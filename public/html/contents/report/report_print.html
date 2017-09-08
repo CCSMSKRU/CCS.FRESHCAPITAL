@@ -1,0 +1,476 @@
+
+<link rel="stylesheet" type="text/css" media="screen" href="/content/multibooker/css/ui.jqgrid.css" />
+<script type="text/javascript" src="/core/jquery/jquery.js"></script>
+
+<script type="text/javascript" src="js/func.js"></script>
+
+
+
+<script>
+
+$_GET = GET();
+var params = {};
+for (key in $_GET){
+  if(key!="subcommand" && key!="sid"){
+    params[key] = $_GET[key];
+  }
+}
+
+
+
+$(document).ready(function(){
+  var subcommand = $_GET['subcommand'];  
+  send_query({command:"get",object:subcommand,sid:$_GET['sid'],params:params},function(result){
+    
+    switch(subcommand){
+      case "casher_report":
+        var xml = result;
+        xml_header = xmlToObject(result,"REPORT",{"LINE_1":"LINE_1","LINE_2":"LINE_2","LINE_3":"LINE_3","LINE_4":"LINE_4","LINE_5":"LINE_5"});
+        xml_bottom = xmlToObject(result,"REPORT",{"TOTAL_RECEIVED_QTY":"TOTAL_RECEIVED_QTY","TOTAL_RECEIVED_TOTAL":"TOTAL_RECEIVED_TOTAL","TOTAL_SOLD_QTY":"TOTAL_SOLD_QTY","TOTAL_SOLD_TOTAL":"TOTAL_SOLD_TOTAL","TOTAL_RETURNED_QTY":"TOTAL_RETURNED_QTY","TOTAL_RETURNED_TOTAL":"TOTAL_RETURNED_TOTAL"});
+        /*
+        xml = xmlToObject(result,"REPORT_TABLE",{"ACTION":"ACTION","TICKET_PRICE":"TICKET_PRICE","RECEIVED_QTY":"RECEIVED_QTY","RECEIVED_TOTAL":"RECEIVED_TOTAL","SOLD_QTY":"SOLD_QTY","SOLD_TOTAL":"SOLD_TOTAL","RETURNED_QTY":"RETURNED_QTY","RETURNED_TOTAL":"RETURNED_TOTAL"});
+        */
+
+        $.get("report.html", function(data) {
+          var report = $(data);
+          var title = $($(data)[0]);
+          var table_header = $($(data)[2]);
+          var table = $($(data)[4]);
+          var html = "";
+          html+= '<link type="text/css" rel="stylesheet" href="/content/multibooker/css/contents/report.css">';
+          html+= "<center>";
+          for(name in xml_header[0]){
+            title.find("."+name).html(xml_header[0][name]);
+          }
+          html+=title.html();
+          html+=table_header.html();
+          html+= "<table>";
+          $(xml).find("REPORT_TABLE").each(function(i){
+            var action = $(this).find("ACTION").text();
+            html+= "<tr class='report_action'><td colspan='7'>"+action+"</td></tr>";
+            
+            $(this).find("LINE").each(function(){
+              $(this).find("*").each(function(){
+                if(this.tagName.indexOf("QTY")!=-1){
+                  table.find("."+this.tagName).css("text-align","center");
+                }
+                table.find("."+this.tagName).html($(this).text());
+              })
+              html+="<tr>"+table.find("tr").html()+"</tr>";
+            })
+            html+= "<tr class='itogo'>";
+            html+= "<td class='title'> Итого </td>";
+            $(this).find("ITOGO").each(function(){
+              $(this).find("*").each(function(){
+                if(this.tagName.indexOf("QTY")!=-1){
+                  html+= "<td style='text-align:center;'>"+$(this).text()+"</td>";
+                }
+                else {
+                  html+= "<td>"+$(this).text()+"</td>";
+                }
+              })
+            })
+            html+= "</tr>";
+            
+             //html+=table.html();
+            //log($(this).find("*"));
+            //table.find("."+name).html(xml[i][name]);
+          })
+          html+= "<tr class='br'><td colspan='7'></td></tr>";
+          $(xml).find("TOTAL").each(function(i){
+            html+="<tr class='total'><td>Итого</td>";
+            $(this).find("*").each(function(){
+              if(this.tagName.indexOf("QTY")!=-1){
+                  html+= "<td style='text-align:center;'>"+$(this).text()+"</td>";
+                }
+                else {
+                  html+= "<td>"+$(this).text()+"</td>";
+                }
+            })
+            html+="</tr>";
+          })
+          html+="</table>"
+
+          html+="</center>";
+
+          /*
+          for(i in xml){
+            for(name in xml[i]){
+              table.find("."+name).html(xml[i][name]);
+            }
+            html+=table.html();
+          }
+          */
+          
+          
+          /*
+          for (i in xml){
+            for (name in xml[i]){
+              if(name == "BARCODE"){
+                ticket.find("."+name).html("<div>"+xml[i][name]+"</div>");
+              }
+              else {
+                ticket.find("."+name).html(xml[i][name]);
+              }
+              
+            }
+            html+= ticket.html();
+          }
+          */
+          $("#report").html(html);
+           window.print();
+        })
+      break;
+      case "casher_journal_of_operations":
+        var xml = xmlToObject(result,"LINE");
+        var html = "";
+        html+= '<link type="text/css" rel="stylesheet" href="/content/multibooker/css/contents/report_journal.css">';
+        html+= '<div class="report">'+
+          '<div>'+
+            '<center>'+
+              '<b>'+$(result).find('HEAD_1').text()+'</b>'+
+            '</center>'+
+          '</div>'+
+          '<table>'+
+            '<tr>'+
+              '<th>'+
+                '<div style="white-space:nowrap;">'+$(result).find('HEAD_2').text()+'</div>'+
+                '<div style="white-space:nowrap;">'+$(result).find('HEAD_4').text()+'</div>'+
+              '</th>'+
+              '<th>'+
+                '<div>'+$(result).find('HEAD_3').text()+'</div>'+
+              '</th>'+
+              '<th>'+
+                '<div>'+$(result).find('HEAD_7').text()+'</div>'+
+              '</th>'+
+              '<th>'+
+                '<div style="white-space:nowrap;">'+
+                  $(result).find('HEAD_5').text()+' '+
+                  $(result).find('HEAD_6').text()+
+                '</div>'+
+                '<div>'+$(result).find('HEAD_8').text()+'</div>'+
+              '</th>'+
+              '<th>'+
+                '<div>'+$(result).find('HEAD_9').text()+'</div>'+
+              '</th>'+
+              '<th>'+
+                '<div>'+$(result).find('HEAD_10').text()+'</div>'+
+              '</th>'+
+              '<th>'+
+                '<div>'+$(result).find('HEAD_11').text()+'</div>'+
+              '</th>'+
+              '<th>'+
+                '<div>'+$(result).find('HEAD_12').text()+'</div>'+
+                '<div>'+$(result).find('HEAD_13').text()+'</div>'+
+              '</th>'+
+              '<th>'+
+                '<div>'+$(result).find('HEAD_14').text()+'</div>'+
+                '<div>'+$(result).find('HEAD_15').text()+'</div>'+
+              '</th>'+
+            '</tr>'+
+            '<tr>'+
+              '<th colspan="9" class="table_title"><b>'+$(result).find('HEAD_16').text()+'</b></th>'+
+            '</tr>';
+          for (i in xml){
+            var arr = xml[i];
+            html+= ''+
+            '<tr>'+
+              '<td>'+
+                '<div style="white-space:nowrap;">'+arr['OPERATION']+'<br>'+arr['OPERATION_TIME']+'</div>'+
+              '</td>'+
+              '<td>'+
+                arr['PERSON_NAME']+
+              '</td>'+
+              '<td>'+
+                arr['ORDER_ID']+
+              '</td>'+
+              '<td>'+
+                arr['SCA_SERIES']+' '+arr['SCA_NUMBER']+'<br>'+
+                arr['ORDER_TICKET_ID']+
+              '</td>'+
+              '<td>'+
+                arr['HALL_NAME']+
+              '</td>'+
+              '<td>'+
+                arr['ACTION_NAME']+
+              '</td>'+
+              '<td>'+
+                arr['PLACE']+
+              '</td>'+
+              '<td class="coast">'+
+                arr['RATING']+'<br>'+arr['TARIFF']+
+              '</td>'+
+              '<td class="coast">'+
+                arr['RATING']+'<br> '+arr['TOTAL']
+              '</td>'+
+            '</tr>';
+          }
+          html+='</table>'+
+        '</div>';
+        $("#report").html(html);
+        window.print();
+      break;
+      case "casher_report_k_17":
+        //var xml = xmlToObject(result,"LINE");
+        var html = "";
+        html+= '<link type="text/css" rel="stylesheet" href="/content/multibooker/css/contents/report_k.css">';
+        html+= '<div class="report">'+
+          '<div style="position: absolute; right:50px;font-size:12px;">'+
+            '<b>"Утверждаю"</b><br/>'+
+            '____________________________<br/>'+
+            '<br/>                "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"_______20_г.'+
+          '</div>'+
+
+          '<div>'+
+            '<center>'+
+              '<div><b>'+$(result).find('HEAD_1').text()+'</b></div>'+
+              '<div><b>'+$(result).find('HEAD_2').text()+'</b>_____________</div>'+
+              '<div><b>'+$(result).find('HEAD_3').text()+'</b></div>'+
+              '<div><b>'+$(result).find('HEAD_4').text()+'</b></div>'+
+            '</center>'+
+          '</div>'+
+          '<br/>'+
+          '<table class="full">'+
+            '<tr>'+
+              '<th rowspan="2">№ накладной</th>'+
+              '<th colspan="3">Остаток на начало продажи</th>'+
+              '<th colspan="3">Получено</th>'+
+              '<th colspan="5">Напечатано</th>'+
+              '<th colspan="3">Остаток на конец продажи</th>'+
+            '</tr>'+
+            '<tr>'+
+              '<th>Серия</th>'+
+              '<th>№ билетов  от и до</th>'+
+              '<th>Кол-во</th>'+
+              '<th>Серия</th>'+
+              '<th>№ билетов от и до</th>'+
+              '<th>Кол-во</th>'+
+              '<th>Серия</th>'+
+              '<th>№ билетов  от и до</th>'+
+              '<th>Кол-во</th>'+
+              '<th>Сумма</th>'+
+              '<th>Брак</th>'+
+              '<th>Серия</th>'+
+              '<th>№ билетов  от и до</th>'+
+              '<th>Кол-во</th>'+
+            '</tr>'+
+            '<tr class="fold"><td colspan="15"></td></tr>';
+
+            var table0 = xmlToObject(result,"LINE0");
+            var table1 = xmlToObject(result,"LINE1");
+            var table2 = xmlToObject(result,"LINE2");
+            var table3 = xmlToObject(result,"LINE3");
+            var table4 = xmlToObject(result,"LINE4");
+            var id = "";
+            for(i in table0){
+              id = table0[i]['TICKET_PACK_ID'];
+              html+= '<tr>';
+              html+= '<td class="b_left_right">'+table0[i]['DELIVERY_NOTE']+'</td>';
+              if(in_arr_key(table1,"TICKET_PACK_ID", id)){
+                for(q in table1){
+                  if(id == table1[q]['TICKET_PACK_ID']){
+                    html+= '<td class="b_left">'+table1[q]['SCA_SERIES']+'</td>';
+                    html+= '<td>'+table1[q]['START_FINISH_NO']+'</td>';
+                    html+= '<td class="b_right">'+table1[q]['QTY']+'</td>';
+                  }
+                }
+              }
+              else {
+                html+= '<td class="b_left"></td>';
+                html+= '<td></td>';
+                html+= '<td class="b_right"></td>';
+              }
+              if(in_arr_key(table2,"TICKET_PACK_ID", id)){
+                for(w in table2){
+                  if(id == table2[w]['TICKET_PACK_ID']){
+                    html+= '<td class="b_left">'+table2[w]['SCA_SERIES']+'</td>';
+                    html+= '<td>'+table2[w]['START_FINISH_NO']+'</td>';
+                    html+= '<td class="b_right">'+table2[w]['QTY']+'</td>';
+                  }
+                }
+              }
+              else {
+                html+= '<td class="b_left"></td>';
+                html+= '<td></td>';
+                html+= '<td class="b_right"></td>';
+              }
+              if(in_arr_key(table3,"TICKET_PACK_ID", id)){
+                for(e in table3){
+                  if(id == table3[e]['TICKET_PACK_ID']){
+                    html+= '<td class="b_left">'+table3[e]['SCA_SERIES']+'</td>';
+                    html+= '<td>'+table3[e]['START_FINISH_NO']+'</td>';
+                    html+= '<td>'+table3[e]['QTY']+'</td>';
+                    html+= '<td>'+table3[e]['AMOUNT']+'</td>';
+                    html+= '<td class="b_right">'+table3[e]['DEFECTIVE']+'</td>';
+                  }
+                }
+              }
+              else {
+                html+= '<td class="b_left"></td>';
+                html+= '<td></td>';
+                html+= '<td></td>';
+                html+= '<td></td>';
+                html+= '<td class="b_right"></td>';
+              }
+              if(in_arr_key(table4,"TICKET_PACK_ID", id)){
+                for(s in table4){
+                  if(id == table4[s]['TICKET_PACK_ID']){
+                    html+= '<td class="b_left">'+table4[s]['SCA_SERIES']+'</td>';
+                    html+= '<td>'+table4[s]['START_FINISH_NO']+'</td>';
+                    html+= '<td class="b_right">'+table4[s]['QTY']+'</td>';
+                  }
+                }
+              }
+              else {
+                html+= '<td class="b_left"></td>';
+                html+= '<td></td>';
+                html+= '<td class="b_right"></td>';
+              }
+              html+= '</tr>';
+            }
+            html+= '<tr class="b_none">';
+            html+= '<td colspan="3"></td>';
+            html+= '<td><b>'+$(result).find("HEAD_TABLE1_ITOGO").text()+'</b></td>';
+            html+= '<td colspan="2"></td>';
+            html+= '<td><b>'+$(result).find("HEAD_TABLE2_ITOGO").text()+'</b></td>';
+            html+= '<td colspan="2"></td>';
+            html+= '<td><b>'+$(result).find("HEAD_TABLE3_1_ITOGO").text()+'</b></td>';
+            html+= '<td><b>'+$(result).find("HEAD_TABLE3_2_ITOGO").text()+'</b></td>';
+            html+= '<td><b>'+$(result).find("HEAD_TABLE3_3_ITOGO").text()+'</b></td>';
+            html+= '<td colspan="2"></td>';
+            html+= '<td><b>'+$(result).find("HEAD_TABLE4_ITOGO").text()+'</b></td>';
+            html+= '</tr>';
+            html+= '</table>';
+
+            html+= '<table class="a_left">';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Итого продано за наличный расчет: </td><td><b>'+$(result).find("COUNT_CASH_TICKETS").text()+'</b></td>';
+            html+= '<td> билетов на сумму: </td><td><b>'+$(result).find("TOTAL_CASH_AMOUNT").text()+'</b></td>';
+            html+= '</tr>';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Итого продано за безналичный расчет: </td><td><b>'+$(result).find("COUNT_CARD_TICKETS").text()+'</b></td>';
+            html+= '<td> билетов на сумму: </td><td><b>'+$(result).find("TOTAL_CARD_AMOUNT").text()+'</b></td>';
+            html+= '</tr>';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Реализовано через распространителей: </td><td><b>'+$(result).find("COUNT_RASPOSTRANITEL").text()+'</b></td>';
+            html+= '<td> мест на сумму: </td><td><b>'+$(result).find("AMOUNT_RASPOSTRANITEL").text()+'</b></td>';
+            html+= '</tr>';
+            html+= '</table>';
+
+            html+= '<center><b>Возвращено</b></center>';
+            var table_r = xmlToObject(result,"RETURNED_LINE");
+            if(!emptyObject(table_r[0])){          
+              html+= '<table class="full">';
+              html+= '<tr>';
+              html+= '<th>Комплект</th>';
+              html+= '<th>Серия</th>';
+              html+= '<th>Номер</th>';
+              html+= '<th>Место</th>';
+              html+= '<th>Цена</th>';
+              html+= '<th>Тип возврата</th>';
+              html+= '<th>Кто вернул</th>';
+              html+= '</tr>';
+              for (i in table_r){
+                html+= '<tr>';
+                html+= '<td class="b">'+table_r[i]['TICKET_PACK_ID']+'</td>';
+                html+= '<td class="b">'+table_r[i]['SCA_SERIES']+'</td>';
+                html+= '<td class="b">'+table_r[i]['SCA_NUMBER']+'</td>';
+                html+= '<td class="b">'+table_r[i]['PLACE']+'</td>';
+                html+= '<td class="b">'+table_r[i]['PRICE']+'</td>';
+                html+= '<td class="b">'+table_r[i]['RETURN_PAYMENT_TYPE']+'</td>';
+                html+= '<td class="b">'+table_r[i]['RETURN_PERSON']+'</td>';
+                html+= '</tr>';
+              }
+              html+= '<tr class="b_none">';
+              html+= '<td colspan="2"></td>';
+              html+= '<td><b>'+$(result).find("RETURNED_TICKETS").text()+'</b></td>';
+              html+= '<td></td>';
+              html+= '<td><b>'+$(result).find("RETURNED_AMOUNT").text()+'</b></td>';
+              html+= '</tr>';
+              html+= '</table>';
+            }
+
+            html+= '<table class="a_left">';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Итого возвращено за наличный расчет: </td><td><b>'+$(result).find("RETURNED_CASH_TICKETS").text()+'</b></td>';
+            html+= '<td> билетов на сумму: </td><td><b>'+$(result).find("RETURNED_CASH_AMOUNT").text()+'</b></td>';
+            html+= '</tr>';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Итого возвращено за безналичный расчет: </td><td><b>'+$(result).find("RETURNED_CARD_TICKETS").text()+'</b></td>';
+            html+= '<td> билетов на сумму: </td><td><b>'+$(result).find("RETURNED_CARD_AMOUNT").text()+'</b></td>';
+            html+= '</tr>';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Реализовано через распространителей: </td><td><b>'+$(result).find("RETURNED_RASPOSTRANITEL_TICKETS").text()+'</b></td>';
+            html+= '<td> мест на сумму: </td><td><b>'+$(result).find("RETURNED_RASPOSTRANITEL_AMOUNT").text()+'</b></td>';
+            html+= '</tr>';
+            html+= '</table>';
+
+            html+= '<center><b>Бракованные бланки, испорченные при печати</b></center>';
+            var table_d = xmlToObject(result,"DEFECTIVE_LINE");
+            if(!emptyObject(table_d[0])){
+              html+= '<table  class="full">';
+              html+= '<tr>';
+              html+= '<th>Комплект</th>';
+              html+= '<th>Серия</th>';
+              html+= '<th>№ билетов  от и до</th>';
+              html+= '<th>Кол-во</th>';
+              html+= '</tr>';
+              for(i in table_d){
+                html+= '<tr>';
+                html+= '<td class="b">'+table_d[i]['TICKET_PACK_ID']+'</td>';
+                html+= '<td class="b">'+table_d[i]['SCA_SERIES']+'</td>';
+                html+= '<td class="b">'+table_d[i]['SCA_NUMBER']+'</td>';
+                html+= '<td class="b">'+table_d[i]['DEFECTIVE_TICKETS']+'</td>';
+                html+= '</tr>';
+              }
+              html+= '</table>';
+            }
+            html+= '<br/>';
+            html+= '<table class="a_left">';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Использовано бланков при печати : </td><td><b>'+$(result).find("TOTAL_USED_TICKETS").text()+' шт.</b></td>';
+            html+= '<td> из них испорчено: </td><td><b>'+$(result).find("TOTAL_DEFECTIVE_TICKETS").text()+' шт.</b></td>';
+            html+= '</tr>';
+            html+= '</table>';
+
+            html+= '<br/><br/>';
+            html+= '<table class="a_left">';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Кассир: </td><td>____________________________</td>';
+            html+= '</tr>';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Кассовый отчет проверил бухгалтер: </td><td>_________________________________________</td>';
+            html+= '</tr>';
+            html+= '<tr class="b_none"> ';
+            html+= '<td><b>В кассу выручку по отчету оприходовать в сумме: </b></td><td><b>'+$(result).find("TOTAL_DEBIT_AMOUNT").text()+'</b></td>';
+            html+= '</tr>';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Номер кассовой квитанции: </td><td>________________________</td>';
+            html+= '</tr>';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Главный бухгалтер: </td><td>________________________</td>';
+            html+= '</tr>';
+            html+= '<tr class="b_none"> ';
+            html+= '<td>Принял ст.кассир: </td><td>________________________</td>';
+            html+= '</tr>';
+            html+= '</table>';
+            $("#report").html(html);
+            window.print();
+      break;
+    }
+    
+  });
+})
+
+</script>
+
+<div id="report">
+
+</div>
+
+<script>
+
+
+
+</script>
+

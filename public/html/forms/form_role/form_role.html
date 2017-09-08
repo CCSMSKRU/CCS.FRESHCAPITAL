@@ -1,0 +1,316 @@
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="form-group">ID Роли</label>
+            <div>
+                <div class="column-wrapper primarykey" data-column="ROLE_ID"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="form-group">Название роли</label>
+            <div>
+                <div class="column-wrapper" data-column="NAME"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="form-group">Статус</label>
+            <div>
+                <div class="column-wrapper" data-column="STATUS_RU"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="form-group">Раздел</label>
+            <div>
+                <div class="column-wrapper" data-column="SECTION"></div>
+            </div>
+        </div>
+    </div>
+    <div class="hidden-inputs">
+        <div class="column-wrapper" data-column="STATUS"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs" id="rolesModalTabs">
+            <li id="TAB_form_role_users" class="active"><a href="#rolesModalTabUsersContent" id="rolesModalTabUsers" data-toggle="tab">Пользователи</a></li>
+            <li id="TAB_form_role_formAccess"><a href="#rolesModalTabFormAccessContent" id="rolesModalTabMenusAccess" data-toggle="tab">Доступ к просмотру данных</a></li>
+            <li id="TAB_form_role_objectAccess"><a href="#rolesModalTabObjectsAccessContent" id="rolesModalTabObjectsAccess" data-toggle="tab">Доступ к стандартным методам объектов</a></li>
+            <li id="TAB_form_role_operationsAccess"><a href="#rolesModalTabOperationsAccessContent" id="rolesModalTabOperationsAccess" data-toggle="tab">Доступ к операциям</a></li>
+            <li id="TAB_form_role_menuAccess"><a href="#rolesModalTabMenuAccessContent" id="rolesModalTabOperationsAccess" data-toggle="tab">Доступ к меню</a></li>
+        </ul>
+    </div>
+</div>
+<div class="hidden-inputs">
+    <div class="column-wrapper" data-column="STATUS"></div>
+    <div class="column-wrapper" data-column="OBJVERSION"></div>
+    <div class="column-wrapper" data-column="SECTION_ID"></div>
+</div>
+<br>
+<div class="tab-content">
+    <div class="tab-pane fade in active" id="rolesModalTabUsersContent">
+        
+    </div>
+    <div class="tab-pane fade in" id="rolesModalTabFormAccessContent">
+        <div class="form_role_form-content-wrapper"></div>
+    </div>
+    <div class="tab-pane fade in" id="rolesModalTabObjectsAccessContent">
+        <div class="form_role_object-content-wrapper"></div>
+    </div>
+    <div class="tab-pane fade in" id="rolesModalTabOperationsAccessContent">
+        <div class="form_role_operations-content-wrapper"></div>
+    </div>
+    <div class="tab-pane fade in" id="rolesModalTabMenuAccessContent">
+        <div class="form_role_menu-content-wrapper"></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<style>
+ .modalSpinner {
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+ }   
+ .modalMainPart h3 {
+    margin-top: 0;
+    text-align: center;
+}    
+</style>
+
+ -->
+<!-- <div class="container SargonOrder orderModalWrapper">
+    <div class="modalSpinner" style="opacity:1;">
+        <div class="row">
+            <div class="col-md-12">
+                <i class="fa fa-refresh fa-spin fa-3x"></i>
+            </div>
+        </div>        
+    </div>
+    <div class="modalMainPart" style="opacity:0;">
+        <div id="modal_refresh">
+            <span><img src="img/refresh.png" width="15"/></span>
+        </div>
+        <br>
+        <div class="MainFields">
+            <input type="hidden" id="orderModalFieldMain_OBJVERSION" />
+            <div class="row forPadding">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Номер заказа:</label>
+                        <input type="text" id="orderModalFieldMain_ORDER_ID" class="form-control  input-sm">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>Кем создан:</label>
+                    <input type="text" id="orderModalFieldMain_USER_FULLNAME" class="form-control input-sm">
+                    <input type="hidden" id="orderModalFieldMain_USER_ID">
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Статус:</label>
+                        <input type="text" id="orderModalFieldMain_STATUS_RU" class="form-control  input-sm">
+                        <input type="hidden" id="orderModalFieldMain_STATUS">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Дата заказа:</label>
+                        <input type="text" id="orderModalFieldMain_ORDER_DATE_TIME" class="form-control  input-sm">
+                        <input type="hidden" id="orderModalFieldMain_ORDER_DATE">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Тип заказа:</label>
+                        <input type="text" id="orderModalFieldMain_CREATED_BY_RU" class="form-control  input-sm">
+                        <input type="hidden" id="orderModalFieldMain_CREATED_BY">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2" style="text-align:right;padding-top:22px;">
+                    <label for="optionsRadios1">Частное лицо <input type="radio" name="optionsRadios" id="orderModalFieldMain_optionsRadios1" value="option1" checked></label>        
+                </div>
+                <div class="col-md-3"> 
+                    <label>Имя:</label>
+                    <input type="text" id="orderModalFieldMain_FIRST_NAME" class="form-control personFields input-sm">
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Фамилия:</label>
+                        <input type="text" id="orderModalFieldMain_LAST_NAME" class="form-control personFields input-sm">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Телефон клиента:</label>
+                        <input type="text" id="orderModalFieldMain_PHONE" class="form-control personFields input-sm">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>E-mail:</label>
+                        <input type="text" id="orderModalFieldMain_EMAIL" class="form-control personFields input-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2" style="text-align:right;padding-top:22px;">
+                    <label for="optionsRadios2">Агент <input type="radio" name="optionsRadios" id="orderModalFieldMain_optionsRadios2" value="option2"></label>                  
+                </div>
+                <div class="col-md-3">
+                    <label>Имя агента</label>
+                    <div class="input-group agentArea">
+                        <input type="text" id="orderModalFieldMain_CUSTOMER_NAME" class="modalCatalogNameInput form-control input-sm">
+                        <input type="hidden" id="orderModalFieldMain_CUSTOMER_ID">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default btn-sm modalCatalogOpen" type="button"><i style="font-size" class="fa fa-list-alt fa-1x"></i></button>
+                        </span>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default btn-sm modalCatalogDeleteCustomer" type="button"><i style="font-size" class="fa fa-undo fa-1x"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <label> Комментарий к заказу: </label>
+                        <textarea style="max-width:100%;" id="orderModalFieldMain_COMMENTS" class="form-control"> </textarea>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="jqGridWrapperSargon">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <ul class="nav nav-tabs" id="clientTabs">
+                        <li class="active"><a href="#orderTicketsBlock" id="goToOrderTickets" data-toggle="tab">Билеты</a></li>
+                        <li><a href="#orderHistoryBlock" id="goToOrderHistory" data-toggle="tab">История заказа</a></li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="orderTicketsBlock">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="for_one_order_table" style="width:100% !important;">
+                                <table id="one_order"></table>
+                                <div id="one_order_nav"></div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div id="order_modal_buttons">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <br>
+                                <button id="goToPayButton" class="leftbutton btn btn-success btn-block btn-sm">Билеты к оплате</button>
+                                <button id="goToCancelButton" class="leftbutton btn btn-success btn-block btn-sm">Отменить билеты</button>
+                                <button id="goToRealizationButton" class="leftbutton btn btn-success btn-block btn-sm">Выдать билеты на реализацию</button>
+                            </div>
+                            <div class="col-md-2">
+                                <br>
+                                <button id="goToReturnButton" class="leftbutton btn btn-block btn-success btn-sm">Вернуть билеты</button>
+                                <button id="goToPrintButton" class="leftbutton btn btn-success btn-block btn-sm">Печатать билеты</button>
+                                <button id="goToCloseRealizationButton" class="leftbutton btn btn-success btn-block btn-sm">Закрыть билеты с реализации</button>
+                            </div>
+                            <div class="col-md-3">
+                                <! <br><label for="">Бронировать до:</label>
+                                <div class="row">
+                                    <div class="col-md-6"><input type="text" id="orderModalFieldMain_RESERV_DATE" class="form-control input-sm"></div>
+                                    <div class="col-md-6"><input id="orderModalFieldMain_RESERV_TIME" type="text" class="form-control input-sm"></div>
+                                </div><br>
+                                <br><label for="">Выбрать способ оплаты для всех зарезервированных билетов:</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="radio" id="orderModalField_CASH" name="cash_visa" value="CASH" />
+                                        <label for="CASH">Наличными</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="radio" id="orderModalField_CARD" name="cash_visa" value="CARD" />
+                                        <label for="CARD">Картой</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <div class="row"><br>
+                                    <div class="col-md-6">
+                                        <label>Заплачено клиентом:</label>
+                                        <input type="text" id="orderModalField_CLIENT_PAID" class="form-control input-sm">
+                                        <label>Сдача:</label>
+                                        <input type="text" id="orderModalField_SURRENDER" class="form-control input-sm">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Принять от клиента:</label>
+                                        <input type="text" id="orderModalFieldMain_TOTAL_TO_PAY_ORDER_AMOUNT" class="form-control input-sm">
+                                        <label>Всего по заказу:</label>
+                                        <input type="text" id="orderModalFieldMain_TOTAL_ORDER_AMOUNT" class="form-control input-sm">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <br><button id="add_for_order" class="btn btn-success btn-block btn-sm">В зал</button>
+                                <button class="modal_close btn btn-success btn-block btn-sm">Закрыть</button>
+                                <button id="save_order" class="btn btn-info btn-block btn-sm">Сохранить</button>
+                            </div>
+                        </div><div class="clear-fix"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade in" id="orderHistoryBlock">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="for_history_order_table">
+                                <table id="history_order"></table>
+                                <div id="history_order_nav"></div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div><! <div id="basket_wrap" style="width:100% !important;"> <! <div class="tabs" style="height:100%;"><div id="tickets" class="tab active">Билеты</div> <div id="history" class="tab">История заказа</div><br clear="both"/></div> --><!--<div class="user_info"></div>
+        </div>  
+    </div>               
+</div>
+
+ -->

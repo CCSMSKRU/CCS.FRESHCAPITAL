@@ -1,0 +1,461 @@
+.open_priceZones_30 {
+    height: 42px;
+    line-height: 42px;
+    width: 42px;
+    text-align: center;
+    color: #ccc;
+    cursor: pointer;
+}
+.open_priceZones_30:hover {
+    color: #fff;
+}
+
+.open_fundZones_30 {
+    height: 42px;
+    line-height: 42px;
+    width: 42px;
+    text-align: center;
+    color: #ccc;
+    cursor: pointer;
+}
+.open_fundZones_30:hover {
+    color: #fff;
+}
+.clear-all-sessions {
+	height: 42px;
+	line-height: 42px;
+	width: 42px;
+	text-align: center;
+	color: #ccc;
+	cursor: pointer;
+}
+.clear-all-sessions:hover {
+	color: #fff;
+}
+
+.navbar-brand img {
+	width: 100px;
+}
+
+td[data-visibility="FALSE"] {
+    display: none;
+}
+
+th[data-visibility="FALSE"] {
+    display: none;
+}
+
+.select-with-search-wrapper {
+	position: relative;
+}
+
+.select-with-search-wrapper .hidden-area {
+	display: none;
+	position: absolute;
+	background: #fff;
+	width: 100%;
+	height: 100%;
+	border: 1px solid #000;
+	height: auto;
+}
+
+.selectedrow {
+	background-color: antiquewhite;
+}
+
+.selectedrow td {
+	background-color: antiquewhite !important;
+}
+
+.editingrow {
+    background-color: antiquewhite;
+}
+
+.editingrow td {
+    background-color: antiquewhite !important;
+}
+
+.open-select-block-dropdown-arrow-wrapper {
+	background-color: red;
+}
+
+/*.page-content {
+	display: none !important;
+}*/
+
+.page-item { 
+    margin-left: 225px; 
+    margin-top: 0px;
+    min-height: 760px; 
+    padding: 25px 20px 20px 20px;
+    background: #fff;
+}
+
+#open_action_14 {
+    height: 42px;
+    line-height: 42px;
+    width: 42px;
+    text-align: center;
+    color: #ccc;
+    cursor: pointer;
+}
+#open_action_14:hover {
+    color: #fff;
+}
+
+.modal-item {
+    background: #fff;
+    display: none;
+    padding: 10px;
+    overflow-y: auto;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.table>thead>tr>th, 
+.table>tbody>tr>th, 
+.table>tfoot>tr>th, 
+.table>thead>tr>td, 
+.table>tbody>tr>td, 
+.table>tfoot>tr>td {
+    padding: 2px 3px;
+}
+
+.forms-container {
+    padding: 15px;
+}
+
+.hidden-inputs {
+    display: none;
+}
+
+table .editable-container.editable-inline,
+table .editableform .form-group,
+table .editable-input {
+    width: 100%;
+}
+
+.modals-list .cross {
+    position: absolute;
+    top: 0;
+    right: 0;   
+}
+
+.modals-list .cross:hover {
+    color: red;
+}
+
+.select2idwrapper {
+font-weight: bold;
+margin-right: 15px;
+/* min-width: 50px; */
+/* display: block; */
+/* max-width: 50px; */
+width: 20px;
+display: block;
+float: left;
+text-align: right;
+}
+
+/* USERINFO BLOCK */
+
+ul.userInfo {
+    margin-right: 30px;
+    z-index: 999999999;
+}
+
+ul.userInfo li.scaPanel a {
+    width: 100%;
+    height: 100%;
+    padding: 11px;
+    cursor: pointer;
+}
+ul.userInfo li.scaPanel a:hover {
+
+}
+
+.footerUserInfo {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: #333;
+    z-index: 999999;
+}
+
+.scaPanel {
+    float: right;
+    padding-top: 2px;
+    font-size: 14px;
+    cursor: pointer;
+
+}
+.scaPanel a {
+    color: #fff;
+}
+
+
+
+/* SEARCH */
+.sidebar-search {
+    float:left;
+    width: 400px;
+}
+
+
+/* MultyPlySelect */
+
+.ms-container {
+    width: 100%;
+}
+
+.MultyPlyButtons {
+    position: relative;
+    margin: 0 auto;
+    width: 35px;
+}
+
+.MultyPlyAddAll,.MultyPlyDellAll {
+    margin-top: 150px;
+}
+
+.MultyPlyAddAll {
+    margin-top: 210px;
+}
+
+.ms-selection ul,.ms-selectable ul {
+    min-height: 380px;
+    padding: 5px !important;
+    box-shadow: 1px 1px 5px #555 inset !important;
+}
+
+/* FORM ACTION */
+
+#modal_form_action_wrapper .buttons button {
+    margin: 0 5px 0 0;
+}
+
+
+
+/* HOME CONTENT */
+#homeContent {
+    position: relative;
+    width: 1000px;
+    margin: 0 auto;
+    background: #f05a28;
+}
+
+#homeContent #comment {
+    position: absolute;
+    background: url(../img/multibookerSite/slider-comment.png) top left repeat-x;
+    height: 56px;
+    width: 1000px;
+    margin-top: 298px;
+    padding: 0 30px;
+    color: #fff;
+    font-size: 26px;
+    line-height: 56px;
+}
+#homeContent #comment span {
+    color: #f05a28;
+}
+
+.content-static.main {
+    background: #f05a28;
+    color: #fff;
+}
+#homeContent p,#homeContent h1  {
+    padding-left: 15px;
+}
+
+#homeContent p {
+    line-height: 1.1;
+}
+
+
+/* ORDER */
+
+.form_order_payment {
+
+}
+
+.form_order_payment label {
+    font-weight: bold;
+}
+
+.form_order_payment .orderRemaining label {
+    color: red;
+}
+.form_order_payment .orderRemaining input {
+    color: red;
+}
+
+/* START select2    */
+
+
+.select2-drop-mask {
+    z-index: 11000;
+}
+
+.select2-drop {
+    z-index: 12000;
+}
+
+
+.pagination {
+    margin-top: -12px;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.pagination input {
+    width: 50px;
+    display: inline-block !important;
+}
+
+.htContextMenu {
+    z-index: 77777;
+    box-shadow: 0 0 10px #000;
+}
+
+.handsontable .htCheckboxRendererInput {
+    margin-left: 50%;
+}
+
+.handsontable .currentRow {
+  background-color: #E7E8EF;
+}
+
+.handsontable .currentCol {
+  background-color: #F9F9FB;
+}
+
+.handsontable table.htCore {
+    table-layout: auto; 
+}
+
+.handsontable .rowStatusMarker.justRow,
+.handsontable .rowStatusMarker.addingRow,
+.handsontable .rowStatusMarker.editedRow,
+.handsontable .rowStatusMarker.duplicatedRow {
+    position: relative;
+}
+
+.handsontable .rowStatusMarker.justRow::before,
+.handsontable .rowStatusMarker.addingRow::before,
+.handsontable .rowStatusMarker.editedRow::before,
+.handsontable .rowStatusMarker.duplicatedRow::before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -4px;
+    width: 0;
+    height: 0;
+    border-right: 10px solid transparent;
+    border-left: 0px solid transparent;
+}
+
+.handsontable .rowStatusMarker.justRow::before {
+
+}
+
+.handsontable .rowStatusMarker.addingRow::before {
+    border-top: 10px solid blue;
+}
+
+.handsontable .rowStatusMarker.editedRow::before {
+    border-top: 10px solid red;
+}
+
+.handsontable .rowStatusMarker.duplicatedRow::before {
+    border-top: 10px solid green;
+}
+
+
+
+
+
+
+.formOrderMini {
+
+}
+
+.formOrderMini .left {
+    float: left;
+    width: 262px; 
+}
+.formOrderMini .text {
+    height: 32px;
+    margin-left: 5px;
+    line-height: 32px;
+}
+.formOrderMini input {
+    margin-top: 5px;
+    padding: 5px ; 
+    outline: 1px solid #ccc;
+    border: 0;
+}
+.formOrderMini .btn {
+    /*width: 43px;*/
+}
+
+.StrOrderAmount {
+    font-size: 16px;
+}
+
+.StrOrderAmount input {
+    padding: 3px ; 
+    outline: 1px solid #ccc;
+    border: 0;
+}
+
+
+.paymentType {
+
+}
+
+.paymentType .btn i {
+    color: #fff;
+}
+
+.label-star {
+    color: red;
+    font-size: initial;
+}
+
+
+
+/* ORDER PAYMENT */
+
+/*.btnOrderAmount {
+    width: 150px !important;
+    margin: 5px 10px;
+}
+
+.btnOrderAmount i{
+    font-size: 35px;
+}*/
+
+.htDatetimepickerHolder {
+    z-index: 10000 !important;
+}
+
+.columns_toggler {
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.wtSpreader{
+    width: inherit!important;
+}
+
+
+
+
+.autocompleteEditor .htCore tbody {
+    max-height: 250px;
+overflow-y: scroll;
+display: block;
+}

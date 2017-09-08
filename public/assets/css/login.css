@@ -1,0 +1,109 @@
+@font-face {
+    font-family: OpenSans;
+    src: url('../fonts/OpenSans-Regular.ttf');
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    transition: all .5s;
+}
+
+body {
+    margin: 0;
+    background: #fff url('../img/loginBg.jpg') no-repeat;
+    background-size: cover;
+    font: 13px normal 'OpenSans', helveticaneue, arial, sans-serif;
+    color: #666;
+}
+html.hide {
+    opacity: 0;
+}
+
+input {
+    outline: none;
+    padding: 10px 4px 6px;
+    margin-top: 9px;
+    border: none;
+    border-bottom: 1px solid #b0b0b0;
+    display: block;
+    color: #666;
+    width: 252px;
+    font: 18px normal 'OpenSans', helveticaneue, arial, sans-serif;
+    transition: all .3s;
+}
+
+
+input:focus {
+    border-color: #888;
+}
+
+input::-webkit-input-placeholder {
+    color: #aaa;
+    transition: color .3s;
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: inset 0 0 0 100px #fff;
+    -webkit-text-fill-color: #666;
+    color: #666;
+}
+input.err {
+    border-color: #ff5000;
+}
+
+.login-wrapper {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    left: 50%;
+    margin-left: -203px;
+    margin-top: 100px;
+    opacity: 0;
+    padding: 73px;
+    background: #fff;
+    border-radius: 150px 0px;
+    text-align: center;
+    overflow: hidden;
+    /*border: 5px solid #649DFF;*/
+    transition: all .5s;
+     box-shadow: 0 0 24px rgba(0,0,0,0.22);
+    transform: translateY(-30px);
+    border-right: 0;
+    border-left: 0;
+}
+
+.logo {
+    margin-top: 27px;
+    margin-bottom: 38px;
+}
+
+.go .login-wrapper {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.login-submit {
+    display: block;
+    line-height: 59px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+    cursor: pointer;
+    outline: none;
+    color: #777;
+    text-decoration: none;
+    margin-top: 50px;
+    width: 406px;
+    margin-left: -73px;
+    font-size: 20px;
+    font-family: OpenSans, 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+}
+
+.login-submit:hover {
+    color: #000;
+}
+
+#toast-container{
+    font-family: OpenSans, 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif!important;
+}

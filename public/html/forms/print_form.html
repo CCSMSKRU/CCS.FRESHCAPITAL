@@ -1,0 +1,282 @@
+<!--<link rel="stylesheet" type="text/css" href="../report/report.css"/>-->
+<style type='text/css'>
+	body {
+		width: 1000px;
+
+	}
+
+	* {
+		font: 12px normal Arial, Helvetica, sans-serif;
+	}
+
+	h1 {
+		font-size: 24px;
+		text-align: center;
+		margin: 24px 0;
+		border-bottom: 1px solid #333;
+		padding: 16px 0;
+	}
+
+	h2 {
+		font-size: 19px;
+		margin: 40px 0 8px;
+	}
+
+	.chld td, .chld th {
+		padding: 5px;
+		border: 1px solid #ccc;
+	}
+
+	.form td {
+		vertical-align: top;
+		padding: 8px 16px;
+	}
+
+	.form {
+		margin: 24px 0;
+	}
+
+	.form td:first-child {
+		white-space: nowrap;
+		border-right: 1px solid #333;
+		text-align: right;
+		font-weight: bold;
+		/*font-size: 11px;*/
+	}
+
+	table {
+		border-collapse: collapse;
+	}
+
+	.chld + .chld {
+		margin-top: 48px;
+	}
+
+	.chld table + table {
+		margin-top: 48px;
+	}
+
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		padding: 8px 0;
+	}
+
+	.main-list {
+		float: left;
+	}
+
+	.b {
+		font-weight: bold;
+		font-size: 11px;
+		margin-bottom: 4px;
+	}
+
+	.chld th {
+		font-weight: bold;
+		font-size: 13px;
+		border-color: #aaa;
+	}
+
+	.chld table {
+		border-top: 2px solid #333;
+	}
+</style>
+<script type="text/javascript" src="../report/js.js"></script>
+<!--<link href="../../assets/js/libs/bootstrap-toastr/toastr.min.css" rel="stylesheet"-->
+<!--type="text/css"/>-->
+<script type="text/javascript" src="../../metronic/admin/template_content/assets/plugins/jquery-1.10.2.min.js"></script>
+<script src="../../assets/js/libs/jquery/plugins/jquery.cookie.js" type="text/javascript"></script>
+<script src="../../metronic/admin/template_content/assets/plugins/bootstrap-toastr/toastr.min.js"></script>
+<script src="../../config.js"></script>
+<script src="../../socket.io/socket.io.js"></script>
+<script src="../../assets/js/socketClient.js"></script>
+<script src="../../assets/js/main.js"></script>
+<script src="../../assets/js/plugins/mustache.js"></script>
+<script type="text/html" id="template">
+	{{#chldrn}}
+	<div class="chld">
+		<h2>{{name}}</h2>
+		<table>
+			<tr>
+				{{#th}}
+				<th>{{.}}</th>
+				{{/th}}
+			</tr>
+			{{#tr}}
+			<tr>
+				{{#td}}
+				<td>{{.}}</td>
+				{{/td}}
+			</tr>
+			{{/tr}}
+		</table>
+	</div>
+	{{/chldrn}}
+</script>
+
+
+<script type="text/javascript">
+
+
+	$_GET = GET();
+
+	$(function () {
+
+		function goPrint(chldrnCount) { //замыкание
+			var objToPrint = {'chldrn': []}, fullCallsCount = chldrnCount * 2 + 2, currentCallsCount = 0;
+			console.log(chldrnCount)
+			return function (name, obj) {
+				if (name == 'formProfile' || name == 'form')
+					objToPrint[name] = obj;
+				else if (name == 'chldProfile')
+					objToPrint['chldrn'].push({'chldProfile': obj});
+				else if (name == 'chld') {
+					console.log(obj['results'][0]['data'])
+					if (obj['results'][0]['data'].length) objToPrint['chldrn'][objToPrint['chldrn'].length - 1]['chld'] = obj;
+					else objToPrint['chldrn'].pop();
+				}
+
+
+				currentCallsCount++;
+				if (fullCallsCount == currentCallsCount) {
+					console.log(objToPrint)
+					var templateObject = {'form': {}, 'chldrn': []};
+
+					for (var i in objToPrint['formProfile']['results'][0]['data']) {
+						var x = $.inArray(objToPrint['formProfile']['results'][0]['data'][i][1], objToPrint['form']['results'][0]['data_columns']);
+						templateObject['form'][objToPrint['formProfile']['results'][0]['data'][i][1] + '_H'] = objToPrint['formProfile']['results'][0]['data'][i][4];
+						templateObject['form'][objToPrint['formProfile']['results'][0]['data'][i][1]] = objToPrint['form']['results'][0]['data'][0][x];
+					}
+
+					for (var k in objToPrint['chldrn']) {
+						templateObject['chldrn'][k] = {'th': [], 'tr': []};
+						for (i in objToPrint['chldrn'][k]['chldProfile']['results'][0]['data']) {
+							if (objToPrint['chldrn'][k]['chldProfile']['results'][0]['data'][i][7] == 'TRUE') {
+								templateObject['chldrn'][k]['th'].push(objToPrint['chldrn'][k]['chldProfile']['results'][0]['data'][i][4]);
+							}
+						}
+						for (var j in objToPrint['chldrn'][k]['chld']['results'][0]['data']) {
+							templateObject['chldrn'][k]['tr'][j] = {'td': []};
+							for (i in objToPrint['chldrn'][k]['chld']['results'][0]['data'][j]) {
+								if (objToPrint['chldrn'][k]['chldProfile']['results'][0]['data'][i][7] == 'TRUE') {
+									templateObject['chldrn'][k]['tr'][j]['td'].push(objToPrint['chldrn'][k]['chld']['results'][0]['data'][j][$.inArray(objToPrint['chldrn'][k]['chldProfile']['results'][0]['data'][i][1], objToPrint['chldrn'][k]['chld']['results'][0]['data_columns'])]);
+								}
+							}
+						}
+					}
+					var body = $('body');
+					$.get( '/html/print_templates/' + $_GET['name'] + '.html', function( data ) {
+						var tpl = data + $('#template').html();
+						body.html(Mustache.render(tpl, templateObject));
+
+						function tableDismember(table) {
+							var tblLen = table.find('tr:eq(0) > *').length,
+									newTable;
+
+							if (table.width() > body.width()) {
+								newTable = table.clone().find('tr').empty().end();
+							}
+
+							for (var i = 0; i < tblLen; i++) {
+								if (table.width() > body.width()) {
+									var trNum = table.find('tr').length;
+									for (var j = 0; j < trNum; j++) {
+										table.find('tr:eq(' + j + ') > *:last').prependTo(newTable.find('tr:eq(' + j + ')'));
+									}
+								}
+							}
+							table.parent('.chld').append(newTable);
+							if (newTable && newTable.width() > body.width() && newTable.find('tr:eq(0) > *').length > 1) tableDismember(newTable, parent);
+						}
+
+						var tables = $('.chld table');
+						tables.each(function () {
+							tableDismember($(this));
+						});
+
+						console.log(templateObject);
+						window.print();
+						window.parent.$('.printIframe').remove();
+					});
+
+
+
+
+
+
+				}
+				return objToPrint;
+			};
+		}
+
+
+		socketQuery({
+			command: 'get',
+			object: 'user_profile',
+			params: {
+				client_object: $_GET['name']
+			}
+		}, function (res) {
+			res = JSON.parse(res);
+			console.log($_GET['name'], res)
+			var chldrn = (res.results[0].extra_data.object_profile.child_client_object) ? res.results[0].extra_data.object_profile.child_client_object.split(',') : [],
+					tryToPrint = goPrint(chldrn.length); //замыкаем
+			console.log(chldrn)
+			tryToPrint('formProfile', res);
+
+			socketQuery({
+				command: 'get',
+				object: res['results'][0]['extra_data']['object_profile']['get_object_command'],
+				params: {
+					where: res['results'][0]['extra_data']['object_profile']['primary_key'].toLowerCase()+"=" + $_GET['ACTIVE_ID']
+				}
+			}, function (res) {
+				res = JSON.parse(res);
+				console.log(res)
+				tryToPrint('form', res);
+			});
+
+			var currentChld = 0;
+
+			function processClients(clientObject) {
+				if (clientObject === undefined) return;
+				currentChld++;
+				socketQuery({
+					command: 'get',
+					object: 'user_profile',
+					params: {
+						client_object: clientObject
+					}
+				}, function (res) {
+					res = JSON.parse(res);
+					console.log(clientObject)
+					console.log(res)
+					tryToPrint('chldProfile', res);
+					var objProf = res['results'][0]['extra_data']['object_profile'];
+					socketQuery({
+						command: 'get',
+						object: objProf['get_object_command'],
+						params: {
+							where: objProf['parent_key'] + '=' + $_GET['ACTIVE_ID']
+						}
+					}, function (res) {
+						res = JSON.parse(res);
+						console.log(res);
+						tryToPrint('chld', res);
+						processClients(chldrn[currentChld]);
+					});
+				});
+			}
+
+			if (chldrn.length) processClients(chldrn[0])
+		});
+
+
+	});
+
+</script>

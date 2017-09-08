@@ -1,0 +1,217 @@
+/*MAP EDITOR*/
+
+.map-editor-canvas-wrapper{
+    width: 100%;
+    height: 100%;
+    padding-right: 300px;
+    position: relative;
+}
+.map-editor-sidebar-wrapper{
+    width: 300px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    overflow-y: auto;
+    top: 0;
+    border-left: 1px solid #ccc;
+}
+
+.map-editor-canvas-container{
+    width: 100%;
+    position: relative;
+    height: 100%;
+}
+.ct-total-values-wrapper{
+    font-family: opensansregular, arial, sans-serif;
+    font-size: 13px;
+    color: #888;
+}
+
+.map-editor-layers-wrapper{
+    margin: 0;
+    padding: 0;
+}
+.me-lg{
+    list-style: none;
+}
+.me-lg.selected .me-lg-info-wrap{
+    background-color: #9bdbe9;
+}
+.me-lg-info-wrap{
+    background-color: #f7f7f7;
+}
+
+
+.me-lg-vis-wrap{
+    display: inline-block;
+    height: 34px;
+    background-color: #eee;
+    width: 34px;
+    text-align: center;
+    padding-top: 7px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.me-lg-vis{
+
+}
+.me-lg-icon-wrap{
+    display: inline-block;
+    height: 34px;
+    width: 20px;
+    text-align: center;
+    padding-top: 7px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.me-lg-icon-wrap:hover{
+    color: #008000;
+}
+
+.me-lg-icon-wrap i{
+
+}
+.me-lg-title-wrap{
+    display: inline-block;
+    height: 34px;
+    width: 200px;
+    text-align: left;
+    padding-top: 7px;
+    cursor: pointer;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+.me-lg-title{
+
+}
+.me-lg-remove-wrap{
+    display: inline-block;
+    height: 34px;
+    background-color: red;
+    width: 34px;
+    text-align: center;
+    padding-top: 7px;
+    cursor: pointer;
+    vertical-align: middle;
+    color: #fff;
+}
+.me-lg-remove{
+
+}
+.me-lg-remove i{
+
+}
+
+/*DropDown*/
+
+.me-lg-dd-wrap{
+    margin: 0;
+    display: none;
+    padding: 0;
+}
+.me-lg-dd{
+    margin: 0;
+    padding: 0;
+}
+.me-lg-layers-list{
+    margin: 0;
+    padding: 0;
+}
+.me-l{
+    list-style: none;
+}
+
+
+
+.me-l{
+
+}
+.me-l-vis-wrap{
+    display: inline-block;
+    height: 34px;
+    background-color: #cbf5d2;
+    width: 34px;
+    text-align: center;
+    padding-top: 7px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.me-l-vis{
+
+}
+.me-l-icon-wrap{
+    display: inline-block;
+    height: 34px;
+    width: 20px;
+    text-align: center;
+    padding-top: 7px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.me-l-icon-wrap i{
+
+}
+.me-l-title-wrap{
+    display: inline-block;
+    height: 34px;
+    width: 200px;
+    text-align: left;
+    padding-top: 7px;
+    cursor: pointer;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+.me-l-title{
+
+}
+.me-l-remove-wrap{
+    display: inline-block;
+    height: 34px;
+    background-color: red;
+    width: 34px;
+    text-align: center;
+    padding-top: 7px;
+    cursor: pointer;
+    vertical-align: middle;
+    color: #fff;
+}
+.me-l-remove{
+
+}
+.me-l-remove i{
+
+}
+
+.me-lg.opened .me-lg-dd-wrap{
+    display: block;
+}
+
+
+.me-select-zone li.selected{
+    background-color: #57a3c6;
+    color: #fff;
+}
+.me-zones-list li .me-li-info{
+    padding: 4px 7px;
+}
+
+.me-zones-list li{
+    cursor: pointer;
+    list-style: none;
+}
+
+.me-zones-list li.selected>.me-li-info{
+    background-color: #57a3c6;
+    color: #fff;
+}
+.me-figures-list{
+    padding-left: 12px;
+}
+.me-points-list{
+    padding-left: 12px;
+}

@@ -1,0 +1,74 @@
+extends layout
+block content
+    -var userData = items.data[0];
+    .page-content
+        .container
+            h2
+                |#{userData.firstname}
+                |#{userData.surname}
+                span.grey
+                    |  (#{userData.email})
+            hr
+            .row
+                .col-md-12
+                    form#form-profile(name="form-profile")
+                        .col-md-4
+                            .user-photo-wrapper
+                                - var photo = (!userData.photo || userData.photo == '' || userData.photo == 'null')? (userData.gender_id == 1)? 'img/user_default_m.jpg' : 'img/user_default_f.jpg' : 'upload/'+userData.photo;
+                                .user-photo-clear
+                                    .fa.fa-trash
+                                img(src="#{photo}")
+                            div.input-group.marTop10
+                                .input-group-addon
+                                    i.fa.fa-image
+                                input.form-control.fc-field.userPhotoInput(type="text", value="#{userData.photo}", data-server_name="photo", data-title="Фото", data-required="false", data-editor="text", placeholder="Выберите изображение")
+                        .col-md-6
+                            table.table
+                                tbody
+                                    tr
+                                        td
+                                            | Имя
+                                        td
+                                            input.form-control.fc-field(type="text", data-server_name="name", data-title="Имя", data-required="true", data-editor="text", placeholder="Имя", value="#{userData.firstname}")
+                                    tr
+                                        td
+                                            | Фамилия
+                                        td
+                                            input.form-control.fc-field(type="text", data-server_name="surname", data-title="Фамилия", data-required="true", data-editor="text", placeholder="Фамилия", value="#{userData.surname}")
+                                    tr
+                                        td
+                                            | Дата рождения
+                                        td
+                                            input.form-control.fc_datepicker.fc-field(type="text", data-required="true", data-server_name="birthday", data-title="Дата рождения", data-editor="date", placeholder="Дата рождения", value="#{userData.birthday}")
+                                    tr
+                                        td
+                                            | Почта
+                                        td
+                                            input.form-control.fc-field(type="text", data-server_name="email", data-title="Почта", data-required="true", data-editor="email", placeholder="Почта", value="#{userData.email}")
+                                    tr
+                                        td
+                                            | Телефон
+                                        td
+                                            input.form-control.maskedPhone.fc-field(type="text", data-server_name="phone", data-title="Телефон", data-editor="phone", placeholder="Телефон", value="#{userData.phone}")
+                                    tr
+                                        td
+                                            | Пол
+                                        td
+                                            input.select2.form-control.fc-field(type="hidden", data-server_name="gender_id", data-editor="select" data-name="name", data-required="true", value="#{userData.gender_id}", data-text="#{userData.gender}", data-table="gender")
+                                    tr
+                                        td
+                                            | Город
+                                        td
+                                            input.select2.form-control.fc-field(type="hidden", data-server_name="city_id", data-editor="select", data-name="title", data-required="true", value="#{userData.city_id}", data-text="#{userData.city}", data-table="city")
+                                    tr
+                                        td
+                                            | Клуб
+                                        td
+                                            input.select2.form-control.fc-field(type="hidden", data-server_name="club_id", data-editor="select", data-name="name", data-required="true", value="#{userData.club_id}", data-text="#{userData.club}", data-table="club")
+            .row
+                .col-md-10
+                    .col-md-12
+                        .sBtn.flRight.green.save_profile
+                            .fa.fa-save
+                            |  &nbsp;&nbsp;Сохранить
+    script(src="js/edit_profile.js")

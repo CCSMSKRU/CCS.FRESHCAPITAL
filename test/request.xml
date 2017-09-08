@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<product>
+    <prequest>
+        <req>
+            <AddressReq>
+                <district>ДСТР</district>
+                <houseNumber>123</houseNumber>
+                <street>ЛЕНИНА, 7</street>
+                <block>1</block>
+                <building>2</building>
+                <apartment>3</apartment>
+                <city>МАГАДАН</city>
+                <prov>56</prov>
+                <postal>678432</postal>
+                <addressType>3</addressType>
+            </AddressReq>
+            <AddressReq>
+                <district>ДСТР</district>
+                <houseNumber>123</houseNumber>
+                <street>ЛЕНИНА, 7</street>
+                <block>1</block>
+                <building>2</building>
+                <apartment>3</apartment>
+                <city>МАГАДАН</city>
+                <prov>56</prov>
+                <postal>678432</postal>
+                <addressType>4</addressType>
+            </AddressReq>
+            <IdReq>
+                <idNum>771234567890</idNum>
+                <idType>81</idType>
+            </IdReq>
+            <IdReq>
+                <idNum>1234567890123</idNum>
+                <idType>34</idType>
+                <issueDate>1900-01-02</issueDate>
+            </IdReq>
+            <InquiryReq>
+                <ConsentReq>
+                    <consentFlag>Y</consentFlag>
+                    <consentDate>2016-01-20</consentDate>
+                    <consentExpireDate>2016-02-15</consentExpireDate>
+                    <consentPurpose>1</consentPurpose>
+                    <otherConsentPurpose></otherConsentPurpose>
+                    <reportUser>ПАО Банк «Успешный»</reportUser>
+                    <liability>Y</liability>
+                </ConsentReq>
+                <inqPurpose>99</inqPurpose>
+                <inqAmount>1000</inqAmount>
+                <currencyCode>RUB</currencyCode>
+            </InquiryReq>
+            <BusinessReq>
+                <businessName>ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ 'МАГАДАНСКИЕ РУДНИКИ'</businessName>
+            </BusinessReq>
+            <RequestorReq>
+                <MemberCode>FG01LL000000</MemberCode>
+                <UserID>FG01LL000005</UserID>
+                <Password>Abcd1234</Password>
+            </RequestorReq>
+            <RefReq>
+                <userReference>TESTRequest01</userReference>
+                <product>BHST</product>
+            </RefReq>
+            <requestDateTime>2006-06-08</requestDateTime>
+            <IOType>B2B</IOType>
+            <OutputFormat>XML</OutputFormat>
+            <lang>ru</lang>
+        </req>
+    </prequest>
+</product>

@@ -1,0 +1,11 @@
+block content
+    form#login-form(name="login-form" method="POST" action="add_user")
+        label(for="login") Логин:
+        input#login(type="text", name="login", value="")
+        input#login(type="text", name="email", value="ivantgco@gmail.com")
+        input#login(type="text", name="birthday", value="05-04-1988")
+        input#login(type="text", name="gender_id", value="1")
+        label(for="password") Пароль:
+        input#password(type="password", name="password", value="")
+        button(type="submit", data-loading-text="Отправляю...") Создать
+        .error

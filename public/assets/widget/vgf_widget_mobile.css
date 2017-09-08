@@ -1,0 +1,295 @@
+
+@font-face {
+    font-family: OpenSans-Bold; /* Гарнитура шрифта */
+    src: url(../fonts/OpenSans-Bold.ttf); /* Путь к файлу со шрифтом */
+}
+@font-face {
+    font-family: OpenSans-Regular; /* Гарнитура шрифта */
+    src: url(../fonts/OpenSans-Regular.ttf); /* Путь к файлу со шрифтом */
+}
+@font-face {
+    font-family: OpenSans-Light; /* Гарнитура шрифта */
+    src: url(../fonts/OpenSans-Light.ttf); /* Путь к файлу со шрифтом */
+}
+
+
+.vgf-widget-holder{
+    font-family: OpenSans-Regular, arial , sans-serif;
+}
+
+.vgf-widget-button {
+    color: #fff;
+    background-color: #1a8cff;
+    padding: 15px 10px;
+    width: 170px;
+    font-family: arial , sans-serif;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+/*.vgf-widget-button:hover {*/
+    /*background-color: #0d5aff;*/
+/*}*/
+.vgf-modal-holder {
+    width: 100%;
+    min-height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.vgf-modal-fader {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(240, 248, 255, 0.6);
+    z-index: 1;
+    width: 100%;
+}
+.vgf-modal-window {
+    width: 95%;
+    border-radius: 3px;
+    padding: 50px 80px 80px 80px;
+    background-color: #fff;
+    min-height: 40px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+    margin-top: 30px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 62px rgba(19, 77, 127, 0.17);
+    margin-bottom: 120px;
+}
+.vgf-title {
+    font-family: 'metabold', OpenSans-Bold, arial , sans-serif;
+    font-size: 50px;
+    line-height: 50px;
+    color: #3b4256;
+    margin-bottom: 30px;
+}
+
+.vgf-sub-row{
+    background-color: #f0f5f9;
+    margin-left: -80px;
+    margin-right: -80px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-size: 14px;
+    color: #3b4256;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+.vgf-price {
+    margin-bottom: 25px;
+    font-size: 30px;
+    line-height: 38px;
+    padding-right: 200px;
+}
+.vgf-info {
+    font-size: 30px;
+    line-height: 38px;
+    padding-right: 200px;
+}
+.vgf-third{
+    width: 33.33333%;
+    display: inline-block;
+
+}
+
+.vgf-third-inner{
+    border: 1px solid #e5edf3;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+/*.vgf-third-inner:hover{*/
+    /*border: 1px solid #fff;*/
+    /*box-shadow: 0 20px 54px rgba(196,208,227,0.75);*/
+/*}*/
+
+.vgf-three{
+    width: 100%;
+    margin-top: 30px;
+}
+.vgf-label-1 {
+    font-size: 80px;
+    height: 90px;
+    width: 90px;
+    color: #3b4256;
+    margin: 0 auto;
+    border-radius: 50%;
+    margin-top: 20px;
+    text-align: center;
+    padding-top: 9px;
+    box-sizing: border-box;
+    font-weight: 600;
+}
+.vgf-label-2 {
+    font-size: 33px;
+    color: #3b4256;
+    margin-bottom: 20px;
+    text-align: center;
+    margin-top: 24px;
+}
+.vgf-label-cta {
+    font-size: 72px;
+    margin-bottom: 25px;
+    color: #f82f38;
+    text-align: center;
+    margin-top: 35px;
+    font-family: OpenSans-Light, arial, sans-serif;
+    font-weight: 600;
+
+}
+
+
+.vgf-60-holder.vgf-third .vgf-third-inner,
+.vgf-75-holder.vgf-third .vgf-third-inner{
+    border-right: 0;
+}
+
+.vgf-form-title {
+    padding-top: 70px;
+    padding-bottom: 55px;
+    font-size: 54px;
+}
+.vgf-form-group {
+    width: 33.33333%;
+    display: inline-block;
+}
+.vgf-form-label {
+    width: 100%;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 34px;
+    color: #666;
+}
+.vgf-form-group {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+}
+.vgf-form-group:nth-child(2) {
+    /*padding-right: 0;*/
+    /*padding-left: 15px;*/
+}
+.vgf-form-input {
+    display: block;
+    width: 100%;
+    font-size: 40px;
+    font-weight: 300;
+    color: #3b4256;
+    line-height: 32px;
+    height: 90px;
+    margin: 0;
+    background: #fff;
+    padding: 0 22px 0 22px;
+    box-sizing: border-box;
+    border:2px solid #e6ecf2;
+    outline: 0;
+    border-radius: 2px;
+}
+
+.vgf-form-input:focus{
+    border:2px solid #1a8cff;
+}
+
+
+.vgf-form-input.invalid{
+    border:2px solid #f82f39;
+}
+
+.vgf-form-confirm {
+    background-color: #1a8cff;
+    height: 102px;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+    font-size: 46px;
+    border-radius: 3px;
+    padding-top: 16px;
+    margin-top: 60px;
+}
+/*.vgf-form-confirm:hover {*/
+    /*background-color: #1976dd;*/
+/*}*/
+.vgf-form-holder {
+    position: relative;
+    margin-top: -680px;
+    z-index: 10;
+    overflow: hidden;
+}
+.vgf-body {
+    background-color: #fff;
+    position: relative;
+    z-index: 20;
+}
+.vtb-logo {
+    position: absolute;
+    z-index: 30;
+    top: 113px;
+    right: 80px;
+}
+
+.vgf-logo {
+    position: absolute;
+    z-index: 30;
+    top: 135px;
+    right: 80px;
+}
+
+.vgf-per-day {
+    font-size: 32px;
+}
+.vgf-full-price{
+    font-size: 24px;
+}
+.vgf-close {
+    position: absolute;
+    z-index: 30;
+    top: 40px;
+    right: 40px;
+    height: 16px;
+    width: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    background-image: url('http://mirbileta.ru/images/vgf_close.png');
+}
+/*.vgf-close:hover{*/
+    /*background-position-y: -16px;*/
+/*}*/
+.vgf-third-inner.active{
+    background-color: #1a8cff;
+    color: #fff;
+
+}
+.vgf-third-inner.active .vgf-label-1 {
+    color: #fff;
+}
+.vgf-third-inner.active .vgf-label-2 {
+    color: #fff;
+}
+.vgf-third-inner.active .vgf-label-cta{
+    color: #fff;
+}
+
+.vgf-form-train{
+    width: 200%;
+}
+.vgf-form-vagon{
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+
+}
+.vgf-thanks-title {
+    padding-top: 60px;
+    padding-bottom: 35px;
+    font-size: 64px;
+}
+.vgf-form-text {
+    font-size: 39px;
+}

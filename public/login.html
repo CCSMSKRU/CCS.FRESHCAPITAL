@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Авторизация</title>
+
+    <link rel="stylesheet" href="assets/css/libs/font_awesome/font_awesome.css">
+    <link rel="stylesheet" href="assets/js/libs/bootstrap-toastr/toastr.min.css">
+    <link rel="stylesheet" href="assets/css/login.css">
+</head>
+<body>
+<div class="login-wrapper">
+    <form method="post" action="#" id="form">
+    <img src="assets/img/logoNew.png" class="logo" alt="">
+    <input type="text" name="username" placeholder="Email" id="username" autocomplete="off" autofocus="on" tabindex="1">
+    <input type="password" name="password" placeholder="Password" id="password"  autocomplete="off" tabindex="2">
+    <a class="login-submit" href="#" tabindex="3">Войти</a>
+    </form>
+</div>
+<script src="assets/js/libs/jquery/jquery-2.0.3.min.js"></script>
+<script src="assets/js/libs/jquery/plugins/jquery.cookie.js"></script>
+<script>
+    $.cookie.json = true;
+    $.cookie.raw = true;
+</script>
+<script src="assets/js/libs/bootstrap-toastr/toastr.min.js"></script>
+<script src="assets/js/toastrLock.js"></script>
+<script src="socket.io/socket.io.js"></script>
+<script src="assets/js/socketClient.js"></script>
+
+<script src="assets/js/main.js"></script>
+<script src="config.js"></script>
+<script src="assets/js/login.js"></script>
+
+</body>
+</html>

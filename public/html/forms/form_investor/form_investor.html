@@ -1,0 +1,187 @@
+<div class="insertIntoHeader">
+    <div data-tab="card" class="modal_tab_switcher active">Карточка</div>
+    <div data-tab="account" class="modal_tab_switcher">Счет</div>
+    <div data-tab="docs" class="modal_tab_switcher">Документы</div>
+</div>
+
+
+<div class="upper-buttons-wrapper"></div>
+
+<div class="modal_tab active" data-tab="card">
+
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <h1><span class="fn-inline-field" data-column="name">{+{name}+}</span></h1>
+            <h4>Карточка инвестора:</h4>
+        </div>
+        <div class="col-md-6">
+            <div class="form-sub-headline">
+                <h5>Всего средств: <span class="fn-inline-field" data-column="total_amount">{+{total_amount}+}</span> руб.</h5>
+                <h5>Доступно средств: <span class="fn-inline-field" data-column="available_amount">{+{available_amount}+}</span> руб.</h5>
+                <h5>Заблокировано средств: <span class="fn-inline-field" data-column="locked_amount">{+{locked_amount}+}</span> руб.</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="flLeft wid100pr">
+        <div class="mb-devider"></div>
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="row">
+            <div>{{{name}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{short_name}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{branch_office}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{phone}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{email}}}</div>
+        </div>
+
+        <div class="row">
+            <div>{{{legal_address}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{real_address}}}</div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="row">
+            <div>{{{inn}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{kpp}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{ogrn}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{gov_registrator}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{registration_date}}}</div>
+        </div>
+
+        <div class="row">
+            <div>{{{executive}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{executive_fio}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{grounds_on}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{business_seasonality}}}</div>
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="row">
+            <div>{{{rko_bank}}}</div>
+        </div>
+        <div class="row">
+            <div>{{{rs}}}</div>
+        </div>
+
+    </div>
+
+
+    <div class="col-md-12">
+        <div class="col-md-12">
+
+            <div data-tbls="investor_representative.tbl_investor_representative,investor_history_log.tbl_investor_history_log"
+                 class="fn-child-tbl-holder marTop10"></div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal_tab" data-tab="account">
+
+    <div class="col-md-12">
+        <div class="col-md-6"><h1>Счёт инвестора:</h1></div>
+        <div class="col-md-6">
+            <div class="form-sub-headline">
+                <h5>Всего средств: <span class="fn-inline-field" data-column="total_amount">{+{total_amount}+}</span> руб.</h5>
+                <h5>Доступно средств: <span class="fn-inline-field" data-column="available_amount">{+{available_amount}+}</span> руб.</h5>
+                <h5>Заблокировано средств: <span class="fn-inline-field" data-column="locked_amount">{+{locked_amount}+}</span> руб.</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="flLeft wid100pr">
+        <div class="mb-devider"></div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="col-md-12">
+
+
+            <div class="tabsParent sc_tabulatorParent floated">
+                <div class="tabsTogglersRow sc_tabulatorToggleRow">
+                    <div class="tabToggle sc_tabulatorToggler opened" dataitem="0">
+                        <span class="childObjectTabTitle" data-name="" data-item="0">Операции по счёту</span>
+                    </div>
+                    <div class="tabToggle sc_tabulatorToggler " dataitem="1">
+                        <span class="childObjectTabTitle" data-name="" data-item="1">История счёта</span>
+                    </div>
+                </div>
+                <div class="ddRow sc_tabulatorDDRow">
+                    <div class="tabulatorDDItem noMinHeight noMaxHeight sc_tabulatorDDItem opened" dataitem="0">
+                        <div class="childObjectWrapper" data-item="0">
+
+                            <div class="tbl-account-operation-holder"></div>
+
+                        </div>
+                    </div>
+                    <div class="tabulatorDDItem noMinHeight noMaxHeight sc_tabulatorDDItem " dataitem="1">
+                        <div class="childObjectWrapper" data-item="1">
+
+                            <div class="tbl-account-history-log-holder"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!--<div data-tbls="investor_account.tbl_investor_account" class="fn-child-tbl-holder marTop10"></div>-->
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal_tab" data-tab="docs">
+
+    <div class="col-md-12">
+        <div class="col-md-6"><h1>Документы инвестора:</h1></div>
+    </div>
+
+    <div class="col-md-12">
+        <div data-tbls="investor_document.tbl_investor_document" class="fn-child-tbl-holder marTop10"></div>
+    </div>
+
+
+</div>
+
+
+
+
+
+

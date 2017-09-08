@@ -1,0 +1,222 @@
+
+@media screen {
+    #report{
+        display: none;
+    }
+
+ }
+@media print {
+    #report{
+        font-size: 14px;
+        display: block;
+    }
+    #report table {
+        font-size: 14px;
+    }
+}
+
+
+@media print{
+  .btn.print {
+    display: none;
+  }
+}
+
+
+
+
+.left {float: left;}
+.right{float:right;}
+
+
+
+table {
+    width: 100%;
+    border-collapse:collapse !important;
+}
+
+table td{
+   padding: 1px 2px;
+
+}
+table td.border-top{
+    border-top: 1px solid;
+
+}
+table td.border-bottom{
+    border-bottom: 1px solid;
+}
+
+
+table.bordered tr td {
+    border: 1px solid; 
+}
+table tr.bordered td {
+    border: 1px solid; 
+}
+table tr td.bordered {
+    border: 1px solid;
+}
+
+table tr.noborder td {
+    border: none;
+}
+
+
+table tr.sideborders td {
+    border: 1px solid;
+}
+
+table tr.sideborders td:first-child {
+    border-left: 1px solid;
+}
+table tr.sideborders td:last-child {
+    border-right: 1px solid;
+}
+
+
+
+table tr.th {
+    text-align: center;
+    vertical-align: center;
+}
+table tr.th-b {
+    text-align: center;
+    vertical-align: center;
+    font-weight: bold;
+}
+
+
+
+.top {
+    vertical-align: top;
+}
+.middle {
+    vertical-align: middle;
+}
+.bottom {
+    vertical-align: bottom;
+}
+
+
+
+tr.r td {
+    text-align: right;
+}
+td.r {
+    text-align: right;
+}
+
+
+tr.l td {
+    text-align: left;
+}
+td.l {
+    text-align: left;
+}
+
+
+tr.c td {
+    text-align: center;
+}
+td.c {
+    text-align: center;
+}
+
+
+.tr-b td{
+    border: 2px solid;
+}
+
+.tr-bb td {
+    border: 3px solid;
+}
+
+.tr-bbb td {
+    border: 4px solid;
+}
+
+.td-b {
+    border: 2px solid;
+}
+
+.td-bb {
+    border: 3px solid;
+}
+
+.td-bbb {
+    border: 4px solid;
+}
+
+
+.b {
+    font-weight: bold; 
+}
+.i {
+    font-style: italic; 
+}
+.u {
+    text-decoration: underline; 
+}
+
+/* Размер шрифта */
+/* <td class="f12"></td> */
+
+.f6 {font-size: 10px;}
+.f8 {font-size: 12px;}
+.f10 {font-size: 14px;}
+.f12 {font-size: 16px;}
+.f14 {font-size: 18px;}
+.f16 {font-size: 20px;}
+.f18 {font-size: 24px;}
+.f20 {font-size: 2px;}
+
+
+/*
+<tr>
+    <td class="r-left">
+        <span class="rotated-text">
+            <span class="rotated-text__inner">
+                Текст!!!
+            </span>
+        </span>
+    </td>
+    <td class="r-right">
+        <span class="rotated-text">
+            <span class="rotated-text__inner">
+                Текст!!!
+            </span>
+        </span>
+    </td>
+</tr>
+
+*/
+
+
+td.r-left .rotated-text__inner {
+    display: inline-block;
+    white-space: nowrap;
+    transform: translate(0,100%) rotate(-90deg);
+    -webkit-transform: translate(0,100%) rotate(-90deg);
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+ }
+td.r-right .rotated-text__inner {
+    display: inline-block;
+    white-space: nowrap;
+    transform: translate(50%,0%) rotate(90deg);
+    -webkit-transform: translate(50%,0%) rotate(90deg);
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+ }
+
+  .rotated-text__inner:after {
+     content: "";
+     float: left;
+     margin-top: 100%;
+ }
+
+
+
+
+

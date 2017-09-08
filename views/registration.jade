@@ -1,0 +1,131 @@
+extends layout
+block content
+    .page-content
+        .container
+            h2 &#1056;&#1077;&#1075;&#1080;&#1089;&#1090;&#1088;&#1072;&#1094;&#1080;&#1103;
+            hr
+            .row
+                .col-md-12
+                    form#form-registration(name="form-registration")
+                        .row
+                            .col-md-6
+                                .col-md-12
+                                    .form-group
+                                        label.control-label
+                                            | Имя
+                                            span.red-star *
+                                        input.form-control.fc-field(type="text", data-server_name="name", data-title="Имя", data-required="true", data-editor="text", placeholder="Имя")
+                                .col-md-12
+                                    .form-group
+                                        label.control-label
+                                            | Фамилия
+                                            span.red-star *
+                                        input.form-control.fc-field(type="text", data-server_name="surname", data-title="Фамилия", data-required="true", data-editor="text", placeholder="Фамилия")
+                                .col-md-12
+                                    .form-group
+                                        label.control-label
+                                            | Почта
+                                            span.red-star *
+                                        input.form-control.fc-field(type="text", data-server_name="email", data-title="Почта", data-required="true", data-editor="email", placeholder="Почта")
+                                .col-md-12
+                                    .form-group
+                                        label.control-label Телефон
+                                        .input-group
+                                            .input-group-addon +7
+                                            input.form-control.maskedPhone.fc-field(type="text", data-server_name="phone", data-title="Телефон", data-editor="phone", placeholder="Телефон")
+                                .col-md-12
+                                    .form-group
+                                        label.control-label
+                                            |Пароль
+                                            span.red-star *
+                                        div.input-group
+                                            .input-group-addon
+                                                i.fa.fa-key
+                                            input.form-control.fc-field(type="password", data-server_name="password", data-title="Пароль", data-required="true", data-editor="text", placeholder="Пароль")
+                                .col-md-12
+                                    .form-group
+                                        label.control-label
+                                            |Подтверждение пароля
+                                            span.red-star *
+                                        div.input-group
+                                            .input-group-addon
+                                                i.fa.fa-key
+                                            input.form-control.fc-field(type="password", data-server_name="confirm_password", data-title="Подтверждение пароля", data-required="true", data-editor="text", placeholder="Подтверждение пароля")
+                                //.col-md-4.form-group
+                                //    label.control-label
+                                //        | &#1054;&#1090;&#1095;&#1077;&#1089;&#1090;&#1074;&#1086;:
+                                //    input.form-control.fc-field(type="text", data-server_name="secondname", data-title="Отчество", data-required="false", data-editor="text", placeholder="Отчество")
+                                .col-md-12
+                                    .form-group
+                                        label.control-label
+                                            | Пол
+                                            span.red-star *
+                                        input.select2.form-control.fc-field(type="hidden", data-server_name="gender_id", data-editor="select" data-name="name", data-required="true", value="", data-text="", data-table="gender")
+                                .col-md-12
+                                    .form-group
+                                        label.control-label
+                                            | Дата рождения
+                                            span.red-star *
+                                        .input-group
+                                            input.form-control.fc_datepicker.fc-field(type="text", data-required="true", data-server_name="birthday", data-title="Дата рождения", data-editor="date", placeholder="Дата рождения")
+                                            .input-group-addon
+                                                i.fa.fa-calendar
+                                .col-md-12
+                                    .form-group
+                                        label.control-label
+                                            | Город
+                                            span.red-star *
+                                        input.select2.form-control.fc-field(type="hidden", data-server_name="city_id", data-editor="select", data-name="title", data-required="true", value="", data-text="", data-table="city")
+                                .col-md-12
+                                    .form-group
+                                        label.control-label
+                                            | Клуб
+                                            span.red-star *
+                                        input.select2.form-control.fc-field(type="hidden", data-server_name="club_id", data-editor="select", data-name="name", data-required="true", value="", data-text="", data-table="club")
+                                .col-md-12
+                                    .form-group
+                                        .checkbox
+                                            label
+                                                input.fc-field(type="checkbox", data-server_name="isAgree", data-title="Согласен(на) на рассылку", data-editor="checkbox", checked="checked")
+                                                | Я хочу получать уведомления и новости
+
+                            .col-md-6
+                                .col-md-12
+                                    .form-group
+                                        label.control-label
+                                            | Фото
+                                        div.input-group
+                                            .input-group-addon
+                                                i.fa.fa-image
+                                            input.form-control.fc-field.userPhotoInput(type="text", data-server_name="photo", data-title="Фото", data-required="false", data-editor="text", placeholder="Выберите изображение")
+                                .col-md-12
+                                    .user-photo-wrapper
+                                        .user-photo-clear
+                                            .fa.fa-trash
+                                        img(src="img/user_default_m.jpg")
+                        .row
+                            .col-md-12
+                                hr
+                                .col-md-12
+                                    #confirm_registration.sBtn.green.marL1.flRight
+                                        i.fa.fa-user
+                                        | &nbsp;&nbsp;Зарегистрироваться
+                                    //#reg_by_vk.sBtn.blue.marL1.flRight.reg_by
+                                    //    i.fa.fa-vk
+                                    //#reg_by_fb.sBtn.blue.marL1.flRight.reg_by
+                                    //    i.fa.fa-facebook
+                    #after-registration
+                        .row
+                            .col-md-12
+                                h3
+                                    |Регистрация прошла успешно!
+                                p
+                                    |На указанный вами адрес было выслано письмо с подтверждением,
+                                    |перейдите по ссылке в письме, что бы подтвердить регистрацию.
+
+                                .sBtn.yellow.flRight
+                                    a(href="/")
+                                        i.fa.fa-home
+                                        |&nbsp;&nbsp;На главную
+
+    script(src="js/registration.js")

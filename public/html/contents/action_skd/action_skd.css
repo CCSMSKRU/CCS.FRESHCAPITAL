@@ -1,0 +1,226 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-image: url(img/clientScreenBg.png);
+}
+
+#action_skd{
+    position: absolute;
+}
+#action_skd canvas{
+}
+
+#clientScreenInner{
+    
+}
+
+#clientScreenContent1{
+    background-color: #f7f7f7;
+    border-top: 1px solid #ddd;
+    overflow: hidden;
+}
+#clientScreenTitle{
+    background-color: #fff;
+    color: #333;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 21px;
+    padding: 20px;
+    font-weight: 300!important;
+}
+#clientScreenFooter{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: #333;
+    font-family: "Open Sans", arial, sans-serif;
+    font-size: 16px;
+    min-height: 91px;
+    background-color: #cacaca;
+    box-shadow: 0 -1px 20px rgba(0,0,0,0.9), inset 0 -40px 60px #A3A3A3;
+
+    display: none;
+}
+
+.box_for_zoom{
+    display: none;
+}
+#topHint{
+    /*display: none!important;*/
+}
+
+#placesInfo{
+    margin: 10px 20px;
+    padding: 0;
+    float: left;
+}
+#totalSumm{
+    background-color: #fff;
+    box-shadow: inset 1px 1px 6px rgba(0,0,0,0.7);
+    border-radius: 5px!important;
+    font-size: 26px;
+    font-family: "Open Sans", arial, sans-serif;
+    color: #333;
+    margin: 10px 20px 10px 10px;
+    text-align: right;
+    padding: 18px 15px;
+}
+
+#placesInfo li{
+    display: inline-block;
+    vertical-align: middle;
+    padding: 4px 45px 5px 5px;
+    font-family: Open Sans, arial, sans-serif;
+    border-radius: 3px!important;
+    list-style: none;
+    background-color: #F7F7F7;
+    margin-right: 5px;
+    margin-bottom: 7px;
+    box-shadow: 1px 2px 0 rgba(0,0,0,0.2);
+    position: relative;
+}
+#placesInfo li.noPadding{
+    padding: 4px 15px 5px 5px;
+}
+
+#placesInfo li .colorCircle{
+    height: 24px;
+    width: 24px;
+    border-radius: 2px!important;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+
+}
+#placesInfo li .info{
+    display: inline-block;
+    vertical-align: middle;
+}
+#placesInfo .placeCountBar{
+    font-size: 11px;
+    color: #333;
+    background-color: #ddd;
+    padding: 3px 5px;
+    border-radius: 2px!important;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.4);
+    position: absolute;
+    top: 7px;
+    right: 7px;
+}
+.pr70{
+    width: 70%;
+    float: left;
+}
+.pr30{
+    width: 30%;
+    float: left;
+}
+#clientScreenContent1 table tr td{
+    padding: 10px;
+}
+#clientScreenActionsList{
+    margin: 0;
+    padding: 0;
+}
+#clientScreenActionsList li{
+    list-style: none;
+    display: inline-block;
+    vertical-align: middle;
+    width: 20%;
+    overflow: hidden;
+    background-color: #2b2b2b;
+    position: relative;
+    cursor: pointer;
+
+}
+.actionItemShortDate{
+    display: inline-block;
+    width: 60px;
+    background-color: crimson;
+    color: #fff;
+    font-family: OpenSansRegular, arial, sans-serif;
+    vertical-align: middle;
+    height: 50px;
+    position: absolute;
+    text-align: center;
+}
+
+#clientScreenActionsList li:hover {
+    opacity: 0.8;
+}
+.actionItemTitle.dark{
+    display: inline-block;
+    vertical-align: middle;
+    height: 50px;
+    background-color: #2E2E2E;
+    width: 100%;
+    color: #fff;
+    font-family: OpenSansRegular, arial, sans-serif;
+}
+.innerHeightBlock{
+    height: 50px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.actionItemTitle .titleInner{
+    padding-left: 70px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.actionItemHeader .year{
+    display: none;
+}
+.actionItemHeader .dayMth{
+    font-size: 12px;
+}
+.actionItemHeader .bigDay{
+    font-size: 26px;
+    font-family: OpenSansRegular, arial, sans-serif;
+}
+.actionItemTime{
+    position: absolute;
+    bottom: 30px;
+    left: 8px;
+    font-size: 16px;
+    color: #fff;
+    font-family: OpenSansRegular, arial, sans-serif;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+}
+
+.actionItemHall{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 16px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #fff;
+    font-family: OpenSansRegular, arial, sans-serif;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+    overflow: hidden;
+    width: 90%;
+}
+.actionItemContent{
+    overflow: hidden;
+    /*height: 300px;*/
+}
+
+.actionItemContent img{
+    width: 100%;
+    float: left;
+}
+#refreshSKD.btn.newStyle{
+    position: absolute;
+    top: 19px;
+    right: 20px;
+    background-color: rgb(80, 156, 238);
+    color: #fff;
+}
+
+#refreshSKD.btn.newStyle:hover{
+    background-color: rgb(79, 143, 212)!important;
+    color: #fff!important;
+}
+#refreshSKD.btn.newStyle i{
+    font-size: 17px;
+}

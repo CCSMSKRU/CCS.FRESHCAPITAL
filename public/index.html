@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>VG Financing</title>
+
+	<link href="assets/img/favicon_mb.png" rel="shortcut icon" type="image/i-icon">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<link href="assets/css/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/js/plugins/ckeditor/contents.css" rel="stylesheet">
+	<link href="assets/clockpicker/clockpicker.css" rel="stylesheet">
+	<link href="assets/clockpicker/standalone.css" rel="stylesheet">
+	<link href="assets/css/libs/uniform.default.css" rel="stylesheet">
+	<link href="assets/js/libs/bootstrap-toastr/toastr.min.css" rel="stylesheet">
+	<link href="assets/css/libs/metro/select2_metro.css" rel="stylesheet">
+	<link href="assets/js/plugins/dateRangePicker/css/datepicker.css" rel="stylesheet">
+	<link href="assets/css/libs/bootstrap/css/datetimepicker.css" rel="stylesheet">
+	<link href="assets/css/libs/bootstrap/css/bootstrap-editable.css" rel="stylesheet">
+	<link href="assets/css/libs/bootstrap/css/address.css" rel="stylesheet">
+	<link href="assets/css/libs/bootstrap/css/bootstrap-switch.min.css" rel="stylesheet">
+	<link href="assets/css/libs/bootstrap/css/colorpicker.css" rel="stylesheet">
+	<link href="assets/css/newMetronic.css" rel="stylesheet">
+	<link href="assets/css/libs/metro/style.css" rel="stylesheet">
+	<link href="assets/css/libs/metro/style-responsive.css" rel="stylesheet">
+	<link href="assets/css/libs/metro/plugins.css" rel="stylesheet">
+	<link href="assets/css/libs/metro/default.css" rel="stylesheet" id="style_color">
+	<link href="assets/css/libs/metro/custom.css" rel="stylesheet">
+	<link href="assets/css/libs/font_awesome/font_awesome.css" rel="stylesheet">
+	<link href="assets/css/main.css" rel="stylesheet">
+	<link href="assets/css/normalize.css" rel="stylesheet">
+	<link href="assets/css/additionalFonts.css" rel="stylesheet">
+	<link href="assets/css/demo.css" rel="stylesheet">
+	<link href="assets/css/icons.css" rel="stylesheet">
+	<link href="assets/css/style6.css" rel="stylesheet">
+	<link href="assets/css/bootstrap-settings.css" rel="stylesheet">
+	<link href="assets/css/plugins/jquery.contextMenu.css" rel="stylesheet">
+	<link href="assets/css/effects.css" rel="stylesheet">
+	<link href="assets/css/components.css" rel="stylesheet">
+	<link href="assets/css/master.css" rel="stylesheet">
+	<link href="assets/css/mapEditorNew.css" rel="stylesheet">
+	<link href="assets/js/plugins/daysweekpicker/daysweekpicker.css" rel="stylesheet">
+	<link href="assets/js/plugins/checkbox/checkbox.css" rel="stylesheet">
+	<!--MAP STYLE-->
+	<link href="assets/css/map.css" rel="stylesheet">
+    <!--END MAP STYLE-->
+    <link href="assets/css/mapViewStyle.css" rel="stylesheet">
+	<link href="assets/css/indexView.css" rel="stylesheet">
+	<link href="assets/css/indexViewK.css" rel="stylesheet">
+	<link href="assets/css/forms_styles.css" rel="stylesheet">
+
+    <link href="assets/js/plugins/ion.rangeslider/css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="assets/js/plugins/ion.rangeslider/css/ion.rangeSlider.custom.css" rel="stylesheet">
+
+
+	<!--<link href="assets/js/plugins/elrte-1.3/css/elrte.min.css" rel="stylesheet">-->
+
+
+</head>
+<body class="page-header-fixed nm">
+
+<div class="form-loader-holder" style="opacity: 1;">
+    <div class="form-loader-fader"></div>
+    <div class="form-loader-body">
+        <div class="form-loader-gif"></div>
+        <div class="form-loader-text">VG Financing<br><span class="powered-by-loader">by Complex Cloud Solutions</span></div>
+    </div>
+</div>
+
+<div id="modalWindows">
+	<div id="modalWindows-position-helper" position="undefined"></div>
+</div>
+<div id="modalSelectionPrevent"></div>
+
+<div class="header">
+	<div id="logo">
+		<div class="onLogoReloadIcon"><i class="fa fa-refresh fa-spin"></i></div>
+		<img src="assets/img/logoNew.png">
+	</div>
+	<div id="search">
+		<input type="text" id="searchInput" placeholder="Поиск, пока не работает">
+
+		<div class="resultsWrapper">
+			<div class="resultsHint"></div>
+			<ul class="resultsList"></ul>
+		</div>
+	</div>
+	<div id="mainPanel">
+		<div class="hidden incQuotaCtrl fa-download fa"></div>
+
+		<!--<div class="clientScreenCtrl fa-desktop fa">-->
+            <!--<div class="clientScreenCtrl_status fa-home fa"></div>-->
+            <!--<div class="clientScreenCtrl_status fa-th fa"></div>-->
+            <!--<div class="clientScreenCtrl_status fa-shopping-cart fa"></div>-->
+        <!--</div>-->
+
+        <!--<div class="clientScreenCtrlPanel">-->
+            <!--<div class="clientScreenCtrlPanel_status fa-home fa"></div>-->
+            <!--<div class="clientScreenCtrlPanel_status fa-th fa"></div>-->
+            <!--<div class="clientScreenCtrlPanel_status fa-shopping-cart fa"></div>-->
+            <!--<div class="clientScreenCtrl_icon fa-desktop fa"></div>-->
+            <!--<div class="clientScreenCtrl_icon_shadow fa-desktop fa"></div>-->
+            <!--<div class="clientScreenCtrlPanelBtns">-->
+                <!--<div class="clientScreenCP_today cSCP_btn_style cSCP_small_btn cSCP_btn_time">Сегодня</div>-->
+                <!--<div class="clientScreenCP_tomor cSCP_btn_style cSCP_small_btn cSCP_btn_time">Завтра</div>-->
+                <!--<div class="clientScreenCP_weekend cSCP_btn_style cSCP_btn_time">Ближайшие выходные</div>-->
+                <!--<div class="clientScreenCP_nextweek cSCP_btn_style cSCP_btn_time">Следующая неделя</div>-->
+                <!--<div class="clientScreenCP_child cSCP_btn_style">Для детей</div>-->
+            <!--</div>-->
+            <!--<div class="clientScreenCtrlPanelSelects">-->
+                <!--<div class="clientScreenCP_genre cSCP_select_style">-->
+                    <!--<div class="cSCP_select_title">Жанр:</div>-->
+                    <!--<div class="cSCP_select3_selector">-->
+                        <!--<select></select>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="clientScreenCP_area cSCP_select_style">-->
+                    <!--<div class="cSCP_select_title">Площадка:</div>-->
+                    <!--<div class="cSCP_select3_selector">-->
+                        <!--<select></select>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="clientScreenCP_since cSCP_select_style">-->
+                    <!--<div class="cSCP_select_title">Дата с:</div>-->
+                    <!--<input class="cSCP_select_selector" type="text"/>-->
+                <!--</div>-->
+                <!--<div class="clientScreenCP_till cSCP_select_style">-->
+                    <!--<div class="cSCP_select_title">Дата по:</div>-->
+                    <!--<input class="cSCP_select_selector" type="text"/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="clientScreenCtrlPanelShow">-->
+                <!--<div class="cSCP_show_label">Показать</div>-->
+                <!--<div class="cSCP_close_icon fa fa-angle-double-up"></div>-->
+                <!--<div class="cSCP_refresh_icon fa fa-refresh"></div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="nb btn btnDouble dark toRight logout" style="opacity: 1;" onclick="logout(event, this);">
+            <i class="fa fa-key"></i>
+
+            <div class="btnDoubleInner">Выйти</div>
+        </div>
+
+		<div id="userBlock" data-owner="userBlock">
+            <div id="userImg"></div>
+			<!--<img id="userImg" src="assets/img/userImg.png">-->
+
+			<div id="userName" class="userName"></div>
+
+			<div data-position="right" data-width="330" class="headerDD" data-parent="userBlock" style="right:0;">
+				<div class="hDDInner">
+					<div class="hDDtitle">
+						<h3><span class="userName"></span>&nbsp;<span class="legalEntityPosition"></span></h3>
+
+						<div class="closehDD"><i class="fa fa-times"></i></div>
+					</div>
+					<div class="hDDcontent" style="margin-right: -330px;">
+						<ul class="classicUl">
+							<li><i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Сообщения
+								<div class="count">3</div>
+							</li>
+						</ul>
+					</div>
+					<div class="hDDfooter">
+						<div class="hDDFooterInner">
+							<div class="nb btn btnDouble blue toRight logout" style="opacity: 1;" onclick="logout();">
+								<i class="fa fa-key"></i>
+
+								<div class="btnDoubleInner">Выйти</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div class="contentWrap">
+
+
+
+	<div class="aside">
+		<div class="page-sidebar-wrapper">
+			<div class="page-sidebar navbar-collapse">
+				<ul id="mainMenu" class="page-sidebar-menu">
+				</ul>
+			</div>
+
+
+
+		</div>
+	</div>
+	<div id="fixHeightContent" class="content">
+		<div class="contentInner">
+			<div class="page-content-wrapper">
+				<div id="page_content_index_wrapper" class="page-content" style="min-height: 0!important">
+					<div id="content-layout-wrapper">
+
+                        <!--Вопросы:<br/>-->
+                        <!--<ul>-->
+                            <!--<li>Как быть с документами, пихать важные(основной дог) и не важные(сканы аренды) в одну таблицу или как?</li>-->
+                            <!--<li>Как генерим договор, выдаем менеджеру анкету с данными или че?</li>-->
+                            <!--<li>Нет ясности с разрешением на просмотр данных мерча из банка, в какой момент запрашиваем, как смотрим?</li>-->
+                            <!--<li>Нужны подробности, что происходит когда мерчант закрывается?</li>-->
+                            <!--<li>Приостановка платежей торговца, тот же вопрос?</li>-->
+                            <!--<li>Рефинансирование, тот же вопрос?</li>-->
+                            <!--<li>Какие опции могут быть касательно дефолтного платежа?</li>-->
+                        <!--</ul>-->
+
+                        <!--Требуется:<br/>-->
+                        <!--<ul>-->
+                            <!--<li>Шаблоны предложений и уведомлений</li>-->
+                            <!--<li>Как генерим договор, выдаем менеджеру анкету с данными или че?</li>-->
+                            <!--<li>Все необходимые поля торговца</li>-->
+                            <!--<li>Все необходимые поля банка</li>-->
+                            <!--<li>Все необходимые поля инвестора</li>-->
+                        <!--</ul>-->
+
+                        <!--TODO:<br/>-->
+                        <!--<ul>-->
+                            <!--<li>Скачивание документов</li>-->
+                            <!--<li>Рефинансирование</li>-->
+                            <!--<li>Некое, неведомое распределение процентов между VG, банком и инвестором...</li>-->
+                            <!--<li>Обновление полей типа percent</li>-->
+                            <!--<li>switch calendar types 7 or gov calendar</li>-->
+                        <!--</ul>-->
+                    </div>
+				</div>
+			</div>
+
+            <a target="_blank" href="http://ccs.msk.ru?utm_source=vg_system" class="developer">
+                <div class="developed-by">Powered by</div>
+                <img src="assets/img/ccs_logo.png">
+            </a>
+
+		</div>
+	</div>
+</div>
+
+<div class="page-content-wrapper2">
+	<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+	<div class="modal fade in" id="portlet-config" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <!--tabindex="-1"-->
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">Modal title</h4>
+				</div>
+				<div class="modal-body">
+					Widget settings form goes here
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn blue OkModal">Save changes</button>
+					<button type="button" class="btn default close_modal" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="page_content_index_wrapper2" class="page-content" style="min-height: 0!important">
+		<div id="content-layout-wrapper2"></div>
+
+		<!--here starts indexView layout-->
+
+		<div id="indexView-actions" style="display: none"></div>
+
+		<!--templates-->
+		<script type="text/html" id="indexView-actionsTpl">
+			<div id="iv-actions-wrapper">
+				{{#actions}}
+				<div class="iv-actions-item" data-hall="{{hall}}" data-action-with-date="{{action_with_date}}" data-action-id="{{action_id}}" data-hall-scheme-id="{{hallscheme_id}}">
+					<div class="iv-actions-inner">
+						<div class="iv-actions-header">
+							<div class="iv-actions-date">
+								<div class="iv-actions-day">{{day}}</div>
+								<div class="iv-actions-mth">{{mth}}</div>
+							</div>
+							<div class="iv-actions-title">
+								<div class="iv-actions-title-inner">{{title}}</div>
+							</div>
+						</div>
+						<div class="iv-actions-content">
+							<div class="iv-actions-image-wrapper">
+								<img src="{{image}}" class="iv-actions-image">
+							</div>
+						</div>
+						<div class="iv-actions-footer">
+							<div class="iv-actions-hall">{{hall}}</div>
+							<div class="iv-actions-time">{{time}}</div>
+						</div>
+					</div>
+				</div>
+				{{/actions}}
+			</div>
+		</script>
+
+		<script type="text/html" id="indexView-toDoListTpl">
+			<div id="iv-toDoList-wrapper">
+				<div class="iv-toDoList-inner">
+					<div class="iv-toDoList-header">
+						<div class="iv-toDoList-addBtn"></div>
+					</div>
+					<div class="iv-toDoList-content">
+						<ul class="iv-toDoList-list">
+							{{#toDoList}}
+							<li>
+								<div class="iv-toDoList-index">{{index}}</div>
+								<div class="iv-toDoList-priority">{{priority}}</div>
+								<div class="iv-toDoList-title">{{title}}</div>
+								<div class="iv-toDoList-checkbox">{{checkbox}}</div>
+							</li>
+							{{/toDoList}}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<script type="text/html" id="indexView-chatTpl">
+			<div id="iv-chatTpl-wrapper">
+				<div class="iv-chatTpl-inner">
+					<div class="iv-chatTpl-header">
+					</div>
+					<div class="iv-chatTpl-content">
+						<ul class="iv-chatTpl-list">
+							{{#toDoList}}
+							<li>
+								<div class="iv-chatTpl-index">{{index}}</div>
+								<div class="iv-chatTpl-priority">{{priority}}</div>
+								<div class="iv-chatTpl-title">{{title}}</div>
+								<div class="iv-chatTpl-checkbox">{{checkbox}}</div>
+							</li>
+							{{/toDoList}}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</script>
+		<!--/templates-->
+
+		<!--here ends indexView layout-->
+
+		<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+		<div class="modal fade" id="portlet-config" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <!--tabindex="-1"-->
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Modal title</h4>
+					</div>
+					<div class="modal-body">
+						Widget settings form goes here
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn blue">Save changes</button>
+						<button type="button" class="btn default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+		<!-- BEGIN STYLE CUSTOMIZER -->
+		<div class="theme-panel hidden-xs hidden-sm hidden hiddenImp">
+			<div class="toggler">
+			</div>
+			<div class="toggler-close">
+			</div>
+			<div class="theme-options">
+				<div class="theme-option theme-colors clearfix">
+						<span>
+							 THEME COLOR
+						</span>
+					<ul>
+						<li class="color-black current color-default" data-style="default">
+						</li>
+						<li class="color-blue" data-style="blue">
+						</li>
+						<li class="color-brown" data-style="brown">
+						</li>
+						<li class="color-purple" data-style="purple">
+						</li>
+						<li class="color-grey" data-style="grey">
+						</li>
+						<li class="color-white color-light" data-style="light">
+						</li>
+					</ul>
+				</div>
+				<div class="theme-option">
+						<span>
+							 Layout
+						</span>
+					<select class="layout-option form-control input-small">
+						<option value="fluid" selected="selected">Fluid</option>
+						<option value="boxed">Boxed</option>
+					</select>
+				</div>
+				<div class="theme-option">
+						<span>
+							 Header
+						</span>
+					<select class="header-option form-control input-small">
+						<option value="fixed" selected="selected">Fixed</option>
+						<option value="default">Default</option>
+					</select>
+				</div>
+				<div class="theme-option">
+						<span>
+							 Sidebar
+						</span>
+					<select class="sidebar-option form-control input-small">
+						<option value="fixed">Fixed</option>
+						<option value="default" selected="selected">Default</option>
+					</select>
+				</div>
+				<div class="theme-option">
+						<span>
+							 Sidebar Position
+						</span>
+					<select class="sidebar-pos-option form-control input-small">
+						<option value="left" selected="selected">Left</option>
+						<option value="right">Right</option>
+					</select>
+				</div>
+				<div class="theme-option">
+						<span>
+							 Footer
+						</span>
+					<select class="footer-option form-control input-small">
+						<option value="fixed">Fixed</option>
+						<option value="default" selected="selected">Default</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<!-- END STYLE CUSTOMIZER -->
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row" id="main_content_wrapper">
+			<div id="clientScreenContent">
+				<ul id="nearrestActions"></ul>
+			</div>
+		</div>
+		<!-- END PAGE HEADER-->
+
+	</div>
+</div>
+<!-- END CONTENT -->
+</div>
+<!--&lt;!&ndash; BEGIN FOOTER &ndash;&gt;-->
+
+<div id="mw-footerPanel" class="footerUserInfo">
+	<div class="printersStack-wrapper"></div>
+	<!--<div class="trayControls">-->
+		<!--<div id="changePack">Сменить пачку</div>-->
+		<!--<div id="changeCashBox">Касса не выбрана</div>-->
+		<!--<div id="call_print_stack">Печать</div>-->
+	<!--</div>-->
+</div>
+
+<div id="bt-menu" class="bt-menu">
+	<!--<a href="#" class="bt-menu-trigger"><span>Menu</span></a>-->
+	<ul class="bt-menu-bottom modals-list">
+
+	</ul>
+	<div class="bt-overlay modal-content-wrapper"></div>
+</div>
+
+<div id="clientScreenWidget">
+	<div id="clientScreenWidget-toggler">
+		<i class="fa fa-desktop"></i>
+	</div>
+	<div id="clientScreenWidgetInner">
+
+		<div id="clientScreenWidget-title">
+			<h5>Экран&nbsp;зрителя</h5>
+		</div>
+		<div id="clientScreenWidget-content">
+			<div class="padder5 flLeft">
+				<div class="sc_vertical_fluid tabsParent sc_tabulatorParent">
+
+					<div class="tabsTogglersRow sc_tabulatorToggleRow">
+						<div class="tabToggle sc_tabulatorToggler opened" dataitem="0" title="Реестр загруженых файлов">
+							<span class="">Афиша</span>
+						</div>
+						<!--<div class="tabToggle sc_tabulatorToggler " dataitem="1" title="Реестр загруженых файлов">-->
+						<!--<span class="">Зал</span>-->
+						<!--</div>-->
+					</div>
+
+					<div class="ddRow notZindexed sc_tabulatorDDRow">
+						<div class="tabulatorDDItem sc_tabulatorDDItem opened overXHidden noMinHeight" dataitem="0">
+
+							<div class="padder5">
+								<label class="smallGrey">Диапазон&nbsp;дат</label>
+
+								<div class="input-daterange input-group" id="clientScreenWidgetDatepicker">
+									<input type="text" class="input-sm form-control" name="start">
+									<span class="input-group-addon">По</span>
+									<input type="text" class="input-sm form-control" name="end">
+								</div>
+
+								<div class="btn-group btn-group-justified newStyle marTop10 marBot10 flLeft">
+									<div class="btn-group">
+										<button type="button" class="btn btn-default newStyle clickButton" id="clientScreen_showAfisha">
+											<i class="fa fa-play"></i>&nbsp;&nbsp;Показать&nbsp;афишу
+										</button>
+									</div>
+								</div>
+
+								<div class="btn-group btn-group-justified newStyle marBot10 flLeft">
+									<div class="btn-group">
+										<button type="button" class="btn btn-default newStyle clickButton" id="clientScreen_closeOrder">
+											<i class="fa fa-times"></i>&nbsp;&nbsp;Скрыть&nbsp;заказ
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--<div class="tabulatorDDItem sc_tabulatorDDItem overXHidden noMinHeight" dataitem="1">-->
+
+						<!--<div class="padder5">-->
+						<!--<div class="btn-group btn-group-justified newStyle marTop10 marBot10 flLeft">-->
+						<!--<div class="btn-group">-->
+						<!--<button type="button" class="btn btn-default newStyle clickButton" id="clientScreen_showHall"><i class="fa fa-play"></i>&nbsp;&nbsp;Показать&nbsp;зал</button>-->
+						<!--</div>-->
+						<!--</div>-->
+						<!--</div>-->
+						<!--</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="clientScreenWidget-footer">
+
+		</div>
+	</div>
+
+</div>
+
+<div class="modal fade" id="basic" tabindex="-1" role="basic" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Modal Title</h4>
+			</div>
+			<div class="modal-body">
+				Modal body goes here
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn blue" onclick="console.log($(this))">Save changes</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<!-- END FOOTER -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<script src="assets/js/libs/jquery/jquery-2.0.3.min.js" type="text/javascript"></script>
+<script src="assets/js/libs/jquery/jquery-ui.min.js" type="text/javascript"></script>
+<script src="assets/js/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="assets/js/libs/async.js" type="text/javascript"></script>
+<script src="assets/js/libs/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="assets/js/libs/jquery/plugins/jquery.cookie.js" type="text/javascript"></script>
+<script src="assets/js/libs/jquery/plugins/jquery.uniform.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+
+<script src="assets/js/plugins/jquery.contextmenu.js"></script>
+<script src="assets/js/plugins/zeroClipboard/ZeroClipboard.js"></script>
+<script src="assets/js/plugins/mustache.js"></script>
+<script src="assets/js/plugins/jquery.mousewheel.min.js"></script>
+<script src="assets/js/plugins/xmlToJSON.js"></script>
+<!-- BEGIN PLUGINS USED BY X-EDITABLE -->
+<script src="metronic/admin/template_content/assets/plugins/select2/select2.min.js" type="text/javascript"></script>
+
+<script src="metronic/admin/template_content/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+<script src="metronic/admin/template_content/assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js" type="text/javascript"></script>
+<script src="metronic/admin/template_content/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js" type="text/javascript"></script>
+<script src="metronic/admin/template_content/assets/plugins/moment.min.js" type="text/javascript"></script>
+<script src="metronic/admin/template_content/assets/plugins/jquery.mockjax.js" type="text/javascript"></script>
+<script src="assets/js/libs/jquery.maskedinput.min.js"></script>
+
+<script type="text/javascript" src="assets/clockpicker/clockpicker.js"></script>
+
+<!-- <script type="text/javascript" src="metronic/admin/template_content/assets/plugins/data-tables/jquery.dataTables.min.js"></script> -->
+<script src="metronic/admin/template_content/assets/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.min.js" type="text/javascript"></script>
+<script src="metronic/admin/template_content/assets/plugins/bootstrap-editable/inputs-ext/address/address.js" type="text/javascript"></script>
+<!--<script src="metronic/admin/template_content/assets/plugins/bootstrap-editable/inputs-ext/wysihtml5/wysihtml5.js" type="text/javascript"></script>-->
+
+<!--<script src="metronic/admin/template_content/assets/plugins/bootstrap-switch/static/js/bootstrap-switch.js" type="text/javascript"></script>-->
+<script src="metronic/admin/template_content/assets/plugins/bootstrap-switch-master/dist/js/bootstrap-switch.min.js" type="text/javascript"></script>
+
+<script src="metronic/admin/template_content/assets/plugins/bootstrap-toastr/toastr.js"></script>
+
+<script src="metronic/admin/template_content/assets/plugins/jquery-nestable/jquery.nestable.js"></script>
+
+<!-- <script type="text/javascript" src="metronic/admin/template_content/assets/plugins/data-tables/DT_bootstrap.js"></script> -->
+<script src="metronic/admin/template_content/assets/scripts/ui-toastr.js"></script>
+<script src="metronic/admin/template_content/assets/scripts/app.js"></script>
+<script src="metronic/admin/template_content/assets/scripts/form-editable.js"></script>
+<script src="metronic/admin/template_content/assets/scripts/ui-bootbox.js"></script>
+<script src="metronic/admin/template_content/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js"></script>
+
+<script src="metronic/admin/template_content/assets/scripts/form-components.js"></script>
+<script src="metronic/admin/template_content/assets/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+<!--<script src="metronic/admin/template_content/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>-->
+<!-- END X-EDITABLE PLUGIN -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script>
+	jQuery(document).ready(function () {
+		//		MB.User.username = $.cookie('username');
+		//		MB.User.password = $.cookie('password');
+		// MB.User.sid      = $.cookie('sid');
+
+//		if (MB.User.username === undefined ||
+//			MB.User.password === undefined ||
+//			MB.User.sid === undefined) {
+//			document.location.href = "login.html";
+//			// document.location.asign("http://192.168.1.101/multibooker4/index.htm");
+//		} else {
+//
+//		}
+
+		App.init();
+		FormEditable.init();
+		UIToastr.init();
+		closeModal();
+		clientScreenWidget_init();
+		select3init();
+
+		// $.datepicker('setDate', new Date(2011, 2, 5));
+		// $.datepicker('update');  //update the bootstrap datepicker
+		/*
+		 $.datepicker.setDefaults($.extend(
+		 $.datepicker.regional["ru"])
+		 );
+		 */
+	});
+</script>
+<script src="socket.io/socket.io.js"></script>
+<script src="assets/js/delivery.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/libs/randomColor.js"></script>
+<script src="assets/js/validator/validator.js"></script>
+
+<script src="assets/js/code39.js"></script>
+
+<script src="assets/js/plugins/JsBarcode-master/JsBarcode.js"></script>
+<script src="assets/js/plugins/JsBarcode-master/CODE39.js"></script>
+<script src="assets/js/plugins/JsBarcode-master/CODE128.js"></script>
+
+<script src="assets/js/spin/spin.min.js"></script>
+<script src="assets/js/formNew.js"></script>
+<script src="assets/js/tableNew.js"></script>
+<script src="assets/js/contentNew.js"></script>
+<script src="assets/js/master.js"></script>
+
+<script src="assets/js/inherits/inherits.js"></script>
+<script src="assets/js/eventEmiter/eventEmiter.js"></script>
+<script>
+	if (typeof MB === "object") {
+		MB.User.connectPage = "main";
+	}
+
+</script>
+<script src="config.js"></script>
+<script src="assets/js/uploadFiles.js"></script>
+<script src="assets/js/socketClient.js"></script>
+<script src="assets/js/print.js"></script>
+<!-- <script src="assets/js/client.js"></script> -->
+
+<script src="assets/js/menurender.js"></script>
+<script src="assets/js/index/index.js" type="text/javascript"></script>
+<!-- <script src="assets/js/tablessettings.js"></script> 
+<script src="assets/js/modalsettings.js"></script> 
+<script src="assets/js/rowclass.js"></script>
+ -->
+
+<!-- <script src="assets/js/tableclass.js"></script> -->
+<script src="assets/js/form.js"></script>
+<script src="assets/js/content.js"></script>
+<!-- <script src="assets/js/alert.js"></script>  -->
+<!-- <script src="assets/js/contentclass.js"></script> -->
+<script src="assets/js/inlineEditing.js"></script>
+<script src="assets/js/uiUl.js"></script>
+<script src="assets/js/classTabs.js"></script>
+<script src="assets/js/modalmini.class.js"></script>
+<!-- <script src="assets/js/content.class.js"></script> -->
+<script src="assets/js/classie.js"></script>
+<script src="assets/js/borderMenu.js"></script>
+<!-- <script src="assets/js/modal.class.js"></script> -->
+<script src="assets/js/no_select.js"></script>
+<script src="assets/js/uiTabs.js"></script>
+<script src="assets/js/toastrLock.js"></script>
+
+<script src="assets/js/selector.js"></script>
+<script src="assets/js/closeModal.js"></script>
+<script src="assets/js/map.linker.js"></script>
+<script src="assets/js/libs/hammer.min.js"></script>
+<script src="assets/js/libs/is-point-in-poly.js"></script>
+<script src="assets/js/map.js"></script>
+<script src="assets/js/entryTickets.js"></script>
+<script src="assets/js/accessGroups.js"></script>
+<script src="assets/js/delivery/delivery.js"></script>
+<!--<script src="assets/js/newMap.js"></script>-->
+<!--<script src="assets/js/mapNew.js"></script>-->
+<script src="assets/js/libs/jquery/plugins/jquery.mousewheel.min.js"></script>
+<!--<script src="assets/js/libs/jquery/plugins/jquery.contextmenu.js"></script>-->
+<script src="assets/js/contextMenu/contextMenu.js"></script>
+
+<!-- INFOUSER BLOCK JS -->
+<script src="assets/js/userinfo.js"></script>
+<!-- SEARCH JS -->
+<script src="assets/js/search.js"></script>
+<script src="assets/js/buttonsClass.js"></script>
+<script src="assets/js/OrderPayment.js"></script>
+<script src="assets/js/reportClassLib.js"></script>
+<script src="assets/js/reportClass.js"></script>
+<script src="assets/js/reports.js"></script>
+<script src="assets/js/lockScreen/lockScreen.js"></script>
+<script src="assets/js/setCashBox/setCashBox.js"></script>
+<script src="assets/js/printSettings/printSettings.js"></script>
+<script src="assets/js/footerPacksInfo/footerPacksInfo.js"></script>
+
+<!--MapEditor-->
+
+<script type="text/javascript" src="assets/js/mapEditor/mapEditor.class.js"></script>
+<script type="text/javascript" src="assets/js/mapEditor/mapEditorModel.js"></script>
+<script type="text/javascript" src="assets/js/mapEditor/mapEditorLogic.js"></script>
+<script type="text/javascript" src="assets/js/mapEditor/mapEditorNew.js"></script>
+<script type="text/javascript" src="assets/js/mapEditor/dragNDrop.js"></script>
+<!--<script type="text/javascript" src="assets/js/mapEditor/mapEditor.js"></script>-->
+<script type="text/javascript" src="assets/js/mapEditor/layerUi.js"></script>
+<script type="text/javascript" src="assets/js/clientScreenWidget/script.js"></script>
+<script type="text/javascript" src="assets/js/select3/select3.js"></script>
+<script type="text/javascript" src="assets/js/multiSelect/multiSelect.js"></script>
+<script type="text/javascript" src="assets/js/imageEditor/imageEditor.js"></script>
+
+<!--FOR MODAL WINDOWS-->
+<script src="assets/js/plugins/jquery.easing.1.3.min.js"></script>
+<script src="assets/js/modalWindows/modalWindows.js"></script>
+<script src="assets/js/classicTable/classicTable.js"></script>
+<script src="assets/js/mini_form/mini_form.js"></script>
+<script>
+	modalWindow();
+	classicTable();
+</script>
+<script type="text/javascript" src="assets/js/plugins/dateRangePicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/js/plugins/dateRangePicker/js/bootstrap-datepicker2.js"></script>
+<script type="text/javascript" src="assets/js/plugins/dateRangePicker/js/locales/bootstrap-datepicker.ru.js"></script>
+<script type="text/javascript" src="assets/js/plugins/daysweekpicker/daysweekpicker.js"></script>
+<script type="text/javascript" src="assets/js/plugins/checkbox/checkbox.js"></script>
+<script type="text/javascript" src="assets/js/plugins/fn_train/fn_train.js"></script>
+<script type="text/javascript" src="assets/js/plugins/ion.rangeslider/js/ion.rangeSlider.min.js"></script>
+<script type="text/javascript" src="assets/js/plugins/petrovich/petrovich.min.js"></script>
+
+<script type="text/javascript" src="assets/js/plugins/object_tree/object_tree.js"></script>
+
+<!--<script type="text/javascript" src="assets/js/plugins/elrte-1.3/js/elrte.min.js"></script>-->
+<!--<script type="text/javascript" src="assets/js/plugins/elrte-1.3/js/i18n/elrte.ru.js"></script>-->
+
+<script type="text/javascript" src="assets/js/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="assets/js/plugins/ckeditor/lang/ru.js"></script>
+
+<script src="assets/js/logout.js"></script>
+<script src="assets/js/phone.js"></script>
+<!--[if lt IE 10]>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="assets/js/plugins/suggestions/suggessions.js"></script>
+<!--END FOR MODAL WINDOWS-->
+<!-- END PAGE LEVEL SCRIPTS -->
+
+</body>
+<!-- END BODY -->
+</html>

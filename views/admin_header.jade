@@ -1,0 +1,33 @@
+block admin_header
+    .page-header
+        .container
+            .logo.adminHome#logo
+                | c
+                span.redLogo
+                    |ff
+                | t.ru | administration
+
+    .page-content
+        .admin-main-menu-wrapper
+            .container
+                ul.admin-main-menu
+                    li
+                        a(href="admin_users") Пользователи
+                    li
+                        a(href="admin_events") Мероприятия
+                    li
+                        a(href="admin_results") Заявки
+                    li
+                        a(href="admin_clubs") Клубы
+                    li
+                        a(href="admin_articles") Статьи
+                    li
+                        a(href="admin_event_types") Регламенты
+                    li
+                        a(href="admin_partners") Партнеры
+                    li
+                        a(href="admin_main_slides") Главный слайдер
+                    //li
+                    //    a(href="admin_mailing") Рассылка
+
+

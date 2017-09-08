@@ -1,0 +1,153 @@
+extends admin_layout
+block content
+    - var isNew = data.isNew;
+    if(!isNew)
+        - var club = data.data[0];
+    .container.posRel
+        if(isNew)
+            h2 Создание клуба
+        else
+            h2 Редактирование клуба
+        hr
+        if(isNew)
+            form#form-registration(name="form-registration")
+                .row
+                    .col-md-6
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Наименование
+                                input.form-control.fc-field(type="text", data-server_name="name", data-title="Имя", data-required="true", data-editor="text", placeholder="Наименование")
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Сайт
+                                input.form-control.fc-field(type="text", data-server_name="url", data-title="Сайт", data-required="false", data-editor="text", placeholder="Сайт", value="")
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Ответственный
+                                input.select2.form-control.fc-field(type="hidden", data-server_name="user_id", data-editor="select", data-name="title", data-required="true", value="", data-text="", data-table="user")
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Почты (через запятую)
+                                input.form-control.fc-field(type="text", data-server_name="emails", data-title="Почты", data-required="true", data-editor="email", placeholder="Почта")
+                        .col-md-12
+                            .form-group
+                                label.control-label Телефоны (через запятую)
+                                input.form-control.fc-field(type="text", data-server_name="phones", data-title="Телефоны", data-editor="text", placeholder="Телефоны")
+                        .col-md-12
+                            .form-group
+                                label.control-label Адрес
+                                input.form-control.fc-field(type="text", data-server_name="address", data-title="Адрес", data-editor="text", placeholder="Адрес")
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Город
+                                input.select2.form-control.fc-field(type="hidden", data-server_name="city_id", data-editor="select", data-name="title", data-required="true", value="", data-text="", data-table="city")
+                        .col-md-12
+                            .form-group
+                                .checkbox
+                                    label
+                                        input.fc-field(type="checkbox", data-server_name="isAffiliate", data-title="Аффилиат?", data-editor="checkbox")
+                                        | Аффилиат?
+
+                    .col-md-6
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Фото
+                                div.input-group
+                                    .input-group-addon
+                                        i.fa.fa-image
+                                    input.form-control.fc-field.userPhotoInput(type="text", data-server_name="photo", data-title="Фото", data-required="false", data-editor="text", placeholder="Выберите изображение")
+                        .col-md-12
+                            .user-photo-wrapper
+                                .user-photo-clear
+                                    .fa.fa-trash
+                                img(src="img/user_default_m.jpg")
+                .row
+                    .col-md-12
+                        hr
+                        .col-md-12
+                            #confirm_registration.sBtn.green.marL1.flRight
+                                i.fa.fa-check
+                                | &nbsp;&nbsp;Сохранить
+        else
+            form#form-registration(name="form-registration", data-id="#{club.id}")
+                .row
+                    .col-md-6
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Наименование
+                                input.form-control.fc-field(type="text", data-server_name="name", data-title="Имя", data-required="true", data-editor="text", placeholder="Наименование", value="#{club.name}")
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Сайт
+                                input.form-control.fc-field(type="text", data-server_name="url", data-title="Сайт", data-required="false", data-editor="text", placeholder="Сайт", value="#{club.url}")
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Ответственный
+                                input.select2.form-control.fc-field(type="hidden", data-server_name="user_id", data-editor="select", data-name="title", data-required="true", value="#{club.user_id}", data-text="#{club.user}", data-table="user")
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Почты (через запятую)
+                                input.form-control.fc-field(type="text", data-server_name="emails", data-title="Почты", data-required="true", data-editor="email", placeholder="Почта", value="#{club.emails}")
+                        .col-md-12
+                            .form-group
+                                label.control-label Телефоны (через запятую)
+                                input.form-control.fc-field(type="text", data-server_name="phones", data-title="Телефоны", data-editor="text", placeholder="Телефоны", value="#{club.phones}")
+                        .col-md-12
+                            .form-group
+                                label.control-label Адрес
+                                input.form-control.fc-field(type="text", data-server_name="address", data-title="Адрес", data-editor="text", placeholder="Адрес", value="#{club.address}")
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Город
+                                input.select2.form-control.fc-field(type="hidden", data-server_name="city_id", data-editor="select", data-name="title", data-required="true", value="#{club.city_id}", data-text="#{club.city}", data-table="city")
+                        .col-md-12
+                            .form-group
+                                .checkbox
+                                    label
+                                        - var isChecked = (club.isAffiliate == 1)? 'checked' : '';
+                                        input(type="checkbox", data-server_name="isAffiliate", data-title="Аффилиат?", data-editor="checkbox", class="fc-field #{isChecked}")
+                                        | Аффилиат?
+
+                    .col-md-6
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Фото
+                                div.input-group
+                                    .input-group-addon
+                                        i.fa.fa-image
+                                    input.form-control.fc-field.userPhotoInput(type="text", data-server_name="photo", data-title="Фото", data-required="false", data-editor="text", placeholder="Выберите изображение", value="#{club.photo}")
+                        .col-md-12
+                            .user-photo-wrapper
+                                .user-photo-clear
+                                    .fa.fa-trash
+                                -var path = (club.photo)? 'upload/'+club.photo : 'img/def_club.jpg';
+                                img(src="#{path}")
+                                //if(club.photo.length > 0)
+
+                                //else
+                                //    img(src="img/default_user_m.jpg")
+                .row
+                    .col-md-12
+                        hr
+                        .col-md-12
+                            #confirm_edit_club.sBtn.green.marL1.flRight
+                                i.fa.fa-check
+                                | &nbsp;&nbsp;Сохранить
+                            if(!isNew)
+                                #delete_club.sBtn.red.marL1.flRight
+                                    i.fa.fa-trash-o
+                                    | &nbsp;&nbsp;Удалить
+
+    script(src="js/admin_club.js")

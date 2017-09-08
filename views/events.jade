@@ -1,0 +1,19 @@
+extends layout
+block content
+    .container
+        h2 Игры
+            hr
+            .row
+                .col-md-12.wows-list-wrapper
+                    for a in items.data
+                        .col-md-3
+                            .wow-item-inner
+                                .wow-image
+                                    a.wow-item-img(href="event?id=#{a.id}")
+                                        -var path = (a.thumb)? 'upload/'+a.thumb: 'img/def_game.jpg';
+                                        img.wid100pr(src="#{path}")
+                                .wow-information
+                                    div(class="wow-status-dot #{a.status_sys_name}")
+                                    | #{a.title}
+                    else
+                        li Нет игр.

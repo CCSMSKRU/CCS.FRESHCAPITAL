@@ -1,0 +1,77 @@
+extends admin_layout
+block content
+    - var isNew = data.isNew;
+    if(!isNew)
+        - var partner = data.data[0];
+    .container.posRel
+        if(isNew)
+            h2 Создание партнера
+        else
+            h2 Редактирование партнера
+        if(isNew)
+            form#edit-partner.marTop22(data-id="new")
+                .row
+                    .col-md-12
+                        .form-group
+                            label Наименование:
+                            input.fc-field.form-control(type='text', data-server_name="name", value="", data-name="name")
+                .row
+                    .col-md-3
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Картинка
+                                div.input-group
+                                    .input-group-addon
+                                        i.fa.fa-image
+                                    input.form-control.fc-field.userPhotoInput(type="text", data-server_name="image", data-title="Картинка", data-required="false", data-editor="text", placeholder="Выберите изображение")
+                        .col-md-12
+                            .user-photo-wrapper
+                                .user-photo-clear
+                                    .fa.fa-trash
+                                img(src="img/def_article.jpg")
+                    .col-md-9
+                        .form-group
+                            label Ссылка:
+                            input.fc-field.form-control(type='text', data-server_name="url", value="", data-name="url")
+        else
+            form#edit-partner.marTop22(data-id="#{partner.id}")
+                .row
+                    .col-md-12
+                        .form-group
+                            label Наименование:
+                            input.fc-field.form-control(type='text', data-server_name="name", value="#{partner.name}", data-name="name")
+                .row
+                    .col-md-3
+                        .col-md-12
+                            .form-group
+                                label.control-label
+                                    | Картинка
+                                div.input-group
+                                    .input-group-addon
+                                        i.fa.fa-image
+                                    input.form-control.fc-field.userPhotoInput(type="text", data-server_name="image", data-title="Картинка", data-required="false", data-editor="text", placeholder="Выберите изображение", value="#{partner.image}")
+                        .col-md-12
+                            .user-photo-wrapper
+                                .user-photo-clear
+                                    .fa.fa-trash
+                                img(src="upload/#{partner.image}")
+                    .col-md-9
+                        .form-group
+                            label Ссылка:
+                            input.fc-field.form-control(type='text', data-server_name="url", value="#{partner.url}", data-name="url")
+        .col-md-12
+            hr
+            .col-md-12
+                #confirm_edit_partner.sBtn.green.marL1.flRight
+                    i.fa.fa-check
+                    | &nbsp;&nbsp;Сохранить
+                if(!isNew)
+                    #publicate_partner.sBtn.blue.marL1.flRight
+                        i.fa.fa-users
+                        | &nbsp;&nbsp;Опубликовать
+                    #delete_partner.sBtn.red.marL1.flRight
+                        i.fa.fa-trash-o
+                        | &nbsp;&nbsp;Удалить
+
+    script(src="js/admin_partner.js")

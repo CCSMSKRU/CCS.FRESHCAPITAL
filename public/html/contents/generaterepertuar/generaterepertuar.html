@@ -1,0 +1,99 @@
+
+
+<div class="row marTop15 marBot15">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <label class='fn-label'>Мероприятие</label>
+            <select class='action_select' data-absolute="true">
+                {{#actions}}
+                <option value='{{actionId}}' data-id='{{actionId}}'>{{actionName}}</option>
+                {{/actions}}
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row marBot15">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <label class='fn-label'>Начальная дата</label>
+            <input type="text" class="dates_begin_date fn-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class='fn-label'>Конечная дата</label>
+            <input type="text" class="dates_end_date fn-control" />
+        </div>
+    </div>
+
+</div>
+
+<div class="row marBot15">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <label class='fn-label'>Время начала</label>
+            <input type="text" class="time_input fn-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class='fn-label'>Дни недели</label>
+            <input type="text" class="daysweekpicker daysweek_input fn-control" />
+        </div>
+    </div>
+</div>
+
+<div class="row marBot15 marTop60">
+    <div class="col-md-12">
+        <div class="col-md-12 textAlignRight">
+            <div class="nb btn btnDouble green generateRepertorie"><i class="fa fa-bars"></i><div class="btnDoubleInner">Сгенерировать</div></div>
+            <div class="nb btn btnDouble red marLeft10 cancelGenerateRepertorie"><i class="fa fa-times"></i><div class="btnDoubleInner">Отмена</div></div>
+        </div>
+    </div>
+</div>
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+
+<!--<div class="row">-->
+    <!--<div class="col-md-12">-->
+        <!--<select id="repertoire_select"></select>-->
+        <!--<hr>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div id="repertoire_params">-->
+    <!--<div class="dates">-->
+        <!--<div class="row">-->
+            <!--<div class="col-md-3">-->
+                <!--<div class="form-group">-->
+                    <!--<label for="" class="for_date">Начальная дата</label>-->
+                    <!--<input type="text" id="dates_begin_date" class="form-control date_input"/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-3">-->
+                <!--<div class="form-group">-->
+                    <!--<label for="" class="for_date">Конечная дата</label>-->
+                    <!--<input type="text" id="dates_end_date" class="form-control date_input"/>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="times row">-->
+        <!--<div class="col-md-12">-->
+            <!--<h4>Время</h4>-->
+        <!--</div>-->
+        <!--<div class="col-md-2">-->
+            <!--<input type="text"class="time_input form-control" value="10:00"/>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="week">-->
+        <!--<h4><div class="pull-left"><input type="checkbox" id="week_all" checked/></div>Каждый день</h4>-->
+
+        <!--<div> <input type="checkbox" id="week_day1" checked/><label for="week_day1">Понедельник</label> </div>-->
+        <!--<div> <input type="checkbox" id="week_day2" checked/><label for="week_day2">Вторник</label> </div>-->
+        <!--<div> <input type="checkbox" id="week_day3" checked/><label for="week_day3">Среда</label> </div>-->
+        <!--<div> <input type="checkbox" id="week_day4" checked/><label for="week_day4">Четверг</label> </div>-->
+        <!--<div> <input type="checkbox" id="week_day5" checked/><label for="week_day5">Пятница</label> </div>-->
+        <!--<div> <input type="checkbox" id="week_day6" checked/><label for="week_day6">Суббота</label> </div>-->
+        <!--<div> <input type="checkbox" id="week_day7" checked/><label for="week_day7">Воскресенье</label> </div>-->
+    <!--</div>-->
+<!--</div>-->

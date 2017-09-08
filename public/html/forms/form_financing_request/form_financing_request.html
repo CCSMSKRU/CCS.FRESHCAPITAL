@@ -1,0 +1,303 @@
+<div class="insertIntoHeader">
+    <div data-tab="card" class="modal_tab_switcher active">Карточка</div>
+    <div data-tab="scoring" class="modal_tab_switcher">Скоринг</div>
+    <div data-tab="financing" class="modal_tab_switcher">Финансирование</div>
+    <div data-tab="docs" class="modal_tab_switcher">Документы (БКИ)</div>
+</div>
+
+<style>
+    #scoring_tabs_wrapper > ul {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: flex-start;
+        height: 60px;
+        margin: 40px 0 0;
+        padding: 0;
+        list-style: none;
+    }
+    #scoring_tabs_wrapper > ul li {
+        width: 160px;
+    }
+    #scoring_tabs_wrapper > ul li a {
+        display: block;
+        height: 100%;
+        font-size: 30px;
+        color: black;
+        text-decoration: none;
+        border-bottom: 4px solid rgba(255, 255, 255, 0);
+        text-align: center;
+    }
+    #scoring_tabs_wrapper > ul li.ui-tabs-active a,
+    #scoring_tabs_wrapper > ul li a:hover {
+        border-color: red;
+    }
+    #scoring_tabs_wrapper > ul li.ui-tabs-active a {
+        color: red;
+    }
+
+    .scoring_tabs {
+        border-top: 1px solid black;
+        padding: 30px 20px;
+        margin-top: -1px;
+    }
+
+    .scoring_tabs .request-btn {
+        margin-top: 20px;
+    }
+
+    .po_value {
+        min-width: calc(100% - 100px);
+        flex-basis: auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding-right: 4px;
+    }
+    .po_key {
+        min-width: 100px;
+        text-align: right;
+        margin-right: 10px;
+        flex-basis: auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding-right: 4px;
+    }
+    .po_key_wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+</style>
+
+<div class="modal_tab active" data-tab="card">
+
+    <div class="col-md-12">
+        <div class="col-md-6"><h1><span class="through_number">{+{through_number}+}</span>  {+{short_name}+}</h1></div>
+    </div>
+
+        <!--<div class="order-status iih-field" data-column="merchant_status" data-color="{+{merchant_status}+}">{+{merchant_status}+}</div><div class="order-created">Создана: <span class="iih-field" data-column="created">{+{created}+}</span></div>-->
+        <div class="col-md-6">
+
+            <div class="row"><div>{{{request_date}}}</div></div>
+            <div class="row"><div>{{{manager_lastname}}}</div></div>
+            <div class="row"><div>{{{lead_type}}}</div></div>
+            <div class="row"><div>{{{regional_center}}}</div></div>
+            <div class="row"><div>{{{terminal_number}}}</div></div>
+            <div class="row"><div>{{{registration_date}}}</div></div>
+            <div class="row"><div>{{{merchant_name}}}</div></div>
+            <div class="row"><div>{{{short_name}}}</div></div>
+            <div class="row"><div>{{{phone}}}</div></div>
+            <div class="row"><div>{{{email}}}</div></div>
+
+            <div class="row"><div>{{{legal_address}}}</div></div>
+            <div class="row"><div>{{{real_address}}}</div></div>
+
+            <div class="row"><div>{{{executive_fio}}}</div></div>
+
+            <div class="row">
+                <div>
+                    <div class="classic-filed-replacer" data-repid="1s" data-replace="Генеральный директор">Ген. дир.</div>
+                    <div class="field-to-replace" data-repid="1s" data-replace="1">{{{executive}}}</div>
+                </div></div>
+
+            <div class="row"><div>
+                <div class="classic-filed-replacer" data-repid="1" data-replace="Устава">Устава</div>
+                <div class="classic-filed-replacer" data-repid="1" data-replace="Свидетельства о государственной регистрации в качестве индивидуального предпринимателя">Свид-ва</div>
+                <div class="classic-filed-replacer" data-repid="1" data-replace="Доверенности № __ от «___» _____ 201 г.">Доверенности</div>
+                <div class="field-to-replace" data-repid="1" data-replace="1">{{{grounds_on}}}</div>
+            </div></div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="row"><div>{{{business_type}}}</div></div>
+            <div class="row"><div>{{{processing_bank}}}</div></div>
+            <div class="row"><div>{{{rko_bank}}}</div></div>
+
+            <div class="row"><div>{{{inn}}}</div></div>
+            <div class="row"><div>{{{kpp}}}</div></div>
+            <div class="row"><div>{{{ogrn}}}</div></div>
+            <div class="row"><div>{{{rs}}}</div></div>
+
+            <div class="row"><div>{{{ks}}}</div></div>
+            <div class="row"><div>{{{bik}}}</div></div>
+
+            <div class="row"><div>{{{is_manager_finish}}}</div></div>
+
+            <!--<div class="row"><div>{{{bki_fiz_file}}}</div></div>-->
+            <!--<div class="row"><div>{{{bki_ur_file}}}</div></div>-->
+
+        </div>
+
+</div>
+
+<div class="modal_tab" data-tab="scoring">
+    <div id="scoring_tabs_wrapper">
+        <ul>
+            <li><a href="#2gis_tab">2GIS</a></li>
+            <li><a href="#nbki_tab">НБКИ</a></li>
+            <li><a href="#moedelo_tab">МоёДело</a></li>
+        </ul>
+        <div class="scoring_tabs">
+            <div id="2gis_tab">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="2gis_org_name_input">Название организации: </label>
+                        <input type="text" class="form-control" id="2gis_org_name_input" value="Мир билета">
+                    </div>
+                    <div class="request-btn" id="get_from_2gis">Получить данные</div>
+                    <div class="request-btn" id="get_2gis_file">Скачать данные</div>
+                </div>
+                <div class="col-md-6">
+                    <h3>Полученные данные: </h3>
+                    <div class="gis_response"></div>
+                </div>
+            </div>
+            <div id="nbki_tab">
+                <div class="col-md-6">
+                    <div class="request-btn" id="get_from_nbki">Получить данные</div>
+                    <div class="request-btn" id="get_nbki_file">Скачать данные</div>
+                </div>
+                <div class="col-md-6">
+                    <h3>Полученные данные: </h3>
+                    <div class="nbki_response"></div>
+                </div>
+            </div>
+            <div id="moedelo_tab">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="moedelo_input">ИНН/ОГРН: </label>
+                        <input type="number" class="form-control" id="moedelo_input" value="7701889831">
+                    </div>
+                    <div class="request-btn" id="get_from_moedelo">Получить данные</div>
+                    <div class="request-btn" id="get_moedelo_file">Скачать данные</div>
+                </div>
+                <div class="col-md-6">
+                    <h3>Полученные данные: </h3>
+                    <div class="moedelo_response"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal_tab" data-tab="financing">
+    <div class="col-md-12">
+        <div class="col-md-6"><h1><span class="through_number">{+{through_number}+}</span>  {+{short_name}+}</h1></div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="request-totals">
+
+                    <h3 class="request-totals-hl">Итоговые показатели:</h3>
+
+
+                    <div class="row"><div>{{{payments_start_date}}}</div></div>
+
+                    <!--financing_date-->
+                    <div data-type="text" class="fn-field no_border fn-readonly-field" data-column="founding_amount">
+                        <label>Сумма:</label>
+                        <div class="fn-readonly">{+{founding_amount}+}</div>
+                    </div>
+                    <div data-type="text" class="fn-field no_border fn-readonly-field" data-column="amount_to_return">
+                        <label>Возврат:</label>
+                        <div class="fn-readonly">{+{amount_to_return}+}</div>
+                    </div>
+                    <div data-type="text" class="fn-field no_border fn-readonly-field" data-column="factoring_rate">
+                        <label>Ставка(%):</label>
+                        <div class="fn-readonly">{+{factoring_rate}+}</div>
+                    </div>
+                    <div data-type="text" class="fn-field no_border fn-readonly-field" data-column="payments_count">
+                        <label>Кол-во плат:</label>
+                        <div class="fn-readonly">{+{payments_count}+}</div>
+                    </div>
+                    <div data-type="text" class="fn-field no_border fn-readonly-field" data-column="payment_amount">
+                        <label>Размер плат:</label>
+                        <div class="fn-readonly">{+{payment_amount}+}</div>
+                    </div>
+                    <div data-type="text" class="fn-field no_border fn-readonly-field" data-column="financing_close_date">
+                        <label>Дата закрытия:</label>
+                        <div class="fn-readonly">{+{financing_close_date}+}</div>
+                    </div>
+
+                    <div class="req-buttons-2">
+                        <div class="request-btn-2" id="req-get-excel">Скачать Excel</div>
+                        <div class="request-btn-2" id="req-get-comm-offer">Ком. предложение</div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div data-tbls="request_turnover.tbl_request_turnover" class="fn-child-tbl-holder marTop10"></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="request-calc-box">
+                <h3 class="request-totals-hl">Калькулятор:</h3>
+
+                <div class="col-md-4">
+                    <div class="row"><div>{{{founding_amount}}}</div></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row"><div>{{{factoring_rate}}}</div></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row"><div>{{{request_financing_type}}}</div></div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="row"><div>{{{payments_count}}}</div></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row"><div>{{{payment_amount}}}</div></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row"><div>{{{avl_proc_dly_withdraw_rate}}}</div></div>
+                </div>
+
+                <div class="col-md-12">
+                    <h3 class="request-calc-hl">Рассчитать:</h3>
+
+                    <div class="request-btn" id="req-calc-by-percent">По проценту</div>
+                    <div class="request-btn" id="req-calc-by-payment">По платежу</div>
+                    <!--<div class="request-btn" id="req-calc-by-amount">По сумме</div>-->
+                    <div class="request-btn" id="req-calc-by-count">По кол-ву платежей</div>
+                    <div class="request-btn" id="req-execute">В работу</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal_tab" data-tab="docs">
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="col-md-6"><h1><span class="through_number">{+{through_number}+}</span>  {+{short_name}+}</h1></div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div data-tbls="request_document.tbl_request_document" class="fn-child-tbl-holder marTop10"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="lower-buttons-padder"></div>
+<div class="lower-buttons-wrapper"></div>
+

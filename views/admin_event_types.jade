@@ -1,0 +1,12 @@
+extends admin_layout
+block content
+    .container.posRel
+        h2 Регламент по типу мероприятия
+        hr
+        .sBtn.green
+            a.btn(href="admin_event_types?id=new")
+                .fa.fa-plus &nbsp;&nbsp;
+                | Добавить тип мероприятия
+        .event-results-tabs
+            .initMeTable(data-get_object="action_type")
+    script(type="text/javascript", src="js/html/event_types.js")

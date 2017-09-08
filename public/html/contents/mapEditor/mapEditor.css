@@ -1,0 +1,405 @@
+
+#mapEditor{
+    position: relative;
+}
+
+#mapEditor ul{
+}
+
+#toOffRColumn{
+    /*cursor: url("img/rotateCursor.png"), pointer;*/
+}
+
+/*#box_for_mapEditor{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    *//*top:80px;*//*
+    left:10px;
+    background-color: #d9d9d9;
+}*/
+
+#select_rect{
+ /*   position: relative;
+    width: 0;
+    height: 0;
+    top:0;
+    left:0;
+    border: 1px dotted #000;
+    *//*background-image: url("../img/select_bg020.png");*//*
+    background-repeat: repeat;
+    display: none;*/
+}
+
+/*
+#canvas1{
+    position: absolute;
+    z-index: 100;
+
+}
+*/
+
+
+/*
+#topHint{
+    position: relative;
+    z-index: 101;
+    width: 100%;
+    top:0;
+    left: 0;
+    height: 24px;
+    background-color: rgba(2, 2, 2, 0.47);
+    color:#FFF;
+}
+
+#topHint span{
+    display: block;
+    float: left;
+    margin: 4px;
+}
+*/
+
+
+
+#box_for_zoom{
+
+    /*  position: absolute;*/
+ /*   z-index: 102;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    float: left;
+    *//*top:80px;*//*
+    right:10px;
+    top:600px;*/
+    /*background-color: #efefef;*/
+
+    /*  border: 1px solid #BFC5D3;
+background-image: url("../img/hint_bg2.png");
+border-radius: 4px 4px 0 0;*/
+    /*display: none;*/
+}
+/*
+
+#canvas2{
+    position: absolute;
+    z-index: 100;
+
+}
+*/
+
+
+
+/*      __________________________________________________          ________________________________________________________________        */
+
+
+.marginTB5{
+    float: left;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.marginTB10{
+    float: left;
+    width: 100%;
+    margin: 10px 0;
+}
+
+
+#right_column_switch_content_box{
+    width: 100%;
+    height: 24px;
+    float: left;
+    margin: 10px 0;
+    /*background-color: #f1eaff;*/
+}
+
+.right_column_block div{
+  /*  width: 100%;*/
+    float: left;
+    margin-bottom: 10px;
+}
+.right_column_block label{
+    display: block;
+    float: left;
+    margin: 7px 5px 0 0;
+}
+.right_column_block input{
+    display: block;
+    float: left;
+}
+.rcsc_btn{
+    /*width: 23px;*/
+    height: 23px;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    float: left;
+    background-color: rgba(227, 226, 248, 0.15);
+    margin-right: 2px;
+    cursor: pointer;
+}
+.rcsc_btn:hover{
+    /*background-color: rgba(135, 133, 144, 0.75);*/
+    background-color: rgba(220, 225, 233, 0.75);
+}
+.rcsc_btn.selected{
+    background-color: rgba(226, 221, 238, 0.76);
+}
+.rcsc_btn span{
+    display: block;
+    margin: 4px 6px 0 6px;
+}
+
+
+#point_edit_box{
+    width: 100%;
+    float: left;
+}
+
+.point_edit_btn{
+    /*width: 23px!important;*/
+    width:auto!important;
+    height: 23px;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    float: left;
+    background-color: rgba(243, 238, 255, 0.11);
+    margin-right: 2px;
+    cursor: pointer;
+}
+.point_edit_btn:hover{
+    background-color: rgba(135, 133, 144, 0.75);
+}
+.point_edit_btn.selected{
+    background-color: rgba(226, 221, 238, 0.76);
+}
+.point_edit_btn span{
+    display: block;
+    margin: 4px 6px 0 6px;
+}
+
+
+#for_groups{
+    float: left;
+    width: 100%;
+    margin: 20px 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.one_group{
+    float: left;
+    width: 100%;
+    /*height: 24px;*/
+    margin-bottom: 2px!important;
+    /*background-color: #f2f0f7;*/
+    background-color: rgba(227, 226, 248, 0.15);
+    cursor: pointer;
+    height: 23px;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+
+}
+.one_group:hover{
+
+    background-color: rgba(220, 225, 233, 0.75);
+
+}
+.one_group span{
+    display: block;
+    float: left;
+    width: 100%;
+    padding: 4px;
+    font-size: 14px;
+}
+
+
+#for_strokes{
+    float: left;
+    width: 100%;
+    margin: 20px 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+.one_stroke{
+    float: left;
+    width: 100%;
+    height: 24px;
+    margin-bottom: 2px;
+    background-color: #f2f0f7;
+    cursor: pointer;
+    position: relative;
+}
+.one_stroke.selected{
+    background-color: rgba(226, 221, 238, 0.76);
+
+}
+.one_stroke span{
+    display: block;
+    float: left;
+    width: 100%;
+    padding: 4px;
+    font-size: 14px;
+}
+
+
+.one_strokes_del{
+    position: absolute;
+    right: 0;
+    width: 24px!important;
+    height: 24px;
+    cursor: pointer;
+}
+
+
+#for_points{
+    float: left;
+    width: 100%;
+    margin: 20px 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+.one_point{
+    float: left;
+    width: 100%;
+    height: 24px;
+    margin-bottom: 2px;
+    background-color: #f2f0f7;
+    cursor: pointer;
+}
+.one_point span{
+    display: block;
+    float: left;
+    width: 100%;
+    padding: 4px;
+    font-size: 14px;
+}
+
+
+#for_lines{
+    float: left;
+    width: 100%;
+    margin: 20px 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+.one_lines{
+    float: left;
+    width: 100%;
+    height: 24px;
+    margin-bottom: 2px;
+    background-color: #f2f0f7;
+    cursor: pointer;
+    position: relative;
+}
+.one_lines span{
+    display: block;
+    float: left;
+    width: 100%;
+    padding: 4px;
+    font-size: 14px;
+}
+.one_lines_del{
+    position: absolute;
+    right: 0;
+    width: 24px!important;
+    height: 24px;
+    cursor: pointer;
+}
+
+
+.lineType{
+    margin-right: 5px;
+}
+
+
+.lines_edit_btn{
+    width: 23px!important;
+    height: 23px;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    float: left;
+    background-color: rgba(243, 238, 255, 0.11);
+    margin-right: 2px;
+    cursor: pointer;
+}
+.lines_edit_btn span{
+    display: block;
+    margin: 4px 0 0 6px;
+}
+
+
+.shortInput{
+    float: left;
+    width: 40px;
+}
+
+
+#for_labels{
+    float: left;
+    width: 100%;
+    margin: 20px 0;
+    max-height: 350px;
+    overflow-y: auto;
+}
+.one_labels{
+    float: left;
+    width: 100%;
+    height: 24px;
+    margin-bottom: 2px;
+    background-color: #f2f0f7;
+    cursor: pointer;
+    position: relative;
+}
+.one_labels span{
+    display: block;
+    float: left;
+    width: 100%;
+    padding: 4px;
+    font-size: 14px;
+}
+.one_labels_del{
+    position: absolute;
+    right: 0;
+    width: 24px!important;
+    height: 24px;
+    cursor: pointer;
+}
+
+
+.one_checkbox input{
+   margin: 5px 0;
+    padding: 0!important;
+}
+.one_checkbox label{
+    margin: 7px 0 5px 0;
+    padding: 0!important;
+}
+
+#show_background{
+    margin-right: 10px;
+}
+
+/* HIDE THE UNFINISHED OPTIONS*/
+
+.unfinished{
+    /*display: none;*/
+}
+.layersTypeUl li .innerDD .transformObject{
+    right: 42px;
+}
+.settingsDD{
+    padding: 0;
+}
+
+#set_scene_coors{
+    color:#00f;
+
+}
+
+#set_scene_coors:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* /END HIDE THE UNFINISHED OPTIONS*/

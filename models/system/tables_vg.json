@@ -1,0 +1,425 @@
+{
+  "class_profile": {
+    "MySQLUnique":true,
+    "profile": {
+      "name": "class_profile"
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name": { "type": "varchar", "length": "255", "unique": true},
+      "name_ru": { "type": "varchar", "length": "255", "default": ""},
+      "primary_key": { "type": "varchar", "length": "255", "default": "id"},
+      "parent_key": { "type": "varchar", "length": "255", "default": ""},
+      "checkbox_where": { "type": "varchar", "length": "255", "default": ""},
+      "checkbox_where_default_enabled": { "type": "tinyint", "length": "1"},
+      "checkbox_where_title": { "type": "varchar", "length": "255", "default": ""},
+      "ending": { "type": "varchar", "length": "255", "default": ""},
+      "default_order_by": { "type": "varchar", "length": "255", "default": "id desc"}, 
+      "default_where": { "type": "varchar", "length": "255"}, 
+      "open_form_client_object": { "type": "varchar", "length": "255"}, 
+      "child_client_object": { "type": "varchar", "length": "255"}, 
+      "rows_max_num_list": { "type": "varchar", "length": "255", "default": "10,20,50,100"}, 
+      "rows_max_num": { "type": "int", "length": "10", "default": 10}, 
+      "new_command": { "type": "tinyint", "length": "1", "default": 1}, 
+      "modify_command": { "type": "tinyint", "length": "1", "default": 1}, 
+      "remove_command": { "type": "tinyint", "length": "1", "default": 1}, 
+      "editable": { "type": "tinyint", "length": "1", "default": 1}, 
+      "additional_functionality": { "type": "tinyint", "length": "1", "default": 0},
+      "distinct_columns": { "type": "varchar", "length": "255", "default": ""},
+      "check_published": { "type": "tinyint", "length": "1", "default": 1},
+      "auto_publish": { "type": "tinyint", "length": "1", "default": 1}, 
+      "use_cache": { "type": "tinyint", "length": "1", "default": 1}, 
+      "created": { "type": "datetime", "default": "NULL"}, 
+      "updated": { "type": "datetime", "default": "NULL"}, 
+      "deleted": { "type": "datetime", "default": "NULL"}, 
+      "published": { "type": "datetime", "default": "NULL"}
+    }
+  },
+  "class_fields_profile": {
+    "MySQLUnique":true,
+    "profile": {
+      "name": "class_fields_profile"
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "class_id": { "type": "bigint", "length": "20", "notNull": true, "unique":true},
+      "column_name": { "type": "varchar", "length": "255", "unique":true},
+      "parent_key": { "type": "tinyint", "length": "1"},
+      "primary_key": { "type": "tinyint", "length": "1"},
+      "name": { "type": "varchar", "length": "255"},
+      "sort_no" : {"type": "bigint", "length": "20"},
+      "type": { "type": "varchar", "length": "255"},
+      "field_length": { "type": "int", "length": "20"},
+      "lov_columns": { "type": "varchar", "length": "255"},
+      "filter_type_id": { "type": "int", "length": "4"},
+      "filter_type": { "type": "varchar", "length": "255", "from_table": "filter_type", "keyword": "filter_type_id", "virtual": true, "return_column": "sysname", "name": "Тип фильтра" },
+      "type_of_editor_id": { "type": "int", "length": "4"},
+      "type_of_editor": { "type": "varchar", "length": "255", "from_table": "type_of_editor", "keyword": "type_of_editor_id", "virtual": true, "return_column": "sysname", "name": "Тип редактора" },
+      "quick_search_field": { "type": "tinyint", "length": "1"},
+      "updatable": { "type": "tinyint", "length": "1", "default": 1},
+      "visible": { "type": "tinyint", "length": "1", "default": 1},
+      "required": { "type": "tinyint", "length": "1"},
+      "editable": { "type": "tinyint", "length": "1", "default": 1},
+      "insertable": { "type": "tinyint", "length": "1", "default": 1},
+      "queryable": { "type": "tinyint", "length": "1", "default": 1},
+      "whereable": { "type": "tinyint", "length": "1", "default": 1},
+      "from_table": { "type": "varchar", "length": "255"},
+      "keyword": { "type": "varchar", "length": "255"},
+      "return_column": { "type": "varchar", "length": "255"},
+      "virtual": { "type": "tinyint", "length": "1"},
+      "default_value": {"type": "text"},
+      "concat_fields": {"type": "text"},
+      "validation": { "type": "varchar", "length": "255"},
+      "get_formating": { "type": "varchar", "length": "255", "default": ""},
+      "set_formating": { "type": "varchar", "length": "255", "default": ""},
+      "is_unique": { "type": "tinyint", "length": "1"},
+      "created": { "type": "datetime", "default": "NULL"},
+      "updated": { "type": "datetime", "default": "NULL"},
+      "deleted": { "type": "datetime", "default": "NULL"},
+      "published": { "type": "datetime", "default": "NULL"}
+    }
+  },
+  "test": {
+    "profile": {
+      "name": "test",
+      "name_ru": "Тест",
+      "ending": ""
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name": { "type": "varchar", "length": "255", "name": "Наименование"},
+      "grandmother_name": { "type": "varchar", "length": "255", "name": "Имя бабушки"},
+      "pets_name": { "type": "text", "name": "Имя скотины"},
+      "pets_birthday": {"type": "datetime"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "test_child": {
+    "profile": {
+      "name": "test_child",
+      "name_ru": "Дочка теста",
+      "ending": "а"
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name": { "type": "varchar", "length": "255", "name": "Наименование"},
+      "test_id": { "type": "bigint", "length": "20"},
+      "test_name": { "type": "varchar", "length": "255", "from_table": "test", "keyword": "test_id", "return_column": "name", "virtual": true, "name": "Наименование теста"},
+      "father_and_surin": { "type": "varchar", "length": "255", "concat_fields": "'father_name' , ' ' , 'surin_name'", "name": "Папа и Шурин"},
+      "father_name": { "type": "varchar", "length": "255", "name": "Имя отца"}, 
+      "surin_name": { "type": "varchar", "length": "255", "name": "Имя шурина"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "menu": {
+    "profile": {
+      "name": "menu",
+      "name_ru": "Главное меню",
+      "ending": "о"
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "type_id" : {"type": "bigint", "length": "20"},
+      "menu_type" : {"type": "varchar", "length": "255", "from_table": "menu_type", "keyword": "type_id", "return_column": "sysname", "virtual": true, "name": "Тип меню"},
+      "parent_id" : {"type": "bigint", "length": "20"},
+      "parent_menu" : {"type": "varchar", "length": "255", "from_table": "menu", "keyword": "parent_id", "return_column": "menu_item", "virtual": true, "name": "Родительский элемент"},
+      "client_object_id" : {"type": "bigint", "length": "20"},
+      "class_id" : {"type": "bigint", "length": "20"},
+      "class_name" : {"type": "varchar", "length": "255", "from_table": "class_profile", "keyword": "class_id", "return_column": "name", "virtual": true, "name": "Класс"},
+      "sort_no" : {"type": "bigint", "length": "20"},
+      "menu_item" : {"type": "varchar", "length": "255", "unique": true, "name": "Название пункта меню"},
+      "description" : {"type": "varchar", "length": "255", "name": "Описание пункта меню"},
+      "icon" : {"type": "varchar", "length": "255", "name": "Иконка"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "menu_type": {
+    "profile": {
+      "name": "menu_type",
+      "name_ru": "Тип меню",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "sysname" : {"type": "varchar", "length": "255", "name": "Системное имя"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "filter_type": {
+    "profile": {
+      "name": "filter_type",
+      "name_ru": "Тип фильтра",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "default_for_data_type" : {"type": "varchar", "length": "255", "name": "Знач. по умолч. для типа данных"},
+      "sysname" : {"type": "varchar", "length": "255", "name": "Системное имя"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "type_of_editor": {
+    "profile": {
+      "name": "type_of_editor",
+      "name_ru": "Тип редактора",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "default_for_data_type" : {"type": "varchar", "length": "255", "name": "Знач. по умолч. для типа данных"},
+      "sysname" : {"type": "varchar", "length": "255", "name": "Системное имя"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "investor": {
+    "profile": {
+      "name": "investor",
+      "name_ru": "Инвестор",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "firstname" : {"type": "varchar", "length": "255", "name": "Имя"},
+      "midname" : {"type": "varchar", "length": "255", "name": "Отчество"},
+      "lastname" : {"type": "varchar", "length": "255", "name": "Фамилия"},
+      "fio" : {"type": "varchar", "length": "255", "concat_fields": "'firstname' , ' ' , 'midname' , ' ' , 'lastname'", "name": "ФИО"},
+      "company_id" : {"type": "bigint", "length": "20"},
+      "company" : {"type": "varchar", "length": "255", "from_table": "company", "keyword": "company_id", "return_column": "name", "virtual": true, "name": "Компания"},
+      "ogrn" : {"type": "varchar", "length": "255", "from_table": "company", "keyword": "company_id", "return_column": "ogrn", "virtual": true, "name": "ОГРН"},
+      "inn" : {"type": "varchar", "length": "255", "from_table": "company", "keyword": "company_id", "return_column": "inn", "virtual": true, "name": "ИНН"},
+      "address" : {"type": "varchar", "length": "255", "from_table": "company", "keyword": "company_id", "return_column": "address", "virtual": true, "name": "Юр. Адрес"},
+      "phone" : {"type": "varchar", "length": "255", "name": "Телефон"},
+      "phone2" : {"type": "varchar", "length": "255", "name": "Телефон 2"},
+      "email" : {"type": "varchar", "length": "255", "name": "email"},
+      "email2" : {"type": "varchar", "length": "255", "name": "email 2"},
+      "principal_amount" : {"type": "bigint", "length": "20", "name": "Всего внесено"},
+      "invested_amount" : {"type": "bigint", "length": "20", "name": "Всего проинвестировано"},
+      "collected_amount" : {"type": "bigint", "length": "20", "name": "Всего заработано"},
+      "default_amount" : {"type": "bigint", "length": "20", "name": "Всего потеряно"},
+      "day_amount" : {"type": "bigint", "length": "20", "name": "Заработано сегодня"},
+      "week_amount" : {"type": "bigint", "length": "20", "name": "Заработано на неделе"},
+      "weeks_in_program" : {"type": "bigint", "length": "20", "name": "Работает недель"},
+      "main_agreement_id" : {"type": "bigint", "length": "20"},
+      "main_agreement" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "main_agreement_id", "return_column": "name", "virtual": true, "name": "Основной договор"},
+      "main_agreement_path" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "main_agreement_id", "return_column": "absolute_path", "virtual": true, "name": "Путь к файлу"},
+      "access_agreement_id" : {"type": "bigint", "length": "20"},
+      "access_agreement" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "access_agreement_id", "return_column": "name", "virtual": true, "name": "Разрешение на просмотр"},
+      "access_agreement_path" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "access_agreement_id", "return_column": "absolute_path", "virtual": true, "name": "Путь к файлу"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "company": {
+    "profile": {
+      "name": "company",
+      "name_ru": "Компания",
+      "ending": "а"
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "ogrn" : {"type": "varchar", "length": "255", "name": "ОГРН"},
+      "inn" : {"type": "varchar", "length": "255", "name": "ИНН"},
+      "address" : {"type": "varchar", "length": "255", "name": "Юр. Адрес"},
+      "phone" : {"type": "varchar", "length": "255", "name": "Телефон"},
+      "email" : {"type": "varchar", "length": "255", "name": "email"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "document": {
+    "profile": {
+      "name": "document",
+      "name_ru": "Документ",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "type" : {"type": "varchar", "length": "255", "name": "Тип"},
+      "date_created" : {"type": "datetime", "name": "Заведен в систму"},
+      "date_signed" : {"type": "datetime", "name": "Дата подписания"},
+      "status_id" : {"type": "bigint", "length": "20"},
+      "status" : {"type": "varchar", "length": "255", "from_table": "document_status", "keyword": "status_id", "return_column": "name", "virtual": true, "name": "Статус"},
+      "file_id" : {"type": "bigint", "length": "20"},
+      "file" : {"type": "text", "from_table": "file", "keyword": "file_id", "return_column": "file", "virtual": true, "name": "Файл"},
+      "absolute_path" : {"type": "varchar", "length": "255", "from_table": "file", "keyword": "file_id", "return_column": "absolute_path", "virtual": true, "name": "Путь к файлу"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "document_status": {
+    "profile": {
+      "name": "document_status",
+      "name_ru": "Статус документа",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "sysname" : {"type": "varchar", "length": "255", "name": "Системное имя"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "file": {
+    "profile": {
+      "name": "file",
+      "name_ru": "Файл",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "date_created" : {"type": "datetime", "name": "Заведен в систму"},
+      "absolute_path" : {"type": "varchar", "length": "255", "name": "Полный путь к файлу"},
+      "extension" : {"type": "varchar", "length": "255", "name": "Расширение"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "merchant": {
+    "profile": {
+      "name": "merchant",
+      "name_ru": "Торговец",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "firstname" : {"type": "varchar", "length": "255", "name": "Имя"},
+      "midname" : {"type": "varchar", "length": "255", "name": "Отчество"},
+      "lastname" : {"type": "varchar", "length": "255", "name": "Фамилия"},
+      "fio" : {"type": "varchar", "length": "255", "concat_fields": "'firstname' , ' ' , 'midname' , ' ' , 'lastname'", "name": "ФИО"},
+      "company_id" : {"type": "bigint", "length": "20"},
+      "company" : {"type": "varchar", "length": "255", "from_table": "company", "keyword": "company_id", "return_column": "name", "virtual": true, "name": "Компания"},
+      "ogrn" : {"type": "varchar", "length": "255", "from_table": "company", "keyword": "company_id", "return_column": "ogrn", "virtual": true, "name": "ОГРН"},
+      "inn" : {"type": "varchar", "length": "255", "from_table": "company", "keyword": "company_id", "return_column": "inn", "virtual": true, "name": "ИНН"},
+      "address" : {"type": "varchar", "length": "255", "from_table": "company", "keyword": "company_id", "return_column": "address", "virtual": true, "name": "Юр. Адрес"},
+      "phone" : {"type": "varchar", "length": "255", "name": "Телефон"},
+      "phone2" : {"type": "varchar", "length": "255", "name": "Телефон 2"},
+      "email" : {"type": "varchar", "length": "255", "name": "email"},
+      "email2" : {"type": "varchar", "length": "255", "name": "email 2"},
+      "main_agreement_id" : {"type": "bigint", "length": "20"},
+      "main_agreement" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "main_agreement_id", "return_column": "name", "virtual": true, "name": "Основной договор"},
+      "main_agreement_path" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "main_agreement_id", "return_column": "absolute_path", "virtual": true, "name": "Путь к файлу"},
+      "access_agreement_id" : {"type": "bigint", "length": "20"},
+      "access_agreement" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "access_agreement_id", "return_column": "name", "virtual": true, "name": "Разрешение на просмотр"},
+      "access_agreement_path" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "access_agreement_id", "return_column": "absolute_path", "virtual": true, "name": "Путь к файлу"},
+      "monthly_сс_turnover" : {"type": "bigint", "length": "20", "name": "Месячный оборот по картам"},
+      "settlement_account" : {"type": "bigint", "length": "20", "name": "Cостояние расчетного счета"},
+      "settlement_account_updated" : {"type": "datetime", "name": "Дата обновления инфо. по Р/С"},
+      "total_recieved" : {"type": "bigint", "length": "20", "name": "Сумма полученых инвестиций"},
+      "total_returned" : {"type": "bigint", "length": "20", "name": "Возвращенная сумма"},
+      "defaults_count" : {"type": "bigint", "length": "20", "name": "Пропусков платежей"},
+      "business_type_id" : {"type": "bigint", "length": "20"},
+      "business_type" : {"type": "varchar", "length": "255", "from_table": "business_type", "keyword": "business_type_id", "return_column": "name", "virtual": true, "name": "Тип бизнеса"},
+      "business_description" : {"type": "text", "name": "Описание бизнеса"},
+      "rating" : {"type": "int", "length": "2", "name": "Рейтинг"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "business_type": {
+    "profile": {
+      "name": "business_type",
+      "name_ru": "Тип бизнеса",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "merchant_investment_request": {
+    "profile": {
+      "name": "merchant_investment_request",
+      "name_ru": "Запрос инвестирования торговца",
+      "ending": "а"
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "incoming_date" : {"type": "datetime", "name": "Дата запроса"},
+      "request_amount" : { "type": "bigint", "length": "20", "name": "Запрос на сумму"},
+      "request_term" : { "type": "bigint", "length": "20", "name": "Запрос на срок (дней)"},
+      "request_start" : { "type": "datetime", "name": "Запрос старта работы"},
+      "status_id" : {"type": "bigint", "length": "20"},
+      "status" : {"type": "varchar", "length": "255", "from_table": "request_status", "keyword": "status_id", "return_column": "name", "virtual": true, "name": "Статус запроса"},
+      "approved_amount" : { "type": "bigint", "length": "20", "name": "Подтвержденная сумма"},
+      "approved_term" : { "type": "bigint", "length": "20", "name": "Подтвержденный срок (дней)"},
+      "approved_start" : { "type": "datetime", "name": "Подтвержденный старт работы"},
+      "merchant_id" : {"type": "bigint", "length": "20"},
+      "merchant" : {"type": "varchar", "length": "255", "from_table": "merchant", "keyword": "merchant_id", "return_column": "fio", "virtual": true, "name": "Торговец"},
+      "merchant_rating" : {"type": "varchar", "length": "255", "from_table": "merchant", "keyword": "merchant_id", "return_column": "rating", "virtual": true, "name": "Рейтинг торговца"},
+      "request_document_id" : {"type": "bigint", "length": "20"},
+      "request_document" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "request_document_id", "return_column": "name", "virtual": true, "name": "Анкета запроса инвестирования"},
+      "request_document_path" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "request_document_id", "return_column": "absolute_path", "virtual": true, "name": "Путь к файлу"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "transaction_daily_registry": {
+    "profile": {
+      "name": "transaction_daily_registry",
+      "name_ru": "Ежедневный реестр транзакций",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "incoming_date" : { "type": "datetime", "name": "Поступил"},
+      "registry_file_id" : {"type": "bigint", "length": "20"},
+      "registry_file" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "registry_file_id", "return_column": "name", "virtual": true, "name": "Файл реестра"},
+      "registry_file_path" : {"type": "varchar", "length": "255", "from_table": "document", "keyword": "registry_file_id", "return_column": "absolute_path", "virtual": true, "name": "Путь к файлу реестра"},
+      "has_parse_errors" : {"type": "int", "length": "1", "name": "Есть ошибки парсинга"},
+      "defaults_count" : {"type": "bigint", "length": "20", "name": "Количество пропусков"},
+      "defaults_amount" : {"type": "bigint", "length": "20", "name": "Пропусков на сумму"},
+      "default_merchants_list" : {"type": "varchar", "length": "255", "name": "Список торговцев с пропуском"},
+      "default_investors_list" : {"type": "varchar", "length": "255", "name": "Список инвесторов с пропуском"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  }
+}

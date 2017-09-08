@@ -1,0 +1,35 @@
+extends layout
+block content
+    .container
+        h2 Клубы
+            hr
+            .row.filter-list(data-object="club")
+                .col-md-4.form-group.filter-list-item
+                    label
+                        | Назване
+                    input.form-control.filter-ctrl(type="text", data-name="name", data-editor="text")
+                .col-md-4.form-group.filter-list-item
+                    label
+                        | Город
+                    input.select2.form-control.filter-ctrl(type="hidden", data-server_name="city_id", data-editor="select", data-filter-table="cities", data-name="title", data-required="true", value="", data-text="", data-table="city")
+                .sBtn.blue.filter-list-btn.filter-list-clear
+                    .fa.fa-ban
+                    | &nbsp;&nbsp;
+                    | Сброс
+                .sBtn.green.filter-list-btn.filter-list-confirm
+                    .fa.fa-filter
+                    | &nbsp;&nbsp;
+                    | Поиск
+            .row
+                .col-md-12.wows-list-wrapper
+                    for a in items.data
+                        .col-md-3.filter-me(data-id="#{a.id}")
+                            .wow-item-inner
+                                .wow-image
+                                    a.wow-item-img(href="club?id=#{a.id}")
+                                        -var path = (a.photo)? 'upload/'+a.photo: 'img/def_club.jpg';
+                                        img.wid100pr(src="#{path}")
+                                .club-information
+                                    | #{a.title}
+                    else
+                        li Нет Клубов.

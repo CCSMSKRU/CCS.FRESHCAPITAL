@@ -1,0 +1,103 @@
+
+.master-wrapper{
+    opacity: 0;
+    height: 100%;
+    padding-bottom: 60px;
+}
+.master-vis{
+    width: 100%;
+    overflow-x: hidden;
+
+}
+.master-train{
+    float: left;
+}
+.master-step.active{
+    /*display: block;*/
+}
+.master-step{
+    /*display: none;*/
+    float: left;
+}
+.master-step-back{
+
+}
+.master-finish{
+
+}
+
+.master-step-btn.disabled{
+    background-color: transparent;
+    color: #bdbdbd;
+}
+
+.master-step-btn{
+    float: right;
+     /*background-color: rgba(29, 136, 31, 0.30);*/
+    color: #121212;
+    font-family: openSans,arial, sans-serif;
+    font-size: 16px;
+    height: 100%;
+    padding-top: 19px;
+    cursor: pointer;
+    /*font-weight: bold;*/
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.master-step-btn.disabled i{
+    color: #ddd;
+}
+
+.master-step-btn i{
+    font-size: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -4px;
+    color: #5f5f5f;
+}
+
+
+.master-step-btn.disabled:hover{
+    background-color: transparent;
+}
+.master-step-btn:hover{
+    background-color: rgba(255,255,255,0.5);
+}
+
+.master-finish{
+    color: #1d881f;
+}
+.master-finish:hover{
+    /*background-color: #176c18;*/
+    color: #176c18;
+}
+
+
+.master-finish i{
+    color: #1d881f;
+}
+
+.master-finish:hover i{
+    color: #176c18;
+}
+
+
+
+.master-finish.disabled i{
+    color: #ddd;
+}
+
+
+.master-finish.disabled:hover{
+    color: #bdbdbd;
+}
+
+.master-footer{
+    position: absolute;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+    border-top: 1px solid #eee;
+    /*background-color: #eee;*/
+}

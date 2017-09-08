@@ -1,0 +1,12 @@
+#canvasOutput{
+    width: 100%!important;
+}
+.pageRightBlock{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.box_for_zoom{
+    display: none;
+}

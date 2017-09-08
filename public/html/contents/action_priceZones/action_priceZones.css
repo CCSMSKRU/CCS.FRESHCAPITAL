@@ -1,0 +1,244 @@
+#action_priceZones{
+    position: relative;
+}
+
+
+#for_price_groups{
+    /*width: 380px;*/
+
+}
+
+.price_color{
+    /*position: absolute;
+    *//*margin-top: -5px;*//*
+    float: left;
+    width: 98%;
+    height: 19px;
+    margin-right: 20px !important;*/
+}
+.one_price_group{
+    position: relative;
+    cursor: pointer;
+}
+
+
+
+/*#for_price_groups{
+    float: left;
+    width: 380px;
+    max-height: 300px;
+    overflow-y: auto;
+
+}*/
+
+
+/*
+.one_price_group{
+    position: relative;
+    float: left;
+    cursor: pointer;
+    width: 100%;
+    height: 24px;
+    border: 1px solid #000;
+}
+.one_price_group span{
+    display: block;
+    margin: 4px 25px;
+    float: left;
+}
+*/
+
+.pf_right{
+    float: right!important;
+    margin-right: 40px!important;
+}
+/*
+
+.one_price_group .select_point{
+    position: absolute;
+    left:2px;
+    top:2px;
+    width: 20px;
+    height: 20px;
+    background-image: url("../img/point20_20.png");
+    display: none;
+}
+
+*/
+
+#hall_scheme_pricezone{
+    /*display: block;
+    width: 380px;
+    max-width: 380px;
+    float: left;
+    margin-bottom: 10px;*/
+}
+#hall_scheme_pricezone div, #pricing_select div{
+    /*width: 380px;
+    margin: 5px 0;
+    border-radius: 4px;
+    background-color: rgba(141, 153, 179, 0.14);
+    padding: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;*/
+
+}
+
+
+#for_price_group_total{
+    position: relative;
+    float: left;
+    width: 100%;
+    border: 1px solid #000;
+}
+#for_price_group_total div{
+    display: block;
+    margin: 4px 25px;
+    float: left;
+    width: 50%;
+}
+#for_price_group_total span{
+    display: block;
+    margin: 4px 25px;
+    float: right;
+}
+#for_pricing{
+    width: 380px;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px!important;
+}
+#pricing_select{
+   /* width: 100%;
+    float: left;
+    margin-bottom: 10px;
+    cursor: pointer;*/
+}
+#pricing_box{
+    /*width: 100%;
+    float: left;
+    border: 1px solid #000;
+    margin: 10px 0;*/
+}
+
+#pricing_header_row{
+  /*  width: 100%;
+    float: left;
+    height: 24px;
+    background-color: #f2f3f3;*/
+
+}
+#pricing_box .pricing_cell{
+   /* float: left;
+    text-align: center;
+    border-right: 1px solid #000;
+    height: 100%;
+    font-size: 13px;*/
+}
+#pricing_header_row .pricing_cell span{
+    display: block;
+    margin-top: 4px;
+}
+
+#pricing_box .pricing_row .pricing_cell span{
+    display: block;
+    margin-top: 2px;
+}
+
+.pricing_cell.belt{
+    /*width: 120px;*/
+    width: 45%;
+    margin-left: -3px;
+
+}
+.pricing_cell.count{
+    width: 15%;
+    /*width: 60px;*/
+}
+.pricing_cell.cost{
+    /*width: 80px;*/
+    width: 20%;
+}
+.pricing_cell_cost_input_box,
+.pricing_cell_price_margin_input_box
+{
+    position: relative;
+    width: 50px;
+}
+
+.pricing_cell_cost_input,
+.pricing_cell_price_margin_input{
+    border: 0!important;
+    outline:none;
+    width: 80px;
+
+}
+
+.pricing_btn{
+    font-size: 12px;
+}
+.pricing_cell.amount{
+    /*width: 117px;*/
+    width: 20%;
+    border-right: none!important;
+}
+/*#for_pricing_row{
+    width: 100%;
+    float: left;
+    max-height: 200px;
+    overflow-y: auto;
+
+}*/
+
+.pricing_row{
+   /* width: 100%;
+    float: left;
+    height: 20px;
+    overflow: hidden;
+    border-top: 1px solid #c1c1c1;*/
+}
+
+#pricing_save_btn{
+    /*width: 40%;*//*
+    float: left;
+    cursor: pointer;
+    color: #0000ff;*/
+}
+#pricing_reset_btn{
+  /*  float: left;
+    cursor: pointer;
+    color: #0000ff;
+    margin-left: 20px;*/
+}
+#pricing_global_amount{
+   /* float: right;
+    *//*width: 60%;*//*
+    text-align: right;*/
+}
+
+
+
+
+
+#go_to_fund{
+    /*float: left;
+    color: #00f;
+    margin:10px 0;
+    cursor: pointer;*/
+}
+
+#price_manager{
+ /*   width: 100%;
+    float: left;
+    margin: 6px 0;*/
+
+}
+#price_manager span{
+  /*  cursor: pointer;
+    color: #00f;*/
+}
+
+#forPricingRow{
+    /*display: none;*/
+}

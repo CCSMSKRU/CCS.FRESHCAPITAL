@@ -1,0 +1,16 @@
+{
+
+  "default_documents_for_business":{
+    "profile": {
+      "name": "business_type",
+      "name_ru": "Тип бизнеса",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "visa_mc_percent" : {"type": "bigint", "length": "10", "name": "Процент visa/mc (%)"},
+      "profitability" : {"type": "bigint", "length": "10", "name": "Процент рентабельности (%)"}
+    }
+  }
+}

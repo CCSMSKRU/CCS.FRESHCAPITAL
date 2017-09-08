@@ -1,0 +1,30 @@
+extends admin_layout
+block content
+    - var res = items.data[0];
+    .container.posRel
+        h2 Заявка
+        hr
+        h4
+            a(href="#{res.video_url}", target="_blank") Ссылка на видео
+            br
+            br
+            .flLeft #{res.concat_result}
+            div(class="result_status statusColor #{res.status_name_sys}")
+                | #{res.status_name}
+            br
+            br
+            | #{res.user_firstname} #{res.user_surname}
+            br
+            br
+            | #{res.action_title}:  #{res.action_part}
+        if(res.status_name_sys == 'IN_QUEUE')
+            .sBtn.green.acceptResult(data-id="#{res.id}", data-part_id="#{res.action_part_id}")
+                | Принять
+            .sBtn.red.rejectResult(data-id="#{res.id}", data-part_id="#{res.action_part_id}")
+                | Отклонить
+        else
+            .sBtn.green
+                a(href="admin_event?id=#{res.action_id}")
+                    .fa.fa-reply
+                    |    К мероприятию
+    script(type="text/javascript", src="js/html/admin_judge_result.js")

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Фондовые распясовки </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <script type="text/javascript" src="html/contents/action_fundZones/action_fundZones.js"></script>
+    <link href="html/contents/action_fundZones//action_fundZones.css" rel="stylesheet" type="text/css">
+    <!--<link href="css/zal2.css" rel="stylesheet" type="text/css">-->
+
+
+</head>
+<body style="overflow: hidden;">
+
+<!--<button type="button" class="btn btn-default linkBtn marTopUn3" id="hall_scheme_fundzone_btn">
+    <i class="fa fa-edit"></i>&nbsp;&nbsp;Изменить
+</button>-->
+
+
+<div id="action_fundZones" class="modalParentBlock">
+
+    <div class="pageHeader">
+        <div class="pageHeaderInner">
+            <h3>&nbsp;</h3>
+            <div class="closeModal"><i class="fa fa-times"></i></div>
+        </div>
+    </div>
+    <div class="pageContent">
+        <div class="" id="canvasOutput">
+            <div class="box_for_canvas canvasContainer" id="box_for_action_fundZones_map">
+                <!--<canvas height='2000' width='2000' id='canvas1'>Обновите браузер</canvas>-->
+
+            </div>
+        </div>
+        <div class="pageRightBlock">
+            <div id="right_column">
+
+                <div class="rightColumnInner flLeft">
+
+                    <div class="newPortlet flLeft">
+                        <div class="newPortletTitle">
+                            <div class="newPortletTitleInner">
+                                <div class="newPortletTitleHeadline" id="hall_scheme_fundzone">Фонды</div>
+                                <!--<button type="button" class="hiddenImp btn btn-default linkBtn marTopUn3" id="hall_scheme_fundzone_btn">
+                                    <i class="fa fa-edit"></i>&nbsp;&nbsp;Изменить
+                                </button>-->
+                            </div>
+                        </div>
+                        <div class="newPortletContent">
+
+                            <div class="padder5">
+                                <label class="smallGery">
+                                    <input type="checkbox" class="showOnlyUsed"> Показать только использованные
+                                </label>
+                            </div>
+
+                            <div class="newPortletContentInner">
+                                <ul id="for_fund_groups" class="newUl selectable hoverable">
+
+                                </ul>
+                            </div>
+                            <div class="padder5">
+                                <table class="table infoTable smallTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Всего мест</th>
+                                        <th>Выбрано</th>
+                                        <th>Не используется</th>
+                                        <th>Исключено</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="for_fundZoneInfo">
+                                    <tr>
+                                        <td class="highlight" id="TOTAL_PLACE_COUNT"></td>
+                                        <td class="highlight" id="TOTAL_SELECTED_PLACE_COUNT"></td>
+                                        <td class="highlight" id="TOTAL_NOT_SELECTED_PLACE_COUNT"></td>
+                                        <td class="highlight" id="TOTAL_EXCLUDED_PLACE_COUNT"></td>
+                                        <!--<td class="hidden-xs"></td>-->
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="btn-group btn-group-justified newStyle marTop10 marBot10 flLeft">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default newStyle" id="toPricing"><i class="fa fa-money"></i>&nbsp;&nbsp;К&nbsp;переоценке</button>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default newStyle" id="toFunds"><i class="fa fa-briefcase"></i>&nbsp;&nbsp;К&nbsp;фондам</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!------------------------>
+
+
+
+<!--<div id="action_fundZones">
+
+
+
+<div class="box_for_canvas" id="box_for_action_fundZones_map">
+    &lt;!&ndash;<canvas height='2000' width='2000' id='canvas1'>Обновите браузер</canvas>&ndash;&gt;
+
+</div>
+
+<div id="right_column">
+    <div class="panel panel-default">
+        <div class="panel-heading" id="hall_scheme_fundzone">
+            &lt;!&ndash;Panel heading without title&ndash;&gt;
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        <i class="fa fa-briefcase"></i> Фонд
+                    </th>
+                    <th class="hidden-xs">
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="for_fund_groups">
+                &lt;!&ndash;<tr>
+                    <td class="highlight">
+                        <div style="border-left: 2px solid #66ee66;"></div>
+                        <a href="#">RedBull</a>
+                    </td>
+                    <td class="hidden-xs"></td>
+
+                </tr>&ndash;&gt;
+                </tbody>
+            </table>
+
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        Всего мест
+                    </th>
+                    <th>
+                        Выбрано
+                    </th>
+                    <th>
+                        Свободно
+                    </th>
+                    <th>
+                        Исключено
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="for_fundZoneInfo">
+                <tr>
+                    <td class="highlight" id="TOTAL_PLACE_COUNT"></td>
+                    <td class="highlight" id="TOTAL_SELECTED_PLACE_COUNT"></td>
+                    <td class="highlight" id="TOTAL_NOT_SELECTED_PLACE_COUNT"></td>
+                    <td class="highlight" id="TOTAL_EXCLUDED_PLACE_COUNT"></td>
+                    &lt;!&ndash;<td class="hidden-xs"></td>&ndash;&gt;
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>-->
+
+
+
+    <!--<table class="table table-striped table-bordered table-advance table-hover">
+        <thead>
+        <tr>
+            <th>
+                <i class="fa fa-briefcase"></i> Фонд
+            </th>
+            <th class="hidden-xs">
+            </th>
+            <th>
+                <i class="fa fa-shopping-cart"></i> Total
+            </th>
+            <th>
+            </th>
+        </tr>
+        </thead>
+        <tbody id="for_fund_groups">
+        <tr>
+            <td class="highlight">
+                <div style="border-left: 2px solid #66ee66;"></div>
+                <a href="#">RedBull</a>
+            </td>
+            <td class="hidden-xs"></td>
+
+        </tr>
+        </tbody>
+    </table>-->
+
+
+
+</body>
+</html>
+
+
+
+<!--
+<div id="hint">
+    <div class="status_info"><div class="label">Зона: </div><div class="status_text" id="status_area">Партер правая сторона</div></div>
+    <div class="status_info"><div class="label">Ряд</div> <div class="status_text" id="status_row">9</div></div>
+    <div class="status_info"><div class="label">Место</div> <div id="status_col">6</div></div>
+    <div class="status_info"><div class="label">Цена:</div> <div class="status_text" id="status_cost">1000руб.</div></div>
+    <div class="status_info"><div class="label">Фонд:</div> <div class="status_text" id="status_fund">Реализация через кассы</div></div>
+    <div class="status_info"><div class="label">Состояние:</div> <div class="status_text" id="status_status">Доступно для продажи</div></div>
+    <div class="status_info"><div class="label">Пояс:</div> <div class="status_text" id="status_zone">Пояс 3</div></div>
+    <div class="status_info"><div class="label">id:</div> <div class="status_text" id="status_id"></div></div>
+</div>
+-->
+
+<!--
+<div class="hint_box">
+    <div class="col-md-12">
+        <table id="hint_tbl" class="table table-bordered table-striped">
+            <tbody>
+            <tr>
+                <td style="width:40%">Зона:</td>
+                <td style="width:60%"><span class="text-muted" id="status_area">Simple text field</span></td>
+            </tr>
+            <tr>
+                <td style="width:40%">Ряд:</td>
+                <td style="width:60%"><span class="text-muted" id="status_row">Simple text field</span></td>
+            </tr>
+            <tr>
+                <td style="width:40%">Место:</td>
+                <td style="width:60%"><span class="text-muted" id="status_col">Simple text field</span></td>
+            </tr>
+            <tr>
+                <td style="width:40%">Цена:</td>
+                <td style="width:60%"><span class="text-muted" id="status_cost">Simple text field</span></td>
+            </tr>
+            <tr>
+                <td style="width:40%">Фонд:</td>
+                <td style="width:60%"><span class="text-muted" id="status_fund">Simple text field</span></td>
+            </tr><tr>
+                <td style="width:40%">Состояние:</td>
+                <td style="width:60%"><span class="text-muted" id="status_status">Simple text field</span></td>
+            </tr><tr>
+                <td style="width:40%">Пояс:</td>
+                <td style="width:60%"><span class="text-muted" id="status_zone">Simple text field</span></td>
+            </tr>
+            <tr>
+                <td style="width:40%">id:</td>
+                <td style="width:60%"><span class="text-muted" id="status_id">Simple text field</span></td>
+            </tr>
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>-->

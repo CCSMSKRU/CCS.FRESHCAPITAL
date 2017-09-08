@@ -1,0 +1,138 @@
+<div class="form-ro-wrapper">
+    <div class="form-ro-sidebar">
+        <div class="form-ro-aside-block form-ro-block" data-column="STATUS_RU">
+            <label>Статус:</label>
+            <div class="form-ro-value">{+{STATUS_RU}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="ORDER_DATE">
+            <label>Дата:</label>
+            <div class="form-ro-value">{+{ORDER_DATE}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="CREATED_BY_RU">
+            <label>Создано:</label>
+            <div class="form-ro-value">{+{CREATED_BY_RU}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="DISCOUNT">
+            <label>Скидка:</label>
+            <div class="form-ro-value" >{+{DISCOUNT}+} %</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="CASH_AMOUNT">
+            <label>Наличными:</label>
+            <div class="form-ro-value" >{+{CASH_AMOUNT}+} руб.</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="CARD_AMOUNT">
+            <label>Картой:</label>
+            <div class="form-ro-value" >{+{CARD_AMOUNT}+} руб.</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="PAYMENT_AMOUNT">
+            <label>Сумма платежа:</label>
+            <div class="form-ro-value" >{+{PAYMENT_AMOUNT}+} руб.</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="AGENT_NAME">
+            <label>Агент:</label>
+            <div class="form-ro-value">{+{AGENT_NAME}+}</div>
+        </div>
+
+        <!--<div class="form-ro-aside-block">-->
+            <!--<div class="nb btn btnDouble blue add-service-to-order">-->
+                <!--<i class="fa fa-plus"></i>-->
+                <!--<div class="btnDoubleInner">Добавить услуги</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+
+        <div class="form-ro-aside-block">
+            <div class="nb btn btnDouble green pay-reserved-services">
+                <i class="fa fa-dollar"></i>
+                <div class="btnDoubleInner">Оплатить услуги</div>
+            </div>
+        </div>
+
+        <div class="form-ro-aside-block">
+            <div class="reserved-services-total-amount-wrapper">Услуг на сумму: <span class="reserved-services-total-amount">0 руб.</span></div>
+        </div>
+
+    </div>
+
+    <div class="form-ro-content">
+        <div class="form-ro-content-block">
+            <table class="form-ro-table marTop7">
+                <tbody>
+                <!--{+{ORDER_DATE}+}-->
+                <!--{+{PAYMENT_RRN}+}-->
+                <!--{+{PAYMENT_EXP_YEAR}+}-->
+                <!--{+{PAYMENT_EXP_MONTH}+}-->
+                <tr>
+                    <th>Мероприятия:</th>
+                    <td class="form-ro-block" data-column="ACTION_LIST"><div class="form-ro-value" >{+{ACTION_LIST}+}</div></td>
+                </tr>
+                <!--<tr>-->
+                    <!--<th>Резервы до:</th>-->
+                    <!--<td class="form-ro-block" data-column="RESERVED_TO_DATE_LIST"><div class="form-ro-value" >{+{RESERVED_TO_DATE_LIST}+}</div></td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<th>Места:</th>-->
+                    <!--<td class="form-ro-block" data-column="PLACE_LIST"><div class="form-ro-value" >{+{PLACE_LIST}+}</div></td>-->
+                <!--</tr>-->
+                <tr>
+                    <th>Тип оплаты:</th>
+                    <td class="form-ro-block" data-column="PAYMENT_TYPE_RU"><div class="form-ro-value" >{+{PAYMENT_TYPE_RU}+}</div></td>
+                </tr>
+                <tr>
+                    <th>Покупатель:</th>
+                    <td class="form-ro-block" data-column="CRM_USER_NAME"><div class="form-ro-value" >{+{CRM_USER_NAME}+}</div></td>
+                </tr>
+                <tr>
+                    <th>Телефон клиента:</th>
+                    <td class="form-ro-block" data-column="CRM_USER_PHONE"><div class="form-ro-value" >{+{CRM_USER_PHONE}+}</div></td>
+                </tr>
+                <tr>
+                    <th>Почта клиента:</th>
+                    <td class="form-ro-block" data-column="CRM_USER_EMAIL"><div class="form-ro-value" >{+{CRM_USER_EMAIL}+}</div></td>
+                </tr>
+                <tr>
+                    <th>Владелец карты:</th>
+                    <td class="form-ro-block" data-column="PAYMENT_CARDHOLDER"><div class="form-ro-value" >{+{PAYMENT_CARDHOLDER}+}</div></td>
+                </tr>
+                <tr>
+                    <th>Код авторизации платежа:</th>
+                    <td class="form-ro-block" data-column="PAYMENT_AUTH_CODE"><div class="form-ro-value" >{+{PAYMENT_AUTH_CODE}+}</div></td>
+                </tr>
+                <tr>
+                    <th>Номер карты:</th>
+                    <td class="form-ro-block" data-column="PAYMENT_PAN_MASK"><div class="form-ro-value" >{+{PAYMENT_PAN_MASK}+}</div></td>
+                </tr>
+                <tr>
+                    <th>Ответ отправки E-mail:</th>
+                    <td class="form-ro-block" data-column="SEND_EMAIL_RESPONSE"><div class="form-ro-value" >{+{SEND_EMAIL_RESPONSE}+}</div></td>
+                </tr>
+                <tr>
+                    <th>Ответ отправки SMS:</th>
+                    <td class="form-ro-block" data-column="SEND_SMS_RESPONSE"><div class="form-ro-value" >{+{SEND_SMS_RESPONSE}+}</div></td>
+                </tr>
+                <tr>
+                    <th>Фрейм:</th>
+                    <td class="form-ro-block" data-column="FRAME"><div class="form-ro-value" >{+{FRAME}+}</div></td>
+                </tr>
+                <tr>
+                    <th>ID Платежа:</th>
+                    <td class="form-ro-block" data-column="PAYMENT_ID"><div class="form-ro-value" >{+{PAYMENT_ID}+}</div></td>
+                </tr>
+                <tr>
+                    <th>Статус платежа:</th>
+                    <td class="form-ro-block" data-column="PAYMENT_TRANS_STATUS"><div class="form-ro-value" >{+{PAYMENT_TRANS_STATUS}+}</div></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="fn-child-objects-tabs-wrapper"></div>
+
+        </div>
+    </div>
+
+
+
+    <div class="form-ro-buttons-row">
+        <div class="lower-buttons-wrapper"></div>
+    </div>
+</div>

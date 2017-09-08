@@ -1,0 +1,40 @@
+extends admin_layout
+block content
+    - var isNew = data.isNew;
+    if(!isNew)
+        - var event_type = data.data[0];
+    .container.posRel
+        if(isNew)
+            h2 Создание типа мероприятия
+        else
+            h2 Редактирование типа мероприятия
+        if(isNew)
+            form#edit-article.marTop22(data-id="new")
+                .row
+                    .col-md-12
+                        .form-group
+                            label Наименование:
+                            input.fc-field.form-control(type='text', data-server_name="name", value="", data-name="name")
+                    .col-md-12
+                        .form-group
+                            label Регламент:
+                            textarea.fc-field.form-control.cf_text_editor(data-name="regulations", data-server_name="regulations", id="new-regulations", value="")
+        else
+            form#edit-article.marTop22(data-id="#{event_type.id}")
+                .row
+                    .col-md-12
+                        .form-group
+                            label Наименование:
+                            input.fc-field.form-control(type='text', data-server_name="name", value="#{event_type.name}", data-name="name")
+                    .col-md-12
+                        .form-group
+                            label Регламент:
+                            textarea.fc-field.form-control.cf_text_editor(data-name="regulations", data-server_name="regulations", id="#{event_type.id}-regulations", value="#{event_type.regulations}")
+        .col-md-12
+            hr
+            .col-md-12
+                #confirm_edit_article.sBtn.green.marL1.flRight
+                    i.fa.fa-check
+                    | &nbsp;&nbsp;Сохранить
+
+    script(src="js/admin_action_type.js")

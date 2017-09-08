@@ -1,0 +1,97 @@
+block header
+    - var slides = (slider)? slider.data: [];
+    if(user)
+        input(type="hidden" id="auth-user-firstname" value="#{user.firstname}")
+        input(type="hidden" id="auth-user-surname" value="#{user.surname}")
+        input(type="hidden" id="auth-user-phone" value="#{user.phone}")
+        input(type="hidden" id="auth-user-email" value="#{user.email}")
+    .page-header.preheader
+
+        .contact-us
+            .feedback-open
+                i.fa.fa-envelope-o &nbsp;&nbsp;
+                | info@cfft.ru
+                //| обратная связь
+        .preheaderButtons-wrapper
+            if !user
+                .preheaderBtn.goToLogin(data-view="login")
+                    a(href="#")
+                        i.fa.fa-key
+                        | &nbsp;&nbsp;Войти
+                .preheaderBtn(data-view="login")
+                    a(href="registration")
+                        i.fa.fa-key
+                        | &nbsp;&nbsp;&#1056;&#1077;&#1075;&#1080;&#1089;&#1090;&#1088;&#1072;&#1094;&#1080;&#1103;
+            else
+                .preheaderBtn(data-view="login")
+                    a(href="profile")
+                        i.fa.fa-user &nbsp;&nbsp;
+                        | #{user.firstname}
+                        | #{user.surname}
+                .preheaderBtn#userLogout(data-view="login")
+                    a(href="#")
+                        i.fa.fa-sign-out
+
+    .page-header.main-header
+        #logo.logo
+            img(src="img/logo2.png")
+        .main-menu-wrapper
+            ul#top-main-menu.main-menu
+                li
+                    a(href="for_athlets")
+                        //i.fa.fa-info-circle &nbsp;&nbsp;
+                        | Участникам
+                li
+                    a(href="articles")
+                        | Статьи
+                li
+                    a(href="clubs")
+                        | Клубы
+                li
+                    a(href="wows")
+                        //i.fa.fa-gavel &nbsp;&nbsp;
+                        | WOW
+                li
+                    a(href="events")
+                        //i.fa.fa-flag-o &nbsp;&nbsp;
+                        | Games
+    .page-content
+        .noPad
+            .main-slider-wrapper-new.noPad
+                .main-slider-view
+                    .main-slider-controls
+                        .main-slider-slide-left
+                            i.fa.fa-angle-left
+                        .main-slider-dots-wrapper
+                            //ul.dots
+                            //    li
+                            //        i.fa.fa-circle
+                            //    li
+                            //        i.fa.fa-circle
+                            //    li
+                            //        i.fa.fa-circle
+                        .main-slider-slide-right
+                            i.fa.fa-angle-right
+                    ul.main-slider(data-shift="0")
+                        if(slides.length > 0)
+                            for s in slides
+                                li.slide
+                                    a(href="#{s.url}", target="_blank")
+                                        img(src="upload/#{s.photo}")
+                        else
+                            li.slide
+                                a(href="http://gonkagladiatorov.ru/", target="_blank")
+                                    img(src="img/slide2.jpg")
+                            li.slide
+                                a(href="wows")
+                                    img(src="img/slide1.jpg")
+                            //.slide-text Lorem ipsum dolor sit!
+                        //li.slide
+                        //    img(src="img/slide2.jpg")
+                        //    //.slide-text Lorem ipsum dolor sit!
+                        //li.slide
+                        //    img(src="img/slide3.jpg")
+            //li
+            //   a(href="#").open-calendar
+            //      i.fa.fa-calendar
+            //.calendar-wrapper

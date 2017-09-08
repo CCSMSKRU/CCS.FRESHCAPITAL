@@ -1,0 +1,165 @@
+.dpm-wrapper{
+    width: 100%;
+    font-family: openSans, arial, sans-serif;
+}
+.dpm-wrapper table{
+    width: 100%;
+}
+
+.dpm-wrapper table thead,
+.dpm-wrapper table tbody,
+.dpm-wrapper table tr,
+.dpm-wrapper table th,
+.dpm-wrapper table td{
+    margin: 0;
+    padding: 0;
+}
+
+.dpm-wrapper table th.hovered,
+.dpm-wrapper table td.hovered{
+    /*background-color: rgb(247, 247, 247);*/
+}
+
+.dpm-wrapper table th.focused,
+.dpm-wrapper table td.focused,
+.dpm-wrapper table th.hovered.focused,
+.dpm-wrapper table td.hovered.focused {
+    /*background-color: rgb(189, 247, 199)!important;*/
+}
+
+.dpm-wrapper table tbody td:hover{
+    background-color: rgba(132, 219, 255, 0.36);
+}
+
+
+.dpm-wrapper table tbody tr{
+    border-bottom: 1px solid #878787;
+}
+
+/*.dpm-wrapper table tbody tr td{*/
+    /*border-bottom: 1px solid #ddd;*/
+/*}*/
+
+/*.dpm-wrapper table tbody tr td:first-child{*/
+    /*border-bottom: 0;*/
+/*}*/
+
+.dpm-wrapper table tbody tr td:first-child{
+    border-right: 1px solid #878787;
+}
+
+.dpm-wrapper table th{
+    border-bottom:1px solid #ddd;
+}
+
+.dpm-value-wrapper input[type="number"] {
+    width: 100%;
+    border: 0;
+    padding: 0;
+    padding-left: 10px;
+    height: 34px;
+    font-size: 14px;
+    outline: 0;
+    background-color: transparent;
+}
+.dpm-value-wrapper input[type="number"]:focus {
+    background-color: #ffff00;
+}
+
+
+/* Spin Buttons modified */
+.dpm-value-wrapper input[type="number"]::-webkit-outer-spin-button,
+.dpm-value-wrapper input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+
+}
+.dpm-value-wrapper input[type="number"]::-webkit-inner-spin-button:hover,
+.dpm-value-wrapper input[type="number"]::-webkit-inner-spin-button:active{
+
+}
+
+input:-webkit-autofill {
+    background: black;
+    color: red;
+}
+
+
+.dpm-i-name {
+    font-weight: normal;
+    font-size: 13px;
+    font-family: opensanssemibold, openSans, arial, sans-serif;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    text-align: left;
+    padding-left: 8px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.dpm-i-amount-wrapper{
+    font-weight: normal;
+}
+
+
+.dpm-i-total{
+    /*border-right: 1px solid #ddd;*/
+}
+
+.dpm-i-total,
+.dpm-i-available{
+     padding: 5px 7px;
+    border-right: 1px solid #ddd;
+
+}
+.dpm-merchant-name{
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 6px;
+    padding-right: 10px;
+    /*max-width: 190px;*/
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.dpm-merchant-amount{
+    padding-top: 0;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    position: relative;
+}
+
+.dpm-merchant-deploy-bar{
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    left: 0;
+    z-index: 10;
+    bottom: 0;
+    background-color: #eee;
+}
+.dpm-merchant-deployed{
+    position: absolute;
+    height: 100%;
+    background-color: rgb(48, 165, 30);
+}
+.dpm-value-recomended{
+    text-align: center;
+    background-color: #C5E4FF;
+    border-radius: 2px;
+    margin: 1px 2px;
+    font-size: 11px;
+    cursor: pointer;
+}
+.dpm-value-recomended:hover{
+    background-color: #b6d3ec;
+}
+.dpm-merchant-deployed-percent{
+    position: absolute;
+    right: 4px;
+    top: -47px;
+    font-size: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid red;
+    border-radius: 3px;
+    color: red;
+}

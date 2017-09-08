@@ -1,0 +1,193 @@
+
+<div class="modalMainPart">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" id="clientTabs">
+                <li class="active"><a href="#client" data-toggle="tab">Клиент</a></li>
+                <li><a href="#client-users" id="goToClientUsers" data-toggle="tab">Пользователи клиента</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="client">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">№</label>
+                        <div>
+                            <div class="column-wrapper primarykey" data-column="CUSTOMER_ID"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label class="control-label">Наименование клиента</label>
+                        <div>
+                            <div class="column-wrapper" data-column="NAME"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <input type="text" id="modalField_USER_ID"> -->
+            <br>                
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Статус</label>
+                        <div>
+                            <div class="column-wrapper" data-column="STATUS_RU"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Тип клиента</label>
+                        <div>
+                            <div class="column-wrapper" data-column="CUSTOMER_TYPE_RU"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Класс клиента</label>
+                        <div>
+                            <div class="column-wrapper" data-column="CUSTOMER_CLASS_NAME"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Дата создания</label>
+                        <div>
+                            <div class="column-wrapper" data-column="CREATION_DATE"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Телефон</label>
+                        <div>
+                            <div class="column-wrapper" data-column="PHONE"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">E-mail</label>
+                        <div>
+                            <div class="column-wrapper" data-column="EMAIL"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Наименование банка</label>
+                        <div>
+                            <div class="column-wrapper" data-column="BANK"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">ИНН</label>
+                        <div>
+                            <div class="column-wrapper" data-column="INN"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">БИК</label>
+                        <div>
+                            <div class="column-wrapper" data-column="BIK"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">ОКПО</label>
+                        <div>
+                            <div class="column-wrapper" data-column="OKPO"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Город</label>
+                        <div>
+                            <div class="column-wrapper" data-column="CITY"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Индекс</label>
+                        <div>
+                            <div class="column-wrapper" data-column="CITY_INDEX"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Адрес</label>
+                        <div>
+                            <div class="column-wrapper" data-column="ADDRESS"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Описание</label>
+                        <div>
+                            <div class="column-wrapper" data-column="DESCRIPTION"></div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <!-- HIDDEN INPUTS -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="hidden-inputs">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" id="modalField_CUSTOMER_TYPE" disabled>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" id="modalField_CUSTOMER_CLASS" disabled>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" id="modalField_OBJVERSION" disabled>
+                            </div>   
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" disabled>
+                            </div>                                  
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="hidden-inputs">
+                <div class="column-wrapper" data-column="STATUS"></div>
+                <div class="column-wrapper" data-column="OBJVERSION"></div>
+                <div class="column-wrapper" data-column="CUSTOMER_TYPE"></div>
+                <div class="column-wrapper" data-column="CUSTOMER_CLASS_ID"></div>
+                <div class="column-wrapper" data-column="CLASS_TYPE"></div>
+                <div class="column-wrapper" data-column="CLASS_TYPE_RU"></div>
+            </div>             
+        </div>
+        <!-- ВСТАВИТЬ КЛАСС ДЛЯ ДОБАВЛЕНИЯ -->
+        <div class="tab-pane fade in" id="client-users"></div>
+    </div>        
+</div>
+<br>

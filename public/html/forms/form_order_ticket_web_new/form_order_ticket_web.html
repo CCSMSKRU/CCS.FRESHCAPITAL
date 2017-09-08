@@ -1,0 +1,126 @@
+
+<div class="insertIntoHeader">
+    <div class="form-ro-barcode flLeft" data-barcode="{+{BARCODE}+}"></div>
+</div>
+
+<div class="form-ro-wrapper">
+    <div class="form-ro-sidebar">
+        <!--<div class="form-ro-poster form-ro-barcode" data-barcode="{+{BARCODE}+}"></div>-->
+        <div class="form-ro-aside-block form-ro-block" data-column="ORDER_ID">
+            <label>Штрихкод:</label>
+            <div class="form-ro-value">{+{BARCODE}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="ORDER_ID">
+            <label>Номер заказа:</label>
+            <div class="form-ro-value"><div class="form-field-parent-object-link">{+{ORDER_ID}+}</div></div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="STATUS_RU">
+            <label>Статус:</label>
+            <div class="form-ro-value">{+{STATUS_RU}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="TICKET_DATE">
+            <label>Дата:</label>
+            <div class="form-ro-value">{+{TICKET_DATE}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="RESERVED_TO_DATE">
+            <label>Резерв до:</label>
+            <div class="form-ro-value">{+{RESERVED_TO_DATE}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="TICKET_DATE">
+            <label>Дата продажи:</label>
+            <div class="form-ro-value">{+{CLOSED_DATE}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="TICKET_DATE">
+            <label>Дата возврата:</label>
+            <div class="form-ro-value">{+{RETURN_DATE}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="PRICE">
+            <label>Стоимость:</label>
+            <div class="form-ro-value" >{+{PRICE}+} руб.</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="PRICE">
+            <label>Проход в зал:</label>
+            <div class="form-ro-value" >{+{ENTER_IN_HALL_STATUS_RU}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="PRICE">
+            <label>Время прохода:</label>
+            <div class="form-ro-value" >{+{ENTER_IN_HALL_TIME}+}</div>
+        </div>
+    </div>
+
+    <div class="form-ro-content">
+        <div class="form-ro-content-block">
+            <!--<div class="form-ro-barcode flLeft" data-barcode="{+{BARCODE}+}"></div>-->
+
+            <table class="form-ro-table marTop11">
+                <tbody>
+                    <tr>
+                        <th>Тип билета:</th>
+                        <td class="form-ro-block" data-column="TICKET_TYPE_RU"><div class="form-ro-value" >{+{TICKET_TYPE_RU}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Тип оплаты:</th>
+                        <td class="form-ro-block" data-column="PAYMENT_TYPE_RU"><div class="form-ro-value" >{+{PAYMENT_TYPE_RU}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Кассир:</th>
+                        <td class="form-ro-block" data-column="USER_FULLNAME"><div class="form-ro-value" >{+{USER_FULLNAME}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>SCA Серия:</th>
+                        <td class="form-ro-block" data-column="SCA_SERIES"><div class="form-ro-value" >{+{SCA_SERIES}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>SCA Номер:</th>
+                        <td class="form-ro-block" data-column="SCA_NUMBER"><div class="form-ro-value" >{+{SCA_NUMBER}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Ряд:</th>
+                        <td class="form-ro-block" data-column="LINE"><div class="form-ro-value" >{+{LINE}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Место:</th>
+                        <td class="form-ro-block" data-column="PLACE"><div class="form-ro-value" >{+{PLACE}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Сектор:</th>
+                        <td class="form-ro-block" data-column="AREA_GROUP"><div class="form-ro-value" >{+{AREA_GROUP}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Мероприятие:</th>
+                        <td class="form-ro-block" data-column="ACTION"><div class="form-ro-value" >{+{ACTION}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Дата мероприятия:</th>
+                        <td class="form-ro-block" data-column="ACTION_DATE"><div class="form-ro-value" >{+{ACTION_DATE}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Зал:</th>
+                        <td class="form-ro-block" data-column="HALL"><div class="form-ro-value" >{+{HALL}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Клиент:</th>
+                        <td class="form-ro-block" data-column="CRM_USER_NAME"><div class="form-ro-value" >{+{CRM_USER_NAME}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Телефон клиента:</th>
+                        <td class="form-ro-block" data-column="CRM_USER_PHONE"><div class="form-ro-value" >{+{CRM_USER_PHONE}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Почта клиента:</th>
+                        <td class="form-ro-block" data-column="CRM_USER_EMAIL"><div class="form-ro-value" >{+{CRM_USER_EMAIL}+}</div></td>
+                    </tr>
+                    <tr>
+                        <th>Комментарий:</th>
+                        <td class="form-ro-block" data-column="COMMENTS"><div class="form-ro-value" >{+{COMMENTS}+}</div></td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="form-ro-buttons-row">
+        <div class="lower-buttons-wrapper"></div>
+    </div>
+</div>

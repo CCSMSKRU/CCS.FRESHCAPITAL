@@ -1,0 +1,12 @@
+extends admin_layout
+block content
+    .container.posRel
+        h2 Клубы
+        hr
+        .sBtn.green
+            a.btn(href="admin_club?id=new")
+                .fa.fa-plus &nbsp;&nbsp;
+                | Добавить клуб
+        .event-results-tabs
+            .initMeTable(data-get_object="club")
+    script(type="text/javascript", src="js/html/admin_clubs.js")

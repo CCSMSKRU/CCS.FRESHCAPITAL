@@ -1,0 +1,115 @@
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" id="">
+            <li id="TAB_subscription_modal_content" class="active"><a href="#subscription_modal_content" data-toggle="tab">Общее</a></li>
+            <li id="TAB_subscription_modal_actions"><a href="#subscription_modal_actions" data-toggle="tab">Мероприятия абонемента</a></li>
+            <li id="TAB_subscription_modal_price"><a href="#subscription_modal_price" data-toggle="tab">Цена абонемента</a></li>
+        </ul>
+    </div>
+</div>
+<div class="tab-content">
+    <div class="tab-pane fade in active" id="subscription_modal_content">   
+        <div class="row">
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label class="control-label">id</label>
+                    <div>
+                        <div class="column-wrapper primarykey" data-column="SUBSCRIPTION_ID"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">Название</label>
+                    <div>
+                        <div class="column-wrapper" data-column="NAME"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">Дата создания</label>
+                    <div>
+                        <div class="column-wrapper" data-column="SUBSCRIPTION_DATE"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">Статус</label>
+                    <div>
+                        <div class="column-wrapper" data-column="STATUS_RU"></div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Главное мероприятие абонемента</label>
+                    <div>
+                        <div class="column-wrapper" data-column="ACTION_NAME"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Зал</label>
+                    <div>
+                        <div class="column-wrapper" data-column="HALL_NAME"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Схема зала</label>
+                    <div>
+                        <div class="column-wrapper" data-column="HALL_SCHEME_NAME"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Тип бланков для печати</label>
+                    <div>
+                        <div class="column-wrapper" data-column="TICKET_PACK_TYPE_RU"></div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label class="control-label">Комментарий</label>
+                    <div>
+                        <div class="column-wrapper" data-column="COMMENTS"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="hidden-inputs">
+            <div class="column-wrapper" data-column="STATUS"></div>
+            <div class="column-wrapper" data-column="OBJVERSION"></div>
+            <div class="column-wrapper" data-column="ACTION_ID"></div>
+            <div class="column-wrapper" data-column="HALL_ID"></div>
+            <div class="column-wrapper" data-column="HALL_SCHEME_ID"></div>
+            <div class="column-wrapper" data-column="TICKET_PACK_TYPE"></div>
+        </div>
+
+    </div> 
+    <!-- Мероприятия в абонементе -->
+    <div class="tab-pane fade in" id="subscription_modal_actions"></div>     
+    <div class="tab-pane fade in" id="subscription_modal_price">
+        <div class="form_subscription_price-content-wrapper"></div>
+    </div>      
+</div>        

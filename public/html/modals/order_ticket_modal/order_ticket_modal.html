@@ -1,0 +1,241 @@
+
+<div id="ticket_content_modal" class="container">
+    <div class="row">
+        <div class="col-md-1">
+            <div class="form-group">
+                <label for="ticket_ORDER_TICKET_ID_inp">Билет №:</label>
+                <select id="ticket_ORDER_TICKET_ID_inp"  class="form-control divIdModal"></select>
+            </div>
+        </div>
+        <div class="col-md-1 order_id">
+            <div class="form-group">
+                <label for="ticket_ORDER_ID_inp">Заказ №:</label>
+                <input disabled id="ticket_ORDER_ID_inp"  class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="ticket_STATUS_RU_inp">Статус билета:</label>
+                <input disabled id="ticket_STATUS_RU_inp"  class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="ticket_TICKET_TYPE_RU_inp">Тип билета:</label>
+                <input disabled id="ticket_TICKET_TYPE_RU_inp" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="ticket_PAYMENT_TYPE_RU_inp">Способ оплаты:</label>
+                <input disabled id="ticket_PAYMENT_TYPE_RU_inp" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="ticket_TICKET_DATE_inp">Дата создания:</label>
+                <input disabled id="ticket_TICKET_DATE_inp" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="ticket_RESERVED_TO_DATE_inp">Резерв до:</label>
+                <input disabled id="ticket_RESERVED_TO_DATE_inp" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <div class="form-group">
+                <label for="ticket_PRICE_inp">Цена:</label>
+                <input disabled id="ticket_PRICE_inp" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="ticket_USER_FULLNAME_inp">Пользователь:</label>
+                <input id="ticket_USER_FULLNAME_inp" disabled class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="ticket_BARCODE_inp">Штрихкод:</label>
+                <input disabled id="ticket_BARCODE_inp" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            <div class="form-group">
+                <label for="ticket_SCA_SERIES_inp">БСО серия:</label>
+                <input disabled id="ticket_SCA_SERIES_inp" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="ticket_SCA_NUMBER_inp">БСО номер:</label>
+                <input disabled id="ticket_SCA_NUMBER_inp" class="form-control">
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="ticket_AREA_GROUP_inp">Зона:</label>
+                <input disabled id="ticket_AREA_GROUP_inp" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <label for="ticket_LINE_inp">Ряд:</label>
+                <input disabled id="ticket_LINE_inp" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <label for="ticket_PLACE_inp">Место:</label>
+                <input disabled id="ticket_PLACE_inp" class="form-control">
+            </div>
+        </div>
+    </div>
+    
+    <hr>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="ticket_ACTION_inp">Мероприятие:</label>
+                <input disabled id="ticket_ACTION_inp" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="ticket_ACTION_DATE_inp">Дата мероприятия:</label>
+                <input disabled id="ticket_ACTION_DATE_inp" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="ticket_HALL_inp">Зал:</label>
+                <input disabled id="ticket_HALL_inp" class="form-control">
+            </div>
+        </div>
+        
+    </div>
+    
+    <hr>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="ticket_LAST_NAME_inp">Фамилия:</label>
+                <input id="ticket_LAST_NAME_inp" disabled class="form-control">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="ticket_FIRST_NAME_inp">Имя:</label>
+                <input id="ticket_FIRST_NAME_inp" disabled class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="ticket_PHONE_inp">Телефон клиента:</label>
+                <input id="ticket_PHONE_inp" disabled class="form-control">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="ticket_EMAIL_inp">E-mail:</label>
+                <input id="ticket_EMAIL_inp" disabled class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <label for="ticket_COMMENTS_inp">Комментарий:</label>
+            <textarea id="ticket_COMMENTS_inp" disabled class="form-control"></textarea>
+        </div>
+    </div>
+    <div id="ticket_modal_buttons">
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+function modalFunctionStart(id){
+    load_one_order(id);
+}
+function load_one_order(ticket_id){
+    switchLoad("load");
+    MBOOKER.MainFunctions.sendQuery({command:"get",subcommand:"order_ticket",sid:MBOOKER.sid,params:{where:"ORDER_TICKET_ID = "+ticket_id}},function(data){
+        switchLoad("complite");
+        var obj = MBOOKER.MainFunctions.jsonToObj(data)[0];
+        log(obj)
+        for (var key in obj){
+            $("#ticket_"+key+"_inp").val(obj[key]);
+        }
+        order_status_db = obj['ORDER_STATUS'];
+    });
+}
+var oder_status_db;
+$(document).ready(function(){
+    var ids = MBOOKER.Modals.ids;
+    var html = "";
+    $("#ticket_modal_buttons").html(html);
+    /// Стилизация Button
+    $( ".basket_btn" ).button();
+    var clientWidth = MBOOKER.MainFunctions.getClientWidth();
+    var clientHeight = MBOOKER.MainFunctions.getClientHeight();
+    /* Делать инфу по билету не в таблице */
+    
+    var ticket_id = ids[0];
+    load_one_order(ticket_id);
+
+    $("#return_ticket").click(function(){
+        //var id = $("#one_order").getGridParam("selectedRow");
+        var id = $("#ticket_ORDER_TICKET_ID_inp").val();
+        if (id<0) {
+            alert_yesno("Ошибка","Не выбрана запись.","Ок","",function(){},0);
+        }else{
+            alert_yesno("Возврат билета.","Вы уверены, что хотите осуществить возврат?","Да, уверен", "Отменить",function(){
+                send_query({command:"operation",subcommand:"return_ticket",sid:sid,params:{ORDER_TICKET_ID:id}},function(data){
+                    if (+$(data).find("result").find("rc").text()==0){
+                        alert_yesno("",$(data).find("result").find("message").text(),"Ок","",function(){
+                            $("#one_order").trigger("reloadGrid");
+                        },0);
+                    }else{
+                        alert_yesno("<span style='color:#f00;'>Ошибка.</span>",$(data).find("result").find("message").text(),"Ок","",function(){
+                            $("#one_order").trigger("reloadGrid");
+                        },0);
+                    }
+                    //$("#one_order").trigger("reloadGrid");
+                });
+            },0)
+        }
+    });
+    $("#return_order").click(function(){
+        alert_yesno("Возврат всего заказа.","Вы уверены, что хотите осуществить возврат заказа?","Да, уверен", "Отменить",function(){
+            send_query({command:"operation",subcommand:"return_order",sid:sid,params:{order_id:order_id}},function(data){
+                if (+$(data).find("result").find("rc").text()==0){
+                    alert_yesno("",$(data).find("result").find("message").text(),"Ок","",function(){
+                        $("#order").trigger("reloadGrid");
+                        $("#go_back").click();
+                    },0);
+                }else{
+                    alert_yesno("<span style='color:#f00;'>Ошибка.</span>",$(data).find("result").find("message").text(),"Ок","",function(){
+                        $("#order").trigger("reloadGrid");
+                    },0);
+                }
+                //$("#one_order").trigger("reloadGrid");
+            });
+        },0)
+    });
+
+    $(".order_id").dblclick(function(){
+        log(order_status_db)
+        var id = $(this).find("input").val();
+        open_order(id,order_status_db);
+    })
+});
+
+</script>

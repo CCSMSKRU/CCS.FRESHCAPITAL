@@ -1,0 +1,24 @@
+<div id="box_for_cashier_list container">
+    <div class="row">
+        <label for="cashier_list">Пользователь:</label><br/>
+        <select id="cashier_list"></select>
+    </div>
+    <div class="date_block row">
+        <div class="col-md-2">
+            <label for="from_date">Дата с:</label>
+            <input type="text" id="from_date" class="date_inp" size="10"/>
+        </div>
+        <div class="col-md-2">
+            <label for="to_date">Дата по:</label>
+            <input type="text" id="to_date" class="date_inp" size="10"/>
+        </div>
+    </div><br>
+    <div id="cash_visa_box" class="row">
+        <div class="col-md-3">
+            <input type="radio" id="CASH" name="cash_visa" value="CASH" checked="checked" /><label for="CASH">За наличные</label>
+        </div>
+        <div class="col-md-4">
+            <input type="radio" id="CARD" name="cash_visa" value="CARD" /><label for="CARD">По кредитной карте</label>
+        </div>
+    </div>
+</div>

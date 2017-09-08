@@ -1,0 +1,196 @@
+{
+  "class_profile": {
+    "MySQLUnique":true,
+    "profile": {
+      "name": "class_profile"
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name": { "type": "varchar", "length": "255", "unique": true},
+      "name_ru": { "type": "varchar", "length": "255", "default": ""},
+      "primary_key": { "type": "varchar", "length": "255", "default": "id"},
+      "parent_key": { "type": "varchar", "length": "255", "default": ""},
+      "checkbox_where": { "type": "varchar", "length": "255", "default": ""},
+      "checkbox_where_default_enabled": { "type": "tinyint", "length": "1"},
+      "checkbox_where_title": { "type": "varchar", "length": "255", "default": ""},
+      "ending": { "type": "varchar", "length": "255", "default": ""},
+      "default_order_by": { "type": "varchar", "length": "255", "default": "id desc"}, 
+      "default_where": { "type": "varchar", "length": "255"}, 
+      "open_form_client_object": { "type": "varchar", "length": "255"}, 
+      "child_client_object": { "type": "varchar", "length": "255"}, 
+      "rows_max_num_list": { "type": "varchar", "length": "255", "default": "10,20,50,100"}, 
+      "rows_max_num": { "type": "int", "length": "10", "default": 10}, 
+      "new_command": { "type": "tinyint", "length": "1", "default": 1}, 
+      "modify_command": { "type": "tinyint", "length": "1", "default": 1}, 
+      "remove_command": { "type": "tinyint", "length": "1", "default": 1}, 
+      "editable": { "type": "tinyint", "length": "1", "default": 1}, 
+      "additional_functionality": { "type": "tinyint", "length": "1", "default": 0},
+      "distinct_columns": { "type": "varchar", "length": "255", "default": ""},
+      "check_published": { "type": "tinyint", "length": "1", "default": 1},
+      "auto_publish": { "type": "tinyint", "length": "1", "default": 1}, 
+      "use_cache": { "type": "tinyint", "length": "1", "default": 1}, 
+      "created": { "type": "datetime", "default": "NULL"}, 
+      "updated": { "type": "datetime", "default": "NULL"}, 
+      "deleted": { "type": "datetime", "default": "NULL"}, 
+      "published": { "type": "datetime", "default": "NULL"}
+    }
+  },
+  "class_fields_profile": {
+    "MySQLUnique":true,
+    "profile": {
+      "name": "class_fields_profile"
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "class_id": { "type": "bigint", "length": "20", "notNull": true, "unique":true},
+      "column_name": { "type": "varchar", "length": "255", "unique":true},
+      "parent_key": { "type": "tinyint", "length": "1"},
+      "primary_key": { "type": "tinyint", "length": "1"},
+      "name": { "type": "varchar", "length": "255"},
+      "type": { "type": "varchar", "length": "255"},
+      "field_length": { "type": "int", "length": "20"},
+      "lov_columns": { "type": "varchar", "length": "255"},
+      "filter_type_id": { "type": "int", "length": "4"},
+      "filter_type": { "type": "varchar", "length": "255", "from_table": "filter_type", "keyword": "filter_type_id", "virtual": true, "return_column": "sysname", "name": "Тип фильтра" },
+      "type_of_editor_id": { "type": "int", "length": "4"},
+      "type_of_editor": { "type": "varchar", "length": "255", "from_table": "type_of_editor", "keyword": "type_of_editor_id", "virtual": true, "return_column": "sysname", "name": "Тип редактора" },
+      "quick_search_field": { "type": "tinyint", "length": "1"},
+      "updatable": { "type": "tinyint", "length": "1", "default": 1},
+      "visible": { "type": "tinyint", "length": "1", "default": 1},
+      "required": { "type": "tinyint", "length": "1"},
+      "editable": { "type": "tinyint", "length": "1", "default": 1},
+      "insertable": { "type": "tinyint", "length": "1", "default": 1},
+      "queryable": { "type": "tinyint", "length": "1", "default": 1},
+      "whereable": { "type": "tinyint", "length": "1", "default": 1},
+      "from_table": { "type": "varchar", "length": "255"},
+      "keyword": { "type": "varchar", "length": "255"},
+      "return_column": { "type": "varchar", "length": "255"},
+      "virtual": { "type": "tinyint", "length": "1"},
+      "default_value": {"type": "text"},
+      "concat_fields": {"type": "text"},
+      "validation": { "type": "varchar", "length": "255"},
+      "get_formating": { "type": "varchar", "length": "255", "default": ""},
+      "set_formating": { "type": "varchar", "length": "255", "default": ""},
+      "is_unique": { "type": "tinyint", "length": "1"},
+      "created": { "type": "datetime", "default": "NULL"},
+      "updated": { "type": "datetime", "default": "NULL"},
+      "deleted": { "type": "datetime", "default": "NULL"},
+      "published": { "type": "datetime", "default": "NULL"}
+    }
+  },
+  "test": {
+    "profile": {
+      "name": "test",
+      "name_ru": "Тест",
+      "ending": ""
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name": { "type": "varchar", "length": "255", "name": "Наименование"},
+      "grandmother_name": { "type": "varchar", "length": "255", "name": "Имя бабушки"},
+      "pets_name2": { "type": "text", "name": "Имя скотины", "old_key":"pets_name"},
+      "pets_birthday": {"type": "datetime"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "test_child": {
+    "profile": {
+      "name": "test_child",
+      "name_ru": "Дочка теста",
+      "ending": "а"
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name": { "type": "varchar", "length": "255", "name": "Наименование"},
+      "test_id": { "type": "bigint", "length": "20"},
+      "test_name": { "type": "varchar", "length": "255", "from_table": "test", "keyword": "test_id", "return_column": "name", "virtual": true, "name": "Наименование теста"},
+      "father_and_surin": { "type": "varchar", "length": "255", "concat_fields": "'father_name' , ' ' , 'surin_name'", "name": "Папа и Шурин"},
+      "father_name": { "type": "varchar", "length": "255", "name": "Имя отца"}, 
+      "surin_name": { "type": "varchar", "length": "255", "name": "Имя шурина"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "menu": {
+    "profile": {
+      "name": "menu",
+      "name_ru": "Главное меню",
+      "ending": "о"
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "type_id" : {"type": "bigint", "length": "20"},
+      "menu_type" : {"type": "varchar", "length": "255", "from_table": "menu_type", "keyword": "type_id", "return_column": "sysname", "virtual": true, "name": "Тип меню"},
+      "parent_id" : {"type": "bigint", "length": "20"},
+      "parent_menu" : {"type": "varchar", "length": "255", "from_table": "menu", "keyword": "parent_id", "return_column": "menu_item", "virtual": true, "name": "Родительский элемент"},
+      "client_object_id" : {"type": "bigint", "length": "20"},
+      "class_id" : {"type": "bigint", "length": "20"},
+      "class_name" : {"type": "varchar", "length": "255", "from_table": "class_profile", "keyword": "class_id", "return_column": "name", "virtual": true, "name": "Класс"},
+      "sort_no" : {"type": "bigint", "length": "20"},
+      "menu_item" : {"type": "varchar", "length": "255", "unique": true, "name": "Название пункта меню"},
+      "description" : {"type": "varchar", "length": "255", "name": "Описание пункта меню"},
+      "icon" : {"type": "varchar", "length": "255", "name": "Иконка"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "menu_type": {
+    "profile": {
+      "name": "menu_type",
+      "name_ru": "Тип меню",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "sysname" : {"type": "varchar", "length": "255", "name": "Системное имя"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "filter_type": {
+    "profile": {
+      "name": "filter_type",
+      "name_ru": "Тип фильтра",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "default_for_data_type" : {"type": "varchar", "length": "255", "name": "Знач. по умолч. для типа данных"},
+      "sysname" : {"type": "varchar", "length": "255", "name": "Системное имя"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "type_of_editor": {
+    "profile": {
+      "name": "type_of_editor",
+      "name_ru": "Тип редактора",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Наименование"},
+      "default_for_data_type" : {"type": "varchar", "length": "255", "name": "Знач. по умолч. для типа данных"},
+      "sysname" : {"type": "varchar", "length": "255", "name": "Системное имя"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  }
+}
+

@@ -1,0 +1,12 @@
+extends admin_layout
+block content
+    .container.posRel
+        h2 Слайды карусели
+        hr
+        .sBtn.green
+            a.btn(href="admin_main_slide?id=new")
+                .fa.fa-plus &nbsp;&nbsp;
+                | Добавить слайд
+        .event-results-tabs
+            .initMeTable(data-get_object="main_slides")
+    script(type="text/javascript", src="js/html/main_slides.js")

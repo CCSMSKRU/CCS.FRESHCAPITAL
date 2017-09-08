@@ -1,0 +1,131 @@
+{
+  "class_profile": {
+    "profile":{},
+    "structure": {
+      "name": {"type": "varchar","length": "255","unique": true},
+      "name_ru": {"type": "varchar","length": "255", "default": ""},
+      "ending": {"type": "varchar","length": "255", "default": ""},
+      "default_order_by": {"type": "varchar","length": "255", "default": "id desc"},
+      "default_where": {"type": "varchar","length": "255"},
+      "open_form_client_object": {"type": "varchar","length": "255"},
+      "child_client_object": {"type": "varchar","length": "255"},
+      "rows_max_num_list": {"type": "varchar","length": "255", "default": "10,20,50,100"},
+      "rows_max_num": {"type": "int","length": "10","default": 10},
+      "new_command": {"type": "tinyint","length": "1", "default": 1},
+      "modify_command": {"type": "tinyint","length": "1", "default": 1},
+      "remove_command": {"type": "tinyint","length": "1", "default": 1},
+      "editable": {"type": "tinyint","length": "1", "default": 1},
+      "additional_functionality": {"type": "tinyint","length": "1", "default": 0},
+      "distinct": {"type": "varchar","length": "255", "default": ""},
+      "get_formating": {"type": "varchar","length": "255", "default": ""},
+      "set_formating": {"type": "varchar","length": "255", "default": ""},
+      "check_published": {"type": "tinyint","length": "1", "default": 1},
+      "auto_publish": {"type": "tinyint","length": "1", "default": 1},
+      "use_cache": {"type": "tinyint","length": "1", "default": 1},
+      "created": {"type": "datetime","default": "NULL"},
+      "updated": {"type": "datetime","default": "NULL"},
+      "deleted": {"type": "datetime","default": "NULL"},
+      "published": {"type": "datetime","default": "NULL"}
+
+    }
+  },
+  "class_fields_profile": {
+    "structure": {
+      "id": {"type": "bigint","length": "20","notNull": true,"autoInc": true,"primary_key": true},
+      "client_object_id": {"type": "bigint","length": "20","notNull": true},
+      "column_name": {"type": "varchar","length": "255"},
+      "parent_key": {"type": "tinyint","length": "1"},
+      "primary_key": {"type": "tinyint","length": "1"},
+      "name": {"type": "varchar","length": "255"},
+      "lov_columns": {"type": "varchar","length": "255"},
+      "filter_type_id": {"type": "int","length": "4"},
+      "type_of_editor_id": {"type": "int","length": "4"},
+      "quick_search_field": {"type": "tinyint","length": "1"},
+      "updatable": {"type": "tinyint","length": "1"},
+      "visible": {"type": "tinyint","length": "1"},
+      "required": {"type": "tinyint","length": "1"},
+      "editable": {"type": "tinyint","length": "1"},
+      "insertable": {"type": "tinyint","length": "1"},
+      "from_table": {"type": "varchar","length": "255"},
+      "keyword": {"type": "varchar","length": "255"},
+      "return_column": {"type": "varchar","length": "255"},
+      "virtual": {"type": "tinyint","length": "1"},
+      "concat": {"type": "text"},
+      "validation": {"type": "varchar","length": "255"},
+      "unique": {"type": "tinyint","length": "1"},
+      "created": {"type": "datetime","default": "NULL"},
+      "updated": {"type": "datetime","default": "NULL"},
+      "deleted": {"type": "datetime","default": "NULL"},
+      "published": {"type": "datetime","default": "NULL"}
+    }
+  },
+  "test": {
+    "profile": {
+      "name": "test",
+      "name_ru": "Тест",
+      "ending": "",
+      "default_order_by": "id desc",
+      "default_where": "",
+      "open_form_client_object": "",
+      "child_client_object": "",
+      "rows_max_num_list": "",
+      "rows_max_num": "",
+      "new_command": "undefined",
+      "modify_command": "undefined",
+      "remove_command": "undefined",
+      "editable": "undefined",
+      "created": "",
+      "updated": "",
+      "deleted": "",
+      "published": "",
+      "additional_functionality": "undefined"
+    },
+    "structure": {
+      "id": {"type": "bigint","length": "20","notNull": true,"autoInc": true,"primary_key": true},
+      "name": {"type": "varchar","length": "255"},
+      "grandmother_name": {"type": "varchar","length": "255"},
+      "pets_name": {"type": "varchar","length": "255"},
+      "pets_birthday" : {"type": "datetime"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  },
+  "test_child": {
+    "profile": {
+      "name": "test_child",
+      "name_ru": "Дочка теста",
+      "ending": "а",
+      "default_order_by": "id desc",
+      "default_where": "",
+      "open_form_client_object": "",
+      "child_client_object": "",
+      "rows_max_num_list": "",
+      "rows_max_num": "",
+      "new_command": "undefined",
+      "modify_command": "undefined",
+      "remove_command": "undefined",
+      "editable": "undefined",
+      "created": "",
+      "updated": "",
+      "deleted": "",
+      "published": "",
+      "additional_functionality": "undefined"
+    },
+    "structure": {
+      "id": {"type": "bigint","length": "20","notNull": true,"autoInc": true,"primary_key": true},
+      "name": {"type": "varchar","length": "255"},
+      "test_id": {"type": "bigint","length": "20"},
+      "test_name": {"type": "varchar","length": "255", "from_table": "test", "keyword": "test_id", "return_column": "name", "virtual": true},
+      "father_and_surin": {"type": "varchar","length": "255", "concat": "'father_name' , ' ' , 'surin_name'"},
+      "father_name": {"type": "varchar","length": "255"},
+      "surin_name": {"type": "varchar","length": "255"},
+      "created": {"type": "datetime"},
+      "updated": {"type": "datetime"},
+      "deleted": {"type": "datetime"},
+      "published": {"type": "datetime"}
+    }
+  }
+
+}

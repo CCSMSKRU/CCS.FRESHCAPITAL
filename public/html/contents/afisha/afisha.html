@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="html/contents/afisha/afisha.css" rel="stylesheet" type="text/css">
+<script>
+
+
+
+    function poster_init(){
+
+    }
+
+    /*
+    xml['dates'] = {0:{date_id:"1",date:"17.11.13"},1:{date_id:"2",date:"18.11.13"}}
+    xml['halls'] = {0:{halls_id:"159",halls_name:"Светлановский"},1:{halls_id:"158",halls_name:"Камерный зал"}}
+    xml['rows'] = {0:{date_id:"1",hall_id:"159",action_name:"Светлановский",action_id:"132"},1:{date_id:"1",hall_id:"159",action_name:"Камерный зал",action_id:"132"}}
+    */
+    $(document).ready(function(){
+        poster_action();
+    });
+    
+    function poster_action(date){
+        window.setTimeout(function(){
+            $('#page_afisha_wrapper').html($('#page_content_index_wrapper').html());
+            var indexViewInstance = new MB.Core.indexView();
+            indexViewInstance.renderActions($('#page_content_index_wrapper #indexView-actions'));
+        }, 300);
+
+        return;
+        $(".body").css("height",MB.Core.getClientHeight()-100)
+        if(date==undefined){date = "";}
+        var xml = {};
+        MB.Core.sendQuery({command:"get",object:"afisha",sid:MB.User.sid,params:{from_date:date}},function(data){
+
+            var date = data['FROM_DATE'];
+            xml['dates'] = data['DATES'];
+            xml['halls'] = data['HALLS'];
+            xml['actions'] = data['ACTIONS'];
+            log(xml)
+            var html = "";
+            html+= '';
+            html+= '<table>';
+            // Формирование Шапки с Датами
+            html+= '<tr>';
+            html+= '<th> Даты </th>';
+            var counter = 1;
+            for (q in xml['halls']){
+                if(counter>4){counter = 1;}
+                html+= '<th id="td_'+xml['halls'][q]['HALL_ID']+'" class="hall headerStyle'+counter+'">';
+                html+= xml['halls'][q]['NAME'];
+                html+= '</th>';
+                /*
+                for(i in xml['dates']){
+                    html+= '<th id="td_'+xml['dates'][i]['DATE_ID']+'_'+xml['halls'][q]['HALL_ID']+'">';
+                    html+= '<div class="td"></div>';
+                    html+= '</th>';
+                } 
+                */
+                counter++;
+            }
+            html+= '</tr>';
+            // Формирование Тела 
+            for(i in xml['dates']){
+                html+= '<tr>';
+                html+= '<td id="th_'+xml['dates'][i]['ACTION_DATE']+'" class="td_th d_'+xml['dates'][i]['D']+'"><div class="td_th"></div>';
+                html+= xml['dates'][i]['ACTION_DATE_2']+"<br/>";
+                html+= xml['dates'][i]['DAY'];
+                html+= '</td>';
+                for (q in xml['halls']){
+                    html+= '<td id="td_'+xml['dates'][i]['ACTION_DATE']+'_'+xml['halls'][q]['HALL_ID']+'">';
+                    html+= '<div class="td"></div>';
+                    html+= '</td>';
+                }
+                html+= '</tr>';
+            }
+            html+= '</table>';
+            $("#poster_content").html(html);
+            $(".date-picker").datepicker({format:"dd.mm.yyyy"});
+            $("#poster_date").val(date);
+            var actions = {};
+            for (i in xml['actions']){
+                /*
+                if(actions[xml['actions'][i]['DATE_ID']]==undefined){actions[xml['actions'][i]['DATE_ID']]={}}
+                if(actions[xml['actions'][i]['DATE_ID']][xml['actions'][i]['HALL_ID']]==undefined){
+                    actions[xml['actions'][i]['DATE_ID']][xml['actions'][i]['HALL_ID']]=0;
+                }
+                actions[xml['actions'][i]['DATE_ID']][xml['actions'][i]['HALL_ID']]++;
+                */
+                if(actions[xml['actions'][i]['ACTION_ID']]==undefined){actions[xml['actions'][i]['ACTION_ID']] = {};}
+                actions[xml['actions'][i]['ACTION_ID']] = xml['actions'][i];
+
+            }
+
+            var height = 0;
+            for (i in xml['actions']){
+                var html = action_html(xml);
+                $("#td_"+xml['actions'][i]['ACTION_DATE']+"_"+xml['actions'][i]['HALL_ID']).find(".td").append(html);
+                
+            }
+            $(".action").mouseenter(function(){
+                action_hint_in($(this),actions);
+            })
+            $(".action").mouseleave(function(){
+                action_hint_out($(this));
+            })
+            $(".action a").click(function(){
+                action_zal($(this));
+            })
+
+        });
+        function action_html(xml){
+            var html = '';
+            if($("#td_"+xml['actions'][i]['ACTION_DATE']+"_"+xml['actions'][i]['HALL_ID']).find(".td").html()!=""){html+="<hr/>"}
+            html+= '<div class="action">';
+            html+= '<div class="poster_action_hint"></div>';
+            html+= '<div><a id="a_'+xml['actions'][i]['ACTION_ID']+'">';
+            html+= xml['actions'][i]['ACTION'];
+            html+= '</a></div>';
+            html+= "<div><b>"+xml['actions'][i]['TIME']+"</b></div>";
+            html+= '</div>';
+            return html;
+        }
+        function action_zal(obj_this){
+            var id = obj_this.attr("id").replace("a_","");
+            var action_label = $(obj_this).html();
+            $("#one_action").remove();
+            action_item = id;
+            MB.Core.switchModal({type:"content", filename:"one_action", params:{action_id:id, label:action_label, action_name:action_label}});
+        }
+        function action_hint_in(obj_this,actions){
+            var arr = ruskey();
+            var id = obj_this.find("a").attr("id").replace("a_","");
+            var action_hint = actions[id];
+            var html = "<div>";
+            html+= '<dl class="dl-horizontal">';
+            log(action_hint);
+            for (key in arr){
+                if(action_hint[key] == ""){
+                    action_hint[key] = "<br/>";
+                }
+                if(typeof action_hint[key]=="String" && action_hint[key].indexOf("|lt|br/|gt|") != -1){
+                    action_hint[key] = parseToHTML(action_hint[key]);
+                }
+                html+= "<dt>"+arr[key]+'</dt> <dd> '+action_hint[key]+"</dd>";
+            }
+            html+= '</dl>';
+            html+= '</div>';            
+            obj_this.find(".poster_action_hint").html(html);
+            var win_height = MB.Core.getClientHeight();
+            var win_width = MB.Core.getClientWidth();
+            var left = obj_this.offset().left+80;
+            var top = obj_this.offset().top-80;
+            var height = obj_this.find(".poster_action_hint").css("height").replace("px","");
+            var width = obj_this.find(".poster_action_hint").css("width").replace("px","");
+            if(win_height-100 <= +top + +height){
+                top= +top - +height;
+            }
+
+            if(win_width-100 <= +left + +width){
+                left= +left - +width;
+            }
+
+            obj_this.find(".poster_action_hint").css("left",left);
+            obj_this.find(".poster_action_hint").css("top",top);
+            obj_this.find(".poster_action_hint").show();
+        }
+        function action_hint_out(obj_this){
+            obj_this.find(".poster_action_hint").hide();
+            obj_this.find(".poster_action_hint").html("");
+        }
+        function ruskey(){
+            var arr = [];
+            //arr['HALL_ID'] = "Ид зала";
+            //arr['DATE_ID'] = "Ид даты";
+            //arr['ACTION_ID'] = "Ид мероприятия";
+            arr['ACTION'] = "Мероприятие";
+            //arr['ACTION_DATE'] = "Дата";
+            arr['ACTION_DATE'] = "Дата и время";
+            arr['ACTION_FINISH_DATE'] = "Конец";
+            arr['HALL'] = "Зал";
+            arr['SHOW_TYPE'] = "Тип";
+            arr['TIME'] = "Время";
+            arr['FREE_PLACE_COUNT'] = "Свободных мест";
+            arr['AGE_CATEGORY'] = "Возрастная категория";
+            arr['LENGH_MINUTES'] = "Длительность в минутах";
+            arr['LENGH_HOUR_MIN'] = "Длительность в часах";
+            arr['DIRECTED_BY'] = "Режисер";
+            arr['SCREENWRITER'] = "Сценарист";
+            arr['SHOW_GENRE'] = "Жанр";
+            arr['DESCRIPTION'] = "Описание";
+            arr['ACTORS'] = "Актеры";
+            arr['ABSTRACT'] = "Аннотация";
+            arr['SHOW_PART_INFO'] = "Период";
+            return arr;
+        }
+
+    }
+    $("#poster_date").on("change",function(){
+        var new_date = $(this).val();
+        poster_action(new_date);
+    })
+</script>
+</head>
+</html>
+<body>
+    <!--<div id="poster" class="body poster">-->
+        <!--<div class="row">-->
+            <!--<form class="form-horizontal" role="form">-->
+                <!--<div class="col-md-3">-->
+                    <!--<div style="margin-left: 25px;">-->
+                        <!--<label class="col-sm-2 control-label">Дата </label>-->
+                        <!--<div class="col-sm-6">-->
+                            <!--<div class="input-group input-medium date date-picker">-->
+                                <!--<input id="poster_date" type="text" class="form-control">-->
+                                <!--<span class="input-group-btn">-->
+                                    <!--<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>-->
+                                <!--</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
+        <!--<br/>-->
+        <!--<div id="poster_content" style="margin-left: 25px;"></div>-->
+    <!--</div>-->
+</body>
+

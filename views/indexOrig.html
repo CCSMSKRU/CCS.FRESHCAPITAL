@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>cfft.ru | &#1043;&#1083;&#1072;&#1074;&#1085;&#1072;&#1103; &#1089;&#1090;&#1088;&#1072;&#1085;&#1080;&#1094;&#1072;</title>
+    <link rel="stylesheet" type="text/css" href="plugins/bootstrap-3.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="plugins/bootstrap-3.3.2-dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="plugins/fontAwesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/core.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="plugins/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="plugins/mustache.js"></script>
+    <script type="text/javascript" src="plugins/bootbox.min.js"></script>
+  </head>
+  <body>
+    <div class="page-wrapper container noPad">
+      <div class="page-header">
+        <div class="container">
+          <div id="logo" class="logo">c<span class="redLogo">ff</span>t.ru</div>
+          <div class="main-menu-wrapper">
+            <ul id="top-main-menu" class="main-menu">
+              <li><i class="fa fa-video-camera"></i>&#1042;&#1080;&#1076;&#1077;&#1086;</li>
+              <li><i class="fa fa-calendar"></i>&#1057;&#1086;&#1073;&#1099;&#1090;&#1080;&#1103;</li>
+              <li><i class="fa fa-info-circle"></i>&#1055;&#1086;&#1083;&#1077;&#1079;&#1085;&#1072;&#1103; &#1080;&#1085;&#1092;&#1086;&#1088;&#1084;&#1072;&#1094;&#1080;&#1103;</li>
+              <li id="userObject" data-view="login"><i class="fa fa-key"></i>&#1042;&#1086;&#1081;&#1090;&#1080;</li>
+              <li data-view="login"><a href="registration.html"><i class="fa fa-key"></i>&#1056;&#1077;&#1075;&#1080;&#1089;&#1090;&#1088;&#1072;&#1094;&#1080;&#1103;</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="page-content">
+        <div class="main-slider-wrapper big-content-wrapper">
+          <div class="fadeLeft"></div>
+          <div class="main-slider-view">
+            <div class="main-slider-slide-left"><i class="fa fa-angle-left"></i></div>
+            <div class="main-slider-slide-right"><i class="fa fa-angle-right"></i></div>
+            <div class="main-slider-dots-wrapper"></div>
+            <ul data-shift="0" class="main-slider">
+              <li class="slide"><img src="img/slide1.jpg">
+                <div class="slide-text">Lorem ipsum dolor sit!</div>
+              </li>
+              <li class="slide"><img src="img/slide2.jpg">
+                <div class="slide-text">Lorem ipsum dolor sit!</div>
+              </li>
+              <li class="slide"><img src="img/slide3.jpg">
+                <div class="slide-text">Lorem ipsum dolor sit!</div>
+              </li>
+            </ul>
+          </div>
+          <div class="fadeRight"></div>
+        </div>
+        <div class="adv-block-wrapper big-content-wrapper">
+          <div class="fadeLeft"></div>
+          <div class="fadeRight"></div>
+          <div class="bot_bg">
+            <div class="container padTop40">
+              <div class="pr33 flLeft adv-item"><img src="img/adv1.jpg">
+                <div class="adv-item-title">Advertisement block 1
+                  <div class="adv-item-angle"></div>
+                </div>
+              </div>
+              <div class="pr33 flLeft adv-item"><img src="img/adv2.jpg">
+                <div class="adv-item-title">Advertisement block 1
+                  <div class="adv-item-angle"></div>
+                </div>
+              </div>
+              <div class="pr33 flLeft adv-item"><img src="img/adv3.jpg">
+                <div class="adv-item-title">Advertisement block 1
+                  <div class="adv-item-angle"></div>
+                </div>
+              </div>
+              <div class="promo-wrapper">
+                <div class="promo-text">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                  industry"s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                  scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+                  electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
+                  of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                  like Aldus PageMaker including versions of Lorem Ipsum.
+                </div>
+                <div class="promo-text">
+                  <div class="row marBot10">
+                    <div class="col-md-9 marTop22 fs-16">&#1061;&#1086;&#1095;&#1077;&#1096;&#1100; &#1087;&#1086;&#1090;&#1077;&#1088;&#1103;&#1090;&#1100; &#1083;&#1080;&#1096;&#1085;&#1080;&#1081; &#1074;&#1077;&#1089;, &#1085;&#1072;&#1073;&#1088;&#1072;&#1090;&#1100; &#1084;&#1099;&#1096;&#1077;&#1095;&#1085;&#1091;&#1102; &#1084;&#1072;&#1089;&#1089;&#1091;, &#1089;&#1090;&#1072;&#1090;&#1100; &#1089;&#1080;&#1083;&#1100;&#1085;&#1077;&#1077;?</div>
+                    <div class="col-md-3">
+                      <div class="sBtn red flRight btn_want-to-train">&#1061;&#1086;&#1095;&#1091; &#1090;&#1088;&#1077;&#1085;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;&#1089;&#1103;</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container padTop40 marBot30">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="article-item-wrapper">
+                <div class="article-item-img-wrapper"><img src="img/article1.jpg"></div>
+                <div class="article-item-title red-mid-header">Letraset sheets</div>
+                <div class="article-item-text text">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                  industry"s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                  scrambled it to make a type specimen book.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="article-item-wrapper">
+                <div class="article-item-img-wrapper"><img src="img/article2.jpg"></div>
+                <div class="article-item-title red-mid-header">Letraset sheets</div>
+                <div class="article-item-text text">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                  industry"s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                  scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+                  electronic typesetting, remaining essentially unchanged.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="article-item-wrapper">
+                <div class="article-item-img-wrapper"><img src="img/article3.jpg"></div>
+                <div class="article-item-title red-mid-header">Letraset sheets</div>
+                <div class="article-item-text text">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                  industry"s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                  scrambled it to make a type specimen book. It has survived not only five centuries.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="event-list-wrapper">
+                <div class="event-list-header">
+                  <div class="event-list-header-title"><i class="fa fa-calendar posRel"><i class="fa fa-circle-o whats_next_lil_icon"></i></i>&#1063;&#1090;&#1086; &#1076;&#1072;&#1083;&#1100;&#1096;&#1077;?</div>
+                </div>
+                <div class="event-list-content">
+                  <ul class="event-list-items">
+                    <li>
+                      <div class="event-list-item-date-wrapper">
+                        <div class="event-list-item-date-day">23</div>
+                        <div class="event-list-item-date-mth">&#1092;&#1077;&#1074;</div>
+                      </div>
+                      <div class="event-list-item-title">Mass workout at fatherland defender day</div>
+                    </li>
+                    <li>
+                      <div class="event-list-item-date-wrapper">
+                        <div class="event-list-item-date-day">08</div>
+                        <div class="event-list-item-date-mth">&#1084;&#1072;&#1088;</div>
+                      </div>
+                      <div class="event-list-item-title">Womans day workout, girls only</div>
+                    </li>
+                    <li>
+                      <div class="event-list-item-date-wrapper">
+                        <div class="event-list-item-date-day">01</div>
+                        <div class="event-list-item-date-mth">&#1103;&#1085;&#1074;</div>
+                      </div>
+                      <div class="event-list-item-title">New years party-workout with Santa!</div>
+                    </li>
+                    <li>
+                      <div class="event-list-item-date-wrapper">
+                        <div class="event-list-item-date-day">12</div>
+                        <div class="event-list-item-date-mth">&#1103;&#1085;&#1074;</div>
+                      </div>
+                      <div class="event-list-item-title">First work day of year workout</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="event-list-footer">&#1055;&#1086;&#1089;&#1084;&#1086;&#1090;&#1088;&#1077;&#1090;&#1100; &#1074;&#1089;&#1077; &#1084;&#1077;&#1088;&#1086;&#1087;&#1088;&#1080;&#1103;&#1090;&#1080;&#1103;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="promo-wrapper big-content-wrapper">
+          <div class="fadeLeft"></div>
+          <div class="fadeRight"></div>
+          <div class="bg3">
+            <div class="container padTop30 padBot30">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="promo-big-text ta-left">&#1093;&#1086;&#1095;&#1077;&#1096;&#1100; &#1089;&#1090;&#1072;&#1090;&#1100; &#1089;&#1080;&#1083;&#1100;&#1085;&#1077;&#1077; &#1080;<br>&#1085;&#1072;&#1081;&#1090;&#1080; &#1077;&#1076;&#1080;&#1085;&#1086;&#1084;&#1099;&#1096;&#1083;&#1077;&#1085;&#1085;&#1080;&#1082;&#1086;&#1074;?<br><br>&#1087;&#1086;&#1089;&#1077;&#1090;&#1080; &#1086;&#1076;&#1085;&#1086; &#1080;&#1079;<span class="red">&#1085;&#1072;&#1096;&#1080;&#1093;<br>&#1084;&#1077;&#1088;&#1086;&#1087;&#1088;&#1080;&#1103;&#1090;&#1080;&#1081;</span>&#1087;&#1086;<br>&#1082;&#1088;&#1086;&#1089;&#1089;&#1092;&#1080;&#1090;&#1091;</div>
+                </div>
+                <div class="col-md-6">
+                  <div class="promo-big-text ta-right">&#1090;&#1088;&#1077;&#1085;&#1080;&#1088;&#1091;&#1081;&#1089;&#1103; &#1074; &#1079;&#1072;&#1083;&#1077;<br>&#1080;&#1083;&#1080; &#1076;&#1086;&#1084;&#1072;<br><br>&#1074;&#1099;&#1073;&#1077;&#1088;&#1080; &#1074;&#1072;&#1088;&#1080;&#1072;&#1085;&#1090; &#1076;&#1083;&#1103;<br>&#1089;&#1077;&#1073;&#1103;,<span class="red">&#1085;&#1072;&#1095;&#1085;&#1080; &#1087;&#1088;&#1103;&#1084;&#1086;<br>&#1089;&#1077;&#1081;&#1095;&#1072;&#1089;</span></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="col-md-6">
+                      <div class="sBtn red btn_find-event wid50pr">&#1053;&#1072;&#1081;&#1090;&#1080; &#1084;&#1077;&#1088;&#1086;&#1087;&#1088;&#1080;&#1103;&#1090;&#1080;&#1077;</div>
+                    </div>
+                    <!-- <div class="col-md-6">-->
+                    <div class="col-md-3">
+                      <div class="sBtn red btn_find-club wid100pr">&#1053;&#1072;&#1081;&#1090;&#1080; &#1079;&#1072;&#1083;</div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="sBtn yellow btn_to-online-games wid100pr">&#1054;&#1085;&#1083;&#1072;&#1081;&#1085; &#1080;&#1075;&#1088;&#1099;</div>
+                    </div>
+                    <!-- </div>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="adv-block-wrapper">
+          <div>
+            <div class="container padTop30">
+              <div class="row padBot30">
+                <div class="col-md-4">
+                  <div class="filled-video"><img src="img/video1.jpg"></div>
+                </div>
+                <div class="col-md-4">
+                  <div class="filled-video"><img src="img/video2.jpg"></div>
+                </div>
+                <div class="col-md-4">
+                  <div class="filled-video"><img src="img/video3.jpg"></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="adv-bunner-wrapper"><img src="img/adv_bunner_big.jpg"></div>
+                </div>
+                <div class="col-md-3">
+                  <div class="adv-bunner-wrapper"><img src="img/adv_bunner.jpg"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-footer">
+        <div class="big-content-wrapper">
+          <div class="bot_bg bot_position">
+            <div class="container">
+              <div id="footer_logo" class="logo">c<span class="redLogo">ff</span>t.ru</div>
+              <div id="bot-main-menu" class="main-menu-wrapper">
+                <ul class="main-menu">
+                  <li>&#1043;&#1083;&#1072;&#1074;&#1085;&#1072;&#1103;</li>
+                  <li>&#1054;&#1073;&#1086; &#1084;&#1085;&#1077;</li>
+                  <li>&#1052;&#1077;&#1088;&#1086;&#1087;&#1088;&#1080;&#1103;&#1090;&#1080;&#1103;</li>
+                  <li>&#1042;&#1080;&#1076;&#1077;&#1086;</li>
+                  <li>Crossfit</li>
+                  <li>&#1048;&#1075;&#1088;&#1099;</li>
+                  <li>&#1042;&#1086;&#1081;&#1090;&#1080;</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="js/core.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+  </body>
+</html>

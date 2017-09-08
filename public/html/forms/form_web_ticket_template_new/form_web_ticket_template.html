@@ -1,0 +1,859 @@
+<div class="insertIntoHeader">
+    <div data-tab="editor" class="modal_tab_switcher active">Редактор шаблона</div>
+    <div data-tab="table" class="modal_tab_switcher">Таблица элементов</div>
+</div>
+
+<div data-tab="editor" class="modal_tab active">
+    <div class="pageContent">
+        <div class="one-action-canvas-wrapper wtt_workarea">
+            <div class="wtt_ticket_border">
+                <div class = "wtt_ticket">
+                <div class = "wtt_edit_box" style = "top: -4px; left: -4px;">
+                    <div class = "wtt_top wtt_edit_boxLine">
+                        <div class = "wtt_edit_boxPoint"></div>
+                    </div>
+                    <div class = "wtt_bottom wtt_edit_boxLine">
+                        <div class = "wtt_edit_boxPoint"></div>
+                    </div>
+                    <div class = "wtt_right wtt_edit_boxLine">
+                        <div class = "wtt_edit_boxPoint"></div>
+                    </div>
+                    <div class = "wtt_left wtt_edit_boxLine">
+                        <div class = "wtt_edit_boxPoint"></div>
+                    </div>
+                    <div class = "wtt_topLeft">
+                        <div class = "wtt_edit_boxPoint"></div>
+                    </div>
+                    <div class = "wtt_bottomRight">
+                        <div class = "wtt_edit_boxPoint"></div>
+                    </div>
+                    <div class = "wtt_topRight">
+                        <div class = "wtt_edit_boxPoint"></div>
+                    </div>
+                    <div class = "wtt_bottomLeft">
+                        <div class = "wtt_edit_boxPoint"></div>
+                    </div>
+                    <img class = "wtt_edit_pen" src = "assets/img/imagesWTTE/pen.gif" />
+                </div>
+                <div class = "wtt_text_editor">
+                    <div class="wtt_te_move"></div>
+                    <div class="wtt_te_close">
+                        <div class="wtt_te_close_icon"></div>
+                    </div>
+                    <div class = "wtt_te_el wtt_te_font_size">
+                        <input type = "te-font-size" value = "20px">
+                        <span class="arrow"></span>
+                        <div class = "wtt_te_font_size_list">
+                            <ul>
+                                <li font-size="10">10px</li>
+                                <li font-size="12">12px</li>
+                                <li font-size="14">14px</li>
+                                <li font-size="16">16px</li>
+                                <li font-size="18">18px</li>
+                                <li font-size="20" class="wtt_te_list_selected">20px</li>
+                                <li font-size="24">24px</li>
+                                <li font-size="28">28px</li>
+                                <li font-size="32">32px</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class = "wtt_te_el wtt_te_font_family">
+                        <input type = "te-font-size" value = "Times New Roman">
+                        <span class="arrow"></span>
+                        <div class = "wtt_te_font_family_list">
+                            <ul>
+                                <li font-fam="sans serif">Sans serif</li>
+                                <li font-fam="arial">Arial</li>
+                                <li font-fam="calibri">Calibri</li>
+                                <li font-fam="comic sans">Comic Sans</li>
+                                <li font-fam="times new roman" class="wtt_te_list_selected">Times New Roman</li>
+                                <li font-fam="helvetica neue">Helvetica Neue</li>
+                                <li font-fam="helvetica neue ultra">Helvetica Neue Ultra</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class = "wtt_te_el wtt_te_font_bold"></div>
+                    <div class = "wtt_te_el wtt_te_font_italic"></div>
+                    <div class = "wtt_te_el wtt_te_font_color">
+                        <div class="wtt_te_font_color_icon"></div>
+                        <div class="wtt_te_colorpicker_state ct-colorpicker-state" style="background-color: #b53535"></div>
+                        <input type="text" class="ct-colorpicker-wrapper" value="#b53535">
+                    </div>
+                    <div class = "wtt_te_el wtt_te_lineheight">
+                        <input type = "te-font-size" value = "20px">
+                        <span class="lh_icon"></span>
+                        <span class="arrow"></span>
+                        <div class = "wtt_te_line_height_list">
+                            <ul>
+                                <li line-height="10">10px</li>
+                                <li line-height="12">12px</li>
+                                <li line-height="14">14px</li>
+                                <li line-height="16">16px</li>
+                                <li line-height="18">18px</li>
+                                <li line-height="20" class="wtt_te_list_selected">20px</li>
+                                <li line-height="24">24px</li>
+                                <li line-height="28">28px</li>
+                                <li line-height="32">32px</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="one-action-sidebar-wrapper">
+            <div class = "wtt_sidebar">
+                <div class="wtt_sidebar_scale_handler">
+                    <div class="wtt_sidebar_scale_handler_minus">-</div>
+                    <div class="wtt_sidebar_scale_handler_lines">
+                        <div class="wtt_sidebar_scale_handler_line1"></div>
+                        <div class="wtt_sidebar_scale_handler_line2"></div>
+                    </div>
+                    <div class="wtt_sidebar_scale_handler_btn"></div>
+                    <div class="wtt_sidebar_scale_handler_plus">+</div>
+                    <div class="wtt_sidebar_scale_handler_label">100%</div>
+                </div>
+                <ul class="wtt_sidebar_scale_btns">
+                    <li>10%</li>
+                    <li>20%</li>
+                    <li>30%</li>
+                    <li>50%</li>
+                    <li>70%</li>
+                    <li>80%</li>
+                    <li class="wtt_sidebar_scale_btn_pressed">100%</li>
+                    <li>X2</li>
+                    <li>X3</li>
+                    <li>X5</li>
+                </ul>
+                <div class="wtt_sidebar_add_label">Добавить элемент:</div>
+                <ul class="wtt_sidebar_add_elements">
+                    <li type = "TextPDF">
+                        <div class="fa fa-font"></div>
+                        <div class="wtt_sidebar_add_element_label">Текст</div>
+                    </li>
+                    <li type = "ImagePDF">
+                        <div class="fa fa-picture-o"></div>
+                        <div class="wtt_sidebar_add_element_label">Изображение</div>
+                    </li>
+                    <li type = "BackgroundPDF">
+                        <div class="fa fa-picture-o"></div>
+                        <div class="wtt_sidebar_add_element_label">Фон</div>
+                    </li>
+                    <li type = "BarcodePDF">
+                        <div class="fa fa-barcode"></div>
+                        <div class="wtt_sidebar_add_element_label">Баркод</div>
+                    </li>
+                </ul>
+                <div class="wtt_sidebar_elements_label">Элементы:</div>
+                <ul class="wtt_sidebar_list"></ul>
+                <div class="wtt_sidebar_props">
+                    <div class="wtt_sidebar_element_props_title">Свойства элемента "Штрихкод 1":</div>
+                    <ul class="wtt_sidebar_element_props">
+                        <li>
+                            <div class="wtt_sidebar_prop_title">X</div>
+                            <div class="wtt_sidebar_prop_value" contenteditable="true">100 px</div>
+                        </li>
+                        <li>
+                            <div class="wtt_sidebar_prop_title">Y</div>
+                            <div class="wtt_sidebar_prop_value" contenteditable="true">150 px</div>
+                        </li>
+                        <li>
+                            <div class="wtt_sidebar_prop_title">Ширина</div>
+                            <div class="wtt_sidebar_prop_value" contenteditable="true">120 px</div>
+                        </li>
+                        <li>
+                            <div class="wtt_sidebar_prop_title">Высота</div>
+                            <div class="wtt_sidebar_prop_value" contenteditable="true">250 px</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div data-tab="table" class="modal_tab">
+    <div class="row">
+        <div class="col-md-4">
+            <div>{{{NAME}}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="fn-train-overflow">
+            <div class="fn-train">
+                <div class="fn-vagon marTop37">
+                    <div class="fn-child-objects-tabs-wrapper"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    .pageContent {
+        height: 100%;
+    }
+    .wtt_workarea *, .wtt_sidebar * {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .wtt_wrap {
+        width: 1310px;
+        margin: 0 auto;
+    }
+    .wtt_workarea {
+        background: rgb(249, 249, 249);
+        overflow: hidden;
+    }
+    .wtt_ticket_border {
+        background-color: #dadada;
+        position: absolute;
+        top: 20px;
+        left: 142.5px;
+        padding: 20px !important;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    }
+    .wtt_ticket {
+        background: white;
+        position: relative;
+    }
+    .wtt_sidebar {
+        overflow: hidden;
+        height: 100%;
+    }
+    .wtt_editor_element {
+        position: absolute;
+        cursor: pointer;
+    }
+    .wtt_active {
+        display: block !important;
+    }
+    .wtt_editing {
+        border: 1px solid rgb(255, 151, 0);
+        outline: none;
+        border-radius: 3px;
+        margin: -1px;
+        cursor: text;
+    }
+    .wtt_edit_box {
+        display: none;
+        width: 461px;
+        height: 138px;
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        z-index: 99999;
+        cursor: move;
+    }
+    img.wtt_edit_pen {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        top: -25px;
+        right: -25px;
+        cursor: pointer;
+        padding: 1px;
+    }
+    img.wtt_edit_pen:hover {
+        padding: 0;
+        border: 1px solid black;
+        border-radius: 7px;
+    }
+    .wtt_top, .wtt_bottom  {
+        background: url("assets/img/imagesWTTE/lineHor.png") repeat-x;
+        background-position-y: 7px;
+        position: absolute;
+        left: 4px;
+        right: 4px;
+        height: 8px;
+    }
+    .wtt_top {
+        top: 0;
+        background-position-y: 0px;
+    }
+    .wtt_bottom {
+        bottom: 0;
+    }
+    .wtt_left, .wtt_right  {
+        background: url("assets/img/imagesWTTE/lineVer.png") repeat-y;
+        background-position-x: 7px;
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        width: 8px;
+    }
+    .wtt_left {
+        left: 0;
+        background-position-x: 0px;
+    }
+    .wtt_right {
+        right: 0;
+    }
+    .wtt_edit_boxPoint {
+        background-image: url("assets/img/imagesWTTE/point.png");
+        width: 8px;
+        height: 8px;
+        position: absolute;
+    }
+    .wtt_top .wtt_edit_boxPoint, .wtt_bottom .wtt_edit_boxPoint {
+        left: 50%;
+        margin-left: -4px;
+        top: -4px;
+    }
+    .wtt_bottom .wtt_edit_boxPoint {
+        top: 4px;
+    }
+    .wtt_left .wtt_edit_boxPoint, .wtt_right .wtt_edit_boxPoint {
+        top: 50%;
+        margin-top: -4px;
+        left: -4px;
+    }
+    .wtt_right .wtt_edit_boxPoint {
+        left: 4px;
+    }
+    .wtt_topLeft .wtt_edit_boxPoint {
+        top: -4px;
+        left: -4px;
+    }
+    .wtt_topRight .wtt_edit_boxPoint {
+        top: -4px;
+        right: -4px;
+    }
+    .wtt_bottomLeft .wtt_edit_boxPoint {
+        bottom: -4px;
+        left: -4px;
+    }
+    .wtt_bottomRight .wtt_edit_boxPoint {
+        bottom: -4px;
+        right: -4px;
+    }
+
+    .wtt_text_editor {
+        display: none;
+        position: absolute;
+        top: 130px;
+        left: 100px;
+        color: black;
+        background: white;
+        border-radius: 3px;
+        border: 1px solid #E2E2E2;
+        box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.1);
+        z-index: 999999;
+    }
+    .wtt_te_move {
+        width: 16px;
+        height: 32px;
+        float: left;
+        position: relative;
+        padding: 0px 10px;
+        margin: 4px 0;
+        background: url("assets/img/imagesWTTE/dragdots.png") no-repeat 0px -7px;
+        cursor: move;
+    }
+    .wtt_te_close {
+        width: 20px;
+        height: 36px;
+        float: right;
+        position: relative;
+        margin: 2px 0 2px 10px;
+        border-left: 1px solid rgb(215, 215, 215);
+    }
+    .wtt_te_close_icon {
+        background: url("assets/img/imagesWTTE/xclose.png") no-repeat 5px 4px;
+        width: 20px;
+        height: 16px;
+        cursor: pointer;
+    }
+    .wtt_te_el {
+        position: relative;
+        float: left;
+        margin: 8px 5px;
+    }
+    .wtt_te_el:last-child {
+        margin-right: 0px;
+    }
+    .wtt_te_el:after, .wtt_te_el:before {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    .wtt_te_font_size_list, .wtt_te_font_family_list, .wtt_te_line_height_list {
+        display: none;
+        position: absolute;
+        top: 25px;
+        max-height: 100px;
+        width: 60px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border: 1px solid rgb(210, 210, 210);
+        border-radius: 3px;
+        background-color: white;
+        font-family: "Helvetica Neue";
+        font-size: 12px;
+        font-weight: 300;
+    }
+    .wtt_te_font_family_list {
+        width: 135px;
+    }
+    .wtt_te_line_height_list {
+        left: 30px;
+    }
+    .wtt_te_font_size_list li, .wtt_te_font_family_list li, .wtt_te_line_height_list li {
+        padding-left: 15px;
+        margin: 2px 0;
+        cursor: pointer;
+    }
+    .wtt_te_font_size_list li:hover, .wtt_te_font_family_list li:hover, .wtt_te_line_height_list li:hover {
+        background-color: rgb(240, 240, 240);
+    }
+    li.wtt_te_list_selected {
+        background: rgb(215, 215, 215) url("assets/img/imagesWTTE/smalv.png") no-repeat 3px 4px;
+    }
+    .wtt_te_font_size input, .wtt_te_font_family input, .wtt_te_lineheight input, .wtt_te_font_color input {
+        padding: 1px 13px 0 5px;
+        border-radius: 3px;
+        border: 1px solid #CCC;
+        background: rgba(255, 255, 255, 0);
+        box-shadow: inset 0px 2px 7px -5px #000000;
+        font-family: 'Helvetica Neue';
+        font-style: normal;
+        font-weight: 300;
+        outline: none;
+    }
+    .wtt_te_font_size input {
+        width: 60px;
+        height: 24px;
+        font-size: 12px;
+    }
+    .wtt_te_font_family input {
+        width: 135px;
+        height: 24px;
+        font-size: 13px;
+        letter-spacing: 0.2px;
+    }
+    .wtt_te_lineheight input {
+        width: 135px;
+        height: 24px;
+        font-size: 13px;
+        letter-spacing: 0.2px;
+    }
+    .wtt_te_font_color input {
+        width: 95px;
+        height: 24px;
+        font-size: 13px;
+        padding: 0 0 0 35px;
+    }
+    .wtt_te_font_color_icon {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 30px;
+        height: 24px;
+        border-radius: 3px 0px 0px 3px;
+        border: 1px solid #CCC;
+        background: whitesmoke url("assets/img/imagesWTTE/icons.png") no-repeat 1px 1px;
+        cursor: pointer;
+    }
+    .wtt_te_colorpicker_state {
+        position: absolute;
+        top: 12px;
+        left: 14px;
+        width: 9px;
+        height: 9px;
+        border-radius: 0;
+        border: 1px solid black;
+    }
+    .wtt_te_font_size .arrow, .wtt_te_font_family .arrow, .wtt_te_lineheight .arrow {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        width: 14px;
+        height: 24px;
+        border-radius: 0px 3px 3px 0;
+        border: 1px solid #CCC;
+        background: url("assets/img/imagesWTTE/arrow_bot.png");
+        cursor: pointer;
+    }
+    .wtt_te_font_size .arrow:hover, .wtt_te_font_family .arrow:hover, .wtt_te_lineheight .arrow:hover {
+        background: url("assets/img/imagesWTTE/arrow_bot_hover.png");
+    }
+    .wtt_te_lineheight input {
+        width: 90px;
+        height: 24px;
+        font-size: 12px;
+        padding-left: 35px;
+    }
+    .wtt_te_lineheight .lh_icon {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 30px;
+        height: 24px;
+        border-radius: 3px 0px 0px 3px;
+        border: 1px solid #CCC;
+        background: whitesmoke url("assets/img/imagesWTTE/icons.png") no-repeat 3px -238px;
+        cursor: pointer;
+    }
+    .wtt_te_font_bold, .wtt_te_font_italic {
+        width: 25px;
+        height: 24px;
+        cursor: pointer;
+    }
+    .wtt_te_font_bold {
+        background: url("assets/img/imagesWTTE/icons.png") 3px -38px;
+    }
+    .wtt_te_font_italic {
+        background: url("assets/img/imagesWTTE/icons.png") 3px -58px;
+    }
+    .wtt_te_font_bold:hover, .wtt_te_font_italic:hover {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    }
+    .wtt_te_font_bold:hover {
+        background-position: 2px -39px;
+    }
+    .wtt_te_font_italic:hover {
+        background-position: 2px -59px;
+    }
+
+    .wtt_sidebar_scale_handler {
+        height: 35px;
+        background-color: #eeeeee;
+        border-bottom: 1px solid #d1d1d1;
+    }
+    .wtt_sidebar_scale_handler_minus, .wtt_sidebar_scale_handler_plus {
+        color: #424242;
+        font-weight: 800;
+        font-size: 23px;
+        float: left;
+        width: 35px;
+        text-align: center;
+        cursor: pointer;
+    }
+    .wtt_sidebar_scale_handler_lines {
+        float: left;
+        width: 320px;
+        height: 35px;
+    }
+    .wtt_sidebar_scale_handler_line1, .wtt_sidebar_scale_handler_line2 {
+        height: 1px;
+    }
+    .wtt_sidebar_scale_handler_line1 {
+        margin-top: 17px;
+        background-color: #d1d1d1;
+    }
+    .wtt_sidebar_scale_handler_line2 {
+        background-color: white;
+    }
+    .wtt_sidebar_scale_handler_label {
+        color: #1d89ee;
+        font-size: 16px;
+        line-height: 35px;
+        padding: 0 5px 0 0 !important;
+        font-family: 'Helvetica Neue';
+        font-style: normal;
+        font-weight: 400;
+        float: right;
+    }
+    .wtt_sidebar_scale_handler_btn {
+        position: absolute;
+        background-color: #1d8aef;
+        top: 3px;
+        left: 160px;
+        width: 26px;
+        height: 26px;
+        border-radius: 20px;
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5), -1px 2px 0px rgba(0, 0, 0, 0.2);
+        border: 7px solid white;
+        cursor: pointer;
+    }
+    .wtt_sidebar_scale_btns li {
+        float: left;
+        text-align: center;
+        width: 10%;
+        background-color: #e1e1e1;
+        font-family: 'Helvetica Neue';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 20px;
+        color: #424242;
+        cursor: pointer;
+    }
+    .wtt_sidebar_scale_btns:after {
+        content:"";
+        display:table;
+        clear:both;
+    }
+    .wtt_sidebar_scale_btns li.wtt_sidebar_scale_btn_pressed {
+        background-color: #1d89ee;
+        color: white;
+    }
+    .wtt_sidebar_scale_btns li:hover {
+        background-color: white;
+        color: #424242;
+    }
+    .wtt_sidebar_add_label {
+        background-color: #1f6c70;
+        font-size: 16px;
+        font-family: 'Helvetica Neue';
+        font-style: normal;
+        font-weight: 400;
+        color: rgb(255, 239, 239);
+        line-height: 39px;
+        padding: 1px 0 0px 15px;
+    }
+    .wtt_sidebar_add_elements li {
+        background-color: #004144;
+        width: 25%;
+        float: left;
+        text-align: center;
+        height: 120px;
+        color: white;
+        cursor: pointer;
+    }
+    .wtt_sidebar_add_elements li .fa {
+        font-size: 30px;
+        font-weight: 300;
+        border: 1px solid white;
+        border-radius: 50px;
+        height: 80px;
+        width: 80px;
+        margin: 20px 0 0;
+    }
+    .wtt_sidebar_add_elements .fa:before {
+        line-height: 75px;
+    }
+    .wtt_sidebar_add_element_label {
+        display: none;
+    }
+    .wtt_sidebar_add_elements li:hover {
+        color: #004144;
+        background-color: white;
+    }
+    .wtt_sidebar_add_elements li:hover .fa {
+        border: 1px solid #004144;
+        margin: 10px 0 0;
+    }
+    .wtt_sidebar_add_elements li:hover .wtt_sidebar_add_element_label {
+        color: #004144;
+        line-height: 30px;
+        font-size: 13px;
+        font-family: 'Helvetica Neue';
+        font-style: normal;
+        font-weight: 400;
+        display: block;
+    }
+    .wtt_sidebar_add_elements .fa-barcode:before {
+        line-height: 80px;
+    }
+    .wtt_sidebar_add_elements {
+        box-shadow: 0px -2px 5px black;
+    }
+    .wtt_sidebar_add_elements:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    .wtt_sidebar_elements_label {
+        background-color: #705c1f;
+        font-size: 16px;
+        font-family: 'Helvetica Neue';
+        font-style: normal;
+        font-weight: 400;
+        color: rgb(255, 239, 239);
+        line-height: 39px;
+        padding: 1px 0 0px 15px;
+        box-shadow: 0px -2px 5px black;
+        position: relative;
+    }
+    .wtt_sidebar_list {
+        position: relative;
+        height: 201px;
+        overflow-y: auto;
+        margin-bottom: 2px;
+    }
+    .wtt_sidebar_list::-webkit-scrollbar, .wtt_sidebar_element_props::-webkit-scrollbar,
+    .wtt_te_line_height_list::-webkit-scrollbar, .wtt_te_font_family_list::-webkit-scrollbar, .wtt_te_font_size_list::-webkit-scrollbar {
+        width: 7px;
+    }
+    .wtt_sidebar_list::-webkit-scrollbar-track, .wtt_sidebar_element_props::-webkit-scrollbar-track,
+    .wtt_te_line_height_list::-webkit-scrollbar-track, .wtt_te_font_family_list::-webkit-scrollbar-track, .wtt_te_font_size_list::-webkit-scrollbar-track {
+        background-color: #eee;
+    }
+    .wtt_sidebar_list::-webkit-scrollbar-thumb, .wtt_sidebar_element_props::-webkit-scrollbar-thumb,
+    .wtt_te_line_height_list::-webkit-scrollbar-thumb, .wtt_te_font_family_list::-webkit-scrollbar-thumb, .wtt_te_font_size_list::-webkit-scrollbar-thumb {
+        background-color: #cacaca;
+    }
+    .wtt_sidebar_list li {
+        background-color: #eeeeee;
+        border-top: 1px solid white;
+        height: 40px;
+        cursor: pointer;
+        padding-right: 5px;
+    }
+    .wtt_sidebar_list li .fa-font, .wtt_sidebar_list li .fa-picture-o,
+    .wtt_sidebar_list li .fa-barcode {
+        font-size: 13px;
+        font-weight: 300;
+        border: 1px solid #A1A1A1;
+        border-radius: 50px;
+        height: 30px;
+        width: 30px;
+        color: #000000;
+        float: left;
+        margin: 5px 10px;
+        line-height: 27px;
+    }
+    .wtt_sidebar_list li .fa-barcode {
+        line-height: 29px;
+    }
+    .wtt_sidebar_element_title {
+        float: left;
+        line-height: 40px;
+    }
+    .wtt_sidebar_list li .fa-trash-o, .wtt_sidebar_list li .fa-pencil {
+        float: right;
+        margin: 7px 4px 0 0;
+        border-radius: 15px;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+    }
+    .wtt_sidebar_list li:hover {
+        background-color: #888069;
+        color: white;
+    }
+    .wtt_sidebar_list li:hover .fa-trash-o, .wtt_sidebar_list li:hover .fa-pencil {
+        background-color: white;
+    }
+    .wtt_sidebar_list li:hover .fa {
+        border-color: white;
+        color: white;
+    }
+    .wtt_sidebar_list li:hover .fa-trash-o {
+        color: red;
+    }
+    .wtt_sidebar_list li:hover .fa-pencil {
+        color: blue;
+    }
+    li.wtt_sidebar_active {
+        background-color: #888069;
+        color: white;
+    }
+    li.wtt_sidebar_active .fa {
+        border-color: white;
+        color: white;
+    }
+    li.wtt_sidebar_active .fa-trash-o, li.wtt_sidebar_active .fa-pencil {
+        background-color: white;
+    }
+    li.wtt_sidebar_active .fa-trash-o {
+        color: red;
+    }
+    li.wtt_sidebar_active .fa-pencil {
+        color: blue;
+    }
+    .wtt_sidebar_props {
+        display: block;
+    }
+    .wtt_sidebar_element_props {
+        overflow-y: auto;
+        height: 181px;
+    }
+    .wtt_sidebar_element_props_title {
+        position: relative;
+        background-color: #1f7021;
+        font-size: 16px;
+        font-family: 'Helvetica Neue';
+        font-style: normal;
+        font-weight: 400;
+        color: rgb(255, 239, 239);
+        box-shadow: 0px -2px 5px black;
+        line-height: 39px;
+        padding: 1px 0 0px 15px;
+    }
+    .wtt_sidebar_prop_title {
+        width: 40%;
+        float: left;
+        line-height: 30px;
+        text-align: right;
+        padding-right: 10px;
+        border-right: 1px solid #eeeeee;
+        background-color: #f9f9f9;
+        cursor: default;
+    }
+    .wtt_sidebar_element_props li:nth-child(even) .wtt_sidebar_prop_title {
+        background-color: #f7f7f7;
+    }
+    .wtt_sidebar_prop_value {
+        width: 60%;
+        line-height: 30px;
+        float: left;
+        padding-left: 10px;
+        background-color: white;
+        outline: none;
+    }
+    .wtt_sidebar_element_props li {
+        border-bottom: 1px solid #eee;
+    }
+    .wtt_sidebar_element_props li:before,  ul.wtt_sidebar_element_props li:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    .wtt_sidebar_element_props_title, .wtt_sidebar_elements_label, .wtt_sidebar_add_label {
+        cursor: pointer;
+    }
+    .wtt_sidebar_add_label:hover, .wtt_sidebar_elements_label:hover, .wtt_sidebar_element_props_title:hover {
+        padding-left: 20px;
+    }
+    .hide_list {
+        display: none !important;
+    }
+
+    .ui-resizable-helper {
+        border: 2px dotted #00F;
+        z-index: 99999 !important;
+    }
+    .ui-resizable-se {
+        cursor: se-resize;
+        width: 12px;
+        height: 12px;
+        bottom: -3px;
+        right: -3px;
+    }
+    .ui-resizable-e {
+        cursor: e-resize;
+        width: 7px;
+        height: 100%;
+        right: -5px;
+        top: 0;
+    }
+    .ui-resizable-s {
+        cursor: s-resize;
+        width: 100%;
+        height: 7px;
+        bottom: -5px;
+        left: 0;
+    }
+    .ui-icon-gripsmall-diagonal-se {
+        background-position: -64px -224px;
+    }
+    .ui-icon {
+        background-image: url("assets/img/imagesWTTE/ui-icons_222222_256x240.png");
+        display: block;
+        text-indent: -99999px;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        width: 16px;
+        height: 16px;
+    }
+    .ui-resizable-handle {
+        position: absolute;
+        font-size: 0.1px;
+        display: block;
+        -ms-touch-action: none;
+        touch-action: none;
+    }
+</style>

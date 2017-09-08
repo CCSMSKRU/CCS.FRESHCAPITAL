@@ -1,0 +1,88 @@
+extends layout
+block content
+    - var articles = data.articles;
+    - var article = data.article;
+    .page-content
+        .container.article-wrapper
+            .row
+                .col-md-8
+                    .big-header #{article.title}
+                    .art-features-wrapper
+                        .art-feature.atr-date
+                            .fa.fa-calendar-o &nbsp;&nbsp;
+                            | #{article.publication_date}
+                        .art-feature.atr-author
+                            .fa.fa-user &nbsp;&nbsp;
+                            | #{article.author}
+                        .art-feature.atr-license
+                            .fa.fa-file-text-o &nbsp;&nbsp;
+                            | #{article.license}
+                    -var path = (article.photo)? 'upload/'+article.photo: 'img/def_article.jpg';
+                    img.art_img_2(src="#{path}")
+                    .art-body-2
+                        | !{article.body}
+                    .art-footer.col-md-6
+                        .art-footer-list-item
+                            | Автор:&nbsp;&nbsp;#{article.author}
+                        .art-footer-list-item
+                            | Переводчик:&nbsp;&nbsp;#{article.author}
+                        .art-footer-list-item
+                            | Источник:&nbsp;&nbsp;
+                            a(href="#{article.original_url}")
+                                | #{article.original}
+                        .art-footer-list-item
+                            | Лицензия СС:&nbsp;&nbsp;#{article.license}
+                        .art-footer-list-item
+                            | Дата публикации:&nbsp;&nbsp;#{article.publication_date}
+                    .art-social.col-md-6
+                        div Нравится? &nbsp;
+                            b Расскажи друзьям!
+                        a.fa.fa-facebook.art-soc-icon(target="_blank", href="https://www.facebook.com/groups/784528851634020/")
+                        a.fa.fa-vk.art-soc-icon(target="_blank", href="http://vk.com/wod_of_week")
+                .col-md-4
+                    .art-addit-wrapper
+                        .art-addit-headline Смотри также
+                        -var artIdx = 6;
+                        each a, key in articles
+                            if(a.id != article.id)
+                                if(key < artIdx)
+                                    a.art-item-wrapper(href="article?id=#{a.id}")
+                                        .art-item-image
+                                            -var artpath = (a.photo)? 'upload/'+a.photo: 'img/def_article.jpg';
+                                            img.art-img(src="#{artpath}")
+                                        .art-item-title
+                                            | #{a.title}
+
+
+
+
+        //div -------------------------------------------------------------------------------------
+        //
+        //.container.marBot30.noPad
+        //    h3.fullDarkHeader
+        //        span.fullDarkHeader-inner
+        //            | #{article.title}
+        //    .row
+        //        .col-md-4
+        //            .article-image-wrapper
+        //                -var path = (article.photo)? 'upload/'+article.photo: 'img/def_article.jpg';
+        //                .art_img(style="background-image: url(#{path})")
+        //            .article-other-info
+        //                if(article.author.length > 0)
+        //                    h4 Автор:
+        //                    div #{article.author}
+        //                if(article.translator.length > 0)
+        //                    h4 Переводчик:
+        //                    div #{article.translator}
+        //                if(article.original_url.length > 0)
+        //                    h4 Оригинал:
+        //                    a(href="#{article.original_url}") #{article.original_url}
+        //                if(article.license.length > 0)
+        //                    h4 Лицензия:
+        //                    div #{article.license}
+        //        .col-md-8
+        //            | !{article.body}
+        //            p
+        //                .ta-right
+        //                    | #{article.publication_date}
+

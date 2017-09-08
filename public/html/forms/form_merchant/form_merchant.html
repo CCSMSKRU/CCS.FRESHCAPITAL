@@ -1,0 +1,177 @@
+<div class="insertIntoHeader">
+    <div data-tab="card" class="modal_tab_switcher active">Карточка</div>
+    <div data-tab="financing" class="modal_tab_switcher">Финансирование</div>
+    <div data-tab="docs" class="modal_tab_switcher">Документы</div>
+</div>
+
+
+<div class="modal_tab active" data-tab="card">
+
+    <div class="col-md-12">
+        <div class="col-md-6"><h1><span class="through_number">{+{through_number}+}</span> {+{short_name}+}</h1></div>
+    </div>
+
+        <!--<div class="order-status iih-field" data-column="merchant_status" data-color="{+{merchant_status}+}">{+{merchant_status}+}</div><div class="order-created">Создана: <span class="iih-field" data-column="created">{+{created}+}</span></div>-->
+
+    <div class="col-md-6">
+
+        <div class="row"><div>{{{name}}}</div></div>
+        <div class="row"><div>{{{short_name}}}</div></div>
+        <div class="row"><div>{{{registration_date}}}</div></div>
+        <div class="row"><div>{{{phone}}}</div></div>
+        <div class="row"><div>{{{email}}}</div></div>
+
+        <div class="row"><div>{{{legal_address}}}</div></div>
+        <div class="row"><div>{{{real_address}}}</div></div>
+
+        <div class="row"><div>{{{executive_fio}}}</div></div>
+
+        <div class="row">
+            <div>
+                <div class="classic-filed-replacer" data-repid="1s" data-replace="Генеральный директор">Ген. дир.</div>
+                <div class="field-to-replace" data-repid="1s" data-replace="1">{{{executive}}}</div>
+            </div></div>
+
+        <div class="row"><div>
+            <div class="classic-filed-replacer" data-repid="1" data-replace="Устава">Устава</div>
+            <div class="classic-filed-replacer" data-repid="1" data-replace="Свидетельства о государственной регистрации в качестве индивидуального предпринимателя">Свид-ва</div>
+            <div class="classic-filed-replacer" data-repid="1" data-replace="Доверенности № __ от «___» _____ 201 г.">Доверенности</div>
+            <div class="field-to-replace" data-repid="1" data-replace="1">{{{grounds_on}}}</div>
+        </div></div>
+
+        <div class="row"><div>{{{number_and_date_acquiring_agreement}}}</div></div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="row"><div>{{{business_type}}}</div></div>
+        <div class="row"><div>{{{processing_bank}}}</div></div>
+        <div class="row"><div>{{{rko_bank}}}</div></div>
+
+        <div class="row"><div>{{{inn}}}</div></div>
+        <div class="row"><div>{{{kpp}}}</div></div>
+        <div class="row"><div>{{{ogrn}}}</div></div>
+        <div class="row"><div>{{{okpo}}}</div></div>
+        <div class="row"><div>{{{okato}}}</div></div>
+        <div class="row"><div>{{{rs}}}</div></div>
+        <div class="row"><div>{{{ks}}}</div></div>
+        <div class="row"><div>{{{bik}}}</div></div>
+
+        <!--<div class="row"><div>{{{bki_fiz_file}}}</div></div>-->
+        <!--<div class="row"><div>{{{bki_ur_file}}}</div></div>-->
+
+    </div>
+
+
+    <div class="col-md-12">
+        <div class="col-md-12">
+
+
+
+            <div data-tbls="merchant_representative.tbl_merchant_representative,merchant_history_log.tbl_merchant_history_log" class="fn-child-tbl-holder marTop10"></div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal_tab" data-tab="financing">
+
+    <div class="row" style="margin-bottom: 30px;">
+
+        <div class="col-md-12">
+            <div class="col-md-6"><h1><span class="through_number">{+{through_number}+}</span> {+{short_name}+}</h1></div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="row"><div>{{{payments_start_date}}}</div></div>
+            <div class="row"><div>{{{financing_close_date}}}</div></div>
+            <div class="row"><div>{{{short_name}}}</div></div>
+            <div class="row"><div>{{{avr_monthly_turnover}}}</div></div>
+            <div class="row"><div>{{{financing_type}}}</div></div>
+            <div class="row"><div>{{{founding_amount}}}</div></div>
+            <div class="row"><div>{{{factoring_rate}}}</div></div>
+            <div class="row"><div>{{{avl_proc_dly_withdraw_rate}}}</div></div>
+            <div class="row"><div>{{{amount_to_return}}}</div></div>
+            <div class="row"><div>{{{payment_amount}}}</div></div>
+            <div class="row"><div>{{{payments_count}}}</div></div>
+
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="row"><div>{{{complete_percent}}}</div></div>
+
+            <div class="row"><div class="fn-field"><label>Всего платежей:</label> <span class="iih-field fn-summ-readonly-field" data-column="payments_count">{+{payments_count}+}</span></div></div>
+            <div class="row"><div class="fn-field"><label>Оплаченных:</label> <span class="iih-field fn-summ-readonly-field" data-column="payments_paid">{+{payments_paid}+}</span></div></div>
+            <div class="row"><div class="fn-field"><label>Дефолтов:</label> <span class="iih-field fn-summ-readonly-field" data-column="payments_default">{+{payments_default}+}</span></div></div>
+            <div class="row"><div class="fn-field"><label>Осталось:</label> <span class="iih-field fn-summ-readonly-field" data-column="payments_pending">{+{payments_pending}+}</span></div></div>
+
+            <div class="row"><div class="fn-field"><label>Возвращено:</label> <span class="iih-field fn-summ-readonly-field" data-column="total_returned">{+{total_returned}+} руб.</span></div></div>
+            <div class="row"><div class="fn-field"><label>Осталось вернуть:</label> <span class="iih-field fn-summ-readonly-field" data-column="to_return">{+{to_return}+} руб.</span></div></div>
+        </div>
+    </div>
+
+
+
+
+    <!--<div class="great-create-new-financing"><span class="great-create-plus">+</span> Создать новое финансирование</div>-->
+
+
+
+    <div class="col-md-12">
+        <!--<div class="row">-->
+            <div data-tbls="merchant_financing.tbl_merchant_financing_2" class="fn-child-tbl-holder marTop10"></div>
+        <!--</div>-->
+
+    </div>
+
+
+
+    <!--.tbl_merchant_financing-->
+
+</div>
+
+
+<div class="modal_tab" data-tab="docs">
+
+    <div class="row" style="margin-top: 30px; margin-bottom: 30px;">
+        <div class="col-md-6">
+
+
+
+            <div class="row"><div>{{{short_name}}}</div></div>
+            <div class="row"><div>{{{avr_monthly_turnover}}}</div></div>
+            <div class="row"><div>{{{financing_type}}}</div></div>
+            <div class="row"><div>{{{founding_amount}}}</div></div>
+            <div class="row"><div>{{{factoring_rate}}}</div></div>
+            <div class="row"><div>{{{avl_proc_dly_withdraw_rate}}}</div></div>
+            <div class="row"><div>{{{amount_to_return}}}</div></div>
+            <div class="row"><div>{{{payment_amount}}}</div></div>
+            <div class="row"><div>{{{payments_count}}}</div></div>
+
+
+        </div>
+
+        <div class="col-md-6">
+
+
+
+        </div>
+
+        <div class="col-md-12">
+            <div data-tbls="merchant_document.tbl_merchant_document" class="fn-child-tbl-holder marTop10"></div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="lower-buttons-padder"></div>
+<div class="lower-buttons-wrapper"></div>
+

@@ -1,0 +1,92 @@
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" id="">
+            <li id="TAB_found_group_modal_content" class="active"><a href="#found_group_modal_content" data-toggle="tab">Общее</a></li>
+            <li id="TAB_found_group_modal_access_user"><a href="#found_group_modal_access_user" data-toggle="tab">Доступ пользователей</a></li>
+            <li id="TAB_found_group_modal_access_agent"><a href="#found_group_modal_access_agent" data-toggle="tab">Доступ агентов</a></li>
+        </ul>
+    </div>
+</div>
+<div class="tab-content">
+    <div class="tab-pane fade in active" id="found_group_modal_content">
+        <input type="hidden" id="xml_OBJVERSION_inp"/>
+
+     <div class="hidden-inputs">
+        <div class="column-wrapper" data-column="OBJVERSION"></div>
+        <div class="column-wrapper" data-column="AVAILABILITY_STATUS"></div>        
+     </div>  
+
+
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">id</label>
+                    <div>
+                        <div class="column-wrapper primarykey" data-column="FUND_GROUP_ID"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Название</label>
+                    <div>
+                        <div class="column-wrapper" data-column="NAME"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Статус доступности</label>
+                    <div>
+                        <div class="column-wrapper" data-column="AVAILABILITY_STATUS_RU"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">Цвет</label>
+                    <div>
+                        <div class="column-wrapper" data-column="COLOR"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Доступно для продажи через WEB</label>
+                    <div>
+                        <div class="column-wrapper" data-column="AVAILABLE_FOR_WEB_SALE"></div>
+                    </div>
+                </div>
+             </div>                
+        </div>
+        
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label class="control-label">Описание</label>
+                    <div>
+                        <div class="column-wrapper" data-column="COMMENTS"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Вставить класс выбора -->
+    <div class="tab-pane fade in" id="found_group_modal_access_user">
+        <div id="userForFundWrapper">
+            <div class="row">
+                <div class="col-md-12 marTop10 marBot10">
+                    <div id="addUsersForFund" class="btn newStyle btn-green"><i class="fa fa-plus"></i>&nbsp;&nbsp;Добавить пользователей к фонду</div>
+                </div>
+            </div>
+        </div>
+        <div class="form_fund_group_access_user-content-wrapper"></div>
+    </div>
+    <div class="tab-pane fade in" id="found_group_modal_access_agent">
+        <div class="form_fund_group_access_agent-content-wrapper"></div>
+    </div>  
+</div>

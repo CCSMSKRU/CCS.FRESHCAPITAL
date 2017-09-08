@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Фонды <span id="fund_groupHeaderName"></span></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" id="">
+                <li id="TAB_found_groups_modal_content" class="active"><a href="#found_groups_modal_content" data-toggle="tab">Общее</a></li>
+                <li id="TAB_found_groups_modal_access_user"><a href="#found_groups_modal_access_user" data-toggle="tab">Доступ пользователей</a></li>
+                <li id="TAB_found_groups_modal_access_inst"><a href="#found_groups_modal_access_inst" data-toggle="tab">Доступ агентов</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="found_groups_modal_content">
+            <input type="hidden" id="xml_OBJVERSION_inp"/>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group"><label for="">id</label><input id="xml_FUND_GROUP_ID_inp" type="text" class="form-control" disabled></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group"><label for="">Название</label><input id="xml_NAME_inp" type="text" class="form-control"></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group"><label for="">Статус доступности</label><select id="xml_AVAILABILITY_STATUS_select" type="text" class="form-control"></select></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group"><label for="">Цвет</label><input id="xml_COLOR_inp" type="text" class="form-control"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group"><label for="">Описание</label><textarea id="xml_COMMENTS_inp" type="text" class="form-control"></textarea></div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade in" id="found_groups_modal_access_user">
+            <br>
+            <div id="for_found_groups_modal_user_table" class="">
+              <table id="found_groups_modal_user_table"></table>
+              <div id="found_groups_modal_user_table_nav"></div>
+            </div>
+        </div>
+        <div class="tab-pane fade in" id="found_groups_modal_access_inst">
+            <br>
+            <div id="for_found_groups_modal_inst_table" class="">
+              <table id="found_groups_modal_inst_table"></table>
+              <div id="found_groups_modal_inst_table_nav"></div>
+            </div>
+        </div>  
+    </div>
+</div>

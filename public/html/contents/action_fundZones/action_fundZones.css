@@ -1,0 +1,118 @@
+#action_fundZones{
+}
+
+
+#for_fund_groups{
+    /*width: 380px;*/
+
+}
+
+.fund_color{
+    position: absolute;
+    /*margin-top: -5px;*/
+    float: left;
+    width: 98%;
+    height: 19px;
+    margin-right: 20px !important;
+}
+.one_fund_group{
+    position: relative;
+    cursor: pointer;
+}
+
+
+/*.one_fund_group{
+    position: relative;
+    float: left;
+    cursor: pointer;
+    width: 100%;
+    height: 24px;
+    border: 1px solid #000;
+}*/
+/*.one_fund_group span{
+    display: block;
+    margin: 4px 25px;
+    float: left;
+}*/
+.pf_right{
+    float: right!important;
+    margin-right: 40px!important;
+}
+
+/*
+.one_fund_group .select_point{
+    position: absolute;
+    left:2px;
+    top:2px;
+    width: 20px;
+    height: 20px;
+    background-image: url("../img/point20_20.png");
+    display: none;
+}
+*/
+
+
+#hall_scheme_fundzone{
+    /*display: block;
+    width: 380px;
+    max-width: 380px;
+    float: left;
+    margin-bottom: 10px;*/
+}
+#hall_scheme_fundzone div{
+    /*width: 380px;
+    margin: 5px 0;
+    border-radius: 4px;
+    background-color: rgba(141, 153, 179, 0.14);
+    padding: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;*/
+
+}
+
+#for_fund_group_total{
+    position: relative;
+    float: left;
+
+    width: 100%;
+
+    border: 1px solid #000;
+}
+.for_fund_group_total_row{
+    width: 100%;
+    float: left;
+}
+#for_fund_group_total span{
+    display: block;
+    margin: 4px 25px;
+    float: left;
+}
+
+
+.right_column_block{
+    margin-bottom: 10px!important;
+}
+
+#go_to_price{
+   /* float: left;
+    color: #00f;
+    margin:10px 0;
+    cursor: pointer;*/
+}
+
+#fund_manager{
+    width: 100%;
+    float: left;
+    margin: 6px 0;
+
+}
+#fund_manager span{
+   /* cursor: pointer;
+    color: #00f;*/
+}
+
+
+.ui-jqdialog{
+    z-index: 1012;
+}

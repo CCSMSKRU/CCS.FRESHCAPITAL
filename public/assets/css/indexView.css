@@ -1,0 +1,91 @@
+#indexView-actions{
+
+}
+
+#iv-actions-wrapper{
+    margin-top: -19px;
+    margin-left: -15px;
+    margin-right: -18px;
+}
+
+.iv-actions-item{
+    float: left;
+    width: 20%;
+    cursor: pointer;
+    position: relative;
+}
+.iv-actions-image-wrapper{
+    height: 230px;
+    overflow-y: hidden;
+}
+.iv-actions-content{
+    float: left;
+}
+
+.iv-actions-item:hover{
+    opacity: 0.8;
+}
+.iv-actions-image{
+    width: 100%;
+}
+.iv-actions-date{
+    width: 60px;
+    position: absolute;
+    top:0;
+    left: 0;
+    background-color: red;
+    color: #fff;
+    float: left;
+    height: 60px;
+}
+.iv-actions-title{
+    float: left;
+    width: 100%;
+    padding-left: 70px;
+    height: 60px;
+    background-color: #666;
+    color: #fff;
+    font-family: OpenSansRegular, arial, sans-serif;
+    font-size: 16px;
+    padding-top: 7px;
+}
+.iv-actions-title-inner{
+    display: inline-block;
+    vertical-align: middle;
+}
+.iv-actions-footer{
+    position: absolute;
+    bottom: 20px;
+    color: #fff;
+    left: 10px;
+}
+#header{
+    box-shadow: 0 5px 17px rgba(255, 229, 229, 0.55);
+}
+.iv-actions-day{
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+}
+.iv-actions-mth{
+    text-align: center;
+    margin-top: -3px;
+}
+.iv-actions-footer{
+    position: absolute;
+    bottom: 0;
+    color: #fff;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    background-color: rgba(0,0,0,0.3);
+    font-size: 15px;
+    text-shadow: 0 0 3px #000;
+}
+
+#page_afisha_wrapper{
+    margin-left: 225px!important;
+    margin-top: 0px!important;
+    min-height: 760px!important;
+    padding: 25px 20px 20px 20px!important;
+}

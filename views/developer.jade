@@ -1,0 +1,14 @@
+extends admin_layout
+block content
+    p Панель разработчика
+    script(src="./socket.io/socket.io.js")
+    script(src="js/delivery.js")
+    script(src="js/uploadFiles.js")
+    script(src="js/socketClient.js")
+    script(src="js/developer.js")
+
+    div
+        button#btn1 createTable users
+        button#btn2 alterTable users
+        br
+        .p= funcs.returnA()

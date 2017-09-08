@@ -1,0 +1,91 @@
+<!-- 
+<script src="/core/jquery/jquery.timers.js" type="text/javascript"></script>
+<script href="/multibooker/core/js/functions.js"></script> 
+<script src="/multibooker/modules/modal_window/templates/shows/js/show_modal.js" type="text/javascript"></script>
+<link href="/multibooker/modules/modal_window/templates/shows/css/show_modal.css" rel="stylesheet" type="text/css"> 
+BOOTSTRAP 
+<script src="/multibooker/core/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<link href="/multibooker/core/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
+-->
+<script src="/multibooker4/html/modals/show_modal/show_modal.js" type="text/javascript"></script>
+<div class="container">
+     <div class="row">
+        <div class="col-md-12">
+            <h3>Зрелище - <span id="customerHeaderName"></span></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Nav tabs -->
+            <div class="navTabs">
+                <ul class="nav nav-tabs" id="">
+                    <li id="TAB_shows_content" class="active"><a href="#shows_content" data-toggle="tab">Общее</a></li>
+                    <li id="TAB_shows_part"><a href="#shows_part" data-toggle="tab">Отделения</a></li>
+                    <div class="clearfix"></div>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="shows_content">
+            <div class="form_block">
+                <input type="hidden" class="" id="show_OBJVERSION_inp" disabled/>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="form-group"><label for="">id</label><input id="show_SHOW_ID_inp" type="text" class="form-control" disabled></div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group"><label for="">Статус</label><select id="show_STATUS_inp" class="form-control" style="width:180px;"></select></div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group"><label for="">Возрастная категория</label><input id="show_AGE_CATEGORY_inp" type="text" class="form-control"></div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group"><label for="">Продолжительность</label><input id="show_LENGH_HOUR_MIN_inp" type="text" class="form-control" disabled></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group"><label for="">Название первая строка</label><input id="show_NAME_inp" class="form-control"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group"><label for="">Название вторая строка</label><input id="show_NAME2_inp" class="form-control"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group"><label for="">Тип зрелища</label><select id="show_SHOW_TYPE_ID_select" class="form-control"></select></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group"><label for="">Жанр</label><select id="show_SHOW_GENRE_ID_select" class="form-control"></select></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group"><label for="">Сценарист</label><input id="show_SCREENWRITER_inp" type="text" class="form-control"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group"><label for="">Режисер</label><textarea id="show_DIRECTED_BY_inp" type="text" class="form-control"></textarea></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group"><label for="">Актеры</label><textarea id="show_ACTORS_inp" type="text" class="form-control"></textarea></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group"><label for="">Описание</label><textarea id="show_DESCRIPTION_inp" class="form-control"></textarea></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group"><label for="">Аннотация</label><textarea id="show_ABSTRACT_inp" class="form-control"></textarea></div>
+                </div>
+            </div>
+        </div>
+    
+        <div id="shows_part" class="tab-pane fade">
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,167 @@
+/*.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12{
+    padding: 0 10px 0 10px;
+    line-height: 0.6;
+}*/
+
+
+label {
+margin-bottom: 0px;
+}
+
+hr {
+    margin: 10px 0;
+}
+
+.form-group {
+    margin: 1px 0 1px 0;
+}
+
+
+.form-control {
+height: 28px;
+padding-top: 2px;
+padding-left: 5px;
+}
+
+
+.page-item {
+   padding: 10px 20px 0px 13px; 
+}
+
+.portlet.box > .portlet-body {
+    padding: 0px 5px;
+ }
+
+.table-scrollable {
+    margin: 0px 0 !important;
+}
+
+#modal_form_order_wrapper {
+
+}
+
+/*.modal-content-wrapper .portlet.box > .portlet-body {
+    padding: 1px 9px;
+}*/
+
+.portlet.box > .portlet-title {
+    margin-bottom: -2px;
+/*    padding: 4px 2px 0 8px; */
+}
+
+.modal-item {
+    padding: 0 0px;
+    box-shadow: 0 0 1px #fff;
+    overflow-y: auto; 
+    overflow-x: hidden; 
+}
+
+.nav-tabs {
+    margin-bottom: 3px;
+}
+
+/*.portlet {
+    margin-bottom: 0px;
+}*/
+
+.portlet > .portlet-title > .actions > .btn {
+    margin-top: -14px;
+    padding: 3px 10px;
+}
+
+.portlet > .portlet-title > .actions > .pagination> .btn {
+    margin-top: -2px;
+    padding: 2px 8px;
+}
+
+.portlet > .portlet-title > .actions > .pagination {
+    margin: -12px 24px 0px 24px;
+}
+
+
+.pagination input.form-control {
+    width: 35px;
+    height: 21px;
+    padding: 0px;
+    text-align: center;
+}
+
+
+
+/*.portlet > .portlet-title > .tools, .portlet > .portlet-title > .actions {
+    margin: 0;
+}*/
+
+/*.portlet > .portlet-title > .actions > .btn-group > .btn {
+    padding: 3px 10px;
+    margin-top: 11px;
+}*/
+
+.bt-menu-trigger span {
+    width: 90%;
+}
+/*[class^="fa-"],[class*=" fa-"]{
+    margin-top: 1px;
+}*/
+
+
+.table {
+
+}
+
+.table th {
+    font-size: 13px!important;
+    font-weight: 700!important;
+}
+
+.table th,.table td {
+    padding: 1px 3px !important;
+}
+
+
+
+
+fieldset {
+    margin: 10px 0 5px 0;
+    padding: 0 15px;
+}
+
+legend {
+    width: inherit;
+    margin: 5px 0;
+    padding: 0 5px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+
+
+.dropdown-menu {
+    z-index: 10000000;
+}
+
+
+
+.bt-menu ul.bt-menu-bottom li {
+    padding: 3px;
+    width: 120px;
+    height: 65px;
+}
+
+
+#bt-menu .portlet {
+    margin-bottom: 10px;
+}
+
+
+.select2-container .select2-choice {
+    height: 27px;
+    padding: 0px 0 0 8px;
+    line-height: 26px;
+}
+
+
+.top-panel  input[type="radio"],.top-panel  input[type="checkbox"] {
+    margin: 30px 0 0;
+}

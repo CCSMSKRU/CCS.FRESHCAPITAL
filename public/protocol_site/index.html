@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Тестовое окружение протокола ccs.vgfinancing</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script src="../assets/js/libs/jquery/jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="../assets/js/libs/jquery/jquery.jsonp-2.4.0.min.js" type="text/javascript"></script>
+    <script src="cfg.js"></script>
+    <script src="funcs.js"></script>
+    <script src="methods.js"></script>
+    <script src="protocol.js"></script>
+    <script src="hint.js"></script>
+    <script src="index.js"></script>
+
+    <link href="../assets/css/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/js/libs/bootstrap-toastr/toastr.min.css" rel="stylesheet">
+    <link href="../assets/css/libs/font_awesome/font_awesome.css" rel="stylesheet">
+    <script src="../assets/js/libs/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../assets/js/libs/jquery.maskedinput.min.js"></script>
+    <script src="../assets/js/libs/jquery/plugins/jquery.scrollTo.min.js"></script>
+    <script src="../assets/js/libs/bootstrap-toastr/toastr.min.js"></script>
+    <script src="../assets/js/libs/bootbox.min.js"></script>
+    <script src="../assets/js/libs/moment.min.js"></script>
+    <script src="../assets/js/libs/formating.js"></script>
+    <script src="../assets/js/libs/validator.js"></script>
+
+    <script src="../assets/js/plugins/mustache.js"></script>
+
+</head>
+<body>
+<div class="container theme-showcase">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default top10 slideBlock">
+                <div class="panel-heading">
+                    <h2 class="panel-title"><span class="slideBlockHead">ccs.vgfinancing unsecure site protocol</span></h2>
+                </div>
+                <div class="panel-body expanded">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <h4>Основные понятия:</h4>
+                            <p>Тестовый протокол расположен на демо сервере <a href="http://demo.multibooker.ru/" target="_blank">http://demo.multibooker.ru</a>.
+                                Чтобы выполнить какой-либо запрос необходимо обратиться на url
+                                <a target="_blank" href="http://demo.multibooker.ru/cgi-bin/site?request=">http://demo.multibooker.ru/cgi-bin/site?request=</a>&nbsp
+                                и далее следуют параметры в формате xml.
+                            </p>
+
+                            <!--<p>-->
+                                <!--Ответ можно получать в двух форматах XML и JSON. По умолчанию ответ будет приходить в формате JSON. Чтобы получать данные в формате XML, необходимо-->
+                                <!--передавать параметр <b>&ltoutput_format&gtxml&lt/output_format&gt</b><br>-->
+                                <!--<span class="red">Внимание!</span> Если использовать ajax, то попытки запрашивать данные в формате XML приведут к ошибке кроссдоменных запросов.-->
+                                <!--При использовании json, эту ошибку можно обойти используя jsonp.-->
+                            <!--</p>-->
+                            <p>
+                                Протокол находится в стадии разработки. Если вам не хватает каких то методов/параметров или понимания процесса, пожалуйста обращайтесь на адрес igoptarev@mirbileta.ru или по телефонам +7 (968) 822-20-76 Иван, +7 (906) 063-88-66 Александр.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="panel panel-default top10 slideBlock" id="requestHeader">
+                <div class="panel-heading">
+                    <h2 class="panel-title"><span class="slideBlockHead">Выполнить запрос</span></h2>
+                </div>
+                <div class="panel-body expanded">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="request">Запрос:</label>
+                                <div class="form-control requestContainer isResizable" contenteditable="true" id="request"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                       <!-- <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-success btn-sm right sendRequest">Выполнить запрос</button>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="response">Ответ:</label>
+                                <div class="form-control responseContainer isResizable" contenteditable="false" id="response"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">URL:<a style="font-weight: bold;color:blue; margin-left: 5px;" id="request_url" href="" target="_blank"></a></div>
+                        <div class="col-md-2"></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-success btn-sm right prepareRequest">Огонь!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default top10 slideBlock">
+                <div class="panel-heading">
+                    <h2 class="panel-title"><span class="slideBlockHead">Методы</span></h2>
+                </div>
+                <div class="panel-body expanded">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="list-group methods">
+                                <a href="" class="list-group-item active one_method" data-name="login" onclick="return false;"></a>
+                                <a href="#" class="list-group-item one_method" data-name="login2" onclick="return false;">Dapibus ac facilisis in</a>
+                                <a href="#" class="list-group-item">Morbi leo risus</a>
+                                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                                <a href="#" class="list-group-item">Vestibulum at eros</a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+
+                            <div class="row one_method">
+                                <h4 class="method_label">Авторизация:</h4>
+                                <div class="method_description method_description_box">Здесь будет описание метода</div>
+                                <div class="method_description_box"><span class="bold green5">Ответ в XML:</span><br><span class="method_responseXML">Здесь будет описание метода</span></div>
+                                <div class="method_description_box"><span class="bold green5">Ответ в JSON:</span><br><span class="method_responseJSON">Здесь будет описание метода</span></div>
+                                <div class="col-md-11 well">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="method_command">command:</label>
+                                            <input type="text" class="form-control request_param method_command" value="" id="method_command">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="method_object">object:</label>
+                                            <input type="text" class="form-control request_param method_object" value="" id="method_object">
+                                        </div>
+                                    </div>
+                                </div>
+                                <h5>Параметры:</h5>
+                                <div class="col-md-11 well method_params_container">
+                                    <!--<div class="form-group">
+                                        <label>param1:</label>
+                                        <input type="text" class="form-control method_params" value="val1">
+                                    </div>-->
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-success btn-sm right prepareRequest">Огонь!</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.col-sm-4 -->
+    </div>
+
+
+</div>
+
+
+
+
+
+</body>
+</html>

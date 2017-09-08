@@ -1,0 +1,214 @@
+<div class="insertIntoHeader">
+    <div class="form-ro-barcode flLeft" data-barcode="BARCODE"></div>
+</div>
+<div class="form-ro-wrapper">
+    <div class="form-ro-sidebar">
+        <div class="form-ro-aside-block form-ro-block" data-column="BARCODE">
+            <label>Штрихкод:</label>
+            <div class="form-ro-value"></div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="ACTION">
+            <label>Мероприятие:</label>
+            <div class="form-ro-value"></div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="AREA_GROUP">
+            <label>Сектор:</label>
+            <div class="form-ro-value"></div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="LINE">
+            <label>Ряд:</label>
+            <div class="form-ro-value">{+{LINE}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="PLACE">
+            <label>Место:</label>
+            <div class="form-ro-value">{+{PLACE}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="PRICE">
+            <label>Стоимость:</label>
+            <div class="form-ro-value">{+{PRICE}+} руб</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="ORDER_TICKET_ID">
+            <label>Номер билета:</label>
+            <div class="form-ro-value">{+{ORDER_TICKET_ID}+}</div>
+        </div>
+        <div class="form-asi-history-line"></div>
+        <div class="form-ro-aside-block form-ro-block form-asi-history-in-row" data-column="X">
+            <label>X:</label>
+            <div class="form-ro-value">{+{X}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block form-asi-history-in-row" data-column="Y">
+            <label>Y:</label>
+            <div class="form-ro-value">{+{Y}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block form-asi-history-in-row" data-column="W">
+            <label>W:</label>
+            <div class="form-ro-value">{+{W}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block form-asi-history-in-row" data-column="H">
+            <label>H:</label>
+            <div class="form-ro-value">{+{H}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="ROTATION">
+            <label>Поворот:</label>
+            <div class="form-ro-value">{+{ROTATION}+}&deg</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="FUND_GROUP_ID">
+            <label>Фонд:</label>
+            <div class="form-ro-value"></div>
+        </div>
+    </div>
+    <div class="form-ro-content">
+        <div class="form-ro-aside-block form-ro-block" data-column="ORDER_TICKET_STATUS">
+            <label>Статус билета:</label>
+            <div class="form-ro-value">{+{ORDER_TICKET_STATUS}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="STATUS_TEXT">
+            <label>Информация:</label>
+            <div class="form-ro-value"></div>
+        </div>
+        <div class="flLeft wid100pr">
+                <div class="fn-train-overflow">
+                    <div class="fn-train">
+                        <div class="fn-vagon">
+                            <div class="fn-child-objects-tabs-wrapper marTop10"></div>
+                            <!--<div class="flLeft wid100pr marTop10">
+                                <div class="totalBlock">
+                                    <div class="afterChildLoaded flLeft orderTotalTickets ">{{{TICKETS_COUNT}}}</div>
+                                    <div class="afterChildLoaded flLeft marLeft10 orderTotalAmount withAppend" data-append="<span class='appendText'> Руб.</span>">{{{TOTAL_ORDER_AMOUNT}}}</div>
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="fn-vagon">
+<!--                            <div class="marTop10 linesTblWrapper">
+
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <!--<div class="fn-buttons-row formOrder-bottom-buttons-block">
+
+            <div class="paddingRight15">
+
+                <div class="fn-btn fn-small-btn green flLeft splicedRoundedBtn upload-quota"><i class="fa fa-upload"></i>&nbsp;&nbsp;Загрузить файл квоты</div>&nbsp;
+            </div>
+        </div>-->
+    </div>
+</div>
+
+
+<style type="text/css">
+    #rightSeparator{
+        position: absolute;
+        right: 0;
+        height: 100%;
+        background-color: #ddd;
+        width: 1px;
+        top: 42px;
+        z-index: 1;
+        display: none;
+    }
+    .h100{
+        height: 100%;
+    }
+    .overY-h{
+        overflow-y: hidden;
+    }
+    #confirmReserve{
+        position: absolute;
+        right: 35px;
+        top: 36px;
+        background-color: #f7f7f7;
+        color: #222;
+        padding: 7px 25px 6px 25px;
+        font-family: openSans, arial, sans-serif;
+        font-size: 14px;
+        height: 34px;
+        cursor: pointer;
+        border: 1px solid #d1d1d1;
+    }
+    #confirmReserve:hover{
+        background-color: #f2f2f2;
+    }
+    #confirmReserve.disabled{
+        color: #c5c5c5;
+    }
+    #confirmDiscount{
+        position: absolute;
+        right: 35px;
+        top: 36px;
+        background-color: #f7f7f7;
+        color: #222;
+        padding: 7px 25px 6px 25px;
+        font-family: openSans, arial, sans-serif;
+        font-size: 14px;
+        height: 34px;
+        cursor: pointer;
+        border: 1px solid #d1d1d1;
+    }
+    #confirmDiscount:hover{
+        background-color: #f2f2f2;
+    }
+    #confirmDiscount.disabled{
+        color: #c5c5c5;
+    }
+    #reject_bso{
+        background-color: #8a3f3f;
+        color: #fff;
+        border: 1px solid #8a3f3f;
+        margin-left: 5px;
+    }
+    #reject_bso:hover{
+        background-color: #b44545!important;
+        color: #fff!important;
+        border: 1px solid #b44545!important;
+    }
+    .totalBlock{
+        /*position: absolute;*/
+        /*bottom: 6px;*/
+        /*right: 6px;*/
+        float: right;
+    }
+    .totalBlock .fn-field{
+        border-right: 0;
+        background-color: transparent!important;
+        padding: 3px 0 0 0;
+    }
+    .totalBlock .fn-field.fn-readonly-field{
+        height: 34px;
+    }
+    .printStatusRow{
+        float: left;
+        padding: 10px 15px;
+        margin-top: 10px;
+        background-color: #dbebf4;
+        border-radius: 3px!important;
+        font-family: openSans, arialm sans-serif;
+        font-size: 16px;
+        color: #222;
+        text-shadow: 0 1px 0 #fff;
+    }
+    .printStatusRow i{
+        font-size: 18px;
+        color: black;
+        padding-right: 9px;
+    }
+    .ifAgentSelected{
+        display: none;
+    }
+    .form-asi-history-line {
+        height: 1px;
+        background-color: #7c7c7c;
+        margin: 10px 0;
+    }
+    .form-ro-content .form-ro-aside-block.form-ro-block:first-child {
+        padding-top: 20px;
+    }
+    .form-ro-content .form-ro-aside-block.form-ro-block {
+        padding-left: 35px;
+    }
+    .form-ro-aside-block.form-ro-block.form-asi-history-in-row {
+        float: left;
+        width: 25%;
+    }
+</style>

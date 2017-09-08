@@ -1,0 +1,28 @@
+-- С выходом MYSQL v 5.7 (а может в более ранней) поле virtual стало часть синтаксиса, а я его использовал в своей структуре.
+-- Пришлось везде переименовывать и обновлять некоторые данные:
+
+ALTER TABLE `class_fields_profile` CHANGE COLUMN `virtual` `is_virtual` TINYINT(1) DEFAULT 0;
+ALTER TABLE `client_object_fields_profile` CHANGE COLUMN `virtual` `is_virtual` TINYINT(1) DEFAULT 0;
+
+#Заменить везде в коде
+#chande anywhere in code
+
+--virtual переименовано в is_virtual
+--Везде в коде
+--В таблице class_fields_profile (поле)
+--В таблице client_object_fields_profile (поле)
+
+select * from class_fields_profile where column_name = 'virtual'
+select * from class_fields_profile where keyword = 'virtual'
+select * from class_fields_profile where return_column = 'virtual'
+select * from class_fields_profile where return_name = 'virtual'
+select * from class_fields_profile where select_search_columns = 'virtual'
+select * from class_fields_profile where lov_return_to_column = 'virtual'
+
+
+update class_fields_profile set column_name = 'is_virtual' where column_name = 'virtual'
+update class_fields_profile set keyword = 'is_virtual' where keyword = 'virtual'
+update class_fields_profile set return_column = 'is_virtual' where return_column = 'virtual'
+update class_fields_profile set return_name = 'is_virtual' where return_name = 'virtual'
+update class_fields_profile set select_search_columns = 'is_virtual' where select_search_columns = 'virtual'
+update class_fields_profile set lov_return_to_column = 'is_virtual' where lov_return_to_column = 'virtual'

@@ -1,0 +1,143 @@
+<div class="container">
+    <div class="modalMainPart">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Клиент - "<span id="customerHeaderName"></span>"</h3>
+                <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" id="clientTabs">
+                    <li class="active"><a href="#client" data-toggle="tab">Клиент</a></li>
+                    <li><a href="#client-users" id="goToClientUsers" data-toggle="tab">Пользователи клиента</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="client">
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="hidden-inputs">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" id="modalField_CUSTOMER_TYPE" disabled>
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" id="modalField_CUSTOMER_CLASS" disabled>
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" id="modalField_OBJVERSION" disabled>
+                                </div>   
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" disabled>
+                                </div>                                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">№</label><input class="form-control" type="text" id="modalField_CUSTOMER_ID" disabled></div>
+                    </div>
+                    <!-- <div class="col-md-3">
+                        <input class="form-control" type="text" id="modalField_CUSTOMER_TYPE" disabled>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control" type="text" id="modalField_CUSTOMER_CLASS" disabled>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control" type="text" id="modalField_OBJVERSION" disabled>
+                    </div> -->
+                    <div class="col-md-9">
+                        <div class="form-group"><label for="">Наименование клиента</label><input id="modalField_NAME" type="text" class="form-control"></div>
+                    </div>
+                </div>
+                <!-- <input type="text" id="modalField_USER_ID"> -->
+                <br>                
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">Статус</label><select id="modalField_STATUS" name="" class="form-control"></select></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">Тип клиента</label><select id="modalField_CUSTOMER_TYPE_RU" name="" class="form-control"></select></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">Класс клиента</label><select id="modalField_CUSTOMER_CLASS_RU" name="" class="form-control"></select></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">Дата создания</label><input id="modalField_CREATION_DATE" type="text" class="form-control"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">Телефон</label><input id="modalField_PHONE" type="text" class="form-control"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">E-mail</label><input id="modalField_EMAIL" type="text" class="form-control"></div>
+                    </div>
+                    <!-- <div class="col-md-3">
+                        <div class="form-group"><label for="">Статус</label><select id="modalField_STATUS" name="" class="form-control"></select></div>
+                    </div> -->
+                    <!-- <div class="col-md-3">
+                        <div class="form-group"><label for="">Пользователь</label><select id="modalField_USER_FULLNAME" name="" class="form-control"></select></div>
+                    </div> -->
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">Наименование банка</label><input id="modalField_BANK" type="text" class="form-control"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">ИНН</label><input id="modalField_INN" type="text" class="form-control"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">БИК</label><input id="modalField_BIK" type="text" class="form-control"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">ОКПО</label><input id="modalField_OKPO" type="text" class="form-control"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">Город</label><input id="modalField_CITY" type="text" class="form-control"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group"><label for="">Индекс</label><input id="modalField_CITY_INDEX" type="text" class="form-control"></div>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group"><label for="">Адрес</label><textarea id="modalField_ADDRESS" name="" cols="30" rows="3" class="form-control"></textarea></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label for="">Описание</label><textarea  id="modalField_DESCRIPTION" name="" cols="30" rows="3" class="form-control"></textarea></div>
+                    </div>
+                </div>                
+            </div>
+            <div class="tab-pane fade in" id="client-users">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div id="customerUsers"></div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="arrows">
+                                <div class="arrow_add"><button title="Добавить">&#9668;</button></div>
+                                <div class="arrow_rem"><button title="Удалить">&#9658;</button></div>
+                            </div>                            
+                        </div>
+                        <div class="col-md-5">
+                            <div id="externalUsers"></div>
+                        </div>
+                    </div>
+                </div>
+        </div>        
+    </div>
+    <br>
+</div>

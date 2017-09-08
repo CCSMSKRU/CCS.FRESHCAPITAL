@@ -1,0 +1,391 @@
+extends layout
+block content
+    - var parts = (data.parts.data.length)? data.parts.data: false;
+    - var event = data.actions.data[0];
+    - var rewards = data.rewards.data[0];
+
+    .wide-block.lightBg
+        .container
+            .h2.event-title
+                | #{event.title}
+    .wide-block.regularBg
+        .container
+            if(!parts)
+                h3 Нет открытых этапов
+            else
+                each p, pKey in parts
+                    - var activeClass = (pKey == 0)? 'active': '';
+                    .row(data-index="#{pKey}" class="part-item #{activeClass}")
+                        .col-md-8
+                            h3
+                                | #{p.title}
+                            p
+                                | #{p.start_date} - #{p.end_date}
+                            p
+                                | !{p.desc_complex}
+                            ul.select_part
+                                - var index = 0
+                                each val, key in parts
+                                    if key == 0
+                                        li.active(data-index="#{key}")
+                                            | #{val.title}
+                                    else
+                                        li(data-index="#{key}")
+                                            | #{val.title}
+                        .col-md-4
+                            p
+                                div(class="status_color #{p.status_sys_name}")
+                                    | #{p.status}
+                            p
+                                .show_rules
+                                    -var complex_path = (p.complex_image)? 'upload/'+p.complex_image : 'img/def_complex_image.jpg';
+                                    img(src="#{complex_path}")
+                                    .modal_rules_content
+                                        if(!p.desc_complex && !p.note && !p.desc_scoring && !p.desc_inventory && !p.desc_video_std && !p.desc_move_std)
+                                            .col-md-12
+                                                h4 Нет информации
+                                        else
+                                            .wid100pr
+                                                if(p.desc_complex && p.desc_complex.length > 0)
+                                                    h4.darkHd Комплекс
+                                                    !{p.desc_complex}
+                                                if(p.note && p.note.length > 0)
+                                                    h4.darkHd Примечание
+                                                    !{p.note}
+                                                if(p.desc_scoring && p.desc_scoring.length > 0)
+                                                    h4.darkHd Подсчет очков
+                                                    !{p.desc_scoring}
+                                                if(p.desc_inventory && p.desc_inventory.length > 0)
+                                                    h4.darkHd Оборудование
+                                                    !{p.desc_inventory}
+                                                if(p.desc_video_std && p.desc_video_std.length > 0)
+                                                    h4.darkHd Стандарты видеосъкемки
+                                                    !{p.desc_video_std}
+                                                if(p.desc_move_std && p.desc_move_std.length > 0)
+                                                    h4.darkHd Стандарты движений
+                                                    !{p.desc_move_std}
+
+    if(parts)
+        .wide-block.lightBg
+            .container
+                each p, pKey in parts
+                    - var activeClass = (pKey == 0)? 'active': '';
+                    .row(data-index="#{pKey}" class="part-item #{activeClass}")
+                        .h2
+                            if(p.status_sys_name == 'OPENED')
+                                | Предварительные результаты
+                            else
+                                | Результаты этапа
+                        .part-buttons-wrapper
+                            - var buttonClass = (user)? 'order-event-part' : 'goToLogin'
+                            if(event.status_sys_name == 'OPENED' && p.status_sys_name == 'OPENED')
+                                a.cBtn.orange(data-event='#{event.title}', data-event_id='#{event.id}', data-event_part='#{p.title}', data-event_part_id='#{p.id}', class="#{buttonClass}")
+                                    if(user)
+                                        |   Отправить результат!
+                                    else
+                                        |   Авторизируйтесь для участия
+                                    .modal-order-content
+                                        form.form-horizontal
+                                            .row
+                                                .col-md-12
+                                                    .pr50.flLeft
+                                                        .form-group.col-md-12
+                                                            | #{event.title}
+                                                    .pr50.flLeft
+                                                        .form-group.col-md-12
+                                                            | #{p.title}
+                                            .row.order-event-part-result-row(data-part="#{p.id}")
+                                                .col-md-12
+                                                    .form-group.col-md-12
+                                                        label Ссылка на видео:
+                                                        .input-group
+                                                            .input-group-addon
+                                                                i.fa.fa-video-camera
+                                                            input.form-control(type="text", data-id="video", data-part="#{p.id}")
+                                                    .form-group.col-md-12
+                                                        label.control-label Клуб
+                                                        input.select2InModal.form-control.fc-field(type="hidden", tabindex="1", data-server_name="club_id", data-editor="select", data-name="name", data-required="true", value="", data-text="", data-table="club")
+                                                    .form-group.col-md-12.results(data-res_type_id="#{p.result_type_id}", data-res_type="#{p.result_type_sys}")
+                                                        label Результат
+                                                        if(p.result_type_sys == 'TIME')
+                                                            //input.form-control.time-mm.maskTime(type="text", placeholder="мм:cc")
+                                                            .input-group
+                                                                input.form-control.mm(type='text', placeholder="мм", data-res_type="#{p.result_type_sys}", data-part="#{p.id}", data-id="mm")
+                                                                .input-group-addon :
+                                                                input.form-control.ss(type='text', placeholder="cc", data-res_type="#{p.result_type_sys}", data-part="#{p.id}", data-id="ss")
+
+                                                        else if(p.result_type_sys == 'REPEAT')
+
+                                                            input.form-control(type="number", data-editor_id="", data-res_type="#{p.result_type_sys}", data-part="#{p.id}", data-id="repeat")
+
+                                                        else if(p.result_type_sys == 'TIE_BREAK')
+                                                            .input-group
+                                                                input.form-control.tieBreak1(type='text', data-res_type="#{p.result_type_sys}", data-part="#{p.id}", data-id="tb1")
+                                                                .input-group-addon (
+                                                                input.form-control.tieBreak2(type='text', data-res_type="#{p.result_type_sys}", data-part="#{p.id}", data-id="tb2")
+                                                                .input-group-addon (
+                                                                input.form-control.tieBreak3(type='text', data-res_type="#{p.result_type_sys}", data-part="#{p.id}", data-id="tb3")
+                                                                .input-group-addon :
+                                                                input.form-control.tieBreak4(type='text', data-res_type="#{p.result_type_sys}", data-part="#{p.id}", data-id="tb4")
+                                                                .input-group-addon ))
+
+                                                        else if(p.result_type_sys == 'TIE_BREAK_SHORT')
+                                                            .input-group
+                                                                input.form-control.tieBreak1(type='text', data-res_type="#{p.result_type_sys}", data-part="#{p.id}", data-id="tbs1")
+                                                                .input-group-addon (
+                                                                input.form-control.tieBreak3(type='text', data-res_type="#{p.result_type_sys}", data-part="#{p.id}", data-id="tbs2")
+                                                                .input-group-addon :
+                                                                input.form-control.tieBreak4(type='text', data-res_type="#{p.result_type_sys}", data-part="#{p.id}", data-id="tbs3")
+                                                                .input-group-addon )
+                            a.cBtn.grey.event-reglament-link(data-sys_name="WOD_OF_WEEK")
+                                | Регламент
+
+                        div.event-results-tabs(role="tabpanel")
+                            ul.nav.nav-pills(role="tablist")
+                                li.active(role="results_by_range_#{p.id}")
+                                    a(href="#male_#{p.id}", aria-controls="male_#{p.id}", role="tab", data-toggle="tab") Мужчины
+                                li(role="results_by_range_#{p.id}")
+                                    a(href="#male40_#{p.id}", aria-controls="male40_#{p.id}", role="tab", data-toggle="tab") Мужчины 40+
+                                li(role="results_by_range_#{p.id}")
+                                    a(href="#famale_#{p.id}", aria-controls="famale_#{p.id}", role="tab", data-toggle="tab") Женщины
+                                li(role="results_by_range_#{p.id}")
+                                    a(href="#famale40_#{p.id}", aria-controls="famale40_#{p.id}", role="tab", data-toggle="tab") Женщины 40+
+                            .tab-content
+                                .tab-pane.active(role="tabpanel", id="male_#{p.id}")
+                                    .initMeTable(data-type="part_table" data-get_object="results", data-action_id="#{event.id}", data-part_id="#{p.id}", data-range_where="male")
+                                .tab-pane(role="tabpanel", id="male40_#{p.id}")
+                                    .initMeTable(data-type="part_table" data-get_object="results", data-action_id="#{event.id}", data-part_id="#{p.id}", data-range_where="male40")
+                                .tab-pane(role="tabpanel", id="famale_#{p.id}")
+                                    .initMeTable(data-type="part_table" data-get_object="results", data-action_id="#{event.id}", data-part_id="#{p.id}", data-range_where="famale")
+                                .tab-pane(role="tabpanel", id="famale40_#{p.id}")
+                                    .initMeTable(data-type="part_table" data-get_object="results", data-action_id="#{event.id}", data-part_id="#{p.id}", data-range_where="famale40")
+                    //<input type="text" data-where_type="external" data-where_table="users" class="tableFilter form-control" data-filter_type="like" data-column="surname">
+                .row
+                    .h2
+                        | Лидерборд мероприятия
+                    div.event-results-tabs(role="tabpanel")
+                        ul.nav.nav-pills(role="tablist")
+                            li.active(role="event_leaderboard")
+                                a(href="#male_#{event.id}", aria-controls="male_#{event.id}", role="tab", data-toggle="tab") Мужчины
+                            li(role="event_leaderboard")
+                                a(href="#male40_#{event.id}", aria-controls="male40_#{event.id}", role="tab", data-toggle="tab") Мужчины 40+
+                            li(role="event_leaderboard")
+                                a(href="#famale_#{event.id}", aria-controls="famale_#{event.id}", role="tab", data-toggle="tab") Женщины
+                            li(role="event_leaderboard")
+                                a(href="#famale40_#{event.id}", aria-controls="famale40_#{event.id}", role="tab", data-toggle="tab") Женщины 40+
+                        .tab-content
+                            .tab-pane.active(role="tabpanel", id="male_#{event.id}")
+                                .leaderBoardTable.posRel(data-get_object="results", data-action_id="#{event.id}",  data-range_where="male")
+                            .tab-pane(role="tabpanel", id="male40_#{event.id}")
+                                .leaderBoardTable.posRel(data-get_object="results", data-action_id="#{event.id}", data-range_where="male40")
+                            .tab-pane(role="tabpanel", id="famale_#{event.id}")
+                                .leaderBoardTable.posRel(data-get_object="results", data-action_id="#{event.id}", data-range_where="famale")
+                            .tab-pane(role="tabpanel", id="famale40_#{event.id}")
+                                .leaderBoardTable.posRel(data-get_object="results", data-action_id="#{event.id}", data-range_where="famale40")
+
+    //-------------------------
+    //.adv-block-wrapper.big-content-wrapper
+    //    .event-main-image-wrapper
+    //        img(src="upload/#{event.image}")
+    //    //.event_bg.h350(style="background-image: url(upload/#{event.image})")
+    //h2.event-main-header
+    //    .container.posRel
+    //        | #{event.title}
+    //        .event-reglament-link(data-sys_name="WOD_OF_WEEK")
+    //            | Регламент
+    //        .event-main-date #{event.date_start_text}
+    //.container
+    //    .row.padTop30
+    //        .col-md-12
+    //            !{event.description1}
+    //    hr
+    //    .collapseable
+    //        h4.padBot10.borBot1CCC Таблица лидеров
+    //        .collapseBtn
+    //            .fa.fa-minus
+    //            |  Свернуть
+    //        .collapseContent
+    //
+    //            div.event-results-tabs(role="tabpanel")
+    //                ul.nav.nav-pills(role="tablist")
+    //                    li.active(role="event_leaderboard")
+    //                        a(href="#male_#{event.id}", aria-controls="male_#{event.id}", role="tab", data-toggle="tab") Мужчины
+    //                    li(role="event_leaderboard")
+    //                        a(href="#male40_#{event.id}", aria-controls="male40_#{event.id}", role="tab", data-toggle="tab") Мужчины 40+
+    //                    li(role="event_leaderboard")
+    //                        a(href="#famale_#{event.id}", aria-controls="famale_#{event.id}", role="tab", data-toggle="tab") Женщины
+    //                    li(role="event_leaderboard")
+    //                        a(href="#famale40_#{event.id}", aria-controls="famale40_#{event.id}", role="tab", data-toggle="tab") Женщины 40+
+    //                .tab-content
+    //                    .tab-pane.active(role="tabpanel", id="male_#{event.id}")
+    //                        .leaderBoardTable(data-get_object="results", data-action_id="#{event.id}",  data-range_where="male")
+    //                    .tab-pane(role="tabpanel", id="male40_#{event.id}")
+    //                        .leaderBoardTable(data-get_object="results", data-action_id="#{event.id}", data-range_where="male40")
+    //                    .tab-pane(role="tabpanel", id="famale_#{event.id}")
+    //                        .leaderBoardTable(data-get_object="results", data-action_id="#{event.id}", data-range_where="famale")
+    //                    .tab-pane(role="tabpanel", id="famale40_#{event.id}")
+    //                        .leaderBoardTable(data-get_object="results", data-action_id="#{event.id}", data-range_where="famale40")
+    //    hr
+    //    div(role='tabpanel')
+    //        ul.nav.nav-tabs(role='tablist')
+    //            each part, idx in parts
+    //                - var activeClass = (idx == 0)? 'active': '';
+    //                li(role='presentation', class="#{activeClass}")
+    //                    a(href='#part_#{part.id}', aria-controls='part_#{part.id}', role='tab', data-toggle='tab', aria-expanded='true') #{part.title}
+    //        .tab-content
+    //            each part, idx in parts
+    //                - var activeClass = (idx == 0)? 'active': '';
+    //                div(role='tabpanel', class="tab-pane #{activeClass}", id="part_#{part.id}")
+    //                    .row
+    //                        .col-md-8
+    //                            h3
+    //                                | #{part.title}
+    //                                .event-part-date
+    //                                    i.fa.fa-calendar
+    //                                    |  #{part.start_date} - #{part.end_date}
+    //                                .justDiv(class="event-part-status #{part.status_sys_name}")
+    //                                    |  #{part.status}
+    //                        .col-md-4
+    //                            - var buttonClass = (user)? 'order-event-part' : 'goToLogin'
+    //                            if(event.status_sys_name == 'OPENED' && part.status_sys_name == 'OPENED')
+    //                                .justDiv(data-event='#{event.title}', data-event_id='#{event.id}', data-event_part='#{part.title}', data-event_part_id='#{part.id}', class="sBtn flRight red #{buttonClass}")
+    //                                    i.fa.fa-paper-plane-o
+    //                                    if(user)
+    //                                        |   Подать заявку
+    //                                    else
+    //                                        |   Авторизируйтесь для участия
+    //                                    .modal-order-content
+    //                                        form.form-horizontal
+    //                                            .row
+    //                                                .col-md-12
+    //                                                    .pr50.flLeft
+    //                                                        .form-group.col-md-12
+    //                                                            | #{event.title}
+    //                                                    .pr50.flLeft
+    //                                                        .form-group.col-md-12
+    //                                                            | #{part.title}
+    //                                            .row.order-event-part-result-row(data-part="#{part.id}")
+    //                                                .col-md-12
+    //                                                    .form-group.col-md-12
+    //                                                        label Ссылка на видео:
+    //                                                        .input-group
+    //                                                            .input-group-addon
+    //                                                                i.fa.fa-video-camera
+    //                                                            input.form-control(type="text", data-id="video", data-part="#{part.id}")
+    //                                                    .form-group.col-md-12
+    //                                                        label
+    //                                                            input.isAffiliate(type="checkbox", data-id="isAff", data-part="#{part.id}")
+    //                                                            | Сдавал(а) в аффиляте
+    //                                                    .form-group.col-md-12.results(data-res_type_id="#{part.result_type_id}", data-res_type="#{part.result_type_sys}")
+    //                                                        label Результат
+    //                                                        if(part.result_type_sys == 'TIME')
+    //
+    //                                                            //input.form-control.time-mm.maskTime(type="text", placeholder="мм:cc")
+    //                                                            .input-group
+    //                                                                input.form-control.mm(type='text', placeholder="мм", data-res_type="#{part.result_type_sys}", data-part="#{part.id}", data-id="mm")
+    //                                                                .input-group-addon :
+    //                                                                input.form-control.ss(type='text', placeholder="cc", data-res_type="#{part.result_type_sys}", data-part="#{part.id}", data-id="ss")
+    //
+    //                                                        else if(part.result_type_sys == 'REPEAT')
+    //
+    //                                                            input.form-control(type="number", data-editor_id="", data-res_type="#{part.result_type_sys}", data-part="#{part.id}", data-id="repeat")
+    //
+    //                                                        else if(part.result_type_sys == 'TIE_BREAK')
+    //
+    //                                                            .input-group
+    //                                                                input.form-control.tieBreak1(type='text', data-res_type="#{part.result_type_sys}", data-part="#{part.id}", data-id="tb1")
+    //                                                                .input-group-addon (
+    //                                                                input.form-control.tieBreak2(type='text', data-res_type="#{part.result_type_sys}", data-part="#{part.id}", data-id="tb2")
+    //                                                                .input-group-addon (
+    //                                                                input.form-control.tieBreak3(type='text', data-res_type="#{part.result_type_sys}", data-part="#{part.id}", data-id="tb3")
+    //                                                                .input-group-addon :
+    //                                                                input.form-control.tieBreak4(type='text', data-res_type="#{part.result_type_sys}", data-part="#{part.id}", data-id="tb4")
+    //                                                                .input-group-addon ))
+    //
+    //                                                        else if(part.result_type_sys == 'TIE_BREAK_SHORT')
+    //
+    //                                                            .input-group
+    //                                                                input.form-control.tieBreak1(type='text', data-res_type="#{part.result_type_sys}", data-part="#{part.id}", data-id="tbs1")
+    //                                                                .input-group-addon (
+    //                                                                input.form-control.tieBreak3(type='text', data-res_type="#{part.result_type_sys}", data-part="#{part.id}", data-id="tbs2")
+    //                                                                .input-group-addon :
+    //                                                                input.form-control.tieBreak4(type='text', data-res_type="#{part.result_type_sys}", data-part="#{part.id}", data-id="tbs3")
+    //                                                                .input-group-addon )
+    //
+    //                    .innerTabParent(role='tabpanel')
+    //                        ul.nav.nav-tabs(role='tablist')
+    //                            li.active(role='presentation')
+    //                                a(href='#rules_#{part.id}', aria-controls='rules_#{part.id}', role='tab', data-toggle='tab', aria-expanded='true') Правила
+    //                            li(role='presentation')
+    //                                a(href='#results_#{part.id}', aria-controls='results_#{part.id}', role='tab', data-toggle='tab', aria-expanded='false') Предварительные результаты
+    //                        .tab-content
+    //                            .tab-pane.active(role='tabpanel', id="rules_#{part.id}")
+    //                                .row.padTop30
+    //                                    .col-md-12
+    //                                        if(part.desc_complex.length == 0 && part.note.length == 0 && part.desc_scoring.length == 0 && part.desc_inventory.length == 0 && part.desc_video_std.length == 0 && part.desc_move_std.length == 0)
+    //                                            .col-md-12
+    //                                                h4 Нет информации
+    //                                        else
+    //                                            if(part.desc_move_std.length > 0)
+    //                                                .wid50pr.flLeft
+    //                                                    if(part.desc_complex.length > 0)
+    //                                                        h4.darkHd Комплекс
+    //                                                        !{part.desc_complex}
+    //                                                    if(part.note.length > 0)
+    //                                                        h4.darkHd Примечание
+    //                                                        !{part.note}
+    //                                                    if(part.desc_scoring.length > 0)
+    //                                                        h4.darkHd Подсчет очков
+    //                                                        !{part.desc_scoring}
+    //                                                    if(part.desc_inventory.length > 0)
+    //                                                        h4.darkHd Оборудование
+    //                                                        !{part.desc_inventory}
+    //                                                    if(part.desc_video_std.length > 0)
+    //                                                        h4.darkHd Стандарты видеосъкемки
+    //                                                        !{part.desc_video_std}
+    //                                            else
+    //                                                .wid100pr.flLeft
+    //                                                    if(part.desc_complex.length > 0)
+    //                                                        h4.darkHd Комплекс
+    //                                                        !{part.desc_complex}
+    //                                                    if(part.note.length > 0)
+    //                                                        h4.darkHd Примечание
+    //                                                        !{part.note}
+    //                                                    if(part.desc_scoring.length > 0)
+    //                                                        h4.darkHd Подсчет очков
+    //                                                        !{part.desc_scoring}
+    //                                                    if(part.desc_inventory.length > 0)
+    //                                                        h4.darkHd Оборудование
+    //                                                        !{part.desc_inventory}
+    //                                                    if(part.desc_video_std.length > 0)
+    //                                                        h4.darkHd Стандарты видеосъкемки
+    //                                                        !{part.desc_video_std}
+    //
+    //                                            .wid50pr.flLeft
+    //                                                if(part.desc_move_std.length > 0)
+    //                                                    h4.darkHd Стандарты движений
+    //                                                    !{part.desc_move_std}
+    //
+    //                            .tab-pane(role='tabpanel', id="results_#{part.id}")
+    //                                .row
+    //                                    .col-md-12
+    //                                        div.event-results-tabs(role="tabpanel")
+    //                                            ul.nav.nav-pills(role="tablist")
+    //                                                li.active(role="results_by_range_#{part.id}")
+    //                                                    a(href="#male_#{part.id}", aria-controls="male_#{part.id}", role="tab", data-toggle="tab") Мужчины
+    //                                                li(role="results_by_range_#{part.id}")
+    //                                                    a(href="#male40_#{part.id}", aria-controls="male40_#{part.id}", role="tab", data-toggle="tab") Мужчины 40+
+    //                                                li(role="results_by_range_#{part.id}")
+    //                                                    a(href="#famale_#{part.id}", aria-controls="famale_#{part.id}", role="tab", data-toggle="tab") Женщины
+    //                                                li(role="results_by_range_#{part.id}")
+    //                                                    a(href="#famale40_#{part.id}", aria-controls="famale40_#{part.id}", role="tab", data-toggle="tab") Женщины 40+
+    //                                            .tab-content
+    //                                                .tab-pane.active(role="tabpanel", id="male_#{part.id}")
+    //                                                    .initMeTable(data-get_object="results", data-action_id="#{event.id}", data-part_id="#{part.id}", data-range_where="male")
+    //                                                .tab-pane(role="tabpanel", id="male40_#{part.id}")
+    //                                                    .initMeTable(data-get_object="results", data-action_id="#{event.id}", data-part_id="#{part.id}", data-range_where="male40")
+    //                                                .tab-pane(role="tabpanel", id="famale_#{part.id}")
+    //                                                    .initMeTable(data-get_object="results", data-action_id="#{event.id}", data-part_id="#{part.id}", data-range_where="famale")
+    //                                                .tab-pane(role="tabpanel", id="famale40_#{part.id}")
+    //                                                    .initMeTable(data-get_object="results", data-action_id="#{event.id}", data-part_id="#{part.id}", data-range_where="famale40")
+    script(type="text/javascript", src="js/html/event.js")

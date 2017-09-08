@@ -1,0 +1,68 @@
+<div class="form-ro-wrapper">
+    <div class="form-ro-sidebar">
+        <div class="form-ro-poster" style="background-image: url('upload/{+{ACTION_POSTER_IMAGE}+}')"></div>
+        <div class="form-ro-aside-block form-ro-block" data-column="DIRECTED_BY">
+            <label>Режиссер:</label>
+            <div class="form-ro-value">{+{DIRECTED_BY}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="SCREENWRITER">
+            <label>Cценарист:</label>
+            <div class="form-ro-value">{+{SCREENWRITER}+}</div>
+        </div>
+        <div class="form-ro-aside-block form-ro-block" data-column="ACTORS">
+            <label>Актеры:</label>
+            <div class="form-ro-value">{+{ACTORS}+}</div>
+        </div>
+        <!--<div class="form-ro-aside-block">-->
+            <!--<label>Отделения:</label>-->
+            <!--<div class="form-ro-value">{+{SHOW_PART_INFO}+}</div>-->
+        <!--</div>-->
+    </div>
+    <div class="form-ro-content">
+        <div class="form-ro-content-block form-ro-block" data-column="DIRECTED_BY">
+            <label>Мероприятие:</label>
+            <div class="form-ro-value">{+{NAME}+} - {+{NAME2}+}</div>
+        </div>
+        <!--<div class="form-ro-content-block">-->
+            <!--<div class="">{{{DATETIME}}}</div>-->
+        <!--</div>-->
+        <div class="form-ro-content-block form-ro-block" data-column="HALL">
+            <label>Место проведения:</label>
+            <div class="form-ro-value">{+{HALL}+} <span data-hall_id="{+{HALL_ID}+}" class="form-ro-get-hall-address"></span></div>
+        </div>
+        <div class="form-ro-content-block form-ro-block" data-column="LENGH_HOUR_MIN">
+            <label>Продолжительность:</label>
+            <div class="form-ro-value">{+{LENGH_HOUR_MIN}+}</div>
+        </div>
+        <div class="form-ro-content-block form-ro-block" data-column="SHOW_TYPE">
+            <label>Тип зрелища:</label>
+            <div class="form-ro-value">{+{SHOW_TYPE}+}</div>
+        </div>
+        <div class="form-ro-content-block form-ro-block" data-column="SHOW_GENRE">
+            <label>Жанр:</label>
+            <div class="form-ro-value">{+{SHOW_GENRE}+}</div>
+        </div>
+
+        <div class="form-ro-prorate"></div>
+
+        <div class="pr50">
+            <div class="form-ro-content-block form-ro-block" data-column="DESCRIPTION">
+                <label>Описание:</label>
+                <div class="form-ro-value">{+{DESCRIPTION}+}</div>
+            </div>
+        </div>
+        <div class="pr50">
+            <div class="form-ro-content-block form-ro-block" data-column="ABSTRACT">
+                <label>Резюме:</label>
+                <div class="form-ro-value">{+{ABSTRACT}+}</div>
+            </div>
+        </div>
+
+
+        <div class="form-ro-age-cat form-ro-block" data-column="AGE_CATEGORY"><div class="form-ro-value">{+{AGE_CATEGORY}+}</div></div>
+
+    </div>
+    <div class="form-ro-buttons-row">
+        <div class="lower-buttons-wrapper"></div>
+    </div>
+</div>

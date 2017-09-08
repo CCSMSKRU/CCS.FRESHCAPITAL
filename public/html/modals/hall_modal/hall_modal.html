@@ -1,0 +1,101 @@
+
+<div id="hall_content_modal" class="container">
+    <div class="row">
+        <div class="col-md-1">
+            <div class="form-group">
+                <label for="hall_HALL_ID_inp">№ Зала:</label>
+                <select id="hall_HALL_ID_inp"  class="form-control divIdModal"></select>
+            </div>
+        </div>
+        <div class="col-md-4 order_id">
+            <div class="form-group">
+                <label for="hall_NAME_inp">Название зала:</label>
+                <input disabled id="hall_NAME_inp"  class="form-control">
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="hall_ADDR_inp">Адрес зала:</label>
+                <input disabled id="hall_ADDR_inp"  class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="hall_STATUS_inp">Статус:</label>
+                <input disabled id="hall_STATUS_inp"  class="form-control">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+function modalFunctionStart(id){
+    switchLoad("load");
+}
+
+/*
+
+var oder_status_db;
+$(document).ready(function(){
+    var ids = MBOOKER.Modals[MBOOKER.Modals.activeModal]['ids'];
+    var html = "";
+    $("#ticket_modal_buttons").html(html);
+    /// Стилизация Button
+    $( ".basket_btn" ).button();
+    var clientWidth = MBOOKER.MainFunctions.getClientWidth();
+    var clientHeight = MBOOKER.MainFunctions.getClientHeight();
+    // Делать инфу по билету не в таблице 
+    
+    var ticket_id = ids[0];
+    load_hall(ticket_id);
+
+    $("#return_ticket").click(function(){
+        //var id = $("#one_order").getGridParam("selectedRow");
+        var id = $("#ticket_ORDER_TICKET_ID_inp").val();
+        if (id<0) {
+            alert_yesno("Ошибка","Не выбрана запись.","Ок","",function(){},0);
+        }else{
+            alert_yesno("Возврат билета.","Вы уверены, что хотите осуществить возврат?","Да, уверен", "Отменить",function(){
+                send_query({command:"operation",subcommand:"return_ticket",sid:sid,params:{ORDER_TICKET_ID:id}},function(data){
+                    if (+$(data).find("result").find("rc").text()==0){
+                        alert_yesno("",$(data).find("result").find("message").text(),"Ок","",function(){
+                            $("#one_order").trigger("reloadGrid");
+                        },0);
+                    }else{
+                        alert_yesno("<span style='color:#f00;'>Ошибка.</span>",$(data).find("result").find("message").text(),"Ок","",function(){
+                            $("#one_order").trigger("reloadGrid");
+                        },0);
+                    }
+                    //$("#one_order").trigger("reloadGrid");
+                });
+            },0)
+        }
+    });
+    $("#return_order").click(function(){
+        alert_yesno("Возврат всего заказа.","Вы уверены, что хотите осуществить возврат заказа?","Да, уверен", "Отменить",function(){
+            send_query({command:"operation",subcommand:"return_order",sid:sid,params:{order_id:order_id}},function(data){
+                if (+$(data).find("result").find("rc").text()==0){
+                    alert_yesno("",$(data).find("result").find("message").text(),"Ок","",function(){
+                        $("#order").trigger("reloadGrid");
+                        $("#go_back").click();
+                    },0);
+                }else{
+                    alert_yesno("<span style='color:#f00;'>Ошибка.</span>",$(data).find("result").find("message").text(),"Ок","",function(){
+                        $("#order").trigger("reloadGrid");
+                    },0);
+                }
+                //$("#one_order").trigger("reloadGrid");
+            });
+        },0)
+    });
+
+    $(".order_id").dblclick(function(){
+        log(order_status_db)
+        var id = $(this).find("input").val();
+        open_order(id,order_status_db);
+    })
+});
+*/
+
+</script>

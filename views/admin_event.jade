@@ -1,0 +1,365 @@
+extends admin_layout
+block content
+
+
+
+    - var isNew = data.isNew;
+    if(!isNew)
+        - var parts = data.parts.data;
+        - var event = data.actions.data[0];
+        - var rewards = data.rewards.data[0];
+        - var sParts = JSON.stringify(parts);
+    .container.posRel
+        if(isNew)
+            h2 Создание мероприятия
+        else
+            h2 Редактирование мероприятия
+        hr
+        div(role='tabpanel')
+            ul.nav.nav-tabs(role='tablist')
+                li.active(role='edit-event')
+                    a(href='#event-header', aria-controls='event-header', role='tab', data-toggle='tab') Общая информация
+                if(!isNew)
+                    li(role='edit-event')
+                        a(href='#event-parts', aria-controls='event-parts', role='tab', data-toggle='tab') Этапы мероприятия
+            .tab-content
+                #event-header.tab-pane.active(role='tabpanel')
+                    form.marTop22
+                        //.row
+                        //    .col-md-4
+                        //        if(!isNew)
+                        //            | #{event.date_start}
+                        //    .col-md-4
+                        //        if(!isNew)
+                        //            | #{event.date_end}
+                        .row
+                            .col-md-3
+                                .form-group
+                                    label Наименование:
+                                    if(isNew)
+                                        input.fc-event-field.form-control(type='text', data-server_name="title", value="", data-name="title")
+                                    else
+                                        input.fc-event-field.form-control(type='text', data-server_name="title", value="#{event.title}", data-name="title")
+                            .col-md-3
+                                .form-group
+                                    if(isNew)
+                                        label Тип мероприятия:
+                                        input.select2.fc-event-field.form-control(type="hidden", data-server_name="type_id", data-name="name", value="", data-text="", data-table="action_type")
+                                    else
+                                        label Тип мероприятия:
+                                        input.select2.fc-event-field.form-control(type="hidden", data-server_name="type_id", data-name="name", value="#{event.type_id}", data-text="#{event.action_type}", data-table="action_type")
+                            .col-md-3
+                                .form-group
+                                    if(isNew)
+                                        label Тип оплаты:
+                                        input.select2.fc-event-field.form-control(type="hidden", data-server_name="payment_type_id", data-name="name", value="", data-text="", data-table="action_payment_types")
+                                    else
+                                        label Тип оплаты:
+                                        input.select2.fc-event-field.form-control(type="hidden", data-server_name="payment_type_id", data-name="name", value="#{event.payment_type_id}", data-text="#{event.payment_type}", data-table="action_payment_types")
+                            .col-md-3
+                                .form-group
+                                    label Сумма оплаты:
+                                    .input-group
+                                        if(isNew)
+                                            input.fc-event-field.form-control(type='number', data-server_name="cost", value="0", data-name="cost")
+                                        else
+                                            input.fc-event-field.form-control(type='number', data-server_name="cost", value="#{event.cost}", data-name="cost")
+                                        .input-group-addon
+                                            i.fa.fa-ruble
+                        .row
+                            .col-md-3
+                                .form-group
+                                    label Картинка:
+                                    if(isNew)
+                                        input.autoUpload.fc-event-field.form-control(type='text', data-server_name="thumb", value="", data-name="thumb")
+                                    else
+                                        input.autoUpload.fc-event-field.form-control(type='text', data-server_name="thumb", value="#{event.thumb}", data-name="thumb")
+                            .col-md-3
+                                .form-group
+                                    label Фон:
+                                    if(isNew)
+                                        input.autoUpload.fc-event-field.form-control(type='text', data-server_name="image", value="", data-name="image")
+                                    else
+                                        input.autoUpload.fc-event-field.form-control(type='text', data-server_name="image", value="#{event.image}", data-name="image")
+                            .col-md-3
+                                .form-group
+                                    label Дата начала:
+                                    if(isNew)
+                                        input.fc-event-field.form-control.fc_datepicker.fc_control(type='text', data-server_name="date_start", value='', data-name='date_start')
+                                    else
+                                        input.fc-event-field.form-control.fc_datepicker.fc_control(type='text', data-server_name="date_start", value='#{event.date_start}', data-name='date_start')
+                            .col-md-3
+                                .form-group
+                                    label Дата окончания:
+                                    if(isNew)
+                                        input.fc-event-field.form-control.fc_datepicker.fc_control(type='text', data-server_name="date_end", value='', data-name='date_end')
+                                    else
+                                        input.fc-event-field.form-control.fc_datepicker.fc_control(type='text', data-server_name="date_end", value='#{event.date_end}', data-name='date_end')
+                            .col-md-3
+                                .form-group
+                                    label Статус:
+                                    if(isNew)
+                                        input.select2.fc-event-field.form-control(type="hidden", data-server_name="status_id", data-name="name", value="", data-text="", data-table="action_statuses")
+                                    else
+                                        input.select2.fc-event-field.form-control(type="hidden", data-server_name="status_id", data-name="name", value="#{event.status_id}", data-text="#{event.status}", data-table="action_statuses")
+                            .col-md-10
+                                .form-group
+                                    label Описание полное:
+                                    if(isNew)
+                                        textarea.fc-event-field.form-control.cf_text_editor(data-name="description1", data-server_name="description1", id="new-description1", value="")
+                                    else
+                                        textarea.fc-event-field.form-control.cf_text_editor(data-name="description1", data-server_name="description1", id="#{event.id}-description1", value="#{event.description1}")
+                                .form-group
+                                    label Описание кратокое:
+                                    if(isNew)
+                                        textarea.fc-event-field.form-control.cf_text_editor(data-name="description2", data-server_name="description2", id="new-description2", value="")
+                                    else
+                                        textarea.fc-event-field.form-control.cf_text_editor(data-name="description2", data-server_name="description2", id="#{event.id}-description2", value="#{event.description2}")
+                            .col-md-2
+                                .row
+                                    .col-md-12
+                                        h5
+                                            b Призовые места
+                                        hr
+                                        .form-group
+                                            label 1-е Место:
+                                            input.form-control(type='text')
+                                        .form-group
+                                            label 2-е Место:
+                                            input.form-control(type='text')
+                                        .form-group
+                                            label 3-е Место:
+                                            input.form-control(type='text')
+                                        .form-group
+                                            label 4-е Место:
+                                            input.form-control(type='text')
+                                        .form-group
+                                            label 5-е Место:
+                                            input.form-control(type='text')
+                        .row.posRel
+                            if(isNew)
+                                .saveEventButton.sBtn.flRight.green(data-id="new")
+                                    .fa.fa-save &nbsp;&nbsp;
+                                    | Сохранить
+                            else
+                                .saveEventButton.sBtn.flRight.green(data-id="#{event.id}")
+                                    .fa.fa-save &nbsp;&nbsp;
+                                    | Сохранить
+                if(!isNew)
+                    #event-parts.tab-pane(role='tabpanel')
+                        #edit-event-parts-wrapper
+                            .row
+                                .col-md-12
+                                    #add-event-part.sBtn.flRight.green.small(data-action_id="#{event.id}")
+                                        i.fa.fa-plus
+                                        |   Добавть этап
+
+
+                            div(role='tabpanel')
+                                ul#edit-event-part-tab-nav-wrapper.nav.nav-tabs(role='tablist')
+                                    if(!isNew)
+                                        if(!parts.length)
+                                            li(role='edit-event-part', class='active')
+                                                a(href='#part_#{parts.id}', aria-controls='part_#{parts.id}', role='tab', data-toggle='tab') #{parts.title}
+                                        else
+                                            each part, idx in parts
+                                                - var activeClass = (idx == 0)? 'active': '';
+                                                li(role='edit-event-part', class='#{activeClass}')
+                                                    a(href='#part_#{part.id}', aria-controls='part_#{part.id}', role='tab', data-toggle='tab') #{part.title}
+                                #edit-event-part-tab-content-wrapper.tab-content
+                                    if(!isNew)
+                                        if(!parts.length)
+                                            div.active.tab-pane(role="tabpanel", id="part_#{parts.id}")
+                                                .e-event-part-wrapper.marTop22
+                                                    form
+                                                        .fn-train-overflow
+                                                            .fn-train
+                                                                .fn-vagon
+                                                                    .row
+                                                                        .col-md-12
+                                                                            .sBtn.small.red.flRight.remove-event-part.marRight3(data-action_id="#{event.id}", data-id="#{parts.id}")
+                                                                                i.fa.fa-trash-o
+                                                                                |   Удалить
+
+                                                                            .sBtn.small.green.flRight.save-edit-event-part.marRight3(data-action_id="#{event.id}", data-id="#{parts.id}")
+                                                                                i.fa.fa-save
+                                                                                |   Сохранить
+                                                                            //.sBtn.small.blue.flRight.marRight3
+                                                                            //    a(href='requests.html?event_id=2&part_id=3')
+                                                                            //        i.fa.fa-video-camera
+                                                                            //        |   К заявкам
+                                                                            //        span.badge 73
+                                                                            //.sBtn.small.blue.flRight.marRight3.to_results
+                                                                            //    i.fa.fa-list-ul
+                                                                            //    |   К результатам
+                                                                    .row
+                                                                        .form-group.col-md-4
+                                                                            label Наименование:
+                                                                            input.fc-event-part-field.form-control.fc_control(data-name='title',data-server_name="title",  type='text', value='#{parts.title}')
+                                                                        .form-group.col-md-4
+                                                                            label Формат подачи результата:
+                                                                            input.fc-event-part-field.select2.form-control.fc_control(value='#{parts.result_type_id}',data-server_name="result_type_id",  data-text='#{parts.result_type}', data-name='name', type="hidden", data-table="result_types")
+                                                                        .form-group.col-md-4
+                                                                            label Дата начала:
+                                                                            input.fc-event-part-field.form-control.fc_datepicker.fc_control(type='text', data-server_name="start_date", value='#{parts.start_date}', data-name='start_date')
+                                                                        .form-group.col-md-4
+                                                                            label Дата окончания:
+                                                                            input.fc-event-part-field.form-control.fc_datepicker.fc_control(type='text', data-server_name="end_date", value='#{parts.end_date}', data-name='end_date')
+                                                                        .form-group.col-md-4
+                                                                            label Статус:
+                                                                            input.fc-event-part-field.select2.form-control.fc_control(value='#{parts.status_id}', data-server_name="status_id", data-text="#{parts.status}", data-name='name', type="hidden", data-table="statuses_of_action_parts")
+                                                                        .form-group.col-md-4
+                                                                            label Картинка для правил:
+                                                                            if(isNew)
+                                                                                input.autoUpload.fc-event-part-field.form-control(type='text', data-server_name="complex_image", value="", data-name="complex_image")
+                                                                            else
+                                                                                input.autoUpload.fc-event-part-field.form-control(type='text', data-server_name="complex_image", value="#{event.complex_image}", data-name="complex_image")
+                                                                    .collapseable
+                                                                        .collapseBtn
+                                                                            .fa.fa-minus
+                                                                        .row
+                                                                            .form-group.col-md-6
+                                                                                label Комплекс:
+                                                                                textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{parts.desc_complex}',data-server_name="desc_complex",  data-editor='html', data-name='desc_complex', id="#{parts.id}-desc_complex")
+                                                                            .form-group.col-md-6
+                                                                                label Примечание:
+                                                                                textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{parts.note}',data-server_name="note",  data-editor='html', data-name='note', id="#{parts.id}-note")
+                                                                        .row
+                                                                            .form-group.col-md-6
+                                                                                label Стандарты движений:
+                                                                                textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{parts.desc_move_std}',data-server_name="desc_move_std",  data-editor='html', data-name='desc_move_std', id="#{parts.id}-desc_move_std")
+                                                                            .form-group.col-md-6
+                                                                                label Подсчет очков:
+                                                                                textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{parts.desc_scoring}',data-server_name="desc_scoring",  data-editor='html', data-name='desc_scoring', id="#{parts.id}-desc_scoring")
+                                                                        .row
+                                                                            .form-group.col-md-6
+                                                                                label Оборудование:
+                                                                                textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{parts.desc_inventory}',data-server_name="desc_inventory",  data-editor='html', data-name='desc_inventory', id="#{parts.id}-desc_inventory")
+                                                                            .form-group.col-md-6
+                                                                                label Стандарты видеосъемки:
+                                                                                textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{parts.desc_video_std}',data-server_name="desc_video_std",  data-editor='html', data-name='desc_video_std', id="#{parts.id}-desc_video_std")
+
+
+                                                                .fn-vagon
+                                                                    h3 Проверенные заявки
+                                                                    table.table
+                                                                        thead
+                                                                            tr
+                                                                                th Атлет
+                                                                                th Реультат
+                                                                                th Судья
+                                                                        tbody
+                                                                            tr
+                                                                                td
+                                                                                    a(href='user.html') Атлет 1
+                                                                                td 5 (4 (11:27))
+                                                                                td
+                                                                                    a(href='judge.html') Судья 1
+                                                                            tr
+                                                                                td
+                                                                                    a(href='user.html') Атлет 1
+                                                                                td 5 (4 (11:27))
+                                                                                td
+                                                                                    a(href='judge.html') Судья 1
+                                                                            tr
+                                                                                td
+                                                                                    a(href='user.html') Атлет 1
+                                                                                td 5 (4 (11:27))
+                                                                                td
+                                                                                    a(href='judge.html') Судья 1
+                                                                    .sBtn.small.blue.flRight.marRight3.back_results
+                                                                        i.fa.fa-reply
+                                                                        |   Назад
+                                        else
+                                            each part, idx in parts
+                                                - var activeClass = (idx == 0)? 'active': '';
+                                                div(role="tabpanel", id="part_#{part.id}", class="tab-pane #{activeClass}")
+                                                    .e-event-part-wrapper
+                                                        form
+                                                            .fn-train-overflow
+                                                                .fn-train
+                                                                    .fn-vagon
+                                                                        .row.bigTitleRow
+                                                                            .col-md-12
+                                                                                .bigTitle.flLeft.h3 #{part.title}
+                                                                                .sBtn.small.red.flRight.remove-event-part.marRight3(data-action_id="#{event.id}", data-id="#{part.id}")
+                                                                                    i.fa.fa-trash-o
+                                                                                    |   Удалить
+                                                                                .sBtn.small.green.flRight.save-edit-event-part.marRight3(data-action_id="#{event.id}", data-id="#{part.id}")
+                                                                                    i.fa.fa-save
+                                                                                    |   Сохранить
+                                                                                //.sBtn.small.blue.flRight.marRight3
+                                                                                //    a(href='requests.html?event_id=2&part_id=3')
+                                                                                //        i.fa.fa-video-camera
+                                                                                //        |   К заявкам
+                                                                                //        span.badge 73
+                                                                                //.sBtn.small.blue.flRight.marRight3.to_results
+                                                                                //    i.fa.fa-list-ul
+                                                                                //    |   К результатам
+
+                                                                        .row
+                                                                            .form-group.col-md-4
+                                                                                label Наименование:
+                                                                                input.fc-event-part-field.form-control.fc_control(data-name='title',data-server_name="title",  type='text', value='#{part.title}')
+                                                                            .form-group.col-md-4
+                                                                                label Формат подачи результата:
+                                                                                input.fc-event-part-field.select2.form-control.fc_control(value='#{part.result_type_id}',data-server_name="result_type_id",  data-text="#{part.result_type}", data-name='name', type="hidden", data-table="result_types")
+                                                                            .form-group.col-md-4
+                                                                                label Дата начала:
+                                                                                input.fc-event-part-field.form-control.fc_datepicker.fc_control(type='text', data-server_name="start_date",  value='#{part.start_date}', data-name='start_date')
+                                                                            .form-group.col-md-4
+                                                                                label Дата окончания:
+                                                                                input.fc-event-part-field.form-control.fc_datepicker.fc_control(type='text', data-server_name="end_date", value='#{part.end_date}', data-name='end_date')
+                                                                            .form-group.col-md-4
+                                                                                label Статус:
+                                                                                input.fc-event-part-field.select2.form-control.fc_control(value='#{part.status_id}',data-server_name="status_id",  data-text="#{part.status}", data-name='name', type="hidden", data-table="statuses_of_action_parts")
+                                                                            .form-group.col-md-4
+                                                                                label Картинка для правил:
+                                                                                if(isNew)
+                                                                                    input.autoUpload.fc-event-part-field.form-control(type='text', data-server_name="complex_image", value="", data-name="complex_image")
+                                                                                else
+                                                                                    input.autoUpload.fc-event-part-field.form-control(type='text', data-server_name="complex_image", value="#{event.complex_image}", data-name="complex_image")
+                                                                        .collapseable
+                                                                            h4.padBot10.borBot1CCC Описание этапа
+                                                                            .collapseBtn
+                                                                                .fa.fa-minus
+                                                                                |  Свернуть
+                                                                            .collapseContent
+                                                                                .row
+                                                                                    .form-group.col-md-6
+                                                                                        label Комплекс:
+                                                                                        textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{part.desc_complex}',data-server_name="desc_complex",  data-editor='html', data-name='desc_complex', id="#{part.id}-desc_complex")
+                                                                                    .form-group.col-md-6
+                                                                                        label Примечание:
+                                                                                        textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{part.note}',data-server_name="note",  data-editor='html', data-name='note', id="#{part.id}-note")
+                                                                                .row
+                                                                                    .form-group.col-md-6
+                                                                                        label Стандарты движений:
+                                                                                        textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{part.desc_move_std}',data-server_name="desc_move_std",  data-editor='html', data-name='desc_move_std', id="#{part.id}-desc_move_std")
+                                                                                    .form-group.col-md-6
+                                                                                        label Подсчет очков:
+                                                                                        textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{part.desc_scoring}', data-editor='html',data-server_name="desc_scoring",  data-name='desc_scoring', id="#{part.id}-desc_scoring")
+                                                                                .row
+                                                                                    .form-group.col-md-6
+                                                                                        label Оборудование:
+                                                                                        textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{part.desc_inventory}',data-server_name="desc_inventory",  data-editor='html', data-name='desc_inventory', id="#{part.id}-desc_inventory")
+                                                                                    .form-group.col-md-6
+                                                                                        label Стандарты видеосъемки:
+                                                                                        textarea.fc-event-part-field.form-control.cf_text_editor.fc_control(value='#{part.desc_video_std}',data-server_name="desc_video_std",  data-editor='html', data-name='desc_video_std', id="#{part.id}-desc_video_std")
+
+                                                                        .collapseable
+                                                                            h4.padBot10.borBot1CCC Заявки на этап
+                                                                            .collapseBtn
+                                                                                .fa.fa-minus
+                                                                                |  Свернуть
+                                                                            .collapseContent
+                                                                                .initMeTable(data-get_object="results", data-action_id="#{event.id}", data-part_id="#{part.id}")
+
+
+                                                                    .fn-vagon
+                                                                        .sBtn.small.blue.flRight.marRight3.back_results
+                                                                            i.fa.fa-reply
+                                                                            |   Назад
+    script(type="text/javascript", src="js/html/admin_event.js")
+
+

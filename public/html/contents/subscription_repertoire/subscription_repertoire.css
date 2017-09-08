@@ -1,0 +1,106 @@
+/*
+
+#box_for_subscription_repertoire_free_place_info_price{
+    float: left;
+    width: 100%;
+}
+#box_for_subscription_repertoire_free_place_info_count{
+    float: left;
+    width: 100%;
+    */
+/*margin-top: -1px;*//*
+
+}
+.one_price{
+    float: left;
+    padding-top: 35px;
+    border: 1px solid #dbdbdb;
+    width: 34px;
+    */
+/*height: 24px;*//*
+
+    -webkit-transform: skew(-20deg) translate(15px,0);
+    -moz-transform: skew(-20deg) translate(15px,0);
+    -o-transform: skew(-20deg) translate(15px,0);
+
+
+    font-weight: bold;
+    letter-spacing: 1px;
+
+
+
+
+
+
+}
+.one_price:nth-child(n+1){
+    border-right:none;
+}
+.one_price:last-child{
+    border-right:1px solid #dbdbdb;
+}
+.one_price:nth-child(odd){
+    background-color:#f9f9f9;
+}
+.one_price_name{
+    -webkit-transform: rotate(-90deg); */
+/* для safari и chrome браузеров *//*
+
+    -moz-transform: rotate(-90deg); */
+/* для FF *//*
+
+    -o-transform: rotate(-90deg); */
+/* для Opera *//*
+
+    transform: rotate(-90deg); */
+/* для остальных браузеров поддерживающий поворот по-умолчанию *//*
+
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4); */
+/* для ИЕ 6-8 *//*
+
+
+    margin-bottom:14px;
+    margin-left: -2px;
+    width: 36px;
+    color: #0000A3;
+    font-size: 1.1em;
+
+
+}
+.one_price_color{
+
+    float: left;
+    width: 28px;
+    height: 10px;
+    margin: 2px;
+}
+
+.one_count{
+    float: left;
+    width: 34px;
+    border: 1px solid #dbdbdb;
+    text-align: center;
+
+}
+.one_count:nth-child(n+1){
+    border-right:none;
+}
+.one_count:last-child{
+    border-right:1px solid #dbdbdb;
+}
+.one_count:nth-child(odd){
+    background-color:#f9f9f9;
+}*/
+
+.one_price_name{
+    float: left;
+    margin-left: 4px;
+}
+
+.one_price_color{
+
+    float: left;
+    width: 10px;
+    height: 18px;
+    margin: 1px;
+}

@@ -1,0 +1,53 @@
+.daysweek-dd-wrapper{
+    position: absolute;
+    background-color: #fff;
+    z-index: 100000;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    display: none;
+}
+.daysweek-list{
+    margin: 0;
+    padding: 0;
+}
+
+.daysweek-list li{
+    list-style: none;
+    font-family: openSans, arial, sans-serif;
+    font-size: 13px;
+    color: #666;
+    cursor: pointer;
+    /*width: 70px;*/
+    padding: 6px 0;
+    text-align: center;
+    margin: 3px 0;
+}
+
+.daysweek-list li:first-child,
+.daysweek-list li.selected:first-child{
+    margin-top: 8px;
+}
+.daysweek-list li:hover{
+    background-color: #f7f7f7;
+}
+.daysweek-list li.selected{
+    background-color: #428bca;
+    color: #fff;
+    width: 40px;
+    margin: 3px auto;
+    border-radius: 16px!important;
+}
+.daysweek-dd-wrapper .daysweek-confirm{
+    width: 120px;
+    background-color: #eee;
+    margin: 5px;
+    height: 32px;
+    text-align: center;
+    border-radius: 2px!important;
+    padding-top: 7px;
+    cursor: pointer;
+}
+.daysweek-dd-wrapper .daysweek-confirm:hover{
+    background-color: #dddddd;
+}
+
+

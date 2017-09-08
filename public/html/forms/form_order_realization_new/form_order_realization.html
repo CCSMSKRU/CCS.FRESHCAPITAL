@@ -1,0 +1,206 @@
+
+<div class="insertIntoHeader">
+    <div class="order-status" data-color="{+{STATUS}+}">{+{STATUS_RU}+}</div><div class="order-created">{+{ORDER_DATE}+}</div>
+</div>
+
+<div class="row h100">
+    <div class="col-md-12 h100">
+        <div class="col-md-4 h100 overY-h">
+
+            <div class="row">
+                <div>{{{AGENT_NAME}}}</div>
+            </div>
+
+            <div class="row">
+                <div>
+                    <div class="fn-field" data-column="">
+                        <label>Резерв до (для зарезервированных билетов):</label>
+                        <input id="reserveToDate" type="text" class="fn-control fn-datetime-control fn-with-btn" data-column="" value="" />
+                        <div id="confirmReserve" class="fn-control disabled fn-btn fn-append-btn">Установить</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div>{{{COMMENTS}}}</div>
+            </div>
+
+            <div id="rightSeparator"></div>
+
+        </div>
+        <div class="col-md-8 h100">
+            <div class="row marTop37">
+                <div class="fn-block">
+                    <div class="tabsParent sc_tabulatorParent floated">
+                        <div class="tabsTogglersRow sc_tabulatorToggleRow">
+                            <div class="tabToggle sc_tabulatorToggler opened" dataitem="0">
+                                <span class="">Билеты</span>
+                            </div>
+                            <div class="tabToggle sc_tabulatorToggler hidden" dataitem="1">
+                                <span class="">История заказа</span>
+                            </div>
+
+                        </div>
+
+                        <div class="ddRow sc_tabulatorDDRow">
+                            <div class="tabulatorDDItem noMaxHeight sc_tabulatorDDItem opened" dataitem="0">
+                                <div class="childObjectWrapper"></div>
+
+                                <!--<div class="afterChildLoaded btn newStyle payTypeSwitcher" data-type="CASH">Наличными</div>-->
+                                <!--<div class="afterChildLoaded btn newStyle payTypeSwitcher" data-type="CARD">Картой</div>-->
+                                <!--<div class="afterChildLoaded btn newStyle payTypeSwitcher" data-type="BANK">Платежное поручение</div>-->
+                                <!--<div class="cardTypeDD-wrapper hidden"></div>-->
+
+                                <div class="totalBlock">
+                                    <div class="afterChildLoaded flLeft">{{{DISCOUNT}}}</div>
+                                    <div class="afterChildLoaded flLeft marLeft10 ">{{{PLACES_COUNT}}}</div>
+                                    <div class="afterChildLoaded flLeft marLeft10 orderTotalTickets ">{{{TICKETS_COUNT}}}</div>
+                                    <div class="afterChildLoaded flLeft marLeft10 orderTotalAmount withAppend" data-append="<span class='appendText'> Руб.</span>">{{{TOTAL_ORDER_AMOUNT}}}</div>
+                                </div>
+                            </div>
+                            <div class="tabulatorDDItem noMaxHeight sc_tabulatorDDItem" dataitem="1">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fn-block">
+                    <div class="printStatus afterChildLoaded">
+                        <div class="printStatusRow"><i class="fa fa-print"></i> Напечатано: {+{PRINTED_TICKETS_COUNT}+} / {+{TICKETS_COUNT}+}</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="fn-buttons-row">
+                <div id="to_pay_order" class="fn-btn green disabled flLeft">Заказ к оплате</div>
+                <div id="cancel_order" class="fn-btn red disabled flLeft">Отменить заказ</div>
+                <div id="return_order" class="fn-btn blue disabled flLeft">Вернуть заказ</div>
+
+                <div class="flRight">
+                    <div class="printBtn disabled flRight marLeft13"><i class="fa fa-print"></i></div>
+
+                    <div class="clientScreenBtn flRight marLeft13"><i class="fa fa-desktop"></i></div>
+
+                    <div class="reportBtn disabled flRight marLeft13"><i class="fa fa-file-text-o"></i></div>
+                    <div class="reportBtn-dd">
+                        <ul>
+                            <li class="delivery_note2_btn">Накладная по заказу</li>
+                            <li class="">***</li><!--return_delivery_note_btn-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    #rightSeparator{
+        position: absolute;
+        right: 0;
+        height: 100%;
+        background-color: #ddd;
+        width: 1px;
+        top: 42px;
+        z-index: 1;
+        display: none;
+    }
+    .h100{
+        height: 100%;
+    }
+    .overY-h{
+        overflow-y: hidden;
+    }
+    #confirmReserve{
+        position: absolute;
+        right: 35px;
+        top: 36px;
+        background-color: #f7f7f7;
+        color: #222;
+        padding: 7px 25px 6px 25px;
+        font-family: openSans, arial, sans-serif;
+        font-size: 14px;
+        height: 34px;
+        cursor: pointer;
+        border: 1px solid #d1d1d1;
+    }
+    #confirmReserve:hover{
+        background-color: #f2f2f2;
+    }
+    #confirmReserve.disabled{
+        color: #c5c5c5;
+    }
+    #confirmDiscount{
+        position: absolute;
+        right: 35px;
+        top: 36px;
+        background-color: #f7f7f7;
+        color: #222;
+        padding: 7px 25px 6px 25px;
+        font-family: openSans, arial, sans-serif;
+        font-size: 14px;
+        height: 34px;
+        cursor: pointer;
+        border: 1px solid #d1d1d1;
+    }
+    #confirmDiscount:hover{
+        background-color: #f2f2f2;
+    }
+    #confirmDiscount.disabled{
+        color: #c5c5c5;
+    }
+    #reject_bso{
+        background-color: #8a3f3f;
+        color: #fff;
+        border: 1px solid #8a3f3f;
+        margin-left: 5px;
+    }
+    #reject_bso:hover{
+        background-color: #b44545!important;
+        color: #fff!important;
+        border: 1px solid #b44545!important;
+    }
+    .totalBlock{
+        /*position: absolute;*/
+        /*bottom: 6px;*/
+        /*right: 6px;*/
+        float: right;
+    }
+    .totalBlock .fn-field{
+        border-right: 0;
+        background-color: transparent!important;
+        padding: 3px 0 0 0;
+    }
+    .totalBlock .fn-field.fn-readonly-field{
+        height: 34px;
+    }
+    .printStatusRow{
+        float: left;
+        padding: 10px 15px;
+        margin-top: 10px;
+        background-color: #dbebf4;
+        border-radius: 3px!important;
+        font-family: openSans, arialm sans-serif;
+        font-size: 16px;
+        color: #222;
+        text-shadow: 0 1px 0 #fff;
+    }
+    .printStatusRow i{
+        font-size: 18px;
+        color: black;
+        padding-right: 9px;
+    }
+    .ifAgentSelected{
+        display: none;
+    }
+    #return_order{
+        margin-bottom: 50px;
+    }
+    #to_pay_order{
+        margin-bottom: 50px;
+    }
+    #cancel_order{
+        margin-bottom: 50px;
+    }
+</style>

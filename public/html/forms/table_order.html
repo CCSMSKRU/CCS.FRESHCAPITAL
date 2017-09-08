@@ -1,0 +1,257 @@
+<!-- 15: "COUNT_RESERVED_TICKETS"
+16: "COUNT_TO_PAY_TICKETS"
+17: "COUNT_TO_REALIZATION_TICKETS"
+18: "COUNT_REALIZATION_TICKETS"
+19: "COUNT_CLOSED_TICKETS"
+20: "AGENT_REALIZATION_ACCESS" -->
+<div class="row">
+	<div class="col-md-12">
+		<div class="forms-container">
+			<div class="portlet box blue">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="fa fa-reorder"></i> Заказы
+					</div>
+					<div class="actions">
+					</div>
+				</div>
+				<div class="portlet-body form">
+					<div class="form-horizontal form-bordered form-row-stripped">
+						<div class="form-body">
+							<div class="form-group">
+								<label class="control-label col-md-3">id Заказа</label>
+								<div class="col-md-1">
+									<div class="column-wrapper primarykey" data-column="ORDER_ID">
+										<select class="form-control id-toggler">
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Дата и время создания</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="ORDER_DATE">
+										<input type="text" placeholder="medium" class="form-control">
+									</div>
+								</div>
+							</div>
+							<!-- <div class="form-group">
+								<label class="control-label col-md-3">Дата создания</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="ORDER_DATE">
+										<input type="text" placeholder="medium" class="form-control">
+									</div>
+								</div>
+							</div> -->
+							<!-- <div class="form-group">
+								<label class="control-label col-md-3">Статус</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="STATUS">
+										<input type="text" placeholder="medium" class="form-control">
+									</div>
+								</div>
+							</div> -->
+							<div class="form-group">
+								<label class="control-label col-md-3">Статус</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="STATUS_RU">
+										<input type="text" placeholder="medium" class="form-control">
+									</div>
+								</div>
+							</div>								
+							<!-- <div class="form-group">
+								<label class="control-label col-md-3">Цвет</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="COLOR">
+										<input type="text" placeholder="medium" class="form-control">
+									</div>
+								</div>
+							</div> -->
+							<div class="form-group">
+								<label class="control-label col-md-3">Дата оплаты</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="PAYMENT_DATE">
+										<input type="text" placeholder="medium" class="form-control">
+									</div>
+								</div>
+							</div>
+							<!-- <div class="form-group">
+								<label class="control-label col-md-3">id Клиента</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="CUSTOMER_ID">
+										<input type="text" placeholder="medium" class="form-control">
+									</div>
+								</div>
+							</div> -->
+							<div class="form-group">
+								<label class="control-label col-md-3">Клиент</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="CUSTOMER_NAME">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<!-- <div class="form-group">
+								<label class="control-label col-md-3">CRM_USER_ID</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="CRM_USER_ID">
+										<input type="text" placeholder="medium" class="form-control">
+									</div>
+								</div>
+							</div> -->
+							<!-- <div class="form-group">
+								<label class="control-label col-md-3">CRM_USER</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="CRM_USER">
+										<input type="text" placeholder="medium" class="form-control">
+									</div>
+								</div>
+							</div> -->
+							<div class="form-group">
+								<label class="control-label col-md-3">Имя</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="FIRST_NAME">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Фамилия</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="LAST_NAME">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Телефон</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="PHONE">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">e-mail</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="EMAIL">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Итого по заказу</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="TOTAL_ORDER_AMOUNT">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Оплачено по заказу</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="TOTAL_PAID_ORDER_AMOUNT">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">К оплате</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="TOTAL_TO_PAY_ORDER_AMOUNT">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Кол-во билетов в заказе</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="TICKETS_COUNT">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Коментарий</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="COMMENTS">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<!-- <div class="form-group">
+								<label class="control-label col-md-3">Тип заказа</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="CREATED_BY_RU">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div> -->
+							<!-- <div class="form-group">
+								<label class="control-label col-md-3">CREATED_BY</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="CREATED_BY">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div> -->
+							<div class="form-group">
+								<label class="control-label col-md-3">id пользователя</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="USER_ID">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">ФИО пользователя</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="USER_FULLNAME">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Резерв до (Дата)</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="RESERV_DATE">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Резерв до (Время)</label>
+								<div class="col-md-9">
+									<div class="column-wrapper" data-column="RESERV_TIME">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="tbl-content"></div>
+						</div>
+						<div class="form-actions fluid">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="col-md-offset-3 col-md-9">
+										<button type="submit" class="btn green save_button disabled"><i class="fa fa-check"></i> Сохранить</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+	<div class="hidden-inputs">
+		<div class="column-wrapper" data-column="ORDER_DATE"><input type="text" placeholder="medium" class="form-control"></div>
+		<div class="column-wrapper" data-column="STATUS"><input type="text" placeholder="medium" class="form-control"></div>
+		<div class="column-wrapper" data-column="COLOR"><input type="text" placeholder="medium" class="form-control"></div>
+		<div class="column-wrapper" data-column="CUSTOMER_ID"><input type="text" placeholder="medium" class="form-control"></div>
+		<div class="column-wrapper" data-column="CRM_USER_ID"><input type="text" placeholder="medium" class="form-control"></div>
+		<div class="column-wrapper" data-column="CRM_USER"><input type="text" placeholder="medium" class="form-control"></div>
+		<div class="column-wrapper" data-column="CREATED_BY"><input type="text" class="form-control"></div>
+		<div class="column-wrapper" data-column="CREATED_BY_RU"><input type="text" class="form-control"></div>	
+		<div class="column-wrapper" data-column="OBJVERSION"><input class="form-control" type="text"></div>
+	</div>	
+</div>

@@ -1,0 +1,61 @@
+<div class="insertIntoHeader">
+    <div class="order-status" data-color="{+{STATUS}+}">{+{STATUS_RU}+}</div><div class="order-created">Создана: {+{CREATION_DATE}+}</div>
+</div>
+
+<div class="row h100">
+    <div class="col-md-12 h100">
+        <div class="col-md-3  overY-h">
+
+            <div class="row">
+                <div>{{{CREATED_BY_USER}}}</div>
+            </div>
+
+            <div id="rightSeparator"></div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="row">
+                <div>{{{QUOTA_OPERATION_TYPE_RU}}}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div>{{{COMMENTS}}}</div>
+            </div>
+        </div>
+
+
+        <div class="flLeft wid100pr">
+            <!--<div class="row">-->
+            <div class="fn-train-overflow">
+                <div class="fn-train">
+                    <div class="fn-vagon">
+
+                        <div class="fn-child-objects-tabs-wrapper marTop10"></div>
+
+                        <div class="flLeft wid100pr marTop10">
+                            <div class="totalBlock">
+                                <div class="afterChildLoaded flLeft orderTotalTickets ">{{{TICKETS_COUNT}}}</div>
+                                <div class="afterChildLoaded flLeft marLeft10 orderTotalAmount withAppend" data-append="<span class='appendText'> Руб.</span>">{{{TOTAL_ORDER_AMOUNT}}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="fn-vagon">
+                        <div class="marTop10 linesTblWrapper">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="fn-buttons-row formOrder-bottom-buttons-block">
+            <div class="paddingRight15">
+                <!--<div class="fn-btn fn-small-btn green flLeft splicedRoundedBtn upload-quota"><i class="fa fa-upload"></i>&nbsp;&nbsp;Загрузить файл квоты</div>&nbsp;-->
+            </div>
+        </div>
+    </div>
+</div>

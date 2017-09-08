@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Переоценка </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="html/contents/action_priceZones/action_priceZones.js"></script>
+    <link href="html/contents/action_priceZones/action_priceZones.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body style="overflow: hidden;">
+
+
+<div id="action_priceZones" class="modalParentBlock">
+    <div class="pageHeader">
+        <div class="pageHeaderInner">
+            <h3>&nbsp;</h3>
+            <div class="closeModal"><i class="fa fa-times"></i></div>
+        </div>
+    </div>
+
+    <div class="pageContent">
+        <div class="" id="canvasOutput">
+            <div class="box_for_canvas canvasContainer" id="box_for_action_priceZones_map">
+
+            </div>
+        </div>
+
+        <div class="pageRightBlock">
+            <div id="right_column">
+                <div class="rightColumnInner flLeft">
+
+                    <div class="newPortlet flLeft">
+                        <div class="newPortletTitle">
+                            <div class="newPortletTitleInner">
+                                <div class="newPortletTitleHeadline flLeft" id="hall_scheme_pricezone">Ценовые пояса</div>
+
+                                <button type="button" class="btn btn-default linkBtn marTopUn3 hiddenImp" id="hall_scheme_pricezone_btn">
+                                    <i class="fa fa-edit"></i>&nbsp;&nbsp;Изменить
+                                </button>
+                            </div>
+                        </div>
+                        <div class="newPortletContent">
+
+                            <div class="padder5">
+                                <label class="smallGery">
+                                    <input type="checkbox" class="showOnlyUsed"> Показать только использованные
+                                </label>
+                            </div>
+
+                            <div class="newPortletContentInner scrollable">
+                                <ul id="for_price_groups" class="newUl selectable hoverable">
+
+                                </ul>
+                            </div>
+                            <div class="padder5">
+                                <table class="table infoTable smallTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Всего мест</th>
+                                        <th>Выбрано</th>
+                                        <th>Свободно</th>
+                                        <!--<th>Исключено</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody id="for_fundZoneInfo">
+                                    <tr>
+                                        <td class="highlight" id="TOTAL_PLACE_COUNT"></td>
+                                        <td class="highlight" id="TOTAL_SELECTED_PLACE_COUNT"></td>
+                                        <td class="highlight" id="TOTAL_NOT_SELECTED_PLACE_COUNT"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="newPortlet flLeft marTop10">
+                        <div class="newPortletTitle">
+                            <div class="newPortletTitleInner">
+                                <div class="newPortletTitleHeadline flLeft inlineEditing" id="pricing_select"></div>
+
+                                <button type="button" class="btn btn-default linkBtn marTopUn3" id="pricing_select_btn">
+                                    <i class="fa fa-edit"></i>&nbsp;&nbsp;Изменить
+                                </button>
+                            </div>
+                        </div>
+                        <div class="newPortletContent">
+
+                            <div class="newPortletContentInner scrollable">
+                                <div class="padder5">
+                                    <!-- <ul id="forPricingRow">
+                                        
+                                    </ul> -->
+
+                                    <table class="table circleRowTable">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                Пояс
+                                            </th>
+                                            <th>
+                                                Кол-во
+                                            </th>
+                                            <th class="nominalTh">
+                                                Номинал
+                                            </th>
+                                            <th class="price_marginTH">
+                                                Наценка
+                                            </th>
+                                            <th>
+                                                Стоимость
+                                            </th>
+                                            <th>
+                                                Сумма
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="for_pricing_row">
+                                        <tr class="pricing_row" id="pricing_row183">
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!--<ul id="for_price_groups" class="newUl selectable hoverable">
+
+                                </ul>-->
+                            </div>
+
+                            <div class="padder5">
+                                <div id="pricing_global_amount" class="global_amount"></div>
+                            </div>
+
+                            <div class="padder5">
+
+                                <div class="btn-group btn-group-justified newStyle marBot10 flLeft">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default newStyle" id="pricing_save_btn"><i class="fa fa-save"></i>&nbsp;&nbsp;Сохранить</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default newStyle" id="pricing_reset_btn"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Сбросить</button>
+                                    </div>
+                                </div>
+                                <!--<button type="button" class="btn btn-default pricing_btn" id="pricing_save_btn"><i class="fa fa-cogs"></i> Сохранить</button>
+                                <button type="button" class="btn btn-default pricing_btn" id="pricing_reset_btn"><i class="fa fa-cogs"></i> Сбросить</button>-->
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--BUTTONS-->
+
+                    <div class="btn-group btn-group-justified newStyle marTop10 marBot10 flLeft">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default newStyle" id="toFundsZones"><i class="fa fa-tasks"></i>&nbsp;&nbsp;К&nbsp;&nbsp;перераспределению</button>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default newStyle" id="toPriceGroups"><i class="fa fa-briefcase"></i>&nbsp;&nbsp;К&nbsp;ценовым&nbsp;группам</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--=====================================================-->
+
+<!--<div id="action_priceZones">
+
+<div class="box_for_canvas" id="box_for_action_priceZones_map">
+    &lt;!&ndash;<canvas height='2000' width='2000' id='canvas1'>Обновите браузер</canvas>&ndash;&gt;
+</div>-->
+
+<!--<div id="right_column">
+
+
+    <div class="panel panel-default blue">
+        <div class="panel-heading" id="hall_scheme_pricezone">
+            &lt;!&ndash;Panel heading without title&ndash;&gt;
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        <i class="fa fa-briefcase"></i> Пояс
+                    </th>
+                    <th class="hidden-xs">
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="for_price_groups">
+                    &lt;!&ndash;<tr>
+                        <td class="highlight">
+                            <div style="border-left: 2px solid #66ee66;"></div>
+                            <a href="#">RedBull</a>
+                        </td>
+                        <td class="hidden-xs"></td>
+
+                    </tr>&ndash;&gt;
+                </tbody>
+            </table>
+
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        Всего мест
+                    </th>
+                    <th>
+                        Выбрано
+                    </th>
+                    <th>
+                        Свободно
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="for_priceZoneInfo">
+                <tr>
+                    <td class="highlight" id="TOTAL_PLACE_COUNT"></td>
+                    <td class="highlight" id="TOTAL_SELECTED_PLACE_COUNT"></td>
+                    <td class="highlight" id="TOTAL_NOT_SELECTED_PLACE_COUNT"></td>
+                    &lt;!&ndash;<td class="hidden-xs"></td>&ndash;&gt;
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading" id="pricing_select">
+            &lt;!&ndash;Panel heading without title&ndash;&gt;
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        Пояс
+                    </th>
+                    <th>
+                        Кол-во
+                    </th>
+                    <th>
+                        Стоимость
+                    </th>
+                    <th>
+                        Сумма
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="for_pricing_row">
+
+                </tbody>
+            </table>
+            <div id="pricing_global_amount"></div>
+            <button type="button" class="btn btn-default pricing_btn" id="pricing_save_btn"><i class="fa fa-cogs"></i> Сохранить</button>
+            <button type="button" class="btn btn-default pricing_btn" id="pricing_reset_btn"><i class="fa fa-cogs"></i> Сбросить</button>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="right_column_block">
+       &lt;!&ndash; <label for="hall_scheme_pricezone">Распоясовки для схемы зала:</label><br>
+        <div id="hall_scheme_pricezone">
+
+        </div>&ndash;&gt;
+       &lt;!&ndash; <div id="for_price_groups">
+            <div class="one_price_group" id="one_price_group1">
+                <span></span>
+            </div>
+
+        </div>&ndash;&gt;
+        &lt;!&ndash;<div id="for_price_group_total"></div>&ndash;&gt;
+
+        &lt;!&ndash;<div id="for_pricing">
+            <label for="pricing_select">Расценка:</label><br>
+            <div id="pricing_select">
+            </div>
+            <div id="pricing_box">
+                <div id="pricing_header_row">
+                    <div class="pricing_cell belt"><span>Пояс</span></div>
+                    <div class="pricing_cell count"><span>Кол-во</span></div>
+                    <div class="pricing_cell cost"><span>Стоимость</span></div>
+                    <div class="pricing_cell amount"><span>Сумма</span></div>
+                </div>
+                <div id="for_pricing_row">
+
+                </div>
+
+            </div>
+            <div id="pricing_save_btn">Сохранить</div>
+            <div id="pricing_reset_btn">Сбросить</div>
+            <div id="pricing_global_amount"></div>
+
+        </div>&ndash;&gt;
+        <hr>
+        <div id="go_to_fund">Перейти к схеме распределения</div>
+
+
+
+    </div>-->
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Nav tabs -->
+        <div class="navTabs">
+            <ul class="nav nav-tabs" id="">
+                <li id="TAB_shows_content" class="active"><a href="#shows_content" data-toggle="tab">Общее</a></li>
+                <li id="TAB_shows_part"><a href="#shows_part" data-toggle="tab">Отделения</a></li>
+	            <!--<li id="TAB_action_suply" class=""><a href="#action_suply" data-toggle="tab">Поставщик билетов</a></li>-->
+                <div class="clearfix"></div>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="tab-content">
+    <div class="tab-pane fade in active" id="shows_content">
+    	<div class="form-row-stripped">
+    		<div class="form-body">
+		        <div class="form_block">
+		            <input type="hidden" class="" id="show_OBJVERSION_inp" />
+		        </div>
+		        <div class="row">
+		            <div class="col-md-1">
+		                <div class="form-group">
+		                	<label class="control-label">id</label>
+		                	<div>
+                        		<div class="column-wrapper primarykey" data-column="SHOW_ID"></div>
+			                </div>
+		                </div>
+		            </div>
+		            <div class="col-md-2">
+		                <div class="form-group">
+		                	<label class="control-label">Возрастная категория</label>
+		                	<div>
+                        		<div class="column-wrapper" data-column="AGE_CATEGORY"></div>
+			                </div>
+		                </div>
+		            </div>
+		    
+		            <div class="col-md-3">
+		                <div class="form-group">
+		                    <label>Организатор:</label>
+                            <div>
+		                        <div class="column-wrapper" data-column="ORGANIZER_NAME"></div>
+                            </div>
+		                </div>
+		            </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Поставщик билетов:</label>
+                            <div>
+                                <div class="column-wrapper" data-column="TICKET_SUPPLIER_NAME"></div>
+                            </div>
+                        </div>
+                    </div>
+
+        			<div class="col-md-2">
+		                <div class="form-group">
+		                	<label class="control-label">Продолжительность</label>
+		                	<div>
+                        		<div class="column-wrapper" data-column="LENGH_HOUR_MIN"></div>
+			                </div>
+		                </div>
+		            </div>		            
+		            <div class="col-md-2">
+		                <div class="form-group">
+		                    <label>Статус:</label>
+		                    <div class="column-wrapper" data-column="STATUS_RU"></div>                  
+		                </div>
+		            </div>
+		        </div>
+		        <div class="row">
+		            <div class="col-md-12">
+		                <div class="form-group">
+		                	<label class="control-label">Название первая строка</label>
+		                	<div>
+                        		<div class="column-wrapper" data-column="NAME"></div>
+			                </div>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="row">
+		            <div class="col-md-12">
+		                <div class="form-group">
+		                	<label class="control-label">Название вторая строка</label>
+		                	<div>
+                        		<div class="column-wrapper" data-column="NAME2"></div>
+			                </div>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="row">
+		            <div class="col-md-3">
+		                <div class="form-group">
+		                	<label class="control-label">Тип зрелища</label>
+		                	<div>
+                        		<div class="column-wrapper" data-column="SHOW_TYPE"></div>
+			                </div>
+		                </div>
+		            </div>
+		            <div class="col-md-3">
+		                <div class="form-group">
+		                	<label class="control-label">Жанр</label>
+		                	<div>
+                        		<div class="column-wrapper" data-column="SHOW_GENRE"></div>
+			                </div>
+		                </div>
+		            </div>
+		            <div class="col-md-6">
+		                <div class="form-group">
+		                	<label class="control-label">Сценарист</label>
+		                	<div>
+                        		<div class="column-wrapper" data-column="SCREENWRITER"></div>
+			                </div>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="row">
+		            <div class="col-md-6">
+		                <div class="form-group">
+		                	<label class="control-label">Режисер</label>
+		                	<div>
+                        		<div class="column-wrapper" data-column="DIRECTED_BY"></div>
+			                </div>
+		                </div>
+		            </div>
+		            <div class="col-md-6">
+		                <div class="form-group">
+		                	<label class="control-label">Актеры</label>
+		                	<div>
+                        		<div class="column-wrapper" data-column="ACTORS"></div>
+			                </div>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="row">
+		            <div class="col-md-6">
+		                <div class="form-group">
+		                	<label class="control-label">Описание</label>
+		                	<div>
+                        		<div class="column-wrapper" data-column="DESCRIPTION"></div>
+			                </div>
+		                </div>
+		            </div>
+		            <div class="col-md-6">
+		                <div class="form-group">
+		                	<label for="">Аннотация</label>
+		                	<div>
+                        		<div class="column-wrapper" data-column="ABSTRACT"></div>
+			                </div>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="hidden-inputs">
+					<div class="column-wrapper" data-column="STATUS"></div>
+                    <div class="column-wrapper" data-column="STATUS_RU"></div>					
+					<div class="column-wrapper" data-column="OBJVERSION"></div>
+					<div class="column-wrapper" data-column="LENGH_MINUTES"></div>
+					<div class="column-wrapper" data-column="SHOW_TYPE_ID"></div>
+					<div class="column-wrapper" data-column="SHOW_GENRE_ID"></div>
+                     <div class="column-wrapper" data-column="AGE_CATEGORY_ID"></div>					
+					<div class="column-wrapper" data-column="ORGANIZER_ID"></div>
+					<div class="column-wrapper" data-column="TICKET_SUPPLIER_ID"></div>
+
+
+				</div>
+		    </div>  
+		</div>
+	</div>
+	<div id="shows_part" class="tab-pane fade">
+		<div class="form_show-content-wrapper"></div>
+    </div>
+    <!--<div class="tab-pane fade in" id="action_suply"></div>-->
+</div>
+

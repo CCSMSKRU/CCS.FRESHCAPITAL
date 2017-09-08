@@ -1,0 +1,52 @@
+extends layout
+block content
+    -var club = items.data[0];
+    .page-content
+        .container
+            h2
+                | #{club.title}
+            hr
+            .row
+                .col-md-12
+                    form#form-profile(name="form-profile")
+                        .col-md-4
+                            .user-photo
+                                -var path = (club.photo)? 'upload/'+club.photo: 'img/def_club.jpg';
+                                img.wid100pr(src="#{path}")
+                                //- var photo = (!club.photo || club.photo == '' || club.photo == 'null')? (club.gender_id == 1)? 'img/user_default_m.jpg' : 'img/user_default_f.jpg' : 'upload/'+club.photo;
+                                //img(src="#{photo}")
+                        .col-md-6
+                            table.table
+                                tbody
+                                    if(club.city)
+                                        tr
+                                            td
+                                                | Город
+                                            td
+                                                | #{club.city}
+                                    if(club.address)
+                                        tr
+                                            td
+                                                | Адрес
+                                            td
+                                                | #{club.address}
+                                    if(club.emails)
+                                        tr
+                                            td
+                                                | Почта
+                                            td
+                                                | #{club.emails}
+                                    if(club.phones)
+                                        tr
+                                            td
+                                                | Телефон
+                                            td
+                                                | #{club.phones}
+                                    if(club.url)
+                                        tr
+                                            td
+                                                | Сайт
+                                            td
+                                                a(href="#{club.url}", target="_blank")
+                                                    | #{club.url}
+

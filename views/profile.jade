@@ -1,0 +1,76 @@
+extends layout
+block content
+    -var userData = items.data[0];
+    .page-content
+        .container
+            h2
+                |#{userData.firstname}
+                |#{userData.surname}
+                span.grey
+                    |  (#{userData.email})
+            hr
+            .row
+                .col-md-12
+                    form#form-profile(name="form-profile")
+                        .col-md-4
+                            .user-photo
+                                - var photo = (!userData.photo || userData.photo == '' || userData.photo == 'null')? (userData.gender_id == 1)? 'img/user_default_m.jpg' : 'img/user_default_f.jpg' : 'upload/'+userData.photo;
+                                img(src="#{photo}")
+                        .col-md-6
+                            table.table
+                                tbody
+                                    tr
+                                        td
+                                            | Имя
+                                        td
+                                            | #{userData.firstname}
+                                    tr
+                                        td
+                                            | Фамилия
+                                        td
+                                            | #{userData.surname}
+                                    tr
+                                        td
+                                            | Почта
+                                        td
+                                            | #{userData.email}
+                                    tr
+                                        td
+                                            | Телефон
+                                        td
+                                            | #{userData.phone}
+                                    tr
+                                        td
+                                            | Пол
+                                        td
+                                            | #{userData.gender}
+                                    tr
+                                        td
+                                            | Возраст
+                                        td
+                                            | #{userData.age}
+                                    tr
+                                        td
+                                            | Город
+                                        td
+                                            | #{userData.city}
+                                    tr
+                                        td
+                                            | Клуб
+                                        td
+                                            | #{userData.club}
+            .row
+                .col-md-10
+                    .col-md-12
+                        .sBtn.flRight.green.save_profile
+                            a(href="edit_profile?id=#{userData.id}")
+                                .fa.fa-edit
+                                | &nbsp;&nbsp;Редактировать
+
+            h2
+                | Заявки
+            hr
+            .event-results-tabs
+                .initMeTable(data-get_object="results", data-user_id="#{userData.id}")
+
+    script(type="text/javascript", src="js/html/profile.js")

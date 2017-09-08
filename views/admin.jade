@@ -1,0 +1,19 @@
+extends admin_layout
+block content
+    p Административная панель
+    script(src="./socket.io/socket.io.js")
+    script(src="js/delivery.js")
+    script(src="js/uploadFiles.js")
+    script(src="js/socketClient.js")
+    script(src="js/admin.js")
+
+    div
+        button#btn1 createTable
+        button#btn2 modify
+        button#btn3 remove
+        button#btn4 get
+        button#btn5 upload
+        button#btn6 sendFeedback
+        button#btn7 Обновить возраст
+        button#btn8 Тест рассылки
+        .p= funcs.returnA()

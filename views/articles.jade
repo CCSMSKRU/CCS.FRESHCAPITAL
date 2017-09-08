@@ -1,0 +1,24 @@
+extends layout
+block content
+    - var articles = data.data;
+    .page-content
+        .container.marBot30.noPad
+            h3.fullDarkHeader
+                span.fullDarkHeader-inner
+                    | Статьи
+            each a, key in articles
+                .row.marBot10
+                    .col-md-4.article-image-wrapper
+                        -var path = (a.photo)? 'upload/'+a.photo: 'img/def_article.jpg';
+                        .art_img(style="background-image: url(#{path})")
+                    .col-md-8
+                        .art-header
+                            a.art-title(href="article?id=#{a.id}")
+                                | #{a.title}
+                        .art-body
+                            | !{a.body}
+                        a.readMore(href="article?id=#{a.id}")
+                            | Читать далее...
+                        //
+
+

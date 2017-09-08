@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<script type="text/javascript">
+    var params = location.search;
+    var back = (params.match(/back=/)!=null) ? String(params.match(/back=.+/)).replace(/back=/,'') : 0;
+</script>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
+    .block {
+        position: relative;
+        width: 600px;
+        min-height: 240px;
+        background: #fff;
+        overflow: hidden;
+        margin: 30px auto;
+        background-color: #fff;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14px;
+        padding-bottom: 65px;
+    }
+    .pok_header{
+        padding: 18px 16px 16px 16px;
+        position: relative;
+        border-bottom: 1px solid #F3F3F3;
+        background-color: #000002;
+    }
+    .pok_content{
+        padding: 15px;
+    }
+    .pok_header img{
+    }
+    .pok_footer{
+        position: absolute;
+        bottom: 0;
+        height: 45px;
+        width: 100%;
+        padding-top: 10px;
+        border-top: 1px solid #F1F1F1;
+        background-color: #f8f8f8;
+
+    }
+    .pok_footer .pokBtn{
+        height: 27px;
+        width: 140px;
+        border-radius: 3px!important;
+        background-color: rgb(38, 139, 34);
+        color: #fff;
+        position: relative;
+        float: right;
+        margin-right: 10px;
+        text-align: center;
+        padding-top: 9px;
+        cursor: pointer;
+    }
+    .pok_footer .pokBtn:hover{
+        background-color: rgb(26, 103, 26);
+    }
+
+    .switchLang{
+        position: absolute;
+        top: 16px;
+        right: 13px;
+    }
+    .switchLang .lang{
+        height: 20px;
+        float: left;
+        color: #ffffff;
+        padding: 2px 4px;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 12px;
+        cursor: pointer;
+        background-color: #D7A1DF;
+    }
+    .switchLang .lang.active{
+        background-color: #6446B3;
+        color: #ffffff;
+    }
+    .switchLang .lang.rus{
+        border-radius: 2px 0 0 2px;
+    }
+    .switchLang .lang.eng{
+        border-radius: 0 2px 2px 0;
+    }
+    .switchableContent {
+        display: none;
+    }
+    .switchableContent.active {
+        display: block;
+    }
+    .smallGrey{
+        font-size: 12px;
+        color: #8e8e8e;
+    }
+
+    .block .timer {
+        color: red;
+    }
+
+
+</style>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div class="block">
+    <div class="pok_header">
+        <div class="switchLang">
+            <div class="lang rus active">Рус</div>
+            <div class="lang eng">Eng</div>
+        </div>
+        <img src="img/logo_barviha.png" />
+    </div>
+    <div class="pok_content">
+
+        <div id="engContent" class="switchableContent ">
+            Payment was not successful.
+            Try using another card or contact your bank for details.
+        </div>
+
+        <div id="rusContent" class="switchableContent active">
+            Оплата не прошла, приносим свои извинения.
+        </div>
+
+
+    </div>
+    <div class="pok_footer" >
+        <div id="confirmBtn" class="pokBtn" onclick="document.location.href = back;"><span id="rusBtn" class="switchableContent active">Вернуться</span><span id="engBtn" class="switchableContent ">Back</span></div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+
+    var initSwitchLang = function(){
+        var switchers = document.getElementsByClassName('lang');
+        for(var i in switchers){
+
+            //console.log(switchers[i], switchers[i].addEventListener('click'));
+
+            switchers[i].onclick =  function(){
+                if(this.className.indexOf('active') == -1){
+                    var activeSwitch = document.getElementsByClassName('lang active');
+                    activeSwitch[0].className = activeSwitch[0].className.replace(' active', '');
+                    this.className += ' active';
+
+                    if(activeSwitch[0].className.indexOf('eng') != -1){
+                        document.getElementById('rusContent').className = document.getElementById('rusContent').className.replace(' active','');
+                        document.getElementById('engContent').className += ' active';
+                    }else{
+                        document.getElementById('engContent').className = document.getElementById('engContent').className.replace(' active','');
+                        document.getElementById('rusContent').className += ' active';
+                    }
+                    if(activeSwitch[0].className.indexOf('eng') != -1){
+                        document.getElementById('rusBtn').className = document.getElementById('rusBtn').className.replace(' active','');
+                        document.getElementById('engBtn').className += ' active';
+                    }else{
+                        document.getElementById('engBtn').className = document.getElementById('engBtn').className.replace(' active','');
+                        document.getElementById('rusBtn').className += ' active';
+                    }
+                }
+            }
+        }
+    };
+    initSwitchLang();
+
+
+
+</script>
+</html>

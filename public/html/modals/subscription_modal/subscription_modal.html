@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Абонемент<span id="subscriptionHeaderName"></span></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" id="">
+                <li id="TAB_subscription_modal_content" class="active"><a href="#subscription_modal_content" data-toggle="tab">Общее</a></li>
+                <li id="TAB_subscription_modal_actions"><a href="#subscription_modal_actions" data-toggle="tab">Мероприятия</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="subscription_modal_content">
+            <input type="hidden" id="xml_OBJVERSION_inp"/>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>id</label>
+                    <input type="text" id="xml_SUBSCRIPTION_ID_inp" class="form-control" disabled/>
+                </div>
+                <div class="col-md-8">
+                    <label>Название</label>
+                    <input type="text" id="xml_NAME_inp" class="form-control"/>
+                </div>
+
+                <div class="col-md-2">
+                    <label>Статус</label>
+                    <select type="text" id="xml_STATUS_select" class="form-control"></select>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Зал</label>
+                    <select id="xml_HALL_ID_select"  class="form-control"> </select>
+                </div>
+                <div class="col-md-5">
+                    <label>Схема зала</label>
+                    <select id="xml_hall_scheme_id_select"  class="form-control"> </select>
+                </div>
+                <div class="col-md-1">
+                    <label>Скидка</label>
+                    <input type="text" id="xml_DISCOUNT_inp" class="form-control"/>
+                </div>
+                <div class="col-md-2">
+                    <label>Дата</label>
+                    <input type="text" id="xml_SUBSCRIPTION_DATE_inp" class="form-control" disabled/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Комментарий</label>
+                    <input id="xml_COMMENTS_inp"  class="form-control"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Тип бланков для печати</label>
+                    <select id="xml_TICKET_PACK_TYPE_SUBSC_select"  class="form-control"></select>
+                </div>
+            </div> 
+        </div> 
+        <div class="tab-pane fade in" id="subscription_modal_actions">
+            <div id="subscription_modal_action_win" class="row">
+                <div class="col-md-5  ">
+                    <div class="title">Мероприятия в абонементе</div>
+                    <div id="subscription_modal_action_ex" class="win ex"></div>
+                </div>
+                <div class="col-md-1">
+                    <div class="arrow">
+                        <div class="arrow_add"><button title="Добавить">&#9668;</button></div>
+                        <div class="arrow_rem"><button title="Удалить">&#9658;</button></div>
+                    </div>
+                </div>
+                <div class="col-md-5  ">
+                    <div class="title">Мероприятия</div>
+                    <div id="subscription_modal_action_all" class="win all"></div>
+                </div>
+            </div>      
+        </div>      
+    </div>        
+</div>

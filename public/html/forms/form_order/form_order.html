@@ -1,0 +1,243 @@
+<div class="row">
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>id Заказа</label>
+			<div class="column-wrapper primarykey" data-column="ORDER_ID"></div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>Статус</label>
+			<div class="column-wrapper" data-column="STATUS_RU"></div>
+		</div>		
+	</div>
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>Дата и время создания</label>
+			<div class="column-wrapper" data-column="ORDER_DATE"></div>
+		</div>		
+	</div>
+<!-- 	<div class="col-md-2">
+		<div class="form-group">
+			<label>Тип оплаты</label>
+			<div class="column-wrapper" data-column="PAYMENT_TYPE_RU"></div>
+		</div>		
+	</div> -->
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>Тип заказа</label>
+			<div class="column-wrapper" data-column="CREATED_BY_RU"></div>
+		</div>		
+	</div>
+
+
+
+</div>
+
+<div class="row">
+	<div id="agentGroupInp">
+		<div class="col-md-3">
+			<div class="form-group">
+				<label>Агент</label>
+				<div class="column-wrapper" data-column="AGENT_NAME"></div>
+			</div>		
+		</div>
+	</div>
+	<div id="clientGroupInp">
+		<div class="col-md-2">
+			<div class="form-group">
+				<label>Покупатель</label>
+				<div class="column-wrapper data-client" data-column="CRM_USER_NAME"></div>
+			</div>		
+		</div>
+		<div class="col-md-2">
+			<div class="form-group">
+				<label>Телефон клиента</label>
+				<div class="column-wrapper data-client" data-column="CRM_USER_PHONE"></div>
+			</div>						
+		</div>
+		<div class="col-md-2">
+			<div class="form-group">
+				<label>e-mail клиента</label>
+				<div class="column-wrapper data-client" data-column="CRM_USER_EMAIL"></div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="col-md-1">
+		<div>
+			<label>Скидка</label>
+			<div class="column-wrapper data-client input-group discountControlGroup" disabled data-column="DISCOUNT"></div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="hidden-inputs">
+	<div class="column-wrapper" data-column="ORDER_DATE"></div>
+	<div class="column-wrapper" data-column="STATUS"></div>
+	<div class="column-wrapper" data-column="COLOR"></div>
+	<div class="column-wrapper" data-column="AGENT_ID"></div>
+	<div class="column-wrapper" data-column="CRM_USER_ID"></div>
+	<div class="column-wrapper" data-column="CREATED_BY"></div>	
+	<div class="column-wrapper" data-column="OBJVERSION"></div>
+	<div class="column-wrapper" data-column="PAYMENT_TYPE"></div>
+</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a href="#tickets" data-toggle="tab">Билеты</a>
+			</li>
+			<li>
+				<a href="#orderhistory" data-toggle="tab">История заказа</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade active in" id="tickets">
+				<div class="form_order-content-wrapper"></div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Комментарий к заказу</label>
+                                    <div class="column-wrapper" data-column="COMMENTS"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Экран пользователя</label>
+                                    <div class="column-wrapper">
+                                        <div class="btn newStyle btn-success" id="cScreen_order"><i class="fa fa-desktop"></i>&nbsp;&nbsp;Показать&nbsp;заказ</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div class="column-wrapper">
+                                        <div class="btn newStyle btn-success" id="reject_bso"><i class="fa fa-times"></i>&nbsp;&nbsp;Забраковать&nbsp;БСО</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label ">Напечатано:</label>
+                                    <div class="col-sm-7">
+                                        <div class="column-wrapper data-client" data-column="PRINTED_TICKETS_COUNT">
+                                            <input type="text" class="form-control" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label ">К печати:</label>
+                                    <div class="col-sm-7">
+                                        <div class="column-wrapper data-client" data-column="NOT_PRINTED_TICKETS_COUNT">
+                                            <input type="text" class="form-control" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Резерв до</label>
+                                    <div class="column-wrapper">
+                                        <input type="text" id="RESERVED_TO_DATE_CONTROLLER" class="datepicker form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div class="column-wrapper">
+                                        <div id="confirm_reserved_to_date" class="btn newStyle"><i class="fa fa-check"></i>&nbsp;&nbsp;Примениить&nbsp;резерв</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="order_payment"></div>
+                    </div>
+                </div>
+
+		  	  	<div class="clearfix"></div>
+				<!-- <div class="row">
+					<form class="form-horizontal form_order_payment" role="form">
+						<div class="col-md-2">
+							<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-6 control-label">Всего билетов:</label>
+							    <div class="col-sm-4">
+							    	<div class="column-wrapper data-client" data-column="TICKETS_COUNT">
+							    		<input type="text" class="form-control" disabled>
+							    	</div>
+							    </div>
+						  	</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+							    <label class="col-sm-6 control-label">На сумму:</label>
+							    <div class="col-sm-6" data-column="TOTAL_ORDER_AMOUNT">
+									<div class="column-wrapper data-client" data-column="TOTAL_ORDER_AMOUNT">
+							    		<input type="text" class="form-control" disabled>
+							    	</div>
+							    </div>
+						  	</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+							    <label class="col-sm-6 control-label ">Итого оплачено:</label>
+							    <div class="col-sm-6">
+							      	<div class="column-wrapper data-client" data-column="TOTAL_PAID_ORDER_AMOUNT">
+							    		<input type="text" class="form-control" disabled>
+							    	</div>
+							    </div>
+						  	</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group orderRemaining">
+							    <label class="col-sm-6 control-label" style="line-height: 0.8;">Осталось оплатить:</label>
+							    <div class="col-sm-6">
+							      	<div class="column-wrapper data-client" data-column="TOTAL_TO_PAY_ORDER_AMOUNT">
+							    		<input type="text" class="form-control" disabled>
+							    	</div>
+							    </div>
+						  	</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+							    <label class="col-sm-4 control-label ">Напечатано:</label>
+							    <div class="col-sm-4">
+							      	<div class="column-wrapper data-client" data-column="PRINTED_TICKETS_COUNT">
+							    		<input type="text" class="form-control" disabled>
+							    	</div>
+							    </div>
+						  	</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+							    <label class="col-sm-5 control-label ">К печати:</label>
+							    <div class="col-sm-3">
+							      	<div class="column-wrapper data-client" data-column="NOT_PRINTED_TICKETS_COUNT">
+							    		<input type="text" class="form-control" disabled>
+							    	</div>
+							    </div>
+						  	</div>
+						</div>
+					</form>
+				</div> -->
+				<div class="order-buttons marTop20"></div>
+			</div>
+			<div class="tab-pane fade" id="orderhistory">
+				<div class="form_order_2-content-wrapper"></div>
+			</div>
+		</div>	
+	</div>
+</div>

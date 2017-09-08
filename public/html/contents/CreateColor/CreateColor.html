@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Зал </title>
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+
+    <link href="html/contents/CreateColor/CreateColor.css" rel="stylesheet" type="text/css">
+    <!--<script type="text/javascript" src="html/contents/one_action/map.js"></script>-->
+    <!--<script type="text/javascript" src="assets/js/newMap.js"></script>-->
+    <script type="text/javascript" src="html/contents/CreateColor/CreateColor.js"></script>
+    <!--<script type="text/javascript" src="html/contents/ForExperiment/MapExp.js"></script>-->
+
+</head>
+<body style="overflow: hidden;">
+
+
+<div  class="col-md-12" style="margin-bottom: 20px;">
+    <label for="name_skin">Наименование скина</label><input id="name_skin">
+</div>
+<div id="CreateColor" class="col-md-12">
+    <canvas width="360" height="120" id="chair_prev_canvas" style="background-color: #c1c1c1;"></canvas>
+</div>
+
+<div  class="col-md-12">
+    <div class="left">
+        <input type="text" class="colorpicker" value="rgba(60,200,13,0.4)" id="CP_mainCenter" data-color-format="rgba"><br>
+        <input type="text" class="colorpicker" value="rgba(60,200,13,0.4)" id="CP_mainPeriphery" data-color-format="rgba">
+    </div>
+    <div class="left">
+        <input type="text" class="colorpicker" value="rgba(60,200,13,0.4)" id="CP_hoverCenter" data-color-format="rgba"><br>
+        <input type="text" class="colorpicker" value="rgba(60,200,13,0.4)" id="CP_hoverPeriphery" data-color-format="rgba">
+    </div>
+    <div class="left">
+        <input type="text" class="colorpicker" value="rgba(60,200,13,0.4)" id="CP_selectedCenter" data-color-format="rgba"><br>
+        <input type="text" class="colorpicker" value="rgba(60,200,13,0.4)" id="CP_selectedPeriphery" data-color-format="rgba">
+    </div>
+
+</div>
+<div class="col-md-12">
+
+    <textarea id="text_image" style="width: 150px; height: 60px;"></textarea>
+</div>
+<div class="col-md-12">
+    <button type="button" class="btn btn-default" id="create_image"><i class="fa fa-user"></i> Сгенерировать</button>
+    <button type="button" class="btn btn-default" id="save_skin"><i class="fa fa-user"></i> Добавить в базу</button>
+</div>
+</body>
+</html>

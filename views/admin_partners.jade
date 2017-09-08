@@ -1,0 +1,12 @@
+extends admin_layout
+block content
+    .container.posRel
+        h2 Партнеры
+        hr
+        .sBtn.green
+            a.btn(href="admin_partner?id=new")
+                .fa.fa-plus &nbsp;&nbsp;
+                | Добавить партнера
+        .event-results-tabs
+            .initMeTable(data-get_object="partner")
+    script(type="text/javascript", src="js/html/admin_partners.js")

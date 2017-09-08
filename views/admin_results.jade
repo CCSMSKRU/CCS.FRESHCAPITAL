@@ -1,0 +1,85 @@
+extends admin_layout
+block content
+
+    .container.posRel
+        h2 Заявки
+        hr
+
+        .event-results-tabs
+            .initMeTable(data-get_object="results")
+
+        //if(items.data.length == 0)
+        //    h4.ta-center Пока нет результатов.
+        //else
+        //    table.table
+        //        thead
+        //            tr
+        //                th Место
+        //                th Мероприятие
+        //                th Этап
+        //                th Атлет
+        //                th Результат
+        //                th Статус
+        //                th Видео
+        //
+        //
+        //
+        //        tbody
+        //            each result, rIdx in items.data
+        //                tr(data-id="#{result.id}")
+        //                    td #{rIdx+1}
+        //                    td
+        //                        a(href="admin_event?id=#{result.action_id}")
+        //                            | #{result.action_title}
+        //                    td #{result.action_part}
+        //                    td
+        //                        a(href="admin_judge_result?id=#{result.id}")
+        //                            | #{result.user_firstname} #{result.user_surname}
+        //                    td
+        //                        a(href="admin_judge_result?id=#{result.id}")
+        //                            | #{result.concat_result}
+        //                    td
+        //                        .statusColor(class="#{result.status_name_sys}")
+        //                            | #{result.status_name}
+        //                    td
+        //                        a(target="_blank", href='#{result.video_url}')
+        //                            i.fa.fa-video-camera
+        //    if(items.data.length > 20)
+        //        nav
+        //            ul.pagination
+        //                li
+        //                    a(href='#', aria-label='Previous')
+        //                        span(aria-hidden='true') «
+        //                li
+        //                    a(href='#') 1
+        //                li
+        //                    a(href='#') 2
+        //                li
+        //                    a(href='#') 3
+        //                li
+        //                    a(href='#') 4
+        //                li
+        //                    a(href='#') 5
+        //                li
+        //                    a(href='#', aria-label='Next')
+        //                        span(aria-hidden='true') »
+
+
+
+        //.events-list-wrapper
+        //    ul
+        //
+        //        for a in items.data
+        //            li.result(data-id="#{a.id}")
+        //                .event-item-info
+        //                    .event-item-title
+        //                        a(href="admin_judge_result?id=#{a.id}") #{a.concat_result}
+        //                        .event-item-desc
+        //                            | #{a.user_firstname} #{a.user_surname}
+        //                            br
+        //                            | #{a.action_title} #{a.action_part}
+        //                a.watch-result(target="_blank", href="#{a.video_url}")
+        //                    .fa.fa-video-camera
+        //        else
+        //            li sorry, no results!
+    script(type="text/javascript", src="js/html/admin_result.js")

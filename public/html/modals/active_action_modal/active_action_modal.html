@@ -1,0 +1,216 @@
+
+<script src="/core/jquery/jquery.timers.js" type="text/javascript"></script>
+<script href="/multibooker/core/js/functions.js"></script> 
+
+<script src="/multibooker/core/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<link href="/multibooker/core/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
+<link href="/multibooker/modules/modal_window/templates/action/css/action_modal.css" rel="stylesheet" type="text/css"> 
+
+
+<style>
+    .SHOW_PART_INFO {
+        width: 440px;
+        padding: 5px;
+        border: 1px solid #abadb3;
+        background: #ebebe4;
+    }
+</style>
+
+<div id="basket_wrap">
+    <h3> Мероприятие </h3>
+    <div class="container">
+         <div class="row">
+            <div class="col-md-2">
+                <div class="form-group"><label for="">id</label><input disabled id="active_action_ACTION_ID_inp" class="form-control"></div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group"><label for="">Дата время:<input disabled id="active_action_ACTION_DATE_inp" class="form-control"></div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group"><label for="">День мероприятия:<input disabled id="active_action_DAY_inp" class="form-control"></div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group"><label for="">Название:<input disabled id="active_action_ACTION_inp" class="form-control"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Зал:<input disabled id="active_action_HALL_inp" class="form-control"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Тип:<input disabled id="active_action_SHOW_TYPE_inp" class="form-control"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Время:<input disabled id="active_action_TIME_inp" class="form-control"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Количество свободных мест:<input disabled id="active_action_FREE_PLACE_COUNT_inp"  class="form-control"></div>
+            </div>
+        </div>
+        <div class="row">        
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Возрастная категория:<input disabled id="active_action_AGE_CATEGORY_inp" class="form-control"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Режисер:<input disabled id="active_action_DIRECTED_BY_inp" class="form-control"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Сценарист:<input disabled id="active_action_SCREENWRITER_inp" class="form-control"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Поставщик билетов:<input disabled id="active_action_TICKET_SUPPLIER_ID_inp" class="form-control"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Жанр:<input disabled id="active_action_SHOW_GENRE_inp" class="form-control"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Описание:<textarea disabled id="active_action_DESCRIPTION_inp" class="form-control"></textarea></div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Актеры:<textarea disabled id="active_action_DESCRIPTION_inp" class="form-control"></textarea></div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Анотация:<textarea disabled id="active_action_ABSTRACT_inp" class="form-control"></textarea></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group"><label for="">Отделения:<div id="active_action_SHOW_PART_INFO" class="SHOW_PART_INFO" style="min-height: 50px;"></div></div>
+            </div>
+         </div>
+     </div>
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    /// Стилизация Button
+    $( ".basket_btn" ).button();
+    var clientWidth = MBOOKER.MainFunctions.getClientWidth();
+    var clientHeight = MBOOKER.MainFunctions.getClientHeight();
+    $("#basket_wrap").width(clientWidth-(clientWidth/25)-50);
+    /* Делать инфу по билету не в таблице */
+    function load_one_order(){
+        /*/
+        MBOOKER.MainFunctions.sendQuery({command:"get",subcommand:"active_action",sid:sid,params:{where:"and ACTION_ID="+action_id}},function(data){
+            var obj = xmlToObject(data,"ROW")[0];
+            log(obj);
+            var html = "";
+            for (var key in obj){
+                $("#action_"+key+"_inp").val(obj[key]);
+                html+= '<div class="action_'+key+'_div">';
+                html+= '<input type="" value="'+obj[key]+'"/>';
+                html+= '</div>';
+            }
+            if(obj['SHOW_PART_INFO']!=undefined){
+                if(obj['SHOW_PART_INFO'].indexOf("|lt|br/|gt|") != -1){
+                    obj['SHOW_PART_INFO'] = parseToHTML(obj['SHOW_PART_INFO']);
+                }
+                $("#action_SHOW_PART_INFO").html(obj['SHOW_PART_INFO']);
+            }
+            
+            
+            //$("#basket_wrap").html(html);
+        });
+        */
+        //var one_persent = ($("#for_one_order_table").width()-30)/100;
+        /*
+        var percentModel = [0,14,8,14,8,4,4,6,6,6,8,8,8,2];
+        var table = {
+            name:"one_order",
+            subcommand:"order_item",
+            colNames:['ID','Мероприятие','Дата','Зал','Зона','Ряд','Место','Статус','Тип','Цена','Дата покупки','Резерв до','Баркод','БСО'],
+            colModel:[
+                {key:true,name:'ORDER_ITEM_ID',index:'ORDER_ITEM_ID', width:percentModel[0], hidden:true, xmlmap:'ORDER_ITEM_ID'},
+                {name:'ACTION',index:'ACTION',xmlmap:'ACTION', width:percentModel[1],align:"left"},
+                {name:'ACTION_DATE',index:'ACTION_DATE',xmlmap:'ACTION_DATE', width:percentModel[2],align:"center"},
+                {name:'HALL',index:'HALL',xmlmap:'HALL', width:percentModel[3],align:"center"},
+                {name:'AREA_GROUP',index:'AREA_GROUP',xmlmap:'AREA_GROUP', width:percentModel[4],align:"center"},
+                {name:'LINE',index:'LINE',xmlmap:'LINE', width:percentModel[5],align:"center"},
+                {name:'PLACE',index:'PLACE',xmlmap:'PLACE', width:percentModel[6],align:"center"},
+                {name:'STATUS',index:'STATUS',xmlmap:'STATUS', width:percentModel[7],align:"center"},
+                {name:'TICKET_TYPE',index:'TICKET_TYPE',xmlmap:'TICKET_TYPE', width:percentModel[8],align:"center"},
+                {name:'SALE_PRICE',index:'SALE_PRICE',xmlmap:'SALE_PRICE', width:percentModel[9],align:"center",formatter: 'number'},
+                {name:'TICKET_DATE',index:'TICKET_DATE',xmlmap:'TICKET_DATE', width:percentModel[10],align:"center"},
+                {name:'RESERVED_TO_DATE',index:'RESERVED_TO_DATE',xmlmap:'RESERVED_TO_DATE', width:percentModel[11],align:"center"},
+                {name:'BARCODE',index:'BARCODE',xmlmap:'BARCODE', width:percentModel[12],align:"center"},
+                {name:'SCA',index:'SCA',xmlmap:'SCA', width:percentModel[13],align:"center"}
+
+
+            ],
+            sortname:"ORDER_ITEM_ID",
+            caption:'Заказ '+order_id,
+            height:clientHeight-600,
+            width:$("#for_one_order_table").width(),
+            autoWidth:false,
+            shrinkToFit:true,
+            rowNum:100,
+            rownumbers:true,
+            pager:"",
+
+            myWhere:" and ORDER_ID="+order_id+" and ORDER_ITEM_ID="+order_item_id,
+
+            del:false,
+            add:false,
+            edit:false,
+            search:false,
+            refresh:false,
+            multipleSearch:false
+
+
+
+        };
+        createTable(table,function(data){
+        });
+        */
+    }
+    load_one_order();
+
+    $("#return_ticket").click(function(){
+        var id = $("#one_order").getGridParam("selectedRow");
+        if (id<0) {
+            alert_yesno("Ошибка","Не выбрана запись.","Ок","",function(){},0);
+        }else{
+            alert_yesno("Возврат билета.","Вы уверены, что хотите осуществить возврат?","Да, уверен", "Отменить",function(){
+                send_query({command:"operation",subcommand:"return_ticket",sid:sid,params:{ORDER_ITEM_ID:id}},function(data){
+                    if (+$(data).find("result").find("rc").text()==0){
+                        alert_yesno("",$(data).find("result").find("message").text(),"Ок","",function(){
+                            $("#one_order").trigger("reloadGrid");
+                        },0);
+                    }else{
+                        alert_yesno("<span style='color:#f00;'>Ошибка.</span>",$(data).find("result").find("message").text(),"Ок","",function(){
+                            $("#one_order").trigger("reloadGrid");
+                        },0);
+                    }
+                    //$("#one_order").trigger("reloadGrid");
+                });
+            },0)
+        }
+    });
+    $("#return_order").click(function(){
+        alert_yesno("Возврат всего заказа.","Вы уверены, что хотите осуществить возврат заказа?","Да, уверен", "Отменить",function(){
+            send_query({command:"operation",subcommand:"return_order",sid:sid,params:{order_id:order_id}},function(data){
+                if (+$(data).find("result").find("rc").text()==0){
+                    alert_yesno("",$(data).find("result").find("message").text(),"Ок","",function(){
+                        $("#order").trigger("reloadGrid");
+                        $("#go_back").click();
+                    },0);
+                }else{
+                    alert_yesno("<span style='color:#f00;'>Ошибка.</span>",$(data).find("result").find("message").text(),"Ок","",function(){
+                        $("#order").trigger("reloadGrid");
+                    },0);
+                }
+                //$("#one_order").trigger("reloadGrid");
+            });
+        },0)
+    });
+    $("#print_tickets").live("click",function(){
+        content_ticket("order_id",order_id);
+
+    });
+
+
+});
+</script>

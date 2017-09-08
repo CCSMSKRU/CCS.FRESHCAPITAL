@@ -1,0 +1,11 @@
+block partners_block
+    .partnersBlock
+        .container.partners.marBot30.noPad
+            h3.fullDarkHeader
+                span.fullDarkHeader-inner
+                    | Единомышленники
+            .row
+                .col-md-12
+                    each val, key in partners
+                        a(target="_blank", href="#{val.url}").col-md-2
+                            img(src="upload/#{val.image}")

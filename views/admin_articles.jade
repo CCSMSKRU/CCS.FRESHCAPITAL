@@ -1,0 +1,12 @@
+extends admin_layout
+block content
+    .container.posRel
+        h2 Статьи
+        hr
+        .sBtn.green
+            a.btn(href="admin_article?id=new")
+                .fa.fa-plus &nbsp;&nbsp;
+                | Добавить статью
+        .event-results-tabs
+            .initMeTable(data-get_object="article")
+    script(type="text/javascript", src="js/html/admin_articles.js")

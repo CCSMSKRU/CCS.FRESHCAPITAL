@@ -1,0 +1,43 @@
+extends admin_layout
+block content
+    .container.posRel
+        h2 Мероприятия
+        .addEventButton.sBtn.flRight.green
+            a(href="admin_event?id=new")
+                .fa.fa-plus &nbsp;&nbsp;
+                | Создать мероприятие
+        hr
+        //.row
+        //    .col-md-12
+        //        .row
+        //            .col-md-3
+        //                .form-group
+        //                    label Название
+        //                    input(type="text").form-control
+        //            .col-md-3
+        //                .form-group
+        //                    label Дата с
+        //                    input(type="text").form-control.cf_datepicker
+        //            .col-md-3
+        //                .form-group
+        //                    label Дата по
+        //                    input(type="text").form-control.cf_datepicker
+
+        .events-list-wrapper
+            ul
+
+                for a in items.data
+                    li.action(data-id="#{a.id}")
+                        .event-item-image
+                            img(src="upload/#{a.thumb}")
+                        .event-item-info
+                            .event-item-title
+                                a(href="admin_event?id=#{a.id}") #{a.title}
+                                .event-item-date 21.05.2015
+                                .event-item-desc #{a.description}
+                        .remove-event(data-action_id="#{a.id}")
+                            .fa.fa-trash-o
+                        .event-mailing(data-action_id="#{a.id}")
+                            .fa.fa-envelope-o
+                else
+                    li sorry, no events!

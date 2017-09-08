@@ -1,0 +1,41 @@
+#action_ticket_list_table{
+    font-size: 10px!important;
+    font-family: Arial,sans-serif;
+    /*border:1px solid #000000;*/
+    width: 100%;
+    float: left;
+    page-break-inside:auto;;
+}
+/*div.split{
+    page-break-after: always;
+}*/
+.tr{
+    width:100%;
+    float: left;
+    border:1px solid #000000;
+}
+.td1,.td2{
+    height: 100%;
+    min-height: 40px;
+    width:20%;
+    float: left;
+    padding: 3px;
+    border-right:1px solid #000000;
+    white-space: nowrap;
+}
+.td4,.td3{
+    /*height: 100%;*/
+    float: left;
+    padding: 3px;
+    /*text-align: center;*/
+    min-height: 40px;
+    white-space: nowrap;
+}
+.barcode{
+    float: right!important;
+    margin-right: 15px;
+}
+#action_ticket_list_table td{
+    padding: 3px;
+    border:1px solid #000000;
+}
