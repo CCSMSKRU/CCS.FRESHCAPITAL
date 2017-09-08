@@ -1,0 +1,75 @@
+var o = {
+    "mail": {
+        "mailTransport": {
+            "service": "Gmail",
+            "auth": {
+                "user": "alextgco@gmail.com",
+                "pass": "AAmbfi89793y"
+            }
+        },
+        "from": "ivantgco@gmail.com"
+    }
+}
+
+
+financing = {
+    id: 102,
+    is_active: false,
+    status: 'В работе',
+    complete_percent: 2,
+    founding_amount: 3000000,
+    amount_to_return: 4080000,
+    to_return: 3965457,
+    payments_pending: 104,
+    payments_default: 0,
+    business_type_id: '',
+    business_type: '',
+    merchant_name: 'ООО "СПА Тай"',
+    merchant_id: 136,
+    total_mouthly_turnover: '12000000',
+    visa_mc_percent: 25,
+    acquiring_days_count: 22,
+    factoring_rate: 36,
+    avl_mth_withdraw_rate: 28,
+    payment_amount: 38181,
+    money_sent: true,
+    processing_bank: 'ОАО "Промсвязь банк"',
+    avl_proc_dly_withdraw_rate: 28,
+    bank_notified: true,
+    payments_count: 107,
+    status_id: 12,
+    status_sysname: 'ACQUIRING_IN_PROCCESS',
+    agreement_date: '',
+    processing_bank_id: 3,
+    total_returned: 114543,
+    current_calendar_id: 50,
+    payments_paid: 3,
+    closed_by_financing_id: '',
+    closing_financing_id: '',
+    closing_date: '',
+    closing_type_id: '',
+    closing_type: '',
+    closing_type_sysname: '',
+    refinancing_amount: '',
+    financing_date: '',
+    bank_comission_summ: '',
+    pending_remittance: '',
+    final_vg_profit: '',
+    cut_off_collected: '',
+    payments_start_date: '2016-06-15',
+    total_mouthly_credit_card_turnover: '',
+    created: '26.07.2016 01:17:31',
+    updated: '26.07.2016 02:48:09',
+    deleted: '',
+    published: '26.07.2016 01:17:31',
+    created_by_user_id: 3,
+    created_by_user: 'Гоптарев',
+    deleted_by_user_id: '',
+    deleted_by_user: '',
+    remove_comment: '',
+    self_company_id: 1,
+    self_company: 'VG',
+    ext_company_id: 1,
+    ext_company: 'VG',
+    payments: {paid: [Object], pending: [Object]}
+}
