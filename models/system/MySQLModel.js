@@ -1209,10 +1209,17 @@ MySQLModel.prototype.get = function (params, cb) {
 
                 //var key = (table_name)? table_name+'.'+one_where.key : one_where.key;
                 var columnProfile = _t.class_fields_profile[one_where.key];
-                if (!columnProfile) return cb(new MyError('Нет профайла для колонки.', {
-                    column: one_where.key,
-                    table: tableName
-                }));
+                if (!columnProfile) {
+                    console.log('Нет профайла для колонки.',{
+                        column: one_where.key,
+                        table: tableName
+                    });
+                    continue;
+                    return cb(new MyError('Нет профайла для колонки.', {
+                        column: one_where.key,
+                        table: tableName
+                    }));
+                }
                 var key;
                 var fromTable = columnProfile.from_table_alias || columnProfile.from_table;
                 if (columnProfile.is_virtual && fromTable) {

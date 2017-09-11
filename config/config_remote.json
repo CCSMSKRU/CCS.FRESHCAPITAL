@@ -1,0 +1,41 @@
+{
+    "isDeveloper":true,
+    "port":80,
+    "host":"127.0.0.1",
+    "session":{
+        "secret":"kkg927jknsd85",
+        "key":"mysid",
+        "cookie":{
+            "path":"/",
+            "httpOnly":true,
+            "maxAge":null
+        }
+    },
+    "mysqlConnection":{
+        "connectionLimit":100,
+        "connectTimeout":60000,
+        "acquireTimeout":60000,
+        "port": "3306",
+        "host": "95.31.10.133",
+        "user": "root",
+        "password": "dgs1224g",
+        "database": "test1_dev",
+        "dateStrings":"TIMESTAMP",
+        "waitForConnection": true
+    },
+    "mail":{
+        "mailTransport":{
+            "host": "smtp.mail.ru",
+            "port": 465,
+            "debug":true,
+            "secure":true,
+            "auth": {
+                "user": "iig@list.ru",
+                "pass": "johnjohn"
+            }
+        },
+        "from":"iig@list.ru",
+        "notificationEmail": "ivantgco@gmail.com,alextgco@gmail.com"
+    },
+    "feedbackEmail":"iig@list.ru"
+}
