@@ -3,7 +3,7 @@
   "default_documents_for_business":{
     "profile": {
       "name": "business_type",
-      "name_ru": "Тип бизнеса",
+      "name_ru": "Тип бизнеса1",
       "ending": ""
     },
     "structure": {
