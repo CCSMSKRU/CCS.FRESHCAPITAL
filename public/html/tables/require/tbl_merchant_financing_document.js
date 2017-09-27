@@ -134,7 +134,7 @@
                                                     var fileName = res.path + res.filename;
                                                     var linkName = 'my_download_link' + MB.Core.guid();
 
-                                                    var nameRu = 'Договор VGFinancing '+agr_numer_g || res.filename;
+                                                    var nameRu = 'Договор '+agr_numer_g || res.filename;
 
                                                     nameRu = nameRu.replaceAll('\'','');
                                                     nameRu = nameRu.replaceAll('"','');
