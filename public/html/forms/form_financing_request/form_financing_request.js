@@ -522,7 +522,7 @@
                                 var fileName = res.path + res.filename;
                                 var linkName = 'my_download_link' + MB.Core.guid();
 
-                                var nameRu = 'Коммерческое предложение от VGFinancing & ВТБ24' || res.filename;
+                                var nameRu = 'Коммерческое предложение' || res.filename;
 
                                 nameRu = nameRu.replaceAll('\'', '');
                                 nameRu = nameRu.replaceAll('"', '');
