@@ -1713,7 +1713,7 @@ Model.prototype.requestDocuments = function (obj, cb) {
         sendToEmail: function (cb) {
             // Отравить на емайл
             if (obj.without_sending) return cb(null); // Все договорено по телефону
-            sendMail({email: merchant.email, subject: 'VG Financing: Запрос документов', html: tpl}, function (err, info) {
+            sendMail({email: merchant.email, subject: 'CCS.TEST1: Запрос документов', html: tpl}, function (err, info) {
                 if (err) return cb(new UserError('Не удалось отправить email', {err: err, info: info}));
                 cb(null);
             });
@@ -2625,7 +2625,7 @@ Model.prototype.sendAgreement = function (obj, cb) {
         sendToEmail: function (cb) {
             // Отравить на емайл
             if (obj.without_sending) return cb(null); // Все договорено по телефону
-            sendMail({email: merchant.email, subject: 'VG Financing: Договор', html: tpl, attachments: attachments}, function (err, info) {
+            sendMail({email: merchant.email, subject: 'CCS.TEST1: Договор', html: tpl, attachments: attachments}, function (err, info) {
                 if (err) return cb(new UserError('Не удалось отправить email', {err: err, info: info}));
                 cb(null);
             });
@@ -3134,7 +3134,7 @@ Model.prototype.notifyBank = function (obj, cb) {
                     agreement_sign_date: merchant_financing.agreement_date || '______'
                 };
                 tpl = mustache.to_html(tpl, m_obj);
-                sendMail({email: item, subject: 'VG Financing: Новое финансирование', html: tpl}, function (err, info) {
+                sendMail({email: item, subject: 'CCS.TEST1: Новое финансирование', html: tpl}, function (err, info) {
                     if (err) return cb(new UserError('Не удалось отправить уведомление на email: ' + item, {err: err, info: info}));
                     cb(null);
                 });
@@ -3777,7 +3777,7 @@ Model.prototype.moneySentAndSetInWork = function (obj, cb) {
             // Отравить на емайл
             if (obj.without_sending) return cb(null); // Все договорено по телефону
             async.eachSeries(bank_emails, function (item, cb) {
-                sendMail({email: item, subject: 'VG Financing: Договор №: '+ merchant_financing.agreement_number +'. Календарь платежей', html: tplBank, attachments: attachments}, function (err, info) {
+                sendMail({email: item, subject: 'CCS.TEST1: Договор №: '+ merchant_financing.agreement_number +'. Календарь платежей', html: tplBank, attachments: attachments}, function (err, info) {
                     if (err) return cb(new UserError('Не удалось отправить email ' + item, {err: err, info: info}));
                     cb(null);
                 });
@@ -3786,7 +3786,7 @@ Model.prototype.moneySentAndSetInWork = function (obj, cb) {
         sendEmailToMerch: function (cb) {
             // Отравить на емайл
             if (obj.without_sending) return cb(null); // Все договорено по телефону
-            sendMail({email: merchant.email, subject: 'VG Financing: Договор №: '+ merchant_financing.agreement_number +'. Календарь платежей', html: tplMerch, attachments: attachments}, function (err, info) {
+            sendMail({email: merchant.email, subject: 'CCS.TEST1: Договор №: '+ merchant_financing.agreement_number +'. Календарь платежей', html: tplMerch, attachments: attachments}, function (err, info) {
                 if (err) return cb(new UserError('Не удалось отправить email торговцу ' + merchant.email, {err: err, info: info}));
                 cb(null);
             });

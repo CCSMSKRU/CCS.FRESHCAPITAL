@@ -142,7 +142,7 @@ Model.prototype.add_CALL_ME = function (obj, cb) {
 
                 };
                 tpl = mustache.to_html(tpl, m_obj);
-                sendMail({email: item, subject: 'VG Financing: Заявка с сайта', html: tpl}, function (err, info) {
+                sendMail({email: item, subject: 'CCS.TEST1: Заявка с сайта', html: tpl}, function (err, info) {
                     if (err) return cb(new UserError('Не удалось отправить уведомление на email: ' + item, {err: err, info: info}));
                     cb(null);
                 });
@@ -221,7 +221,7 @@ Model.prototype.add_ASK_QUESTION = function (obj, cb) {
 
                 };
                 tpl = mustache.to_html(tpl, m_obj);
-                sendMail({email: item, subject: 'VG Financing: Заявка с сайта', html: tpl}, function (err, info) {
+                sendMail({email: item, subject: 'CCS.TEST1: Заявка с сайта', html: tpl}, function (err, info) {
                     if (err) return cb(new UserError('Не удалось отправить уведомление на email: ' + item, {err: err, info: info}));
                     cb(null);
                 });
@@ -304,7 +304,7 @@ Model.prototype.add_FEEDBACK = function (obj, cb) {
 
                 };
                 tpl = mustache.to_html(tpl, m_obj);
-                sendMail({email: item, subject: 'VG Financing: Заявка с сайта', html: tpl}, function (err, info) {
+                sendMail({email: item, subject: 'CCS.TEST1: Заявка с сайта', html: tpl}, function (err, info) {
                     if (err) return cb(new UserError('Не удалось отправить уведомление на email: ' + item, {err: err, info: info}));
                     cb(null);
                 });
@@ -389,7 +389,7 @@ Model.prototype.add_GET_FINANCING = function (obj, cb) {
 
                 };
                 tpl = mustache.to_html(tpl, m_obj);
-                sendMail({email: item, subject: 'VG Financing: Заявка с сайта', html: tpl}, function (err, info) {
+                sendMail({email: item, subject: 'CCS.TEST1: Заявка с сайта', html: tpl}, function (err, info) {
                     if (err) return cb(new UserError('Не удалось отправить уведомление на email: ' + item, {err: err, info: info}));
                     cb(null);
                 });
@@ -483,7 +483,7 @@ Model.prototype.add_FEEDBACK_FULL = function (obj, cb) {
 
                 };
                 tpl = mustache.to_html(tpl, m_obj);
-                sendMail({email: item, subject: 'VG Financing: Заявка с сайта', html: tpl}, function (err, info) {
+                sendMail({email: item, subject: 'CCS.TEST1: Заявка с сайта', html: tpl}, function (err, info) {
                     if (err) return cb(new UserError('Не удалось отправить уведомление на email: ' + item, {err: err, info: info}));
                     cb(null);
                 });
@@ -567,7 +567,7 @@ Model.prototype.add_FINANCING_PRODUCT_ORDER = function (obj, cb) {
 
                 };
                 tpl = mustache.to_html(tpl, m_obj);
-                sendMail({email: item, subject: 'VG Financing: Заявка с сайта', html: tpl}, function (err, info) {
+                sendMail({email: item, subject: 'CCS.TEST1: Заявка с сайта', html: tpl}, function (err, info) {
                     if (err) return cb(new UserError('Не удалось отправить уведомление на email: ' + item, {err: err, info: info}));
                     cb(null);
                 });
