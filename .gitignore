@@ -1,3 +1,23 @@
 # Created by .ignore support plugin (hsz.mobi)
 /config/config.json
 /DB/test1_dev_08092017_2140_NOT_CLEARED.sql
+.idea
+.gitignore_old
+.idea/
+DB/rollbacks/054e84df-4af3-93ee-257f-daf57058a7d718092017_154138.json
+DB/rollbacks/0f720474-d4b9-a573-9350-607f79a03b8618092017_163418.json
+DB/rollbacks/2dff7b60-e33e-d5a6-46e1-b5d66acf63c709092017_041922.json
+DB/rollbacks/3b5d3efa-7131-897d-1d82-2cc054e832ff09092017_042228.json
+DB/rollbacks/6cfe278a-e726-7900-6ff9-3abb4f6571b709092017_042123.json
+DB/rollbacks/79607134-9b84-f604-7e0a-958fd7265ee609092017_041711.json
+DB/rollbacks/8fdc3e13-d6c7-d09d-b1aa-e3bc5a0f595009092017_041957.json
+DB/rollbacks/9bd0aa90-64e9-46b7-0c06-8b5d4c60d55d12092017_025058.json
+DB/rollbacks/9cb36aac-63b3-2e80-b4c9-cb5919f727ab09092017_042024.json
+DB/rollbacks/9e6b4ff5-8dbf-2319-f7d1-c430c6e4d96d09092017_021345.json
+DB/rollbacks/a8c472c8-0de8-e009-7fa4-25410f77d44409092017_042107.json
+DB/rollbacks/a90f989e-1f4b-f01d-7b96-17227f01e8d609092017_042055.json
+DB/rollbacks/c26eff07-6174-c923-c3b0-5191ed98e6a709092017_042038.json
+DB/rollbacks/da7cb035-e6f9-e914-e705-56699bffd49e09092017_042150.json
+DB/rollbacks/fa44b23f-382d-ff14-6ab4-3a5466edf57d09092017_041935.json
+SYNC_SYSTEM_CORE/
+node_modules/

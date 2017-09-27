@@ -1567,7 +1567,8 @@ Model.prototype.calc_amounts = function (obj, cb) {
                     param_where:{
                         investor_account_id:id
                     },
-                    columns:['type_id','type_sysname'],
+                    // columns:['type_id','type_sysname'],
+                    columns:['type_sysname'],
                     sort:{
                         columns:['type_sysname'],
                         directions:['asc']
