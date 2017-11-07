@@ -22,10 +22,10 @@ html.hide {
 
 input {
     outline: none;
-    padding: 10px 4px 6px;
+    padding: 10px 4px 10px 10px;
     margin-top: 9px;
     border: none;
-    border-bottom: 1px solid #b0b0b0;
+    border: 1px solid #b0b0b0;
     display: block;
     color: #666;
     width: 252px;
@@ -54,18 +54,19 @@ input.err {
 .login-wrapper {
     position: relative;
     width: 260px;
-    height: 260px;
+    height: 295px;
+
     left: 50%;
     margin-left: -203px;
     margin-top: 100px;
     opacity: 0;
     padding: 73px;
     background: #fff;
-    border-radius: 150px 0px;
+    /*border-radius: 150px 0px;*/
     text-align: center;
     overflow: hidden;
     /*border: 5px solid #649DFF;*/
-    transition: all .5s;
+    /*transition: all .5s;*/
      box-shadow: 0 0 24px rgba(0,0,0,0.22);
     transform: translateY(-30px);
     border-right: 0;
@@ -73,8 +74,9 @@ input.err {
 }
 
 .logo {
-    margin-top: 27px;
-    margin-bottom: 38px;
+    margin-top: -20px;
+    margin-bottom: 18px;
+    width: 270px;
 }
 
 .go .login-wrapper {

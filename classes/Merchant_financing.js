@@ -5449,6 +5449,9 @@ Model.prototype.report_investor = function (obj, cb) {
             cb(null);
         },
         getTemplate: function (cb) {
+
+            console.log('NAME', name);
+
             fs.readFile('./templates/' + name, function (err, data) {
                 if (err) return cb(new MyError('Не удалось считать файл шаблона test.xlsx.', err));
                 template = new XlsxTemplate(data);
