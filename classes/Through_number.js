@@ -156,7 +156,7 @@ Model.prototype.getNext = function (obj, cb) {
         },
         updateAdded: function (cb) {
 
-            tNum = addedId + '-Ф/201'+moment().format('YYYY').substr(3);
+            tNum = addedId + '-А/201'+moment().format('YYYY').substr(3);
 
             var o = {
                 command: 'modify',

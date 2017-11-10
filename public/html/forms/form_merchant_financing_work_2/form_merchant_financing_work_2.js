@@ -58,7 +58,7 @@
                         '<div class="form-group"><label>Дата начала платежей:</label><input class="form-control" type="text" id="payments_start_date" value="{{payments_start_date}}"></div>';
 
                     var mo = {
-                        agr_number: merchant.through_number || '-Ф/201'+moment().format('YYYY').substr(3),
+                        agr_number: merchant.through_number || '-А/201'+moment().format('YYYY').substr(3),
                         agr_date: '',
                         payments_start_date: merchant.payments_start_date
                     };
