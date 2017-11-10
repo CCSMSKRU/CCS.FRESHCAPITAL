@@ -86,6 +86,7 @@
             <div class="row"><div>{{{lead_type}}}</div></div>
             <div class="row"><div>{{{regional_center}}}</div></div>
             <div class="row"><div>{{{terminal_number}}}</div></div>
+            <div class="row"><div>{{{bank_agreement}}}</div></div>
             <div class="row"><div>{{{registration_date}}}</div></div>
             <div class="row"><div>{{{merchant_name}}}</div></div>
             <div class="row"><div>{{{short_name}}}</div></div>
@@ -94,25 +95,6 @@
 
             <div class="row"><div>{{{legal_address}}}</div></div>
             <div class="row"><div>{{{real_address}}}</div></div>
-
-            <div class="row"><div>{{{executive_fio}}}</div></div>
-
-            <div class="row">
-                <div>
-                    <div class="classic-filed-replacer" data-repid="1s" data-replace="Генеральный директор">Ген. дир.</div>
-                    <div class="field-to-replace" data-repid="1s" data-replace="1">{{{executive}}}</div>
-                </div></div>
-
-            <div class="row"><div>
-                <div class="classic-filed-replacer" data-repid="1" data-replace="Устава">Устава</div>
-                <div class="classic-filed-replacer" data-repid="1" data-replace="Свидетельства о государственной регистрации в качестве индивидуального предпринимателя">Свид-ва</div>
-                <div class="classic-filed-replacer" data-repid="1" data-replace="Доверенности № __ от «___» _____ 201 г.">Доверенности</div>
-                <div class="field-to-replace" data-repid="1" data-replace="1">{{{grounds_on}}}</div>
-            </div></div>
-
-        </div>
-
-        <div class="col-md-6">
 
             <div class="row"><div>{{{business_type}}}</div></div>
             <div class="row"><div>{{{processing_bank}}}</div></div>
@@ -133,6 +115,31 @@
 
         </div>
 
+        <div class="col-md-6">
+            <div class="row"><div>{{{executive_fio}}}</div></div>
+	        <div class="row">
+		        <div>
+			        <div class="classic-filed-replacer" data-repid="1s" data-replace="Генеральный директор">Ген. дир.</div>
+			        <div class="field-to-replace" data-repid="1s" data-replace="1">{{{executive}}}</div>
+		        </div>
+	        </div>
+            <div class="row"><div>
+                <div class="classic-filed-replacer" data-repid="1" data-replace="Устава">Устава</div>
+                <div class="classic-filed-replacer" data-repid="1" data-replace="Свидетельства о государственной регистрации в качестве индивидуального предпринимателя">Свид-ва</div>
+                <div class="classic-filed-replacer" data-repid="1" data-replace="Доверенности № __ от «___» _____ 201 г.">Доверенности</div>
+                <div class="field-to-replace" data-repid="1" data-replace="1">{{{grounds_on}}}</div>
+            </div></div>
+
+	        <div class="row"><div>{{{legal_address_district}}}</div></div>
+	        <div class="row"><div>{{{legal_address_city}}}</div></div>
+	        <div class="row"><div>{{{legal_address_street}}}</div></div>
+	        <div class="row"><div>{{{legal_address_building}}}</div></div>
+	        <div class="row"><div>{{{legal_address_block}}}</div></div>
+	        <div class="row"><div>{{{legal_address_house}}}</div></div>
+	        <div class="row"><div>{{{legal_address_apartment}}}</div></div>
+	        <div class="row"><div>{{{legal_address_postal}}}</div></div>
+        </div>
+
 </div>
 
 <div class="modal_tab" data-tab="scoring">
@@ -144,7 +151,7 @@
         </ul>
         <div class="scoring_tabs">
             <div id="2gis_tab">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="form-group">
                         <label for="2gis_org_name_input">Название организации: </label>
                         <input type="text" class="form-control" id="2gis_org_name_input" value="Мир билета">
@@ -152,23 +159,23 @@
                     <div class="request-btn" id="get_from_2gis">Получить данные</div>
                     <div class="request-btn" id="get_2gis_file">Скачать данные</div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <h3>Полученные данные: </h3>
-                    <div class="gis_response"></div>
+                    <div class="gis_response response_wrapper"></div>
                 </div>
             </div>
             <div id="nbki_tab">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="request-btn" id="get_from_nbki">Получить данные</div>
                     <div class="request-btn" id="get_nbki_file">Скачать данные</div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <h3>Полученные данные: </h3>
-                    <div class="nbki_response"></div>
+                    <div class="nbki_response response_wrapper"></div>
                 </div>
             </div>
             <div id="moedelo_tab">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="form-group">
                         <label for="moedelo_input">ИНН/ОГРН: </label>
                         <input type="number" class="form-control" id="moedelo_input" value="7701889831">
@@ -176,9 +183,9 @@
                     <div class="request-btn" id="get_from_moedelo">Получить данные</div>
                     <div class="request-btn" id="get_moedelo_file">Скачать данные</div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <h3>Полученные данные: </h3>
-                    <div class="moedelo_response"></div>
+                    <div class="moedelo_response response_wrapper"></div>
                 </div>
             </div>
         </div>

@@ -1,3 +1,11 @@
+var createRandId = function () {
+    return "xxxxxxxx".replace(/[xy]/g, function (c) {
+        var r, v;
+        r = Math.random() * 16 | 0;
+        v = (c === "x" ? r : r & 0x3 | 0x8);
+        return v.toString(16);
+    }).toUpperCase();
+};
 var ImageLoader = function(params){
     console.log('new ImageLoader');
     if (!socket)  throw 'ImageLoader -> socket не определен.';
@@ -8,16 +16,19 @@ var ImageLoader = function(params){
         console.log('=================================delivery.connect');
 
         delivery0.on('receive.start',function(fileUID){
+            if (_t.id !== fileUID.params.id) return;
             console.log('receiving a file!');
         });
 
         delivery0.on('receive.success',function(file){
+            if (_t.id !== file.params.id) return;
             if (file.isImage()) {
                 $('img').attr('src', file.dataURL());
             }
         });
 
         delivery0.on('receive.success',function(file){
+            if (_t.id !== file.params.id) return;
             console.log('------> receive.success');
             var params = file.params;
             var html = '<a href='+ file.dataURL() +'>ТЕСТ ССЫЛКИ</a>';
@@ -27,6 +38,7 @@ var ImageLoader = function(params){
              }*/
         });
         delivery0.on('file.load',function(filePackage){
+            if (_t.id !== filePackage.params.id) return;
             console.log(filePackage.name + " has just been loaded.");
         });
         _t.loaded = true;
@@ -35,8 +47,12 @@ var ImageLoader = function(params){
 
     this.filelist = [];
     this.counter = 0;
+    this.InProcessCounter = 0;
     this.attemptsSendCount = 1;
-    this.container = $("body");
+    this.id =  'ImageLoader_' + createRandId();
+    var $body = $("body");
+    $body.append('<div id="'+ this.id +'"></div>');
+    this.container = $body.children('#' + this.id);
     this.sendMethod = params.sendMethod || 'send';
 
     this.dir = params.dir || "upload/";
@@ -75,11 +91,13 @@ var ImageLoader = function(params){
     this.uid = '';
 
     delivery.on('send.success',function(fileUID){
-        if (self.id===fileUID.uid){
+        // if (self.id===fileUID.uid){
+        if (self.id !== fileUID.params.id){
             return;
         }
+        self.InProcessCounter--;
         self.uid = fileUID.uid;
-        self.success(fileUID);
+        // self.success(fileUID);
         self.send();
        /* if (!!self.filelist[self.counter]){
             self.send();
@@ -88,6 +106,20 @@ var ImageLoader = function(params){
         }*/
         //console.log(fileUID);
 
+    });
+
+
+    delivery.socket.on('save.success',function(fileUID){
+        if (self.id !== fileUID.params.id){
+            return;
+        }
+        self.success(fileUID);
+    });
+    delivery.socket.on('save.error',function(error, fileUID){
+        if (self.id !== fileUID.params.id){
+            return;
+        }
+        self.error(error, fileUID);
     });
 
     delivery.on('send.error',function(error){
@@ -104,31 +136,57 @@ var ImageLoader = function(params){
         }
         self.submit.click();
     });
+    this.container.trigger('ready');
 };
 
 ImageLoader.prototype = {
-    send:function(){
+    prepare:function(files){
         var _t = this;
+        console.log('COUNTER',_t.InProcessCounter);
+        if (!_t.InProcessCounter){
+            for (var i in files) {
+                _t.filelist.push(files[i])
+            }
+            console.log('FILE SENDED');
+            _t.send();
+        }else{
+            setTimeout(function(){
+                _t.prepare(files);
+            },100);
+        }
+    },
+    send:function(files){
+        var _t = this;
+        if (Array.isArray(files)){
+            // Создадим очередь и оттуда будем вызывать send;
+            return _t.prepare(files);
+        }
+
         if (!this.filelist.length){
             return;
         }
+        _t.InProcessCounter++;
         if (!_t.loaded){
             if (_t.attemptsSendCount>50) return console.log('Сокет не подключени. Отправка невозможна.');
             return window.setTimeout(function () {
                 _t.attemptsSendCount++;
+                _t.InProcessCounter--;
                 _t.send();
             }, 100);
         }
         var file = this.filelist.shift();
         file.name = decodeURI(file.name);
         var extraParams = this.extraParams || {};
+        extraParams.id = _t.id;
         delivery.send(file, extraParams);
         //delivery.send(file, {param1:'sdsd'});
         this.counter++;
     },
     success:function(fileUID){
         this.extraParams = {};
-        console.log(fileUID);
+        // console.log(fileUID);
+
+        // this.container.trigger('success', [fileUID]);
 
     },
     error:function(error){

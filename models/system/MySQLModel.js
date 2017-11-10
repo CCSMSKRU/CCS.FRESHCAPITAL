@@ -1997,7 +1997,11 @@ MySQLModel.prototype.remove = function (obj, cb) {
         }
     ], function (err, results) {
         if (err) return cb(new MyError('Не удалось удалить запись.', err));
-        if (results == 0) return cb(new UserError('rowNotFound'));
+        // if (results == 0) return cb(new UserError('rowNotFound',{obj:obj, class_name:_t.name}));
+        if (results == 0) {
+            console.log('Запись уже была удалена ранее',{obj:obj, class_name:_t.name});
+            // return cb(new UserError('rowNotFound',{obj:obj, class_name:_t.name}));
+        }
         if (!obj.doNotClearCache){
             _t.clearCache();
         }

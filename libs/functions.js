@@ -11,6 +11,14 @@ var funcs = {
             return v.toString(16);
         }).toUpperCase();
     },
+    guidShort: function () {
+        return "xxxxxxxx".replace(/[xy]/g, function (c) {
+            var r, v;
+            r = Math.random() * 16 | 0;
+            v = (c === "x" ? r : r & 0x3 | 0x8);
+            return v.toString(16);
+        }).toUpperCase();
+    },
     formatResponse: function (code, type, message, data) {
         code = code || 0;
         var o = {

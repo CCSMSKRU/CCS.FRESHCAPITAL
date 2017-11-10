@@ -893,7 +893,8 @@
       "manager_lastname" : {"type": "varchar", "length": "255", "from_table": "manager", "keyword": "manager_id", "return_column": "lastname", "is_virtual": true, "name": "Фамилия менеджера"},
       "terminal_number" : {"type": "varchar", "length": "255", "name": "Номер терминала"},
       "regional_center" : {"type": "varchar", "length": "255", "name": "Региональный центр"},
-      "overpayment" : { "type": "DECIMAL(50, 2)", "name": "Переплачено"}
+      "overpayment" : { "type": "DECIMAL(50, 2)", "name": "Переплачено"},
+      "bank_agreement" : {"type": "varchar", "length": "255", "name": "Договор банка"}
     }
   },
   "merchant_status": {
@@ -1967,6 +1968,14 @@
       "kpp" : {"type": "varchar", "length": "255", "name": "КПП"},
       "ogrn" : {"type": "varchar", "length": "255", "name": "ОГРН"},
       "legal_address" : {"type": "varchar", "length": "255", "name": "Юр. адрес"},
+      "legal_address_district" : {"type": "varchar", "length": "255", "name": "Район"},
+      "legal_address_city" : {"type": "varchar", "length": "255", "name": "Город"},
+      "legal_address_street" : {"type": "varchar", "length": "255", "name": "Улица"},
+      "legal_address_building" : {"type": "varchar", "length": "255", "name": "Строение"},
+      "legal_address_block" : {"type": "varchar", "length": "255", "name": "Корпус"},
+      "legal_address_house" : {"type": "varchar", "length": "255", "name": "Дом"},
+      "legal_address_apartment" : {"type": "varchar", "length": "255", "name": "Апартаменты"},
+      "legal_address_postal" : {"type": "varchar", "length": "255", "name": "Индекс"},
       "real_address" : {"type": "varchar", "length": "255", "name": "Факт. адрес"},
       "executive" : {"type": "varchar", "length": "255", "name": "Исполнительный орган"},
       "executive_fio" : {"type": "varchar", "length": "255", "name": "ФИО Исполнительного органа"},
@@ -2093,6 +2102,9 @@
       "financing_type" : {"type": "bigint", "join_table": "merchant_financing", "from_table": "merchant_financing_type", "keyword": "financing_type_id", "return_column": "name", "is_virtual": true, "name": "Тип финансирования"},
       "pending_amount" : { "type": "DECIMAL(50, 2)", "name": "Ожидается (процессинг)"},
       "paid_amount" : { "type": "DECIMAL(50, 2)", "name": "Оплачено (процессинг)"},
+      "import_amount" : { "type": "DECIMAL(50, 2)", "name": "Оплачено (импорт)"},
+      "import_amount_vtb" : { "type": "DECIMAL(50, 2)", "name": "Переведено vtb24 (импорт)"},
+      "import_applied" : { "type": "tinyint", "length": "1", "name": "Импорт"},
 
 
       "closing_type_id" : {"type": "bigint", "length": "20", "editable": false, "visible": false},

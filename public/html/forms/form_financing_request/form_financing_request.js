@@ -11,59 +11,16 @@
 
     $("#scoring_tabs_wrapper").tabs();
 
-
-    let parseObject = function (obj) {
         try {
-            let content = '';
-
-            if (typeof obj == 'object') {
-                for (let key in obj) {
-                    if (obj.hasOwnProperty(key)) {
-                        if (typeof obj[key] == 'object') {
-                            if (Array.isArray(obj[key])) {
-                                if (obj[key].length > 0) {
-                                    if (obj[key].length == 1 && typeof obj[key][0] != 'object') {
-                                        content += "<div class='po_key_wrapper'>";
-                                        content += "<div class='po_key'>" + key + ":</div><div class='po_value'>" + obj[key][0] + '</div>';
-                                        content += "</div>";
-                                    } else {
-                                        content += "<div class='po_key_wrapper column'>";
-                                        content += "<div class='po_key'>" + key + ":</div><div class='po_value'>";
-
-                                        obj[key].forEach(function (v, i) {
-                                            content += parseObject(v);
-
-                                            if (i < obj[key].length - 1) content += ';-;-\n';
-                                        });
-
-                                        content += '</div>';
-                                        content += "</div>";
-                                    }
-                                }
-                            } else {
-                                content += "<div class='po_key_wrapper'>";
-                                content += "<div class='po_key'>" + key + ":</div><div class='po_value'>";
-                                content += parseObject(obj[key]) + '</div>';
-                                content += "</div>";
-                            }
-                        } else {
-                            content += "<div class='po_key_wrapper'>";
-                            content += "<div class='po_key'>" + key + ":</div><div class='po_value'>" + obj[key] + '</div>';
-                            content += "</div>";
-                        }
-                    }
-                }
-
-                return content;
-            } else {
-                return "\'" + obj + '\'\n';
-            }
+    	$('#moedelo_input').val(formInstance.data.data[0].inn);
+    	$('#2gis_org_name_input').val(formInstance.data.data[0].merchant_name);
         } catch (e) {
-            console.log(e);
-
-            return 'error while parsing';
+    	console.error('no data');
         }
-    };
+    $('.response_wrapper').JSONRenderer('destroy');
+	$('.gis_response').JSONRenderer();
+	$('.nbki_response').JSONRenderer();
+	$('.moedelo_response').JSONRenderer();
 
 
     let print2GISData = function (r) {
@@ -114,9 +71,9 @@
 
         socketQuery(o, function (r) {
             if ('body' in r && 'result' in r.body) {
-                $('.gis_response').html('<div class="parsed_output">' + parseObject(r.body.result) + '</div>');
+	            $('.gis_response').JSONRenderer('refreshData', r.body.result);
             } else {
-                print2GISData(r);
+	            $('.gis_response').html('<h4>Нет данных</h4>');
             }
 
             if (!r.code) {
@@ -140,9 +97,9 @@
 
         socketQuery(o, function (r) {
             if ('body' in r) {
-                $('.gis_response').html('<div class="parsed_output">' + parseObject(r.body) + '</div>');
+	            $('.gis_response').JSONRenderer('refreshData', r.body);
             } else {
-                print2GISData(r);
+	            $('.gis_response').html('<h4>Нет данных</h4>');
             }
 
             if ('path' in r) {
@@ -162,14 +119,31 @@
         let o = {
             command: 'loadData',
             object: 'merchant_nbki_data',
-            params: {}
+            params: {
+	            // business: {
+		         //    inn: '7701889831',
+		         //    ogrn: '1107746736811',
+		         //    name: 'ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \'Мир билета\''
+	            // },
+	            // address: {
+		         //    district: '',
+		         //    city: 'МОСКВА',
+		         //    street: 'КРАСНОСЕЛЬСКАЯ',
+		         //    block: '39',
+		         //    building: '3',
+		         //    houseNumber: '',
+		         //    postal: '105066',
+		         //    prov: ''
+	            // }
+	            id: formInstance.activeId
+            }
         };
 
         formInstance.loader(true, 'Подождите, загружаем данные.');
 
         socketQuery(o, function (r) {
             if ('body' in r && 'body' in r.body && 'product' in r.body.body && 'preply' in r.body.body.product) {
-                $('.nbki_response').html('<div class="parsed_output">' + parseObject(r.body.body.product.preply.length == 1 ? r.body.body.product.preply[0] : r.body.body.product.preply) + '</div>');
+	            $('.nbki_response').JSONRenderer('refreshData', r.body.body.product.preply.length == 1 ? r.body.body.product.preply[0] : r.body.body.product.preply);
             }
 
             if (!r.code) {
@@ -184,14 +158,16 @@
         let o = {
             command: 'saveDataToCSV',
             object: 'merchant_nbki_data',
-            params: {}
+            params: {
+	            id: formInstance.activeId
+            }
         };
 
         formInstance.loader(true, 'Подождите, загружаем данные.');
 
         socketQuery(o, function (r) {
             if ('body' in r && 'product' in r.body && 'preply' in r.body.product) {
-                $('.nbki_response').html('<div class="parsed_output">' + parseObject(r.body.product.preply.length == 1 ? r.body.product.preply[0] : r.body.product.preply) + '</div>');
+	            $('.nbki_response').JSONRenderer('refreshData', r.body.product.preply.length == 1 ? r.body.product.preply[0] : r.body.product.preply);
             }
 
             if ('path' in r) {
@@ -207,87 +183,6 @@
     });
 
 
-    let printMoeDeloData = function (r) {
-        try {
-            let no_data = true;
-
-            $('.moedelo_response').html('');
-
-            if ('path' in r) {
-                window.location.replace(r.path);
-            }
-            if ('body' in r) {
-                let body = r.body;
-
-                if ('Requisites' in body) {
-                    no_data = false;
-                    let requisites = body['Requisites'];
-
-                    $('.moedelo_response').append('<h4>Реквизиты: </h4>' +
-                        '<ul class="requisites">' +
-                        '<li>' +
-                        '<p>Название: ' + requisites['Name']['Full'] + '</p>' +
-                        '<p>Адрес: ' + requisites['Address'] + '</p>' +
-                        '<p>ИНН: ' + requisites['Inn'] + '</p>' +
-                        '<p>ОГРН: ' + requisites['Ogrn'] + '</p>' +
-                        '<p>ПФР: ' + requisites['PfrNumber'] + '</p>' +
-                        '</li>' +
-                        '</ul>');
-                }
-
-                if ('Arbitrations' in body) {
-                    no_data = false;
-                    let arbitrations = body['Arbitrations'];
-
-                    $('.moedelo_response').append('<h4>Суды: </h4><ul class="arbitrations"></ul>');
-
-                    $.each(arbitrations, function (i, v) {
-                        $('ul.arbitrations').append('<li>' +
-                            '<p>Номер: ' + v['Number'] + '</p>' +
-                            '<p>Категория: ' + v['Category'] + '</p>' +
-                            '<p>Дата закрытия: ' + moment(v['CloseDate']).format("MMMM D, YYYY") + '</p>' +
-                            '</li>')
-                    });
-                }
-
-                if ('Founders' in body) {
-                    no_data = false;
-                    let founders = body['Founders'];
-
-                    $('.moedelo_response').append('<h4>Основатели: </h4><ul class="founders"></ul>');
-
-                    $.each(founders, function (i, v) {
-                        $('ul.founders').append('<li>' +
-                            '<p>Название: ' + v['FullName'] + '</p>' +
-                            '<p>Сумма: ' + v['Amount'] + '</p>' +
-                            '</li>')
-                    });
-                }
-
-                if ('StateContracts' in body && 'Contracts' in body['StateContracts']) {
-                    no_data = false;
-                    let contracts = body['StateContracts']['Contracts'];
-
-                    $('.moedelo_response').append('<h4>Контракты: </h4><ul class="contracts"></ul>');
-
-                    $.each(contracts, function (i, v) {
-                        $('ul.contracts').append('<li>' +
-                            '<p>Предмет контракта: ' + v['SubjectContract'] + '</p>' +
-                            '<p>Партнер: ' + v['Name'] + '</p>' +
-                            '<p>Сумма: ' + v['Amount'] + '</p>' +
-                            '</li>')
-                    });
-                }
-            }
-
-            if (no_data) {
-                $('.moedelo_response').append('<h4>Нет данных</h4>');
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
     formWrapper.find('#get_from_moedelo').off('click').on('click', function () {
         let o = {
             command: 'loadData',
@@ -301,9 +196,9 @@
 
         socketQuery(o, function (r) {
             if ('body' in r) {
-                $('.moedelo_response').html('<div class="parsed_output">' + parseObject(r.body) + '</div>');
+	            $('.moedelo_response').JSONRenderer('refreshData', r.body);
             } else {
-                printMoeDeloData(r);
+	            $('.moedelo_response').html('<h4>Нет данных</h4>');
             }
 
             if (!r.code) {
@@ -327,9 +222,9 @@
 
         socketQuery(o, function (r) {
             if ('body' in r) {
-                $('.moedelo_response').html('<div class="parsed_output">' + parseObject(r.body) + '</div>');
+	            $('.moedelo_response').JSONRenderer('refreshData', r.body);
             } else {
-                printMoeDeloData(r);
+	            $('.moedelo_response').html('<h4>Нет данных</h4>');
             }
 
             if ('path' in r) {

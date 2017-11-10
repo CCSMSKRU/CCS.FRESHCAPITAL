@@ -264,12 +264,16 @@
 
                 bootbox.dialog({
                     title: 'Внимание',
-                    message: 'Вы уверены что хотите подтвердить финансирование для '+name+'?',
+                    message: 'Вы уверены что хотите подтвердить финансирование для '+name+'?' +
+                    '<br>Вы можете указать какой датой провести операцию в формате DD.MM.YYYY (Напимер 01.12.2016).' +
+                    '<br> Если ничего не указать, будет сегодняшнее число.' +
+                    '<br><input id="operation_date" type="text" value=""/>',
                     buttons: {
                         success: {
                             label: 'Подтвердить',
                             callback: function(){
-                                ip.commitMerchant(id, function(){
+                                var operation_date = $('#operation_date').val();
+                                ip.commitMerchant({id:id, operation_date:operation_date}, function(){
                                     formInstance.reload();
                                 });
                             }
@@ -529,13 +533,15 @@
 
         },
 
-        commitMerchant: function(id, cb){
+        commitMerchant: function(params, cb){
 
-
+            var id = params.id;
+            var operation_date = params.operation_date;
             var r = formWrapper.find('.i-p-table-merchant-row[data-nativeid="'+id+'"]');
 
             var so = {
-                id: id
+                id: id,
+                operation_date:operation_date
             };
 
 

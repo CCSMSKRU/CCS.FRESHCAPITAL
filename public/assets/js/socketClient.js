@@ -1,4 +1,5 @@
 var socket;
+var fileLoader;
 var createGuid = function () {
 	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxxx".replace(/[xy]/g, function (c) {
 		var r, v;
@@ -7,6 +8,28 @@ var createGuid = function () {
 		return v.toString(16);
 	}).toUpperCase();
 };
+
+
+jsonToObj = function (obj) {
+    var i, j, result = {},
+        convert = function (d, n) {
+            for (i in obj[d]) {
+                result[i] = {};
+                for (j in obj[n]) {
+                    result[i][obj[n][j]] = obj[d][i][j];
+                }
+            }
+        };
+
+    if (obj['DATA'] && obj['NAMES']) convert('DATA', 'NAMES');
+    else if (obj['data']) {
+        if (obj['data_columns']) convert('data', 'data_columns');
+        else if (obj['names']) convert('data', 'names');
+    } else result = obj;
+
+    return result;
+};
+
 
 var socketQuery = function(obj, callback){
     console.log('socketQuery еще не готова к использованию');
@@ -35,7 +58,7 @@ var socketQuery_stack = {
 };
 
 
-console.log('CONNECT');
+console.log('CONNECTING');
 socket = io.connect();
 var delivery;
 socket.on('connect', function (data) {
@@ -53,8 +76,8 @@ socket.on('connect', function (data) {
         }
         delivery = new Delivery(socket);
     }
-
-    MB.Core.fileLoader = new ImageLoader();
+    // MB.Core.fileLoader = new ImageLoader();
+    fileLoader = new ImageLoader();
 });
 
 socket.on('disconnect', function (data) {

@@ -18,8 +18,10 @@
 
                 var financing_id = tableInstance.data.data[row].id;
 
-                var work_statuses = ['ACQUIRING_IN_PROCCESS', 'READY_TO_WORK','CLOSED', 'WAIT_BANK_CONFIRM','BANK_CONFIRM'];
-                var form_name = (work_statuses.indexOf(tableInstance.data.data[row].status_sysname) == -1 )? 'form_merchant_financing' : 'form_merchant_financing_work';
+                var work_statuses = ['ACQUIRING_IN_PROCCESS', 'READY_TO_WORK','CLOSED', 'WAIT_BANK_CONFIRM','BANK_CONFIRM', 'WAIT_INVESTOR'];
+
+
+                var form_name = (work_statuses.indexOf(tableInstance.data.data[row].status_sysname) == -1 )? 'form_merchant_financing' : 'form_merchant_financing_work_2';
 
 
                 var openInModalO = {
@@ -57,6 +59,8 @@
                     '<div class="form-group">' +
                     '<label>Процент списания:</label>' +
                     '<input type="number" id="day_percent" value="" class="form-control"/>' +
+                    '<label>До какой даты созданы платежные дни (например 01.01.2017) (если до сегодня/вчера, то можно не указывть).:</label>' +
+                    '<input type="text" id="oper_date" value="" class="form-control"/>' +
                     '</div>';
 
                 bootbox.dialog({
@@ -68,13 +72,15 @@
                             callback: function(){
 
                                 var day_percent = $('#day_percent').val();
+                                var oper_date = $('#oper_date').val();
 
                                 var o = {
                                     command:'changeToPercent',
                                     object:'merchant_financing',
                                     params:{
                                         id:financing_id,
-                                        day_percent: day_percent
+                                        day_percent: day_percent,
+                                        operation_date:oper_date
                                     }
                                 };
 
