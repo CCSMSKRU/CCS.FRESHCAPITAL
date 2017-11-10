@@ -3041,8 +3041,8 @@ Model.prototype.notifyBank = function (obj, cb) {
         },
         check: function (cb) {
             // сделать проверки (статусы) READY_TO_WORK
-            if (['READY_TO_WORK'].indexOf(merchant_financing.status_sysname)==-1){
-                var statuses = ['Готов к работе'].join(', ');
+            if (['READY_TO_WORK','BANK_CONFIRM'].indexOf(merchant_financing.status_sysname)==-1){
+                var statuses = ['Готов к работе','BANK_CONFIRM'].join(', ');
                 return cb(new UserError('Необходимо профинансировать! Зайдите в планы финансирования.', {
                     id:id,
                     status:merchant_financing.status
@@ -3193,7 +3193,9 @@ Model.prototype.notifyBank = function (obj, cb) {
                 return cb(err, err2);
             });
         }else{
+            if (!obj.doNotSaveRollback){
             rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'notifyBank', params:obj});
+            }
             cb(null, new UserOk('Банк уведомлен'));
         }
     });
@@ -3287,7 +3289,10 @@ Model.prototype.bankConfirm = function (obj, cb) {
                 return cb(err, err2);
             });
         }else{
-            rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'bankConfirm', params:obj});
+            if (!obj.doNotSaveRollback){
+                rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'bankConfirm', params:obj});
+            }
+
             cb(null, new UserOk('Все готово! Осталось только отправить торговцу деньги.'));
         }
     });
@@ -3311,7 +3316,7 @@ Model.prototype.moneySentAndSetInWork = function (obj, cb) {
     // if (!filename) return cb(new MyError('В метод не передан filename'));
     var rollback_key = obj.rollback_key || rollback.create();
 
-
+    var confirm = obj.confirm;
 
     // Получаем финансирование
     // Проверяем статусы и прочее
@@ -3474,6 +3479,7 @@ Model.prototype.moneySentAndSetInWork = function (obj, cb) {
 
         setMoneySent: function (cb) {
             // Установить финансированию money_sent
+            if (merchant_financing.money_sent) return cb(null);
             var params = {
                 id:id,
                 money_sent:true,
@@ -3525,7 +3531,7 @@ Model.prototype.moneySentAndSetInWork = function (obj, cb) {
                     payments_start_date:payments_start_date,
                     merchant_financing_id:id,
                     financing_type_id:merchant_financing.financing_type_id,
-                    confirm:obj.confirm
+                    confirm:confirm
                 }
             };
             o.params.rollback_key = rollback_key;
@@ -3893,6 +3899,7 @@ Model.prototype.ready_to_work_to_work = function (obj, cb) {
             var params = {
                 id:obj.id,
                 rollback_key:rollback_key,
+                confirm:obj.confirm,
                 doNotSaveRollback:true
             };
             _t.moneySentAndSetInWork(params, cb);
@@ -3900,7 +3907,7 @@ Model.prototype.ready_to_work_to_work = function (obj, cb) {
         }
     }, function (err) {
         if (err) {
-            if (err.message == 'needConfirm') return cb(err);
+            // if (err.message == 'needConfirm') return cb(err);
             rollback.rollback({rollback_key:rollback_key,user:_t.user}, function (err2) {
                 return cb(err, err2);
             });
@@ -5801,6 +5808,7 @@ Model.prototype.changeToPercent = function (obj, cb) {
     if (isNaN(+day_percent)) return cb(new UserError('Некорректно указан максимальный процент списания в день.',{obj:obj}));
     if (day_percent <= 0 || day_percent > 100) return cb(new UserError('Некоректно указан процент.',{obj:obj}));
     var confirm = obj.confirm;
+    var operation_date = obj.operation_date || funcs.getDateMySQL();
 
     var merchant_financing;
     async.series({
@@ -5830,10 +5838,25 @@ Model.prototype.changeToPercent = function (obj, cb) {
                 command:'get',
                 object:'merchant_financing_payment',
                 params:{
-                    param_where:{
-                        merchant_financing_id:id,
-                        status_sysname:'PENDING'
+                    // param_where:{
+                    //     merchant_financing_id:id,
+                    //     status_sysname:'PENDING'
+                    // },
+                    where:[
+                        {
+                            key:'merchant_financing_id',
+                            val1:id
                     },
+                        {
+                            key:'status_sysname',
+                            val1:'PENDING'
+                        },
+                        {
+                            key:'payment_date',
+                            type:'>',
+                            val1:operation_date
+                        }
+                    ],
                     limit:10000,
                     collapseData:false
                 }
@@ -6890,20 +6913,22 @@ Model.prototype.report_merchant_factoring = function (obj, cb) { // Отчет �
 
         },
         getFin: function (cb) {
+            if (!merchant.current_financing_id) return cb(new UserError('У торговца не указано текущее финансирование.'));
             var o = {
-                command: 'get',
+                command: 'getById',
                 object: 'merchant_financing',
                 params: {
-                    param_where: {
-                        id: merchant.current_financing_id
-                    },
+                    id: merchant.current_financing_id,
+                    // param_where: {
+                    //     id: merchant.current_financing_id
+                    // },
                     collapseData: false
                 }
             };
 
             _t.api(o, function (err, res) {
 
-                if(err) return cb(new UserError('Не удалось получить финансирование', {err:err, o:o}));
+                if(err) return cb(new UserError('Не удалось получить активное финансирование', {err:err, o:o}));
 
                 fin = res[0];
 

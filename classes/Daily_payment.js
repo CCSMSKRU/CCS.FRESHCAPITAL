@@ -534,7 +534,7 @@ Model.prototype.setRemittance = function (obj, cb) {
                     var p_amount_last = +p_amount;
                     if (p_count > 1){
                         p_amount = Math.round((amount / p_count)*100)/100;
-                        p_amount_last = amount - p_amount*(p_count - 1);
+                        p_amount_last = Math.round((amount - p_amount*(p_count - 1))*100)/100;
                     }
 
                     if(daily_payment.need_close){
@@ -696,6 +696,7 @@ Model.prototype.setRemittance = function (obj, cb) {
 
                     break;
             }
+            amount = Math.round(amount*100)/100;
             if (amount !== 0) return cb(new UserError('Указанная сумма превышает сумму, необходимую для закрытия выбранных платежей. <br>Остаток: ' + amount + '<br>' +
                 'Сумма необходимая для закрытия:' + (+need_money_full || +need_money) + '<br><br>' +
                 'Чтобы оплатить авансом используйте специальную функцию.'));
@@ -1390,7 +1391,7 @@ Model.prototype.apply = function (obj, cb) {
             });
         } else {
             if (!obj.doNotSaveRollback){
-                rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'apply', params:obj});
+                rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'apply daily_payment', params:obj});
             }
             cb(null, new UserOk('Ок'));
         }

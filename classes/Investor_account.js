@@ -452,7 +452,9 @@ Model.prototype.markMoney = function (obj, cb) {
             if (Math.round((account.available_amount + account.locked_amount)*100)/100 != Math.round(account.total_amount*100)/100) {
                 return cb(new MyError('Проблема со счетом №: ' + account.id + '. Обратитесь к администратору.'));
             }
-            if (account.available_amount - amount < 0) return cb(new UserError('Недостаточно средств.'));
+            if (account.available_amount - amount < 0) {
+                return cb(new UserError('Недостаточно средств.'));
+            }
             cb(null);
         },
         makeOperation: function (cb) {
@@ -1567,8 +1569,7 @@ Model.prototype.calc_amounts = function (obj, cb) {
                     param_where:{
                         investor_account_id:id
                     },
-                    // columns:['type_id','type_sysname'],
-                    columns:['type_sysname'],
+                    columns:['type_id','type_sysname'],
                     sort:{
                         columns:['type_sysname'],
                         directions:['asc']

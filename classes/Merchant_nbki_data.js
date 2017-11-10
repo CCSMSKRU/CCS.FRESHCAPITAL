@@ -153,42 +153,42 @@ Model.prototype.example = function (obj, cb) {
 };
 
 
-let genRequestBody = function () {
+let genRequestBody = function (request_date, business, address) {
     let body = '<?xml version="1.0" ?>' +
         // '<?xml version="1.0" encoding="windows-1251" ?>' +
         '<product>' +
         '   <prequest>' +
         '       <req>' +
         '           <AddressReq>' +
-        // '               <district>ДСТР</district>' +
-        // '               <houseNumber>123</houseNumber>' +
-        '               <street>КРАСНОСЕЛЬСКАЯ, 39</street>' +
-        // '               <block>1</block>' +
-        // '               <building>2</building>' +
-        // '               <apartment>3</apartment>' +
-        '               <city>МОСКВА</city>' +
-        // '               <prov>56</prov>' +
-        '               <postal>105066</postal>' +
+        '               <district>' + address.district + '</district>' +
+        '               <houseNumber>' + address.house + '</houseNumber>' +
+        '               <street>' + address.street + '</street>' +
+        '               <block>' + address.block + '</block>' +
+        '               <building>' + address.building + '</building>' +
+        '               <apartment>' + address.apartment + '</apartment>' +
+        '               <city>' + address.city + '</city>' +
+        '               <prov>' + address.prov + '</prov>' +
+        '               <postal>' + address.postal + '</postal>' +
         '               <addressType>3</addressType>' +
         '           </AddressReq>' +
         '           <AddressReq>' +
-        // '               <district>ДСТР</district>' +
-        // '               <houseNumber>123</houseNumber>' +
-        '               <street>КРАСНОСЕЛЬСКАЯ, 39</street>' +
-        // '               <block>1</block>' +
-        // '               <building>2</building>' +
-        // '               <apartment>3</apartment>' +
-        '               <city>МОСКВА</city>' +
-        // '               <prov>56</prov>' +
-        '               <postal>105066</postal>' +
+	    '               <district>' + address.district + '</district>' +
+	    '               <houseNumber>' + address.house + '</houseNumber>' +
+	    '               <street>' + address.street + '</street>' +
+	    '               <block>' + address.block + '</block>' +
+	    '               <building>' + address.building + '</building>' +
+	    '               <apartment>' + address.apartment + '</apartment>' +
+	    '               <city>' + address.city + '</city>' +
+	    '               <prov>' + address.prov + '</prov>' +
+	    '               <postal>' + address.postal + '</postal>' +
         '               <addressType>4</addressType>' +
         '           </AddressReq>' +
         '           <IdReq>' +
-        '               <idNum>7701889831</idNum>' +
+        '               <idNum>' + business.inn + '</idNum>' +
         '               <idType>81</idType>' +
         '           </IdReq>' +
         '           <IdReq>' +
-        '               <idNum>1107746736811</idNum>' +
+        '               <idNum>' + business.ogrn + '</idNum>' +
         '               <idType>34</idType>' +
         '               <issueDate>1900-01-02</issueDate>' +
         '           </IdReq>' +
@@ -207,19 +207,17 @@ let genRequestBody = function () {
         '               <currencyCode>RUB</currencyCode>' +
         '           </InquiryReq>' +
         '           <BusinessReq>' +
-        '               <businessName>ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ' +
-        '               \'Мир билета\'</businessName>' +
+        '               <businessName>' + business.name + '</businessName>' +
         '           </BusinessReq>' +
         '           <RequestorReq>' +
-        '               <MemberCode>FG01LL000000</MemberCode>' +
-        '               <UserID>FG01LL000005</UserID>' +
-        '               <Password>Abce1234</Password>' +
+        '               <MemberCode>' + 'FG01LL000000' + '</MemberCode>' +
+        '               <UserID>' + 'FG01LL000005' + '</UserID>' +
+        '               <Password>' + 'Abce1234' + '</Password>' +
         '           </RequestorReq>' +
         '           <RefReq>' +
-        '               <userReference>TESTRequest01</userReference>' +
         '               <product>BHST</product>' +
         '           </RefReq>' +
-        '           <requestDateTime>2006-06-08</requestDateTime>' +
+        '           <requestDateTime>' + request_date + '</requestDateTime>' +
         '           <IOType>B2B</IOType>' +
         '           <OutputFormat>XML</OutputFormat>' +
         '           <lang>ru</lang>' +
@@ -234,15 +232,62 @@ Model.prototype.loadData = function (obj, cb) {
     if (typeof obj !== 'object') return cb(new MyError('В метод не переданы obj'));
 
     try {
-        let body = genRequestBody();
+		let _t = this;
+
+		if (isNaN(+obj.id)) return cb(new MyError('В метод не передан id площадки'));
+
+		let request_id = +obj.id;
+		let request_date = moment().format('YYYY-MM-DD');
         let guid = moment().format('DDMMYYYY') + '_' + funcs.guid();
         let filename = guid + '.xml';
         let filename_sgn = filename + '.sgn';
         let path = 'modules/utils/cryptcp/';
 
         async.waterfall([
+			//get financing_request
+			(cb) => {
+				let o = {
+					command: 'get',
+					object: 'financing_request',
+					params: {
+						param_where: {
+							id: request_id
+						},
+						collapseData: false
+					}
+				};
+
+				_t.api(o, function (err, res) {
+					if (err) return cb(new UserError('Не удалось получить заявку', {err: err, o: o}));
+
+					if (res[0]) {
+						let business = {
+							inn: res[0].inn,
+							ogrn: res[0].ogrn,
+							name: res[0].merchant_name
+						};
+						let address = {
+							district: res[0].legal_address_district,
+							city: res[0].legal_address_city,
+							building: res[0].legal_address_building,
+							block: res[0].legal_address_block,
+							house: res[0].legal_address_house,
+							postal: res[0].legal_address_postal,
+							street: res[0].legal_address_street,
+							apartment: res[0].legal_address_apartment,
+							prov: ''
+						};
+
+						let body = genRequestBody(request_date, business, address);
+
+						cb(null, body);
+					} else {
+						return cb(new UserError('Не удалось получить заявку'));
+					}
+				});
+			},
             //getNBKIData:
-            (cb) => {
+			(body, cb) => {
                 request({
                     method: 'POST',
                     url: 'http://icrs.demo.nbki.ru/products/B2BRequestServlet',
@@ -269,9 +314,12 @@ Model.prototype.loadData = function (obj, cb) {
             },
             //deleteSign:
             (cb) => {
+				let isWin = /^win/.test(process.platform);
+
                 exec(
-                    'cd ' + path + ' & ' +
-                    'cryptcp.x64 -verify -dn "icrs.demo.nbki.ru, OJSC NBCH 2017, Moscow, Moscow, RU, support@nbki.ru" ' + filename_sgn + ' ' + filename,
+					isWin ? ('cd ' + path + ' & ' +
+					'cryptcp -verify -dn "icrs.demo.nbki.ru, OJSC NBCH 2017, Moscow, Moscow, RU, support@nbki.ru" ' + filename_sgn + ' ' + filename) :
+						('cryptcp -verify -dn "icrs.demo.nbki.ru, OJSC NBCH 2017, Moscow, Moscow, RU, support@nbki.ru" ' + path + '/' +filename_sgn + ' ' + path + '/' + filename),
                     (error, stdout, stderr) => {
                         if (error) return cb(error, new MyError('Ошибка снятия подписи'));
 
@@ -312,6 +360,8 @@ Model.prototype.saveDataToCSV = function (obj, cb) {
     if (typeof obj !== 'object') return cb(new MyError('В метод не переданы obj'));
 
     try {
+	    if (isNaN(+obj.id)) return cb(new MyError('В метод не передан id площадки'));
+
         this.loadData(obj, function (err, res) {
             if (res && res.body && res.body.body) {
                 let body = res.body.body;
