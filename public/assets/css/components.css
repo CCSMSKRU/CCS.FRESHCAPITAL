@@ -8897,6 +8897,48 @@ label.invoice-free-sub {
 .execute-daily-payments:hover{
     background-color: #2edf00;
 }
+
+.import-vtb{
+	 height: 50px;
+	 width: 180px;
+	 background-color: #2579d4;
+	 border-radius: 3px;
+	 text-align: center;
+	 font-size: 16px;
+	 box-sizing: border-box;
+	 padding-top: 14px;
+	 margin-top: 30px;
+	 margin-left: 5px;
+	 float: right;
+	 border: 1px solid rgba(0,0,0,0.15);
+        color: #fff;
+	 cursor: pointer;
+ }
+.import-vtb:hover{
+	background-color: #2894ff;
+}
+
+.apply-import-vtb{
+	height: 50px;
+	width: 220px;
+	background-color: #6ed4a2;
+	border-radius: 3px;
+	text-align: center;
+	font-size: 16px;
+	box-sizing: border-box;
+	padding-top: 14px;
+	margin-top: 30px;
+	margin-left: 5px;
+	float: right;
+	border: 1px solid rgba(0,0,0,0.15);
+	cursor: pointer;
+}
+.apply-import-vtb:hover{
+	background-color: #78e0ad;
+}
+
+
+
 .create-payments-day{
     list-style: none;
 }
@@ -8908,4 +8950,66 @@ label.invoice-free-sub {
 }
 .ipt-m-cdate{
 
+}
+
+
+#scoring_tabs_wrapper > ul {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: flex-start;
+	height: 60px;
+	margin: 40px 0 0;
+	padding: 0;
+	list-style: none;
+}
+#scoring_tabs_wrapper > ul li {
+	width: 160px;
+}
+#scoring_tabs_wrapper > ul li a {
+	display: block;
+	height: 100%;
+	font-size: 30px;
+	color: black;
+	text-decoration: none;
+	border-bottom: 4px solid rgba(255, 255, 255, 0);
+	text-align: center;
+}
+#scoring_tabs_wrapper > ul li.ui-tabs-active a,
+#scoring_tabs_wrapper > ul li a:hover {
+	border-color: red;
+}
+#scoring_tabs_wrapper > ul li.ui-tabs-active a {
+	color: red;
+}
+
+
+.scoring_tabs {
+	border-top: 1px solid black;
+	padding: 30px 20px;
+	margin-top: -1px;
+}
+
+.scoring_tabs .request-btn {
+	margin-top: 20px;
+}
+.append_new{
+
+    height: 50px;
+    width: 180px;
+    background-color: #2579d4;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 16px;
+    box-sizing: border-box;
+    padding-top: 14px;
+    margin-top: 30px;
+    margin-left: 5px;
+    float: right;
+    border: 1px solid rgba(0,0,0,0.15);
+    cursor: pointer;
+    color: #fff;
+}
+.append_new:hover{
+    background-color: #2894ff;
 }
