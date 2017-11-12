@@ -38,7 +38,7 @@ var Protocol = function () {
             //dataType: (self.responseInXML)? 'text' : 'jsonp',
             dataType: 'json',
             data:{
-                site:'vgfinancing.com',
+                site:'altynfin.com',
                 json:s_json
             },
             error: function (err) {

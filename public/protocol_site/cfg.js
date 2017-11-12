@@ -1,5 +1,5 @@
 //var host = 'http://192.168.1.190';
-var host = 'http://ccs.vgfinancing.com/';
+var host = 'http://54.36.67.154:8080/';
 //var host = 'https://shop.kassa.uz';
 
 var url = '/site_api';
