@@ -6,6 +6,8 @@ var async = require('async');
 var fs = require('fs');
 var funcs = require('./functions');
 var moment = require('moment');
+var checkAccess = require('../modules/checkAccess');
+
 var debug = true;
 
 module.exports = function (obj, cb, user) {
@@ -58,6 +60,15 @@ module.exports = function (obj, cb, user) {
                 }
                 // Если требуется -> проверим.
                 if (!user.authorized) return cb(new UserError('noAuth'));
+                var o = {
+                    user:user,
+                    command:command,
+                    object:object,
+                    client_object:client_object
+                };
+                checkAccess.check(o, function(err){
+                    return cb(err);
+                });
                 //if ()
                 //async.series([
                 //    function (cb) {
@@ -65,7 +76,7 @@ module.exports = function (obj, cb, user) {
                 //    }
                 //],cb);
 
-                cb(null);
+                // cb(null);
             },
             function (cb) {
                 // Подготовим alias
