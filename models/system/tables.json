@@ -894,7 +894,11 @@
       "terminal_number" : {"type": "varchar", "length": "255", "name": "Номер терминала"},
       "regional_center" : {"type": "varchar", "length": "255", "name": "Региональный центр"},
       "overpayment" : { "type": "DECIMAL(50, 2)", "name": "Переплачено"},
-      "bank_agreement" : {"type": "varchar", "length": "255", "name": "Договор банка"}
+      "bank_agreement" : {"type": "varchar", "length": "255", "name": "Договор банка"},
+
+      "financing_request_type_id" : {"type": "bigint", "length": "20", "visible": false},
+      "financing_request_type" : {"type": "varchar", "length": "255", "from_table": "financing_request_type", "keyword": "financing_request_type_id", "return_column": "name", "is_virtual": true, "name": "Тип заявки"},
+      "financing_request_type_sysname" : {"type": "varchar", "length": "255", "from_table": "financing_request_type", "keyword": "financing_request_type_id", "return_column": "sysname", "is_virtual": true, "name": "Тип заявки SYS"}
     }
   },
   "merchant_status": {
@@ -1010,7 +1014,11 @@
       "manager_name" : {"type": "varchar", "length": "255", "from_table": "manager", "keyword": "manager_id", "return_column": "firstname", "is_virtual": true, "name": "Менеджер"},
       "manager_lastname" : {"type": "varchar", "length": "255", "from_table": "manager", "keyword": "manager_id", "return_column": "lastname", "is_virtual": true, "name": "Фамилия менеджера"},
       "terminal_number" : {"type": "varchar", "length": "255", "name": "Номер терминала"},
-      "regional_center" : {"type": "varchar", "length": "255", "name": "Региональный центр"}
+      "regional_center" : {"type": "varchar", "length": "255", "name": "Региональный центр"},
+
+      "financing_request_type_id" : {"type": "bigint", "length": "20", "visible": false},
+      "financing_request_type" : {"type": "varchar", "length": "255", "from_table": "financing_request_type", "keyword": "financing_request_type_id", "return_column": "name", "is_virtual": true, "name": "Тип заявки"},
+      "financing_request_type_sysname" : {"type": "varchar", "length": "255", "from_table": "financing_request_type", "keyword": "financing_request_type_id", "return_column": "sysname", "is_virtual": true, "name": "Тип заявки SYS"}
     }
   },
   "merchant_representative":{

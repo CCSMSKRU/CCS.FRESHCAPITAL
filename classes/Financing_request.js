@@ -1655,9 +1655,16 @@ Model.prototype.request_to_merchant = function (obj, cb) {
                         continue;
                     }
                     if(i == 'request_financing_type_id'){
+
                         o.params['financing_type_id'] = fin_request[i];
                         continue;
                     }
+                    if(i == 'financing_request_type_id'){
+
+                        o.params['financing_request_type_id'] = fin_request[i];
+                        continue;
+                    }
+
 
 
                     o.params[i] = fin_request[i];
@@ -1691,6 +1698,11 @@ Model.prototype.request_to_merchant = function (obj, cb) {
                     }
                     if(i == 'request_financing_type_id'){
                         o.params['financing_type_id'] = fin_request[i];
+                        continue;
+                    }
+                    if(i == 'financing_request_type_id'){
+
+                        o.params['financing_request_type_id'] = fin_request[i];
                         continue;
                     }
 

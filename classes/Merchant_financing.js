@@ -475,6 +475,7 @@ Model.prototype.add_ = function (obj, cb) {
                 obj['fromClient'] =  false;
                 obj['manager_id'] = merchant.manager_id;
                 obj['terminal_number'] = merchant.terminal_number;
+                obj['financing_request_type_id'] = merchant.financing_request_type_id;
 
                 //obj['manager_name'] = merchant.manager_name;
                 //obj['manager_lastname'] = merchant.manager_lastname;
@@ -8416,21 +8417,14 @@ Model.prototype.report_altynfin = function (obj, cb) {
         obj = {};
     }
     var _t = this;
-    //var id = obj.id;
-    //
-    //if (isNaN(+id)) return cb(new MyError('Не передан id',{obj:obj}));
 
     var rollback_key = obj.rollback_key || rollback.create();
 
     var name = obj.name || 'report_altyfin.xlsx';
 
-    //var report_date = obj.report_date || funcs.getDate();
-
     var from_date = obj.from_date;
     var to_date = obj.to_date;
 
-    //var weekAgoStart = moment(report_date, 'DD.MM.YYYY').startOf('week').add(-6,'day').format('DD.MM.YYYY');
-    //var weekAgoEnd = moment(report_date, 'DD.MM.YYYY').startOf('week').add(-2,'day').format('DD.MM.YYYY');
 
     var data, readyData, template, binaryData, filename;
     var manager_fee_percent = 0.01;
@@ -8475,12 +8469,10 @@ Model.prototype.report_altynfin = function (obj, cb) {
     };
 
     async.series({
-
-
         getMerchantFinancigs: function (cb) {
             console.log('merchant_financing_ids', merchant_financing_ids.join(','));
 
-            if (!merchant_financing_ids.length) return cb(null);
+            //if (!merchant_financing_ids.length) return cb(null);
 
             var o = {
                 command: 'get',
@@ -8506,11 +8498,13 @@ Model.prototype.report_altynfin = function (obj, cb) {
             _t.api(o, function (err, res) {
                 if (err) return cb(new MyError('Не удалось получить merchant_financing', {o: o, err: err}));
 
-                for (var i in res) {
-                    for (var j in res[i]) {
-                        financings[res[i].id][j] = (typeof financings[res[i].id][j]!=='undefined')? financings[res[i].id][j] : res[i][j];
-                    }
-                }
+                financings = res;
+
+                //for (var i in res) {
+                //    for (var j in res[i]) {
+                //        financings[res[i].id][j] = (typeof financings[res[i].id][j]!=='undefined')? financings[res[i].id][j] : res[i][j];
+                //    }
+                //}
                 console.log('financings----> ',financings);
                 cb(null);
             });
@@ -8545,8 +8539,11 @@ Model.prototype.report_altynfin = function (obj, cb) {
                     }
                 };
                 _t.api(o, function (err, res) {
+
                     if (err) return cb(new MyError('Не удалось получить операции для данного финансирования', {o: o, err: err}));
+
                     one_fin.operationsAll = [];
+
                     for (var i in res) {
                         one_fin.operationsAll.push(res[i]);
                     }
@@ -8557,520 +8554,131 @@ Model.prototype.report_altynfin = function (obj, cb) {
                 });
             },cb);
         },
-
-        getPlanMerchantInvestors: function (cb) {
-            if (!merchant_financing_ids.length) return cb(null);
-            var o = {
-                command: 'get',
-                object: 'investment_plan_merchant_investor',
-                params: {
-                    where: [
-                        {
-                            key:'merchant_financing_id',
-                            type:'in',
-                            val1:merchant_financing_ids
-                        },
-                        {
-                            key:'investor_account_id',
-                            val1:account.id
-                        },
-                        {
-                            key:'commited',
-                            val1:true
-                        },
-                        {
-                            key:'commited_date',
-                            type:'<=',
-                            val1:moment(weekAgoEnd,'DD.MM.YYYY').format('YYYY-MM-DD')
-                        }
-                    ],
-                    limit:100000000,
-                    collapseData: false
-                }
-            };
-            _t.api(o, function (err, res) {
-                if (err) return cb(new MyError('Не удалось получить merchant_financing', {o: o, err: err}));
-                for (var i in res) {
-                    if (typeof financings[res[i].merchant_financing_id] == 'object'){
-                        if (!financings[res[i].merchant_financing_id].merch_investors) financings[res[i].merchant_financing_id].merch_investors = [];
-                        financings[res[i].merchant_financing_id].merch_investors.push(res[i]);
-                        financings[res[i].merchant_financing_id].amount = res[i].amount;
-                        financings[res[i].merchant_financing_id].commited = res[i].commited;
-                        financings[res[i].merchant_financing_id].commited_date = res[i].commited_date || res[i].created;
-                        financings[res[i].merchant_financing_id].mgm_fee = res[i].mgm_fee;
+        getBanks:function(cb){
+            async.eachSeries(financings, function(one_fin, cb){
+                // Получить все операции по этому финансированию
+                var o = {
+                    command: 'get',
+                    object: 'bank',
+                    params: {
+                        where:[
+                            {
+                                key:'id',
+                                val1:one_fin.processing_bank_id
+                            }
+                        ],
+                        collapseData: false
                     }
-                }
-                //console.log('financings----> ',financings);
-                cb(null);
-            });
-        },
+                };
+                _t.api(o, function (err, res) {
 
+                    if (err) return cb(new MyError('Не удалось получить операции для данного финансирования', {o: o, err: err}));
+
+                    one_fin.bank_data = res;
+
+                    cb(null);
+                });
+            },cb);
+        },
         prepareData0: function (cb) {
+
             readyData = {
                 inc: [],
-                t1: [],
-                t2: [],
-                rs: [],
-                remit: [],
-                total_added_to_account:0,
-                total_amount_mgm_fee:0,
-                total_recon:0,
-                sum_gross_investment_all_hist:0,
-                balance:0,
-                last_weeks_total_collected:0,
-                last_week_total_collected:0,
-                total_reinvestment_power:0,
-                this_week_mgm_fee:0
+                t1: []
             };
-            for (var i in financings) {
-
-                var fin = financings[i];
-
-                fin.total_returned = Math.round(getCutOffAmount(fin.operations, 'REMITTANCE_FROM_MERCH', null, weekAgoEnd) * 100)/100;
-                // fin.complete_percent = Math.round((fin.total_returned * 100 / fin.amount_to_return) * 100) / 100;
-                // fin.to_return = Math.round((+fin.amount_to_return - +fin.total_returned) * 100) / 100;
-
-                fin.total_returned_all = Math.round(getCutOffAmount(fin.operationsAll, 'REMITTANCE_FROM_MERCH', null, weekAgoEnd) * 100)/100;
-                fin.complete_percent = Math.round((fin.total_returned_all * 100 / fin.amount_to_return) * 100) / 100;
-                fin.to_return = Math.round((+fin.amount_to_return - +fin.total_returned_all) * 100) / 100;
-
-
-                // if(fin.id == 178){
-                //
-                //
-                //
-                //     debugger;
-                // }
-
-            }
-
-
 
             cb(null);
         },
         prepareData1: function (cb) {
-            var t1_sum_founding_amount = 0;
-            var t1_sum_amount_to_return = 0;
-            var t1_sum_gross_profit = 0;
-            var t1_sum_all_comission_sum = 0;
-            var t1_sum_net_profit = 0;
-            var t1_sum_total_collected = 0;
-            var t1_sum_total_pending = 0;
-            var t1_sum_complete_percent = 0;
-            var t1_sum_complete_percent_l = '';
 
-            readyData.t1_sum_avr_factoring_rate = 0;
-            readyData.t1_sum_avr_payment_count = 0;
-            var counter = 0;
-            for (var i in financings) {
+            var idx = 1;
 
-                var fin = financings[i];
-                if (!fin.commited) continue;
-                counter++;
+            var total_founding_amount = 0;
+            var total_factoring_rate = 0;
+            var total_amount_to_return = 0;
+            var total_payments_count = 0;
+            var total_payment_amount = 0;
+            var total_bank_comission = 0;
+            var total_mediator_comission = 0;
+            var total_agent_comission = 0;
+            var total_manager_comission = 0;
+            var total_gross_profit = 0;
+            var total_total_collected = 0;
+            var total_total_pending = 0;
+            var total_closing_percent = 0;
+            var total_currnet_gross_profit = 0;
 
 
-                //console.log('financing_date', fin.financing_date);
-                var gross_profit = +fin.amount_to_return - fin.founding_amount;
-                var broker_comission_percent = (+fin.broker_comission + (+fin.agent_comission || 0)) / 100;
-
-                var all_comission_sum = +fin.founding_amount * broker_comission_percent + fin.amount_to_return * fin.processing_bank_commission / 100;
-                var net_profit = gross_profit - all_comission_sum;
-
-                var pseudo_res = '';
-                var pseudo_comlete_sign_count = Math.abs((fin.complete_percent) / 4);
-
-                for(var p =0;p<pseudo_comlete_sign_count;p++){
-                    pseudo_res += 'l';
-                }
+            for(var i in financings){
+                var f =  financings[i];
 
                 readyData.t1.push({
-                    merchant_id: fin.merchant_id,
-                    merchant_name: (moment(fin.commited_date,'DD.MM.YYYY') > moment(weekAgoEnd, 'DD.MM.YYYY'))? fin.merchant_short_name + '  (' + moment(fin.commited_date,'DD.MM.YYYY').format('DD.MM.YYYY') + ')' : fin.merchant_short_name,
-                    founding_date: fin.payments_start_date,
-                    founding_amount: fin.founding_amount,
-                    factoring_rate: fin.factoring_rate,
-                    amount_to_return: fin.amount_to_return,
-                    days_per_week: (fin.financing_type_sysname == 'PERCENT')? 7 : 5, // days_per_week,
-                    //days_per_week: fin.financing_type_sysname,
-                    payments_count: fin.payments_count,
-                    payment_amount: fin.payment_amount,
-                    gross_profit: gross_profit,
-                    all_comission_sum: all_comission_sum,
-                    net_profit: net_profit,
-                    total_collected: fin.total_returned_all,
-                    total_pending: fin.to_return,
-                    complete_percent: fin.complete_percent / 100,
-                    complete_percent_l: pseudo_res
+                    index:idx,
+                    agr_number: f.agr_number,
+                    merchant: f.merchant_name + '(' + f.merchant_id + ')',
+                    financing_purpose: f.financing_request_type,
+                    financing_type: f.financing_type,
+                    finanincg_date: f.financing_date,
+                    plan_closing_date: f.financing_close_date,
+                    founding_amount: f.founding_amount,
+                    factoring_rate: f.factoring_rate,
+                    amount_to_return: f.amount_to_return,
+                    payments_count: f.payments_count,
+                    payment_amount: f.payment_amount,
+                    dly_withdraw_rate: f.avl_proc_dly_withdraw_rate,
+                    bank: f.processing_bank,
+                    bank_comission_percent: f.bank_data.comission_percent,
+                    bank_comission: f.amount_to_return / 100 * f.bank_data.comission_percent,
+                    mediator_comission_percent: 0,
+                    mediator_comission: 0,
+                    agent_comission_percent: 0,
+                    agent_comission: 0,
+                    manager_comission_percent: f.broker_comission,
+                    manager_comission: f.founding_amount / 100 * f.broker_comission,
+                    gross_profit: (+f.amount_to_return - +f.founding_amount) - (f.founding_amount / 100 * f.broker_comission) - 0 - 0, // add here other comissions
+                    effective_rate: '???',
+                    total_collected: Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100,
+                    total_pending: f.amount_to_return - (Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100),
+                    closing_percent: (Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100) / f.amount_to_return * 100,
+                    currnet_gross_profit: ((+f.amount_to_return - +f.founding_amount) - (f.founding_amount / 100 * f.broker_comission) - 0 - 0) / 100  * ((Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100) / f.amount_to_return * 100)
                 });
 
 
-                // if(fin.id == 178){
-                //     debugger;
-                // }
-
-                t1_sum_founding_amount           += fin.founding_amount;
-                t1_sum_amount_to_return         += fin.amount_to_return;
-                t1_sum_gross_profit             += gross_profit;
-                t1_sum_all_comission_sum       += all_comission_sum;
-                t1_sum_net_profit               += net_profit;
-                t1_sum_total_collected          += fin.total_returned_all;
-                t1_sum_total_pending            += fin.to_return;
-                t1_sum_complete_percent         += (+fin.complete_percent / 100);
-
-                readyData.t1_sum_avr_factoring_rate += fin.factoring_rate;
-                readyData.t1_sum_avr_payment_count += fin.payments_count;
-            }
-
-            t1_sum_complete_percent = (counter > 0) ? t1_sum_complete_percent/counter : 0;
+                total_founding_amount += +f.founding_amount;
+                total_factoring_rate += +f.factoring_rate;
+                total_amount_to_return += +f.amount_to_return;
+                total_payments_count += +f.payments_count;
+                total_payment_amount += +f.payment_amount;
+                total_bank_comission += +(f.amount_to_return / 100 * f.bank_data.comission_percent);
+                total_mediator_comission += 0;
+                total_agent_comission += 0;
+                total_manager_comission += +(f.founding_amount / 100 * f.broker_comission);
+                total_gross_profit += (+f.amount_to_return - +f.founding_amount) - (f.founding_amount / 100 * f.broker_comission) - 0 - 0;
+                total_total_collected += +(Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100);
+                total_total_pending += +(f.amount_to_return - (Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100));
+                total_closing_percent += +((Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100) / f.amount_to_return * 100);
+                total_currnet_gross_profit += +(((+f.amount_to_return - +f.founding_amount) - (f.founding_amount / 100 * f.broker_comission) - 0 - 0) / 100  * ((Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100) / f.amount_to_return * 100));
 
 
-
-            readyData.t1_sum_founding_amount = t1_sum_founding_amount;
-            readyData.t1_sum_amount_to_return = t1_sum_amount_to_return;
-            readyData.t1_sum_gross_profit = t1_sum_gross_profit;
-            readyData.t1_sum_all_comission_sum = t1_sum_all_comission_sum;
-            readyData.t1_sum_net_profit = t1_sum_net_profit;
-            readyData.t1_sum_total_collected = t1_sum_total_collected;
-            readyData.t1_sum_total_pending = t1_sum_total_pending;
-            readyData.t1_sum_complete_percent = t1_sum_complete_percent;
-
-            var total_pseudo_comlete_sign_count = Math.floor(readyData.t1_sum_complete_percent * 100 / 4);
-            var total_pseudo_res = '';
-
-            for(var p2 =0;p2<total_pseudo_comlete_sign_count;p2++){
-                total_pseudo_res += 'l';
-            }
-
-            t1_sum_complete_percent_l = total_pseudo_res;
-
-
-            readyData.t1_sum_complete_percent_l = t1_sum_complete_percent_l;
-            readyData.t1_sum_avr_factoring_rate = (counter > 0) ? Math.round((readyData.t1_sum_avr_factoring_rate / counter) * 100) / 100 : 0;
-            readyData.t1_sum_avr_payment_count = (counter > 0) ? Math.round((readyData.t1_sum_avr_payment_count / counter) * 100) / 100 : 0;
-
-            cb(null);
-
-
-        },
-        prepareData2: function (cb) {
-
-
-            var t2_sum_gross_investment                     = 0;
-            var t2_sum_bank_comission_part_summ             = 0;
-            var t2_sum_gross_investment_cut_off             = 0;
-            var t2_sum_net_investment                       = 0;
-            var t2_sum_participation_payback_amount         = 0;
-            var t2_sum_participation_gross_profit           = 0;
-            var t2_sum_mgm_comission                        = 0;
-            var t2_sum_net_profit_after_mgm_fee             = 0;
-            var t2_sum_gross_profit_after_mgm_fee           = 0;
-            var t2_sum_total_collected                      = 0;
-            var t2_sum_total_to_return                      = 0;
-            var t2_sum_pending_remittance                   = 0;
-            var t2_sum_mgm_comission_paid                   = 0;
-            var t2_last_weeks_total_collected               = 0;
-
-            for (var i in financings) {
-
-                var fin = financings[i];
-                if (!fin.commited) continue;
-                var amount = +fin.amount;
-
-                var percent = fin.percent = amount * 100 / +fin.founding_amount; // Процент участие в инвестировании
-
-                var gross_profit = +fin.amount_to_return - fin.founding_amount;
-
-                var broker_comission_percent = (+fin.broker_comission + (+fin.agent_comission || 0)) / 100;
-
-
-                var all_comission_sum = +fin.founding_amount * broker_comission_percent + fin.amount_to_return * fin.processing_bank_commission / 100;
-                var net_profit = gross_profit - all_comission_sum;
-
-                var bank_comission_part_summ = all_comission_sum * percent / 100;
-                var gross_investment = bank_comission_part_summ + amount;
-
-                var participation_payback_amount = amount * fin.factoring_rate / 100;
-                var participation_gross_profit = amount + participation_payback_amount;
-
-                var main_company_commision = fin.mgm_fee / 100;
-
-                var mgm_comission = (participation_payback_amount - bank_comission_part_summ) * main_company_commision;
-                var net_profit_after_mgm_fee = participation_payback_amount - bank_comission_part_summ - mgm_comission;
-                var gross_profit_after_mgm_fee = participation_gross_profit - mgm_comission;
-                //var total_returned = fin.total_returned * percent / 100;
-                //var total_returned = getCutOffAmount(fin.operations, 'REMITTANCE_FROM_MERCH', null, weekAgoEnd) * percent / 100;
-                var total_returned = getCutOffAmount(fin.operations, 'REMITTANCE_FROM_MERCH', null, weekAgoEnd); // На процент умножать не надо так как операции только по тому инфестору
-                var to_return = fin.to_return * percent / 100;
-                //var last_weeks_total_collected = getCutOffAmount(fin.operations, 'REMITTANCE_FROM_MERCH');
-
-
-                //var pending_remittance = total_returned - last_weeks_total_collected;
-                //var pending_remittance = getCutOffAmount(fin.operations, 'REMITTANCE_FROM_MERCH') * percent / 100;
-                var pending_remittance = getCutOffAmount(fin.operations, 'REMITTANCE_FROM_MERCH'); // На процент умножать не надо так как операции только по тому инфестору
-                var last_weeks_total_collected = total_returned - pending_remittance;
-                //var mgm_comission_paid = (fin.closing_date)? mgm_comission : 0;
-                var mgm_comission_paid = getCutOffAmount(fin.operations, 'REMITTANCE_MAIN_INV_COMISSION', null, weekAgoEnd);
-
-                readyData.t2.push({
-                    merchant_id: fin.merchant_id,
-                    merchant_name: (moment(fin.commited_date,'DD.MM.YYYY') > moment(weekAgoEnd, 'DD.MM.YYYY'))? fin.merchant_short_name + '  (' + moment(fin.commited_date,'DD.MM.YYYY').format('DD.MM.YYYY') + ')' : fin.merchant_short_name,
-                    gross_investment: gross_investment,
-                    bank_comission_part_summ: bank_comission_part_summ,
-                    net_investment: amount,
-                    participation_percent: Math.round(percent*100)/100,
-                    participation_payback_amount: participation_payback_amount,
-                    participation_gross_profit: participation_gross_profit,
-                    mgm_comission: mgm_comission,
-                    net_profit_after_mgm_fee: net_profit_after_mgm_fee,
-                    gross_profit_after_mgm_fee: gross_profit_after_mgm_fee,
-                    complete_percent: fin.complete_percent,
-                    total_collected: total_returned,
-                    total_to_return: to_return,
-                    last_weeks_total_collected: last_weeks_total_collected,
-                    pending_remittance:pending_remittance,
-                    mgm_comission_paid:mgm_comission_paid,
-                    mgm_fee_paid_date:fin.closing_date,
-                    mgm_fee_paid_amount:mgm_comission_paid
-
-
-                });
-                t2_sum_gross_investment                     += gross_investment;
-                t2_sum_bank_comission_part_summ             += bank_comission_part_summ;
-                // t2_sum_gross_investment_cut_off             += +(+bank_comission_part_summ + getCutOffAmount(fin.operations, 'TRANSFER_TO_MERCHANT', null, weekAgoEnd));
-                if (moment(fin.commited_date,'DD.MM.YYYY') <= moment(weekAgoEnd, 'DD.MM.YYYY')){
-                    t2_sum_gross_investment_cut_off             += +(+bank_comission_part_summ + getCutOffAmount(fin.operations, 'TRANSFER_TO_MERCHANT', null, weekAgoEnd));
-                }
-                t2_sum_net_investment                       += amount;
-                t2_sum_participation_payback_amount         += participation_payback_amount;
-                t2_sum_participation_gross_profit           += participation_gross_profit;
-                t2_sum_mgm_comission                        += mgm_comission;
-                t2_sum_net_profit_after_mgm_fee             += net_profit_after_mgm_fee;
-                t2_sum_gross_profit_after_mgm_fee           += gross_profit_after_mgm_fee;
-                t2_sum_total_collected                      += total_returned;
-                t2_sum_total_to_return                      += to_return;
-                t2_last_weeks_total_collected                      += last_weeks_total_collected;
-                t2_sum_pending_remittance                   += pending_remittance;
-                t2_sum_mgm_comission_paid                   += mgm_comission_paid;
+                idx++;
 
             }
 
 
-            readyData.t2_sum_gross_investment                   = t2_sum_gross_investment;
-            readyData.t2_sum_bank_comission_part_summ           = t2_sum_bank_comission_part_summ;
-
-            readyData.t2_sum_gross_investment_cut_off           = t2_sum_gross_investment_cut_off;
-
-            readyData.t2_sum_net_investment                     = t2_sum_net_investment;
-            readyData.t2_sum_participation_payback_amount       = t2_sum_participation_payback_amount;
-            readyData.t2_sum_participation_gross_profit         = t2_sum_participation_gross_profit;
-            readyData.t2_sum_mgm_comission                      = t2_sum_mgm_comission;
-            readyData.t2_sum_net_profit_after_mgm_fee           = t2_sum_net_profit_after_mgm_fee;
-            readyData.t2_sum_gross_profit_after_mgm_fee         = t2_sum_gross_profit_after_mgm_fee;
-            readyData.t2_sum_total_collected                    = t2_sum_total_collected;
-            readyData.t2_sum_total_to_return                    = t2_sum_total_to_return;
-            readyData.t2_last_weeks_total_collected             = t2_last_weeks_total_collected;
-            readyData.t2_sum_pending_remittance                 = t2_sum_pending_remittance;
-            readyData.t2_sum_mgm_comission_paid                 = t2_sum_mgm_comission_paid;
-            // var merchant_id
-            // var merchant_name
-            // var gross_investment
-            // var bank_comission_part_summ
-            // var net_investment
-            // var participation_percent
-            // var participation_payback_amount
-            // var participation_gross_profit
-            // var mgm_comission
-            // var net_profit_after_mgm_fee
-            // var gross_profit_after_mgm_fee
-            // var complete_percent
-            // var total_collected
-            // var total_to_return
-            // var last_weeks_total_collected
-            // var pending_remittance
-            // var mgm_comission_paid
-
-            cb(null);
-
-        },
-        prepareData3: function (cb) {
-
-            readyData.rs_total_final_profit      = 0;
-            readyData.rs_total_cut_off_collected = 0;
-            readyData.rs_sum_last_weeks_total_collected = 0;
-            readyData.rs_sum_gross_profit_after_mgm_fee = 0;
-            readyData.rs_sum_current_gross_collected = 0;
-            readyData.rs_sum_week_1 = 0;
-            readyData.rs_sum_week_2 = 0;
-            readyData.rs_sum_week_3 = 0;
-            readyData.rs_sum_week_4 = 0;
-            readyData.rs_sum_week_5 = 0;
-            readyData.rs_sum_week_6 = 0;
-            readyData.rs_sum_week_7 = 0;
-            readyData.rs_sum_week_8 = 0;
-            readyData.rs_sum_week_9 = 0;
-            readyData.rs_sum_week_10 = 0;
-            readyData.rs_sum_week_11 = 0;
-            readyData.rs_sum_week_12 = 0;
-            readyData.total_collected_summ = 0;
-
-
-
-            var rs_sum_gross_profit_after_mgm_fee      = 0;
-            var rs_sum_current_gross_collected      = 0;
-            var rs_total_cut_off_collected = 0;
-
-
-            for (var i in financings) {
-                // Добавим
-                var fin = financings[i];
-                if (!fin.commited) continue;
-
-                var amount = +fin.amount;
-
-                var percent = fin.percent = amount * 100 / +fin.founding_amount; // Процент участие в инвестировании
-                // var last_weeks_total_collected = 0;
-
-                for (var c = 1; c <= 12; c++) {
-                    var num = 12 - c;
-                    var start = moment(report_date, 'DD.MM.YYYY').startOf('week').add(-6,'day').add(-num,'week').format('DD.MM.YYYY');
-                    var end = moment(report_date, 'DD.MM.YYYY').startOf('week').add(-2,'day').add(-num,'week').format('DD.MM.YYYY');
-
-
-                    //fin['week_' + c + '_value'] = Math.round((getCutOffAmount(fin.operations, 'REMITTANCE_FROM_MERCH', start, end) * percent / 100)*100)/100;
-                    fin['week_' + c + '_value'] = Math.round((getCutOffAmount(fin.operations, 'REMITTANCE_FROM_MERCH', start, end))*100)/100;
-                    readyData['week_' + c] = start + ' - ' + end;
-                    // last_weeks_total_collected += fin['week_' + c + '_value'];  // Это данные только за отображенные недели, а нужно за все прощедшие
-                }
-
-
-
-
-                var gross_profit = +fin.amount_to_return - fin.founding_amount;
-
-                var broker_comission_percent = (+fin.broker_comission + (+fin.agent_comission || 0)) / 100;
-
-                var all_comission_sum = +fin.founding_amount * broker_comission_percent + fin.amount_to_return * fin.processing_bank_commission / 100;
-                var net_profit = gross_profit - all_comission_sum;
-
-                var bank_comission_part_summ = all_comission_sum * percent / 100;
-                var gross_investment = bank_comission_part_summ + amount;
-                var participation_payback_amount = amount * fin.factoring_rate / 100;
-                var participation_gross_profit = amount + participation_payback_amount;
-
-                var main_company_commision = fin.mgm_fee / 100;
-
-                var mgm_comission = (participation_payback_amount - bank_comission_part_summ) * main_company_commision;
-                var net_profit_after_mgm_fee = participation_payback_amount - bank_comission_part_summ - mgm_comission;
-                var gross_profit_after_mgm_fee = participation_gross_profit - mgm_comission;
-
-                // var total_returned = fin.total_returned * percent / 100;
-                var total_returned = getCutOffAmount(fin.operations, 'REMITTANCE_FROM_MERCH', null, weekAgoEnd); // На процент умножать не надо так как операции только по тому инфестору
-                var to_return = fin.to_return * percent / 100;
-
-                var current_gross_collected = fin.total_returned * percent / 100;
-                var cut_off_collected_part =  fin.cut_off_collected * percent / 100;
-
-                var last_weeks_total_collected = total_returned;
-
-
-
-
-                readyData.rs.push({
-                    merchant_id: fin.merchant_id,
-                    merchant_name: (moment(fin.commited_date,'DD.MM.YYYY') > moment(weekAgoEnd, 'DD.MM.YYYY'))? fin.merchant_short_name + '  (' + moment(fin.commited_date,'DD.MM.YYYY').format('DD.MM.YYYY') + ')' : fin.merchant_short_name,
-                    //gross_profit_after_mgm_fee: fin.gross_profit_after_mgm_fee,
-                    current_gross_collected: current_gross_collected,
-                    last_weeks_total_collected: last_weeks_total_collected,
-                    gross_profit_after_mgm_fee: gross_profit_after_mgm_fee,
-                    cut_off_collected: cut_off_collected_part,
-                    week_1_value: fin.week_1_value,
-                    week_2_value: fin.week_2_value,
-                    week_3_value: fin.week_3_value,
-                    week_4_value: fin.week_4_value,
-                    week_5_value: fin.week_5_value,
-                    week_6_value: fin.week_6_value,
-                    week_7_value: fin.week_7_value,
-                    week_8_value: fin.week_8_value,
-                    week_9_value: fin.week_9_value,
-                    week_10_value: fin.week_10_value,
-                    week_11_value: fin.week_11_value,
-                    week_12_value: fin.week_12_value,
-
-                    total_collected: fin.total_collected
-
-                });
-
-                readyData.rs_total_final_profit += +fin.final_profit;
-                readyData.rs_total_cut_off_collected += +cut_off_collected_part;
-                readyData.rs_sum_last_weeks_total_collected += +last_weeks_total_collected;
-                readyData.rs_sum_gross_profit_after_mgm_fee += +gross_profit_after_mgm_fee;
-                readyData.rs_sum_current_gross_collected += +current_gross_collected;
-                readyData.rs_sum_week_1 += +fin.week_1_value;
-                readyData.rs_sum_week_2 += +fin.week_2_value;
-                readyData.rs_sum_week_3 += +fin.week_3_value;
-                readyData.rs_sum_week_4 += +fin.week_4_value;
-                readyData.rs_sum_week_5 += +fin.week_5_value;
-                readyData.rs_sum_week_6 += +fin.week_6_value;
-                readyData.rs_sum_week_7 += +fin.week_7_value;
-                readyData.rs_sum_week_8 += +fin.week_8_value;
-                readyData.rs_sum_week_9 += +fin.week_9_value;
-                readyData.rs_sum_week_10 += +fin.week_10_value;
-                readyData.rs_sum_week_11 += +fin.week_11_value;
-                readyData.rs_sum_week_12 += +fin.week_12_value;
-
-                readyData.total_collected_summ += +fin.total_collected;
-
-
-            }
-            cb(null);
-        },
-        prepareData4: function (cb) {
-            //total_added_to_account:0,
-            //    total_amount_mgm_fee:0,
-            //    total_recon:0,
-            //    sum_gross_investment_all_hist:0,
-            //    balance:0,
-            //    last_weeks_total_collected:0,
-            //    last_week_total_collected:0,
-            //    total_reinvestment_power:0,
-            //    this_week_mgm_fee:0
-            readyData.total_added_to_account = getCutOffAmount(operations, 'ADD_TO_ACCOUNT', null, weekAgoEnd);
-            for (var i in operations) {
-                if (operations[i].subtype_sysname !== 'ADD_TO_ACCOUNT') continue;
-                readyData.inc.push({
-                    incoming_amount:+operations[i].amount,
-                    incoming_date:operations[i].operation_date
-                });
-            }
-
-            readyData.total_amount_mgm_fee = getCutOffAmount(operations, 'REMITTANCE_MAIN_INV_COMISSION', null, weekAgoEnd);
-            readyData.total_withdrawal_of_funds = 0;
-            for (var i in operations) {
-                if (operations[i].subtype_sysname !== 'WITHDRAWAL_OF_FUNDS') continue;
-                readyData.remit.push({
-                    remittance_amount:+operations[i].amount,
-                    remittance_date:operations[i].operation_date
-                });
-                readyData.total_withdrawal_of_funds += +operations[i].amount;
-            }
-
-
-            //readyData.total_recon = readyData.total_added_to_account - readyData.total_withdrawal_of_funds - readyData.total_amount_mgm_fee;
-            readyData.total_recon = readyData.total_added_to_account - readyData.total_withdrawal_of_funds;
-            // readyData.sum_gross_investment_all_hist = readyData.rs_sum_last_weeks_total_collected;
-            readyData.sum_gross_investment = readyData.t2_sum_gross_investment_cut_off;
-            readyData.balance = readyData.total_recon - readyData.sum_gross_investment_all_hist;
-            readyData.last_weeks_total_collected = readyData.rs_sum_last_weeks_total_collected;
-            readyData.last_week_total_collected = readyData.rs_sum_week_12;
-            readyData.this_week_mgm_fee = getCutOffAmount(operations, 'REMITTANCE_MAIN_INV_COMISSION');
-            readyData.total_reinvestment_power = readyData.last_week_total_collected - readyData.this_week_mgm_fee;
-
-            // readyData.recon_total_invested = readyData.total_recon - readyData.t2_sum_gross_investment;
-            readyData.recon_total_invested = readyData.total_recon - readyData.t2_sum_gross_investment_cut_off;
-            readyData.recon_avail_to_invest = readyData.recon_total_invested + readyData.rs_sum_last_weeks_total_collected;
-            // readyData.recon_avail_to_reinvest = readyData.recon_avail_to_invest + readyData.t2_sum_pending_remittance; // Последняя неделя лишняя
-            //readyData.recon_avail_to_reinvest = readyData.recon_avail_to_invest; // + readyData.t2_sum_pending_remittance; // Последняя неделя лишняя
-            readyData.recon_avail_to_reinvest = readyData.recon_avail_to_invest - readyData.total_amount_mgm_fee;
+            readyData.total_founding_amount = total_founding_amount;
+            readyData.total_factoring_rate = total_factoring_rate / financings.length;
+            readyData.total_amount_to_return = total_amount_to_return;
+            readyData.total_payments_count = total_payments_count;
+            readyData.total_payment_amount = total_payment_amount;
+            readyData.total_bank_comission = total_bank_comission;
+            readyData.total_mediator_comission = total_mediator_comission;
+            readyData.total_agent_comission = total_agent_comission;
+            readyData.total_manager_comission = total_manager_comission;
+            readyData.total_gross_profit = total_gross_profit;
+            readyData.total_total_collected = total_total_collected;
+            readyData.total_total_pending = total_total_pending;
+            readyData.total_closing_percent = total_closing_percent / financings.length;
+            readyData.total_currnet_gross_profit = total_currnet_gross_profit;
 
             cb(null);
 
