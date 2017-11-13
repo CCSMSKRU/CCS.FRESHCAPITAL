@@ -21,3 +21,4 @@ DB/rollbacks/da7cb035-e6f9-e914-e705-56699bffd49e09092017_042150.json
 DB/rollbacks/fa44b23f-382d-ff14-6ab4-3a5466edf57d09092017_041935.json
 SYNC_SYSTEM_CORE/
 node_modules/
+/DB/rollbacks/
