@@ -8420,7 +8420,7 @@ Model.prototype.report_altynfin = function (obj, cb) {
 
     var rollback_key = obj.rollback_key || rollback.create();
 
-    var name = obj.name || 'report_altyfin.xlsx';
+    var name = 'report_altyfin.xlsx';
 
     var from_date = obj.from_date;
     var to_date = obj.to_date;
@@ -8694,12 +8694,7 @@ Model.prototype.report_altynfin = function (obj, cb) {
         perform: function (cb) {
             var sheetNumber = 1;
             template.substitute(sheetNumber, readyData);
-            sheetNumber = 2;
-            template.substitute(sheetNumber, readyData);
-            sheetNumber = 3;
-            template.substitute(sheetNumber, readyData);
-            sheetNumber = 4;
-            template.substitute(sheetNumber, readyData);
+
             var dataBuf = template.generate();
             binaryData = new Buffer(dataBuf, 'binary');
             cb(null)
