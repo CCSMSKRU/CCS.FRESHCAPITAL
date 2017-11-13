@@ -269,6 +269,7 @@ Model.prototype.create_new = function (obj, cb) {
                                 for (let i in payments) {
                                     if (financing_ids.indexOf(payments[i].merchant_financing_id) == -1) financing_ids.push(payments[i].merchant_financing_id);
                                 }
+
                                 let o = {
                                     command:'get',
                                     object:'merchant_financing',
@@ -281,16 +282,19 @@ Model.prototype.create_new = function (obj, cb) {
                                             {
                                                 key:'status_sysname',
                                                 val1:'ACQUIRING_IN_PROCCESS'
-                                            },
-                                            {
-                                                key:'id',
-                                                type:'!in',
-                                                val1:financing_ids
                                             }
+
                                         ],
                                         collapseData:false
                                     }
                                 };
+                                if (financing_ids.length){
+                                    o.params.where.push({
+                                        key:'id',
+                                        type:'!in',
+                                        val1:financing_ids
+                                    });
+                                }
                                 _t.api(o, function(err, res){
                                     if (err) return cb (new MyError('Не удалось получить необходимые финансирования.',{err:err, o:o}));
                                     async.eachSeries(res, function(fin, cb){
@@ -732,16 +736,19 @@ Model.prototype.append_new = function (obj, cb) {
                                         {
                                             key:'status_sysname',
                                             val1:'ACQUIRING_IN_PROCCESS'
-                                        },
-                                        {
-                                            key:'id',
-                                            type:'!in',
-                                            val1:financing_ids
                                         }
                                     ],
                                     collapseData:false
                                 }
+
                             };
+                            if (financing_ids.length){
+                                o.params.where.push({
+                                    key:'id',
+                                    type:'!in',
+                                    val1:financing_ids
+                                });
+                            }
                             _t.api(o, function(err, res){
                                 if (err) return cb (new MyError('Не удалось получить необходимые финансирования.',{err:err, o:o}));
                                 async.eachSeries(res, function(fin, cb){
