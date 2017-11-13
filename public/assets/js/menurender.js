@@ -323,6 +323,9 @@
                         }else if(rep_name == 'report_managers'){
                             o.object = 'merchant_financing';
                             o.command = 'report_managers';
+                        }else if(rep_name == 'report_altynfin'){
+                            o.object = 'merchant_financing';
+                            o.command = 'report_altynfin';
                         }
 
 
@@ -337,18 +340,25 @@
                             rep_name!=="report_financing_request" &&
                             rep_name!=="report_weekly_moneyflow" &&
                             rep_name!=="report_managers" &&
+                            rep_name!=="report_altynfin" &&
                             rep_name!=="report_invoices") {
 
                             return;
                         }
 
-                        var html =  '<div class="row">' +
-                        '<div class="col-md-12">' +
-                        '<div class="form-group">' +
-                        '<label>Укажите дату отчета:</label>' +
-                        '<input type="text" id="report-date" class="form-control" />' +
-                        '</div>' +
-                        '</div></div>';
+                        var html = '';
+
+                        if(rep_name !== 'report_altynfin'){
+                            html +=  '<div class="row">' +
+                            '<div class="col-md-12">' +
+                            '<div class="form-group">' +
+                            '<label>Укажите дату отчета:</label>' +
+                            '<input type="text" id="report-date" class="form-control" />' +
+                            '</div>' +
+                            '</div></div>';
+                        }
+
+
 
 
                         var selInstance;
@@ -397,7 +407,7 @@
                             '</div>';
                         }
 
-                        if(rep_name == "report_financing_request" || rep_name == "report_weekly_moneyflow" ||  rep_name == 'report_managers'){
+                        if(rep_name == "report_financing_request" || rep_name == "report_weekly_moneyflow" ||  rep_name == 'report_managers' ||  rep_name == 'report_altynfin'){
                             html +=  '<div class="row">' +
                                         '<div class="col-md-6">' +
                                             '<div class="form-group">' +
@@ -548,12 +558,14 @@
 
 
 
+
+
 						//return MB.Core.switchPage({
 						//	type: menuType,
 						//	name: objectname
 						//});
 
-                        if(rep_name == "report_financing_request" || rep_name == 'report_invoices' || rep_name == 'report_weekly_moneyflow' ||  rep_name == 'report_managers'){
+                        if(rep_name == "report_financing_request" || rep_name == 'report_invoices' || rep_name == 'report_weekly_moneyflow' ||  rep_name == 'report_managers' ||  rep_name == 'report_altynfin'){
 
 
                             $('#from-date').datepicker({
