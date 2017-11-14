@@ -8420,7 +8420,7 @@ Model.prototype.report_altynfin = function (obj, cb) {
 
     var rollback_key = obj.rollback_key || rollback.create();
 
-    var name = 'report_altyfin.xlsx';
+    var name = 'report_altynfin.xlsx';
 
     var from_date = obj.from_date;
     var to_date = obj.to_date;
@@ -8574,7 +8574,7 @@ Model.prototype.report_altynfin = function (obj, cb) {
 
                     if (err) return cb(new MyError('Не удалось получить операции для данного финансирования', {o: o, err: err}));
 
-                    one_fin.bank_data = res;
+                    one_fin.bank_data = res[0];
 
                     cb(null);
                 });
@@ -8583,7 +8583,8 @@ Model.prototype.report_altynfin = function (obj, cb) {
         prepareData0: function (cb) {
 
             readyData = {
-                inc: [],
+                from_date: from_date,
+                to_date: to_date,
                 t1: []
             };
 
@@ -8614,14 +8615,14 @@ Model.prototype.report_altynfin = function (obj, cb) {
 
                 readyData.t1.push({
                     index:idx,
-                    agr_number: f.agr_number,
+                    agr_number: f.agreement_number,
                     merchant: f.merchant_name + '(' + f.merchant_id + ')',
                     financing_purpose: f.financing_request_type,
                     financing_type: f.financing_type,
                     finanincg_date: f.financing_date,
                     plan_closing_date: f.financing_close_date,
                     founding_amount: f.founding_amount,
-                    factoring_rate: f.factoring_rate,
+                    factoring_rate: f.factoring_rate / 100,
                     amount_to_return: f.amount_to_return,
                     payments_count: f.payments_count,
                     payment_amount: f.payment_amount,
@@ -8666,10 +8667,10 @@ Model.prototype.report_altynfin = function (obj, cb) {
 
 
             readyData.total_founding_amount = total_founding_amount;
-            readyData.total_factoring_rate = total_factoring_rate / financings.length;
+            readyData.total_factoring_rate = (total_factoring_rate / financings.length) / 100;
             readyData.total_amount_to_return = total_amount_to_return;
-            readyData.total_payments_count = total_payments_count;
-            readyData.total_payment_amount = total_payment_amount;
+            readyData.total_payments_count = total_payments_count / financings.length;
+            readyData.total_payment_amount = total_payment_amount / financings.length;
             readyData.total_bank_comission = total_bank_comission;
             readyData.total_mediator_comission = total_mediator_comission;
             readyData.total_agent_comission = total_agent_comission;
@@ -8677,7 +8678,7 @@ Model.prototype.report_altynfin = function (obj, cb) {
             readyData.total_gross_profit = total_gross_profit;
             readyData.total_total_collected = total_total_collected;
             readyData.total_total_pending = total_total_pending;
-            readyData.total_closing_percent = total_closing_percent / financings.length;
+            readyData.total_closing_percent = (total_closing_percent / financings.length)/100;
             readyData.total_currnet_gross_profit = total_currnet_gross_profit;
 
             cb(null);
@@ -8700,7 +8701,8 @@ Model.prototype.report_altynfin = function (obj, cb) {
             cb(null)
         },
         writeFile: function (cb) {
-            filename = '_' + name;
+
+            filename = 'Финансовый отчет.xlsx';
             fs.writeFile('./public/savedFiles/' + filename,binaryData, function (err) {
                 if (err) return cb(new MyError('Не удалось записать файл testOutput.xlsx',{err:err}));
                 return cb(null, new UserOk('testOutput.xlsx успешно сформирован'));
