@@ -532,7 +532,9 @@ api_functions.download_merchant_factoring = function (obj, cb) { // Отчет �
             //if (!obj.doNotSaveRollback){
             //    rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'METHOD_NAME', params:obj});
             //}
-            cb(null, new UserOk('Ок', {path: 'http://137.74.236.117:8081/savedFiles/' + filename}));
+            cb(null, new UserOk('Ок', {path: 'http://54.36.67.154:8080/savedFiles/' + filename}));
+            //http://137.74.236.117:8081
+
         }
     });
 };
@@ -893,7 +895,10 @@ api_functions.download_invoice = function (obj, cb) {
         }
     }, function (err) {
         if (err) return cb(err);
-        cb(null, new UserOk('Ок.', {path: 'http://137.74.236.117:8081/savedFiles/' + filename}));
+        cb(null, new UserOk('Ок.', {path: 'http://54.36.67.154:8080/savedFiles/' + filename}));
+
+        //http://137.74.236.117:8081
+
     });
 };
 
