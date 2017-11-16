@@ -14,7 +14,8 @@
             callback: function(){
                 // Загрузить файл,
                 // отправить операцию загрузить документ
-                var loader = MB.Core.fileLoader;
+                //MB.Core.
+                var loader = fileLoader;
                 loader.start({
                     params:{
                         not_public:true

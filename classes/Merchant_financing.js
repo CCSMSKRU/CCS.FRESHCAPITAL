@@ -8637,10 +8637,10 @@ Model.prototype.report_altynfin = function (obj, cb) {
                     manager_comission_percent: f.broker_comission,
                     manager_comission: f.founding_amount / 100 * f.broker_comission,
                     gross_profit: (+f.amount_to_return - +f.founding_amount) - (f.founding_amount / 100 * f.broker_comission) - 0 - 0, // add here other comissions
-                    effective_rate: '???',
+                    effective_rate: (+f.factoring_rate - (+f.bank_data.comission_percent + +f.broker_comission)),
                     total_collected: Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100,
                     total_pending: f.amount_to_return - (Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100),
-                    closing_percent: (Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100) / f.amount_to_return * 100,
+                    closing_percent: ((Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100) / +f.amount_to_return),
                     currnet_gross_profit: ((+f.amount_to_return - +f.founding_amount) - (f.founding_amount / 100 * f.broker_comission) - 0 - 0) / 100  * ((Math.round(getCutOffAmount( f.operationsAll, 'REMITTANCE_FROM_MERCH', from_date, to_date) * 100) / 100) / f.amount_to_return * 100)
                 });
 
