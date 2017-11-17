@@ -135,7 +135,7 @@ Model.prototype.modify_ = function (obj, cb) {
     async.series({
 
         modify: function (cb) {
-
+            obj.rollback_key = rollback_key;
             _t.modifyPrototype(obj, function (err, res) {
 
                 if(err) return cb(null);
@@ -147,7 +147,6 @@ Model.prototype.modify_ = function (obj, cb) {
 
         },
         get: function(cb){
-
             _t.getById({id:id}, function (err, res) {
 
                 if(err) return cb(new MyError('Не удалось получить запись оборота xfd', {id: id, err: err}));
@@ -188,19 +187,16 @@ Model.prototype.modify_ = function (obj, cb) {
 
             var params = {
                 id: turnover.id,
-                amount_per_day: Math.round(+turnover.turnover / +turnover.work_days_count)
+                amount_per_day: Math.round(+turnover.turnover / +turnover.work_days_count),
+                rollback_key:rollback_key
             };
 
             _t.modifyPrototype(params, function (err,res) {
 
                 if(err){
-                    if(err.message == 'notModified'){
-
-                    }else{
-                        return cb(new MyError('Не удалось обновить запись оборота ujg', {o: params, err: err}));
-                    }
+                    if(err.message == 'notModified') return cb(null);
+                    return cb(new MyError('Не удалось обновить запись оборота ujg', {o: params, err: err}));
                 }
-
                 cb(null);
 
             });
@@ -257,24 +253,18 @@ Model.prototype.modify_ = function (obj, cb) {
                     object: 'financing_request',
                     params: {
                         id: fin_request.id,
-                        founding_amount: avr,
-                        avr_monthly_turnover: avr
+                        avr_monthly_turnover: avr,
+                        rollback_key:rollback_key
                     }
                 };
+                if (!fin_request.founding_amount) o.params.founding_amount = avr;
 
                 _t.api(o, function (err,res) {
 
                     if(err) {
-
-                        if(err.message == 'notModified'){
-
-                        }else{
-                            return cb(new MyError('Не удалось изменить запись заявки adg', {o: o, err: err}));
-                        }
-
-
+                        if(err.message == 'notModified') return cb(null);
+                        return cb(new MyError('Не удалось изменить запись заявки adg', {o: o, err: err}));
                     }
-
                     cb(null);
 
                 });
@@ -332,20 +322,15 @@ Model.prototype.modify_ = function (obj, cb) {
 
                 }else{
 
-                    return cb(null);
+                    return cb(new UserError('Укажите тип финансирования.'));
 
                 }
 
                 _t.modifyPrototype(params, function (err,res) {
 
                     if(err){
-                        if(err.message == 'notModified'){
-
-
-
-                        }else{
-                            if(err) return cb(new MyError('Не удалось обновить запись оборота cdg', {o: params, err: err}));
-                        }
+                        if(err.message == 'notModified') return cb(null);
+                        return cb(new MyError('Не удалось обновить запись оборота cdg', {o: params, err: err}));
                     }
 
                     cb(null);
@@ -368,9 +353,9 @@ Model.prototype.modify_ = function (obj, cb) {
                 return cb(err, err2);
             });
         } else {
-            //if (!obj.doNotSaveRollback){
-            //    rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'METHOD_NAME', params:obj});
-            //}
+            if (!obj.doNotSaveRollback){
+               rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'modify_', params:obj});
+            }
             cb(null, new UserOk('Ок'));
         }
     });

@@ -2022,7 +2022,6 @@
       "through_number" : {"type": "varchar", "length": "255", "name": "Сквозной номер"},
       "regional_center" : {"type": "varchar", "length": "255", "name": "Региональный центр"},
       "terminal_number" : {"type": "varchar", "length": "255", "name": "Номер терминала"},
-      "registration_date": {"type": "date", "name": "Дата регистрации юр. лица"},
       "is_manager_finish": {"type": "tinyint", "length" : "1", "name": "Заполнена менеджером"}
     }
   },
