@@ -123,6 +123,7 @@ Model.prototype.add_ = function (obj, cb) {
 
             obj.through_number = tNum;
             obj.request_date = moment().format('DD.MM.YYYY');
+            obj.rollback_key = rollback_key;
 
             _t.addPrototype(obj, function (err, res) {
 
@@ -135,153 +136,145 @@ Model.prototype.add_ = function (obj, cb) {
         },
         updateRequestByMerchant: function (cb) {
 
-           if(!obj.merchant_id){
-               cb(null);
-           }else{
+           if(!obj.merchant_id) return cb(null);
 
-               async.series({
+            async.series({
 
-                   getData: function (cb) {
+                getData: function (cb) {
 
-                       var o = {
-                           command: 'get',
-                           object: 'merchant',
-                           params: {
-                               param_where:{
-                                   id: obj.merchant_id
-                               },
-                               collapseData: false
-                           }
-                       };
+                    var o = {
+                        command: 'get',
+                        object: 'merchant',
+                        params: {
+                            param_where:{
+                                id: obj.merchant_id
+                            },
+                            collapseData: false
+                        }
+                    };
 
-                       _t.api(o, function (err, res) {
+                    _t.api(o, function (err, res) {
 
-                           if(err) return cb(new UserError('Не удалось получить торговца', {err:err, o:o}));
+                        if(err) return cb(new UserError('Не удалось получить торговца', {err:err, o:o}));
 
-                           merchant = res[0];
+                        merchant = res[0];
 
-                           cb(null);
+                        cb(null);
 
-                       });
+                    });
 
-                   },
-                   updateRequest: function (cb) {
+                },
+                updateRequest: function (cb) {
 
-                       var fields = [
-                           {m:'name',r:'merchant_name'},
-                           {m:'short_name',r:'short_name'},
-                           {m:'phone',r:'phone'},
-                           {m:'email',r:'email'},
-                           {m:'legal_address',r:'legal_address'},
-                           {m:'real_address',r:'real_address'},
-                           {m:'executive_fio',r:'executive_fio'},
-                           {m:'executive',r:'executive'},
-                           {m:'grounds_on',r:'grounds_on'},
-                           {m:'business_type_id',r:'business_type_id'},
-                           {m:'processing_bank_id',r:'processing_bank_id'},
-                           {m:'rko_bank_id',r:'rko_bank_id'},
-                           {m:'inn',r:'inn'},
-                           {m:'kpp',r:'kpp'},
-                           {m:'ogrn',r:'ogrn'},
-                           {m:'regional_center',r:'regional_center'},
-                           {m:'registration_date',r:'registration_date'},
-                           {m:'rs',r:'rs'}
-                       ];
+                    var fields = [
+                        {m:'name',r:'merchant_name'},
+                        {m:'short_name',r:'short_name'},
+                        {m:'phone',r:'phone'},
+                        {m:'email',r:'email'},
+                        {m:'legal_address',r:'legal_address'},
+                        {m:'real_address',r:'real_address'},
+                        {m:'executive_fio',r:'executive_fio'},
+                        {m:'executive',r:'executive'},
+                        {m:'grounds_on',r:'grounds_on'},
+                        {m:'business_type_id',r:'business_type_id'},
+                        {m:'processing_bank_id',r:'processing_bank_id'},
+                        {m:'rko_bank_id',r:'rko_bank_id'},
+                        {m:'inn',r:'inn'},
+                        {m:'kpp',r:'kpp'},
+                        {m:'ogrn',r:'ogrn'},
+                        {m:'regional_center',r:'regional_center'},
+                        {m:'registration_date',r:'registration_date'},
+                        {m:'rs',r:'rs'}
+                    ];
 
-                       var o = {
-                           command: 'modify',
-                           object: 'financing_request',
-                           params: {
-                               id: id
-                           }
-                       };
+                    var o = {
+                        command: 'modify',
+                        object: 'financing_request',
+                        params: {
+                            id: id,
+                            rollback_key:rollback_key
+                        }
+                    };
 
-                       for(var i in fields){
-                           var item = fields[i];
-                           o.params[item.r] = merchant[item.m];
-                       }
+                    for(var i in fields){
+                        var item = fields[i];
+                        o.params[item.r] = merchant[item.m];
+                    }
 
-                       _t.api(o, function (err, res) {
+                    _t.api(o, function (err, res) {
 
-                            if(err) return cb(new UserError('Не удалось обновить заявку из торговца idh', {err:err,o:o}));
+                        if(err) return cb(new UserError('Не удалось обновить заявку из торговца idh', {err:err,o:o}));
 
-                            cb(null);
+                        cb(null);
 
-                       });
+                    });
 
-                   }
+                }
 
-               }, cb);
+            }, cb);
 
-
-           }
         },
         getPreviousRequestTurnover: function(cb){
 
-            console.log('HER');
+            if (!merchant) return cb(null);
+            if (!merchant.through_number) return cb(null);
 
-            if(merchant && merchant.through_number.length > 0){
+            async.series({
 
-                async.series({
+                getPrevRequest: function(cb){
 
-                    getPrevRequest: function(cb){
+                    var o = {
+                        command:'get',
+                        object:'financing_request',
+                        params:{
+                            param_where: {
+                                through_number: merchant.through_number
+                            },
+                            collapseData:false
+                        }
+                    };
+
+                    _t.api(o, function (err, res) {
+                        if (err) return cb(new MyError('Не удалось получить более раннюю заявку по торговцу',{o : o, err : err}));
+
+
+                        prevRequest = (res.length > 0)? res[0] : undefined;
+
+
+                        cb(null);
+                    });
+
+                },
+                getPrevTurnovers: function(cb){
+
+                    if(prevRequest){
 
                         var o = {
                             command:'get',
-                            object:'financing_request',
+                            object:'request_turnover',
                             params:{
                                 param_where: {
-                                    through_number: merchant.through_number
+                                    financing_request_id: prevRequest.id
                                 },
                                 collapseData:false
                             }
                         };
 
                         _t.api(o, function (err, res) {
-                            if (err) return cb(new MyError('Не удалось получить более раннюю заявку по торговцу',{o : o, err : err}));
+                            if (err) return cb(new MyError('Не удалось получить обороты по предыдущей заявке',{o : o, err : err}));
 
-
-                            prevRequest = (res.length > 0)? res[0] : undefined;
-
+                            prevTurnovers = res;
 
                             cb(null);
                         });
 
-                    },
-                    getPrevTurnovers: function(cb){
+                    }else{
 
-                        if(prevRequest){
+                        cb(null);
 
-                            var o = {
-                                command:'get',
-                                object:'request_turnover',
-                                params:{
-                                    param_where: {
-                                        financing_request_id: prevRequest.id
-                                    },
-                                    collapseData:false
-                                }
-                            };
-
-                            _t.api(o, function (err, res) {
-                                if (err) return cb(new MyError('Не удалось получить обороты по предыдущей заявке',{o : o, err : err}));
-
-                                prevTurnovers = res;
-
-                                cb(null);
-                            });
-
-                        }else{
-
-                            cb(null);
-
-                        }
                     }
-                }, cb);
-
-            }else{
-                cb(null);
-            }
+                }
+            }, cb);
 
         },
         insertDocs: function (cb) { // Создадим соответствующие записи в документах финансирования мерчанта
@@ -331,11 +324,11 @@ Model.prototype.add_ = function (obj, cb) {
                             object: 'request_document',
                             params: {
                                 financing_request_id: id,
-                                document_id: item
+                                document_id: item,
+                                rollback_key:rollback_key
                             }
                         };
 
-                        o.params.rollback_key = rollback_key;
 
                         _t.api(o, function (err) {
 
@@ -353,15 +346,7 @@ Model.prototype.add_ = function (obj, cb) {
 
                 }
 
-            }, function (err, res) {
-                if (err) {
-                    rollback.rollback({rollback_key:rollback_key,user:_t.user}, function (err, res) {
-                        console.log('Результат выполнения rollback', err, res);
-                    });
-                    return cb(err);
-                }
-                cb(null);
-            });
+            }, cb);
 
         },
         createTurnoverTable: function (cb) {
@@ -592,7 +577,8 @@ Model.prototype.add_ = function (obj, cb) {
                         month: item.month,
                         year: item.year,
                         work_days_count: item.work_days_count,
-                        full_days_count: item.full_days_count
+                        full_days_count: item.full_days_count,
+                        rollback_key:rollback_key
                     }
                 };
 
@@ -628,9 +614,9 @@ Model.prototype.add_ = function (obj, cb) {
                 return cb(err, err2);
             });
         } else {
-            //if (!obj.doNotSaveRollback){
-            //    rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'METHOD_NAME', params:obj});
-            //}
+            if (!obj.doNotSaveRollback){
+               rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'add_', params:obj});
+            }
             cb(null, new UserOk('Ок', res.add));
         }
     });

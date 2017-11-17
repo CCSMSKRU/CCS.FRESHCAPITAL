@@ -1456,7 +1456,8 @@ Model.prototype.import_vtb = function (obj, cb) {
 
                 let amount_vtb = 0;
                 for (let i in data) {
-                    if (data[i][5] === 'По реквизитам №1 р/сR-9800-0367016-SUPPL'){
+                    // if (data[i][5] === 'По реквизитам №1 р/сR-9800-0367016-SUPPL'){
+                    if (data[i][5] === 'По реквизитам №1 р/сR-9800-0367241-SUPPL'){
                         amount_vtb = +String(data[i][6]).replace(',','.');
                         // Брейк не делаем, так как нам нужно последнее вхождение. Можно было бы с конца, но не уже так)
                     }
