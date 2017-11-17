@@ -154,7 +154,7 @@ var rollback = {
                 case 'modify':
                     // Для типа modify нужно сравнить изменившиеся поля или просто записать сохраненные значения
                     o = {
-                        command:'modifyToRemove',
+                        command:'modifyToRemove', // Вызовет modifyPrototype если определен. Нужно если ошибка возникла в самом modify_
                         object:item.params.object,
                         params:item.oldValue
                     };
