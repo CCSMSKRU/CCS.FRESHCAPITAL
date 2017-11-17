@@ -154,11 +154,12 @@ var rollback = {
                 case 'modify':
                     // Для типа modify нужно сравнить изменившиеся поля или просто записать сохраненные значения
                     o = {
-                        command:'modify',
+                        command:'modifyToRemove',
                         object:item.params.object,
                         params:item.oldValue
                     };
                     o.params.rollback_key = false;
+                    o.params.is_rollback = true;
                     api(o, function(err){
                         if (err) {
                             // TODO повторять попытку несколько раз.
