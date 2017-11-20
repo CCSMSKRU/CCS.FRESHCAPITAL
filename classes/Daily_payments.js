@@ -1506,6 +1506,7 @@ Model.prototype.import_vtb = function (obj, cb) {
                         }
                     }else{
                         financings_obj[res[0].id].import_amount += +fin.import_amount;
+                        financings_obj[res[0].id].import_amount_vtb += +fin.import_amount_vtb;
                     }
 
                     cb(null);
