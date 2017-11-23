@@ -208,10 +208,12 @@
                     <div class="row"><div>{{{payments_start_date}}}</div></div>
 
                     <!--financing_date-->
+
                     <div data-type="text" class="fn-field no_border fn-readonly-field" data-column="founding_amount">
                         <label>Сумма:</label>
                         <div class="fn-readonly">{+{founding_amount}+}</div>
                     </div>
+
                     <div data-type="text" class="fn-field no_border fn-readonly-field" data-column="amount_to_return">
                         <label>Возврат:</label>
                         <div class="fn-readonly">{+{amount_to_return}+}</div>
@@ -253,24 +255,20 @@
             <div class="request-calc-box">
                 <h3 class="request-totals-hl">Калькулятор:</h3>
 
-                <div class="col-md-4">
-                    <div class="row"><div>{{{founding_amount}}}</div></div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row"><div>{{{factoring_rate}}}</div></div>
-                </div>
-                <div class="col-md-4">
+
+                <div class="col-md-12">
                     <div class="row"><div>{{{request_financing_type}}}</div></div>
                 </div>
+                <!--<div class="col-md-4"><div></div>-->
+                <!--</div>-->
+                <!--<div class="col-md-4"><div></div>-->
+                <!--</div>-->
 
-                <div class="col-md-4">
-                    <div class="row"><div>{{{payments_count}}}</div></div>
+                <div class="col-md-6">
+                    <div class="row"><div>{{{founding_amount}}}</div></div>
                 </div>
-                <div class="col-md-4">
-                    <div class="row"><div>{{{payment_amount}}}</div></div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row"><div>{{{avl_proc_dly_withdraw_rate}}}</div></div>
+                <div class="col-md-6">
+                    <div class="row"><div>{{{fix_founding_amount}}}</div></div>
                 </div>
 
                 <div class="col-md-12">
@@ -282,6 +280,30 @@
                     <div class="request-btn" id="req-calc-by-count">По кол-ву платежей</div>
                     <div class="request-btn" id="req-execute">В работу</div>
                 </div>
+
+                <div class="col-md-4">
+                    <div class="row"><div>{{{avr_monthly_turnover}}}</div></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row"><div>{{{work_days_count}}}</div></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row"><div>{{{factoring_rate}}}</div></div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="row"><div>{{{avl_proc_dly_withdraw_rate}}}</div></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row"><div>{{{payment_amount}}}</div></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row"><div>{{{payments_count}}}</div></div>
+                </div>
+
+
+
+
             </div>
         </div>
     </div>

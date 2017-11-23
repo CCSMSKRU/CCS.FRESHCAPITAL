@@ -2022,7 +2022,9 @@
       "through_number" : {"type": "varchar", "length": "255", "name": "Сквозной номер"},
       "regional_center" : {"type": "varchar", "length": "255", "name": "Региональный центр"},
       "terminal_number" : {"type": "varchar", "length": "255", "name": "Номер терминала"},
-      "is_manager_finish": {"type": "tinyint", "length" : "1", "name": "Заполнена менеджером"}
+      "is_manager_finish": {"type": "tinyint", "length" : "1", "name": "Заполнена менеджером"},
+      "work_days_count": {"type": "int", "length": "2", "name": "Рабочих дней", "default":22},
+      "fix_founding_amount": {"type": "tinyint", "length" : "1", "name": "Зафиксировать сумму", "default":0}
     }
   },
   "financing_request_status": {
@@ -2058,7 +2060,10 @@
       "daily_percent": {"type": "int", "length": "3", "name": "Процент списания ()"},
       "fixed_amount": {"type": "bigint", "length": "255", "name": "Фиксированный платеж", "validation": "number"},
       "percent_by_fixed_amount": {"type": "bigint", "length": "255", "name": "Процент от обор. если фикс.", "validation": "number"},
-      "balance": {"type": "bigint", "length": "255", "name": "Остаток", "validation": "number"}
+      "balance": {"type": "bigint", "length": "255", "name": "Остаток", "validation": "number"},
+      "waiting_amount": {"type": "bigint", "length": "20", "name": "Ожидаемая сумма по списанию", "validation": "number"},
+      "use_for_calc": {"type": "tinyint", "length" : "1", "name": "Использовать", "default":0},
+      "works_on_holidays": {"type": "tinyint", "length" : "1", "name": "Без выходных", "default":0}
     }
   },
   "through_number":{

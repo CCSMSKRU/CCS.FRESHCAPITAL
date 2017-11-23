@@ -187,9 +187,18 @@ Model.prototype.modify_ = function (obj, cb) {
 
             var params = {
                 id: turnover.id,
-                amount_per_day: Math.round(+turnover.turnover / +turnover.work_days_count),
+                // amount_per_day: Math.round(+turnover.turnover / +turnover.work_days_count),
                 rollback_key:rollback_key
             };
+
+            var work_days_count = (turnover.works_on_holidays)? turnover.full_days_count : turnover.work_days_count;
+            params.amount_per_day = Math.round((turnover.turnover / work_days_count) * 100)/100;
+
+            params.daily_percent = Math.round(((params.amount_per_day * +fin_request.avl_proc_dly_withdraw_rate) / 100) * 100) / 100;
+
+            params.balance = params.amount_per_day - params.daily_percent;
+
+            params.waiting_amount = params.daily_percent * work_days_count;
 
             _t.modifyPrototype(params, function (err,res) {
 
@@ -209,7 +218,7 @@ Model.prototype.modify_ = function (obj, cb) {
                 object: 'request_turnover',
                 params: {
                     param_where: {
-                        financing_request_id: turnover.financing_request_id
+                        financing_request_id: turnover.financing_request_id,
                     },
                     collapseData: false
                 }
@@ -235,7 +244,7 @@ Model.prototype.modify_ = function (obj, cb) {
 
             for(var i in turnovers){
 
-                if(+turnovers[i].turnover == 0){
+                if(+turnovers[i].turnover == 0 || !turnovers[i].use_for_calc){
                     continue;
                 }
 
@@ -253,11 +262,13 @@ Model.prototype.modify_ = function (obj, cb) {
                     object: 'financing_request',
                     params: {
                         id: fin_request.id,
+                        // founding_amount:avr,
                         avr_monthly_turnover: avr,
                         rollback_key:rollback_key
                     }
                 };
-                if (!fin_request.founding_amount) o.params.founding_amount = avr;
+                if (!fin_request.founding_amount || !fin_request.fix_founding_amount) o.params.founding_amount = avr;
+                if (!fin_request.fix_founding_amount) o.params.avr_monthly_turnover = avr;
 
                 _t.api(o, function (err,res) {
 
@@ -322,7 +333,8 @@ Model.prototype.modify_ = function (obj, cb) {
 
                 }else{
 
-                    return cb(new UserError('Укажите тип финансирования.'));
+                    return cb(null);
+                    // return cb(new UserError('Укажите тип финансирования.'));
 
                 }
 
