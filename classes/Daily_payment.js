@@ -373,6 +373,25 @@ Model.prototype.setDefault = function (obj, cb) {
             });
 
         },
+        checkToClosedByRemmitance:function(cb){
+            // Если данный платеж закрывается переводом на счет, то его уже нельзя задефолтить
+            var o = {
+                command:'get',
+                object:'daily_payment_paid_later',
+                params:{
+                    param_where:{
+                        daily_payment_id:id,
+                        target_daily_payment_id:id
+                    },
+                    collapseData:false
+                }
+            };
+            _t.api(o, function (err, res) {
+                if (err) return cb(new MyError('Не удалось получить daily_payment_paid_later для проверки',{o : o, err : err}));
+                if (res.length) return cb(new UserError('Нельзя поставить платеж дефолтным, так как он закрывается переводом на счет.'));
+                cb(null);
+            });
+        },
         checkToPartialPaidPercent:function(cb){
             // Если указана сумма и финансирование имеет тип ПРОЦЕНТ, то делаем частичную оплату вместо дефолта
             if (daily_payment.financing_type_sysname === 'PERCENT' && paid_amount){
