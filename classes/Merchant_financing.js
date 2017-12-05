@@ -2878,9 +2878,12 @@ Model.prototype.financing_to_deployment = function (obj, cb) {
     }
     var _t = this;
     var id = obj.id;
+
     if (isNaN(+id)) return cb(new MyError('В метод не передан id финансирования'));
+
     var confirm = obj.confirm;
     var rollback_key = obj.rollback_key || rollback.create();
+
 
     // Получим данные по финансированию
     // Проверим статус
@@ -2916,7 +2919,9 @@ Model.prototype.financing_to_deployment = function (obj, cb) {
                 object: 'merchant_financing',
                 params: {
                     id: id,
-                    payments_start_date: obj.payments_start_date
+                    payments_start_date: obj.payments_start_date,
+                    agreement_date: obj.agr_date,
+                    agreement_number: obj.agr_number
                 }
             };
 
