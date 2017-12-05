@@ -568,6 +568,7 @@
                         if(rep_name == "report_financing_request" || rep_name == 'report_invoices' || rep_name == 'report_weekly_moneyflow' ||  rep_name == 'report_managers' ||  rep_name == 'report_altynfin'){
 
 
+
                             $('#from-date').datepicker({
                                 format: "dd.mm.yyyy",
                                 language: "ru",
