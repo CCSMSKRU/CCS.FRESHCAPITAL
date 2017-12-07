@@ -184,6 +184,7 @@ Model.prototype.modify_ = function (obj, cb) {
 
         },
         updateRow: function(cb){
+        // if (!fin_request.avl_proc_dly_withdraw_rate) return cb(new UserError('Необходимо указать ставку факторинга.'));
 
             var params = {
                 id: turnover.id,
@@ -191,7 +192,11 @@ Model.prototype.modify_ = function (obj, cb) {
                 rollback_key:rollback_key
             };
 
-            var work_days_count = (turnover.works_on_holidays)? turnover.full_days_count : turnover.work_days_count;
+            var work_days_count = turnover.manual_days_count;
+            if (!work_days_count){
+                work_days_count = (turnover.works_on_holidays)? turnover.full_days_count : turnover.work_days_count;
+            }
+
             params.amount_per_day = Math.round((turnover.turnover / work_days_count) * 100)/100;
 
             params.daily_percent = Math.round(((params.amount_per_day * +fin_request.avl_proc_dly_withdraw_rate) / 100) * 100) / 100;
@@ -199,6 +204,13 @@ Model.prototype.modify_ = function (obj, cb) {
             params.balance = params.amount_per_day - params.daily_percent;
 
             params.waiting_amount = params.daily_percent * work_days_count;
+
+
+            var avr_payment_days_count = fin_request.work_days_count || 22;
+            var avr_daily_turnover = +fin_request.avr_monthly_turnover / avr_payment_days_count;
+            // params.deviation_by_month = (fin_request.avr_monthly_turnover) ? params.waiting_amount - fin_request.avr_monthly_turnover : null;
+            // params.deviation_by_month = (fin_request.avr_monthly_turnover) ?  (avr_daily_turnover * work_days_count) - params.waiting_amount : null;
+            params.deviation_by_month = (fin_request.avr_monthly_turnover) ?  params.waiting_amount - (avr_daily_turnover * (+fin_request.avl_proc_dly_withdraw_rate / 100) * work_days_count)  : null;
 
             _t.modifyPrototype(params, function (err,res) {
 
@@ -268,7 +280,7 @@ Model.prototype.modify_ = function (obj, cb) {
                     }
                 };
                 if (!fin_request.founding_amount || !fin_request.fix_founding_amount) o.params.founding_amount = avr;
-                if (!fin_request.fix_founding_amount) o.params.avr_monthly_turnover = avr;
+                // if (!fin_request.fix_founding_amount) o.params.avr_monthly_turnover = avr;
 
                 _t.api(o, function (err,res) {
 
@@ -287,7 +299,7 @@ Model.prototype.modify_ = function (obj, cb) {
 
         },
         updateAllRows: function(cb){
-
+            return cb(null);
             async.eachSeries(turnovers, function(item, cb){
 
                 if(+item.turnover == 0){

@@ -662,12 +662,33 @@ Model.prototype.modify_ = function (obj, cb) {
     if(obj.rs && obj.rs.toString().length != 20) return cb(new UserError('Поле Р/С должно состоять из 20 символов'));
 
     async.series({
+        get: function(cb){
+            _t.getById({id:id}, function (err, res) {
+
+                if(err) return cb(new MyError('Не удалось получить запись оборота', {id: id, err: err}));
+
+                fin_request = res[0];
+
+                return cb(null);
+
+            });
+        },
+        preCalc:function(cb){
+            for (var i in obj) {
+                if (typeof fin_request[i] !== 'undefined') fin_request[i] = obj[i];
+            }
+            if (!fin_request.fix_founding_amount){
+                obj.founding_amount = +obj.avr_monthly_turnover || fin_request.avr_monthly_turnover;
+            }
+            if (typeof obj.founding_amount !== 'undefined' && fin_request.factoring_rate){
+                obj.amount_to_return = +fin_request.founding_amount + (+fin_request.founding_amount / 100 * +fin_request.factoring_rate);
+            }
+            cb(null);
+        },
         modify: function(cb){
 
             _t.modifyPrototype(obj, function (err, res) {
-
-                if(err) return cb(null);
-
+                if(err) return cb(err);
                 cb(null, res);
             });
 
@@ -711,38 +732,26 @@ Model.prototype.modify_ = function (obj, cb) {
 
             async.eachSeries(turnovers, function(item, cb){
 
-                if(+item.turnover == 0){
-
-                    return cb(null);
-
-                }
-
+                if(+item.turnover == 0) return cb(null);
+                if(item.daily_percent) return cb(null);
                 var params = {
-                    id: item.id
+                    id: item.id,
+                    rollback_key:rollback_key
                 };
                 //
-                // var dly = Math.round(+item.turnover / +item.work_days_count);
                 //
-                // if(fin_request.avl_proc_dly_withdraw_rate != ''){
-                //     params.daily_percent = (dly / 100 * +fin_request.avl_proc_dly_withdraw_rate).toFixed(0);
-                // }
+                // params.fixed_amount = '';
+                // params.percent_by_fixed_amount = '';
                 //
-                // if(fin_request.avl_proc_dly_withdraw_rate != ''){
-                //     params.balance = dly  - (dly / 100 * +fin_request.avl_proc_dly_withdraw_rate).toFixed(0);
-                // }
-
-                params.fixed_amount = '';
-                params.percent_by_fixed_amount = '';
-
-
-
-                var work_days_count = (item.works_on_holidays)? item.full_days_count : item.work_days_count;
-                params.amount_per_day = Math.round((item.turnover / work_days_count) * 100)/100;
-
-                params.daily_percent = Math.round(((params.amount_per_day * +fin_request.avl_proc_dly_withdraw_rate) / 100) * 100) / 100;
-
-                params.balance = params.amount_per_day - params.daily_percent;
-                params.waiting_amount = params.daily_percent * work_days_count;
+                //
+                //
+                // var work_days_count = (item.works_on_holidays)? item.full_days_count : item.work_days_count;
+                // params.amount_per_day = Math.round((item.turnover / work_days_count) * 100)/100;
+                //
+                // params.daily_percent = Math.round(((params.amount_per_day * +fin_request.avl_proc_dly_withdraw_rate) / 100) * 100) / 100;
+                //
+                // params.balance = params.amount_per_day - params.daily_percent;
+                // params.waiting_amount = params.daily_percent * work_days_count;
 
                 // if(fin_request.request_financing_type_sysname == 'FIXED'){
                 //
@@ -780,7 +789,8 @@ Model.prototype.modify_ = function (obj, cb) {
                 // }
 
                 var o = {
-                    command: 'modifyPrototype',
+                    // command: 'modifyPrototype',
+                    command: 'modify',
                     object: 'request_turnover',
                     params: params
                 };
@@ -811,6 +821,7 @@ Model.prototype.modify_ = function (obj, cb) {
 
     },function (err, res) {
         if (err) {
+            if(err.message == 'notModified') return cb(null);
             if (err.message == 'needConfirm') return cb(err);
             rollback.rollback({obj:obj, rollback_key: rollback_key, user: _t.user}, function (err2) {
                 return cb(err, err2);
@@ -845,7 +856,7 @@ Model.prototype.removeCascade = function (obj, cb) {
     }
 };
 
-Model.prototype.calculate = function (obj, cb) {
+Model.prototype.calculateOLD = function (obj, cb) {
     if (arguments.length == 1) {
         cb = arguments[0];
         obj = {};
@@ -1375,98 +1386,42 @@ Model.prototype.recalculate = function(obj, cb){
 
             return cb(null);
         },
-        // getTurnovers: function (cb) {
-        //
-        //     var o = {
-        //         command: 'get',
-        //         object: 'request_turnover',
-        //         params: {
-        //             param_where: {
-        //                 financing_request_id: financing_request.id
-        //             },
-        //             collapseData: false
-        //         }
-        //     };
-        //
-        //     _t.api(o, function (err, res) {
-        //         if(err) return cb(new UserError('Не удалось получить обороты торговца', {o:o, err:err}));
-        //
-        //         turnovers = res;
-        //
-        //         cb(null);
-        //     });
-        //
-        // },
         recalc: function (cb) {
 
-            //var toModify = [];
-
-            var fa;
-            var atr;
-            var pa;
-            var pc;
-            var tmt;
-            var avl_proc_dly_withdraw_rate_calculated;
-
             var avr_payment_days_count = financing_request.work_days_count || 22;
-            // var avr_daily_turnover = +financing_request.founding_amount / avr_payment_days_count;
             var avr_daily_turnover = +financing_request.avr_monthly_turnover / avr_payment_days_count;
+
             var avr_pa;
             var avr_pc;
+            var avl_proc_dly_withdraw_rate;
 
             var params = {};
-
-
 
             switch(obj.recalc_type){
                 case 'percent':
 
-                    // fa = +financing_request.founding_amount || parseFloat(financing_request.founding_amount);
-                    fa = +financing_request.avr_monthly_turnover || parseFloat(financing_request.avr_monthly_turnover);
-                    atr = parseFloat(fa) + (parseFloat(fa) / 100 * parseInt(financing_request.factoring_rate));
+                    avl_proc_dly_withdraw_rate =  +financing_request.avl_proc_dly_withdraw_rate;
 
-                    // avr_pa = Math.ceil(totalByDly / totalMths);
-                    avr_pa = avr_daily_turnover / 100 * +financing_request.avl_proc_dly_withdraw_rate;
-                    avr_pc = atr / avr_pa;
 
-                    pa = avr_pa;
-                    pc = avr_pc;
 
-                    // avl_proc_dly_withdraw_rate_calculated = pa * parseInt(financing_request.payments_count) * 100/ +fa;
-                    avl_proc_dly_withdraw_rate_calculated = pa * avr_payment_days_count * 100/ +fa;
+                    avr_pa = avr_daily_turnover / 100 * +avl_proc_dly_withdraw_rate;
+                    avr_pc = financing_request.amount_to_return / avr_pa;
                     break;
 
                 case 'by_payment_amount':
 
-                    fa = +financing_request.avr_monthly_turnover || parseFloat(financing_request.avr_monthly_turnover);
-                    atr = parseFloat(fa) + (parseFloat(fa) / 100 * parseInt(financing_request.factoring_rate));
+                    avr_pa = +financing_request.payment_amount;
 
-                    // avr_pa = avr_daily_turnover / 100 * +financing_request.avl_proc_dly_withdraw_rate;
-                    // avr_pc = atr / avr_pa;
-
-                    pa = parseFloat(financing_request.payment_amount);
-                    pc = Math.ceil(atr / pa);
-                    // avl_proc_dly_withdraw_rate_calculated = pa * parseInt(financing_request.payments_count) * 100/ fa;
-                    avl_proc_dly_withdraw_rate_calculated = pa * avr_payment_days_count * 100/ +fa;
-
-
+                    avr_pc = financing_request.amount_to_return / avr_pa;
+                    avl_proc_dly_withdraw_rate =  (avr_pa * 100)/ +avr_daily_turnover;
 
                     break;
                 case 'by_payments_count':
 
-                    fa = +financing_request.avr_monthly_turnover || parseFloat(financing_request.avr_monthly_turnover);
-                    atr = parseFloat(fa) + (parseFloat(fa) / 100 * parseInt(financing_request.factoring_rate));
+                    avr_pc = financing_request.payments_count;
 
-                    avr_pa = avr_daily_turnover / 100 * +financing_request.avl_proc_dly_withdraw_rate;
-                    avr_pc = atr / avr_pa;
-
-
-                    pc = parseInt(financing_request.payments_count);
-                    pa = atr/pc;
-                    // Рассчитанный процент
-                    // avl_proc_dly_withdraw_rate_calculated = pa * parseInt(financing_request.payments_count) * 100/ fa;
-                    avl_proc_dly_withdraw_rate_calculated = pa * avr_payment_days_count * 100/ +fa;
-
+                    avr_pa = +financing_request.amount_to_return / avr_pc;
+                    avl_proc_dly_withdraw_rate =  (avr_pa * 100)/ +avr_daily_turnover;
                     break;
                 default :
 
@@ -1474,55 +1429,48 @@ Model.prototype.recalculate = function(obj, cb){
 
             }
 
-            // params.founding_amount =        Math.ceil(fa);
-            params.amount_to_return =       Math.ceil(atr);
-            params.payment_amount =         Math.ceil(pa);
-            params.payments_count =         parseInt(pc);
+            params.payment_amount =         Math.ceil(avr_pa);
+            params.payments_count =         Math.ceil(avr_pc);
+            params.avl_proc_dly_withdraw_rate = Math.round(+avl_proc_dly_withdraw_rate * 100)/100;
 
-            if (avl_proc_dly_withdraw_rate_calculated) params.avl_proc_dly_withdraw_rate_calculated = Math.round(parseFloat(avl_proc_dly_withdraw_rate_calculated)*100)/100;
-            if (avl_proc_dly_withdraw_rate_calculated) params.avl_proc_dly_withdraw_rate = Math.round(parseFloat(avl_proc_dly_withdraw_rate_calculated)*100)/100;
+            // if(!financing_request.payments_start_date) return cb(new UserError('Не указана дата начала платежей.'));
 
-            var calendar;
-
-            //if(!financing_request.financing_date) return cb(new UserError('Не указана дата финансирования.'));
-            if(!financing_request.payments_start_date) return cb(new UserError('Не указана дата начала платежей.'));
-
-            if(financing_request.request_financing_type_sysname == 'PERCENT'){
-
-                if(avr_pc){
-
-                    generateCalendar({
-                        date_start: financing_request.payments_start_date,
-                        payments_count: avr_pc,
-                        type: 'gov'
-                    }, function (err, res) {
-                        calendar = res;
-                        //cb(null);
-                    });
-
-                    params.financing_close_date = calendar[calendar.length -1];
-
-                }else{
-
-                }
-
-            }else if(financing_request.request_financing_type_sysname == 'FIXED'){
-
-                generateCalendar({
-                    date_start: financing_request.payments_start_date.substr(0,10),
-                    payments_count: financing_request.payments_count,
-                    type: 'gov'
-                }, function (err, res) {
-                    calendar = res;
-                    //cb(null);
-                });
-
-                params.financing_close_date = calendar[calendar.length -1];
-
-
-            }else{
-
-            }
+            // if(financing_request.request_financing_type_sysname == 'PERCENT'){
+            //
+            //     if(avr_pc){
+            //
+            //         generateCalendar({
+            //             date_start: financing_request.payments_start_date,
+            //             payments_count: avr_pc,
+            //             type: 'gov'
+            //         }, function (err, res) {
+            //             calendar = res;
+            //             //cb(null);
+            //         });
+            //
+            //         params.financing_close_date = calendar[calendar.length -1];
+            //
+            //     }else{
+            //
+            //     }
+            //
+            // }else if(financing_request.request_financing_type_sysname == 'FIXED'){
+            //
+            //     generateCalendar({
+            //         date_start: financing_request.payments_start_date.substr(0,10),
+            //         payments_count: financing_request.payments_count,
+            //         type: 'gov'
+            //     }, function (err, res) {
+            //         calendar = res;
+            //         //cb(null);
+            //     });
+            //
+            //     params.financing_close_date = calendar[calendar.length -1];
+            //
+            //
+            // }else{
+            //
+            // }
 
 
 

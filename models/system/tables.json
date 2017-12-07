@@ -2056,6 +2056,7 @@
       "turnover": {"type": "bigint", "length": "255", "name": "Оборот по картам", "validation": "number"},
       "work_days_count": {"type": "int", "length": "2", "name": "Рабочих дней"},
       "full_days_count": {"type": "int", "length": "2", "name": "Календарных дней"},
+      "manual_days_count": {"type": "int", "length": "2", "name": "Реальных рабочих дней"},
       "amount_per_day": {"type": "bigint", "length": "255", "name": "~ Оборот в день", "validation": "number"},
       "daily_percent": {"type": "int", "length": "3", "name": "Процент списания ()"},
       "fixed_amount": {"type": "bigint", "length": "255", "name": "Фиксированный платеж", "validation": "number"},
@@ -2063,7 +2064,8 @@
       "balance": {"type": "bigint", "length": "255", "name": "Остаток", "validation": "number"},
       "waiting_amount": {"type": "bigint", "length": "20", "name": "Ожидаемая сумма по списанию", "validation": "number"},
       "use_for_calc": {"type": "tinyint", "length" : "1", "name": "Использовать", "default":0},
-      "works_on_holidays": {"type": "tinyint", "length" : "1", "name": "Без выходных", "default":0}
+      "works_on_holidays": {"type": "tinyint", "length" : "1", "name": "Без выходных", "default":0},
+      "deviation_by_month": {"type": "bigint", "length" : "20", "name": "Отклонение"}
     }
   },
   "through_number":{
