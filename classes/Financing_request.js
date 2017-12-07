@@ -733,7 +733,7 @@ Model.prototype.modify_ = function (obj, cb) {
             async.eachSeries(turnovers, function(item, cb){
 
                 if(+item.turnover == 0) return cb(null);
-                if(item.daily_percent) return cb(null);
+                // if(item.daily_percent) return cb(null);
                 var params = {
                     id: item.id,
                     rollback_key:rollback_key
