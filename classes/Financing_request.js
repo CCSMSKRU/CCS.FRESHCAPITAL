@@ -1654,6 +1654,7 @@ Model.prototype.commercial_offer = function (obj, cb) {
     var fin_request;
     var commercial_offer_tmp_filename = Guid.create().value;
 
+
     async.series({
         getRequest: function (cb) {
             // Получим заявку
