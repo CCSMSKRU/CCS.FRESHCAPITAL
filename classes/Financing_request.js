@@ -683,6 +683,9 @@ Model.prototype.modify_ = function (obj, cb) {
             if (typeof obj.founding_amount !== 'undefined' && fin_request.factoring_rate){
                 obj.amount_to_return = +fin_request.founding_amount + (+fin_request.founding_amount / 100 * +fin_request.factoring_rate);
             }
+            if (obj.factoring_rate && fin_request.fix_founding_amount){
+                obj.amount_to_return = +fin_request.founding_amount + (+fin_request.founding_amount / 100 * +fin_request.factoring_rate);
+            }
             cb(null);
         },
         modify: function(cb){
@@ -729,7 +732,7 @@ Model.prototype.modify_ = function (obj, cb) {
 
         },
         updateAllRows: function(cb){
-
+            if (obj.doNotUpdateAllRows) return cb(null);
             async.eachSeries(turnovers, function(item, cb){
 
                 if(+item.turnover == 0) return cb(null);

@@ -276,6 +276,7 @@ Model.prototype.modify_ = function (obj, cb) {
                         id: fin_request.id,
                         // founding_amount:avr,
                         avr_monthly_turnover: avr,
+                        doNotUpdateAllRows:true,
                         rollback_key:rollback_key
                     }
                 };
