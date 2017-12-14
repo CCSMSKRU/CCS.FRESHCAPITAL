@@ -1006,6 +1006,8 @@
       "financing_type_sysname" : {"type": "varchar", "length": "255", "from_table": "merchant_financing_type", "keyword": "financing_type_id", "return_column": "sysname", "is_virtual": true, "name": "Тип sys", "visible": false, "default_value":"PERCENT"},
       "through_number" : {"type": "varchar", "length": "255", "name": "Сквозной номер"},
       "number_and_date_acquiring_agreement" : {"type": "varchar", "length": "255", "name": "№ и дата Договора эквайринга"},
+      "fns_number" : {"type": "varchar", "length": "255", "name": "№ Налоговой инспекции"},
+      "fns_city" : {"type": "varchar", "length": "255", "name": "ФНС по гор."},
       "request_status_id" : {"type": "bigint", "length": "20", "visible": false},
       "request_status" : {"type": "varchar", "length": "255", "from_table": "financing_request_status", "keyword": "request_status_id", "return_column": "name", "is_virtual": true, "name": "Статус заявки"},
       "request_status_sysname" : {"type": "varchar", "length": "255", "from_table": "financing_request_status", "keyword": "request_status_id", "return_column": "sysname", "is_virtual": true, "name": "Статус SYS", "default_value":"CREATED"},
@@ -2024,7 +2026,10 @@
       "terminal_number" : {"type": "varchar", "length": "255", "name": "Номер терминала"},
       "is_manager_finish": {"type": "tinyint", "length" : "1", "name": "Заполнена менеджером"},
       "work_days_count": {"type": "int", "length": "2", "name": "Рабочих дней", "default":22},
-      "fix_founding_amount": {"type": "tinyint", "length" : "1", "name": "Зафиксировать сумму", "default":0}
+      "fix_founding_amount": {"type": "tinyint", "length" : "1", "name": "Зафиксировать сумму", "default":0},
+      "number_and_date_acquiring_agreement" : {"type": "varchar", "length": "255", "name": "№ и дата Договора эквайринга"},
+      "fns_number" : {"type": "varchar", "length": "255", "name": "№ Налоговой инспекции"},
+      "fns_city" : {"type": "varchar", "length": "255", "name": "ФНС по гор."}
     }
   },
   "financing_request_status": {

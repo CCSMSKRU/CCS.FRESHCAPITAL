@@ -6026,6 +6026,8 @@ Model.prototype.generateDocument = function (obj, cb) {
         },
         checkFields: function (cb) {
 
+            var ooo_or_ip = (merchant.name.toLowerCase().indexOf('индивидуальный предприниматель') > -1)? 'ip':'ooo';
+
             if(fin.financing_type_sysname == 'PERCENT'){
                 if(!incData.payments_count && !fin.payments_count) return cb(new UserError('Не заполнено кол-во платежей для процентого финансирования'));
             }
@@ -6038,7 +6040,7 @@ Model.prototype.generateDocument = function (obj, cb) {
                 if(!merchant.short_name)              return cb(new UserError('Не заполнено поле Краткое Наименование торговца'));
                 if(!incData.fio)                    return cb(new UserError('Не заполнено поле ФИО'));
                 if(!incData.fio_short)                    return cb(new UserError('Не заполнено поле Фамилия И.О.'));
-                if(!incData.executive)              return cb(new UserError('Не заполнено поле Исп. орган'));
+                if(ooo_or_ip == 'ooo' && !incData.executive)              return cb(new UserError('Не заполнено поле Исп. орган'));
 //                if(!incData.executive_native && !merchant.executive)              return cb(new UserError('Не заполнено поле Исп. орган им. падеж'));
                 if(!incData.grounds_end)            return cb(new UserError('Не заполнено поле окончание действующ...'));
                 if(!incData.grounds)                return cb(new UserError('Не заполнено поле основание'));
@@ -6048,7 +6050,7 @@ Model.prototype.generateDocument = function (obj, cb) {
                 if(!merchant.inn || merchant.inn.toString().length < 10)               return cb(new UserError('Не заполнено поле ИНН или его долинна менее 10 символам'));
                 //if(!merchant.okpo)              return cb(new UserError('Не заполнено поле ОКПО'));
                 //if(!merchant.okato)             return cb(new UserError('Не заполнено поле ОКАТО'));
-                if(!merchant.kpp)               return cb(new UserError('Не заполнено поле КПП'));
+                if(ooo_or_ip == 'ooo' && !merchant.kpp)               return cb(new UserError('Не заполнено поле КПП'));
                 if(!merchant.bik)               return cb(new UserError('Не заполнено поле БИК'));
                 if(!merchant.rs || merchant.rs.toString().length != 20)                return cb(new UserError('Не заполнено поле Р/С или его долинна не равна 20 символам'));
                 if(!merchant.ks)                return cb(new UserError('Не заполнено поле К/С'));
@@ -6792,7 +6794,7 @@ Model.prototype.generateDocument = function (obj, cb) {
                             "short_name":              merchant.short_name || '',
                             "fio":                     incData.fio || '',
                             "fio_native":              merchant.executive_fio || '',
-                            "fio_short":               incData.fio_short || '',
+                            "fio_short":               incData.fio_short || merchant.fio_short || '',
                             "executive":               incData.executive || '',
                             "executive_native":        incData.executive_native || merchant.executive,
                             "grounds_end":             incData.grounds_end,

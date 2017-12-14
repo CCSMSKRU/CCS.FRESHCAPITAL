@@ -92,7 +92,7 @@
                                 fio: fio_dative,
                                 fio_short: fio_short,
                                 grounds_end: 'действующего',
-                                grounds: 'Устава',
+                                grounds: merchant.grounds_on,
                                 payments_count: 60
                             };
 
@@ -544,6 +544,7 @@
                             '<div class="form-group"><label>ФНС по гор.:</label><input class="form-control" type="text" id="fns_city" value="{{fns_city}}"></div>'+
                             '<div class="form-group"><label>Должность (в лице):</label><input class="form-control" type="text" id="executive" value="{{executive}}"></div>'+
                             '<div class="form-group"><label>ФИО (в лице):</label><input class="form-control" type="text" id="fio" value="{{fio}}"></div>'+
+                            '<div class="form-group"><label>ФИО сокр:</label><input class="form-control" type="text" id="fio_short" value="{{fio_short}}"></div>'+
                             '<div class="form-group"><label>Действующего/ей:<span id="grounds_end_replacer" class="prepare-replacer">Действующей</span></label><input class="form-control" type="text" id="grounds_end" value="{{grounds_end}}"></div>'+
                             '<div class="form-group"><label>На основании:</label><input class="form-control" type="text" id="grounds" value="{{grounds}}"></div>';
 
@@ -577,8 +578,8 @@
                             mo = {
                                 agr_number: agr_numer_g,
                                 gov_registration_date: merchant.registration_date,
-                                fns_number: '',
-                                fns_city: 'г. Москве',
+                                fns_number: merchant.fns_number || '',
+                                fns_city: merchant.fns_city || 'г. Москве',
                                 executive: 'Генерального директора',
                                 executive_native: merchant.executive,
                                 fio: fio_dative,
