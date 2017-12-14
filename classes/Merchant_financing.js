@@ -6190,9 +6190,13 @@ Model.prototype.generateDocument = function (obj, cb) {
                             var daily_percent_words = (daily_percent)? rubles(daily_percent).replace(/ руб[а-я]+ 00 копеек/,'') : 'Ноль';
                             daily_percent_words = daily_percent_words.charAt(0).toUpperCase() + daily_percent_words.substr(1);
 
+                            var percent_word = getNoun(+fin.avl_proc_dly_withdraw_rate, 'процент', 'процента', 'процентов');
+
                             lowest_turnover = lowest_turnover.turnover || '';
                             var lowest_turnover_words = (lowest_turnover)? rubles(lowest_turnover).replace(/ руб[а-я]+ 00 копеек/,'') : 'Ноль';
                             lowest_turnover_words = lowest_turnover_words.charAt(0).toUpperCase() + lowest_turnover_words.substr(1);
+
+                            var avr_monthly_turnover_words = (fin_req.avr_monthly_turnover)? rubles(fin_req.avr_monthly_turnover).replace(/ руб[а-я]+ 00 копеек/,'')  : 'Ноль';
 
                             doc.setData({
                                 "agr_number":              incData.agr_number || '',
@@ -6216,14 +6220,15 @@ Model.prototype.generateDocument = function (obj, cb) {
                                 "rs":                      merchant.rs,
                                 "ks":                      merchant.ks,
                                 "bank_name":               merchant.rko_bank,
-                                "avr_mth_turnover":        lowest_turnover,
-                                "avr_mth_turnover_words":  lowest_turnover_words,
+                                "avr_mth_turnover":        fin_req.avr_monthly_turnover,
+                                "avr_mth_turnover_words":  avr_monthly_turnover_words,
                                 "founding_amount":         fin.founding_amount,
                                 "founding_amount_words":   founding_amount_words,
                                 "vgf_comission":           vgf_comission,
                                 "vgf_comission_words":     vgf_comission_words,
                                 "daily_percent":           daily_percent,
                                 "daily_percent_words":     daily_percent_words,
+                                "percent_word":            percent_word,
                                 "payment_start_date":      toDocDateFormat(fin.payments_start_date) || '«___» ______ 201_ г.',
                                 "payment_end_date":        toDocDateFormat(moment(fin.payments_start_date, 'DD.MM.YYYY').add(9, 'months').format('DD.MM.YYYY')) || '«___» ______ 201_ г.'
                             });
@@ -6761,7 +6766,9 @@ Model.prototype.generateDocument = function (obj, cb) {
 
                     ext = 'docx';
 
-                    fs.readFile('./templates/doc_doverennost_tpl.docx', function (err, data) {
+                    var dover_name = (ooo_or_ip == 'ip')? 'doc_doverennost_ip_tpl.docx' : 'doc_doverennost_ooo_tpl.docx';
+
+                    fs.readFile('./templates/'+dover_name, function (err, data) {
 
                         if (err) return cb(new MyError('Не удалось считать файл шаблона доверенность.', err));
 
