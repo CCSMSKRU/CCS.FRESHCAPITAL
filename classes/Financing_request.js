@@ -1570,7 +1570,7 @@ Model.prototype.request_report = function (obj, cb) {
                 payments_count: financing_request.payments_count,
                 payment_amount: financing_request.payment_amount,
                 financing_close_date: financing_request.financing_close_date,
-                avl_proc_dly_withdraw_rate: financing_request.avl_proc_dly_withdraw_rate,
+                avl_proc_dly_withdraw_rate: financing_request.avl_proc_dly_withdraw_rate / 100,
                 t1: []
             };
             cb(null);
@@ -1601,7 +1601,11 @@ Model.prototype.request_report = function (obj, cb) {
                     daily_percent: turnover.daily_percent,
                     fixed_amount: turnover.fixed_amount,
                     percent_by_fixed_amount: turnover.percent_by_fixed_amount,
-                    balance: turnover.balance
+                    balance: turnover.balance,
+                    await_summ: +turnover.daily_percent * +turnover.work_days_count,
+                    margin: (+turnover.daily_percent * +turnover.work_days_count) - (+financing_request.payment_amount * +turnover.work_days_count),
+                    normal_turnover: (+financing_request.payment_amount * +turnover.work_days_count) * 100 / 30,
+                    turnover_margin: +turnover.turnover - ((+financing_request.payment_amount * +turnover.work_days_count) * 100 / 30)
                 });
 
             }
