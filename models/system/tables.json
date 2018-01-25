@@ -2097,6 +2097,22 @@
       "total_default_paid_amount" : { "type": "DECIMAL(50, 2)", "name": "Оплачено (счет)"}
     }
   },
+  "daily_payments_total":{
+    "profile": {
+      "name": "daily_payments_total",
+      "name_ru": "Итоги платежного дня",
+      "ending": "ы",
+      "server_parent_table":"daily_payments",
+      "server_parent_key":"daily_payments_id"
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "daily_payments_id" : {"type": "bigint", "length": "20", "visible":false, "parent_key": true},
+      "bank_id" : {"type": "bigint", "length": "20", "visible":false, "parent_key": true},
+      "total_paid_amount" : { "type": "DECIMAL(50, 2)", "name": "Оплачено (процессинг)"},
+      "total_default_paid_amount" : { "type": "DECIMAL(50, 2)", "name": "Оплачено (счет)"}
+    }
+  },
   "daily_payment":{
     "profile": {
       "name": "daily_payment",
