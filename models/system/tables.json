@@ -2320,6 +2320,19 @@
       "name": { "type": "varchar", "length": "255", "name": "Наименование"},
       "sysname": { "type": "varchar", "length": "255", "name": "Системное имя"}
     }
+  },
+  "financing_request_comment": {
+    "profile": {
+      "name": "financing_request_comment",
+      "name_ru": "Комментарий заявки",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "datetime": {"type": "datetime","name": "Дата время"},
+      "comment" : {"type": "varchar","length": "255", "name": "Коммент"},
+      "financing_request_id" : {"type": "bigint","length": "20"}
+    }
   }
 }
 
