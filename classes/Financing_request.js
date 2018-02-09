@@ -514,11 +514,11 @@ Model.prototype.add_ = function (obj, cb) {
                     [2,3,9,10,16,17,23,24,30,31]
                 ],
                 2018: [
-                    [1,2,3,4,5,6,7,8,9,10,13,14,20,21,27,28],
+                    [1,2,3,4,5,6,7,8,13,14,20,21,27,28],
                     [3,4,10,11,17,18,23,24,25],
-                    [3,4,8,10,11,17,18,24,25,31],
+                    [3,4,8,9,10,11,17,18,24,25,31],
                     [1,7,8,14,15,21,22,28,29],
-                    [1,5,6,9,12,13,19,20,26,27],
+                    [1,2,5,6,9,12,13,19,20,26,27],
                     [2,3,9,10,12,16,17,23,24,30],
                     [1,7,8,14,15,21,22,28,29],
                     [4,5,11,12,18,19,25,26],
@@ -542,6 +542,8 @@ Model.prototype.add_ = function (obj, cb) {
                     [1,7,8,14,15,21,22,28,29]
                 ]
             };
+
+	        let months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
 
             function checkDate(date){
 
@@ -685,41 +687,55 @@ Model.prototype.add_ = function (obj, cb) {
                 }
             ];
 
-            async.eachSeries(monthsArr, function(item, cb){
+            async.eachSeries(monthsArr, function(item, cb) {
 
-                var o = {
-                    command: 'add',
-                    object: 'request_turnover',
-                    params: {
-                        financing_request_id: id,
-                        month: item.month,
-                        year: item.year,
-                        work_days_count: item.work_days_count,
-                        full_days_count: item.full_days_count,
-                        rollback_key:rollback_key
-                    }
-                };
+	            var o = {
+		            command: 'add',
+		            object: 'request_turnover',
+		            params: {
+			            financing_request_id: id,
+			            month: item.month,
+			            year: item.year,
+			            work_days_count: item.work_days_count,
+			            full_days_count: item.full_days_count,
+			            rollback_key: rollback_key
+		            }
+	            };
 
-                if(prevRequest && prevTurnovers){
+	            if (prevRequest && prevTurnovers) {
 
-                    for(var i in prevTurnovers){
-                        var pt = prevTurnovers[i];
+		            for (var i in prevTurnovers) {
+			            var pt = prevTurnovers[i];
 
-                        if(item.month == pt.month && item.year == pt.year){
-                            o.params.turnover = pt.turnover;
+			            if (item.month == pt.month && item.year == pt.year) {
+				            o.params.turnover = pt.turnover;
+			            }
+
+		            }
+
+	            }
+
+	            _t.api(o, function (err, res) {
+
+		            if (err) return new MyError('Не удалось добавить запись в таблицу оборота торговца', err);
+
+		            let o = {
+		                command: 'add',
+                        object: 'turnover_calendar',
+                        params: {
+	                        financing_request_id: id,
+                            month: item.month,
+                            days: nw[item.year][months.indexOf(item.month.toLowerCase())].join(',')
                         }
+                    };
 
-                    }
+		            _t.api(o, (err, res) => {
+			            if (err) return new MyError('Не удалось сохранить календарь', err);
 
-                }
+			            cb(null);
+                    });
 
-                _t.api(o, function(err,res){
-
-                    if(err) return new MyError('Не удалось добавить запись в таблицу оборота торговца', err);
-
-                    cb(null);
-
-                });
+	            });
 
 
             }, cb);

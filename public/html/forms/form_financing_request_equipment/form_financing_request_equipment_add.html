@@ -1,0 +1,31 @@
+<div class="insertIntoHeader">
+    <!--<div class="order-status iih-field" data-column="merchant_status" data-color="{+{merchant_status}+}">{+{merchant_status}+}</div><div class="order-created">Создана: <span class="iih-field" data-column="created">{+{created}+}</span></div>-->
+</div>
+<!---->
+
+<div class="col-md-12">
+
+    <h1 style="padding-left: 20px;">Выберите менеджера:</h1>
+
+    <div class="row"><div class="big-fld">{{{manager_lastname}}}</div></div>
+
+    <h1 style="padding-left: 20px;">Выберите тип заявки:</h1>
+
+    <div class="row"><div class="big-fld">{{{financing_request_type}}}</div></div>
+
+    <h1 style="padding-left: 20px;">Укажите наименование торговца:</h1>
+
+    <div class="row">
+        <div class="big-fld">
+            <div class="classic-filed-replacer" data-repid="1" data-replace="Общество с ограниченной ответственностью" data-replace2="ООО">ООО</div>
+            <div class="classic-filed-replacer" data-repid="1" data-replace="Индивидуальный предприниматель" data-replace2="ИП">ИП</div>
+            <div class="field-to-replace"  data-repid="1" data-replace="1">{{{merchant_name}}}</div>
+        </div>
+    </div>
+    <div class="row"><div class="big-fld"><div class="field-to-replace"  data-repid="1" data-replace="2">{{{short_name}}}</div></div></div>
+
+    <h1 style="padding-left: 20px;">Или выберите существующего:</h1>
+
+    <div class="row"><div class="big-fld">{{{merchant}}}</div></div>
+
+</div>

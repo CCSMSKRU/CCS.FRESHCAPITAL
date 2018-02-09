@@ -354,8 +354,12 @@ Model.prototype.report1 = function (obj, cb) {
     var name = obj.name || 'investor_report_rus_2.xlsx';
     var report_date = obj.report_date || funcs.getDate();
 
-    var weekAgoStart = moment(report_date, 'DD.MM.YYYY').startOf('week').add(-6,'day').format('DD.MM.YYYY');
-    var weekAgoEnd = moment(report_date, 'DD.MM.YYYY').startOf('week').add(-2,'day').format('DD.MM.YYYY');
+    // var weekAgoStart = moment(report_date, 'DD.MM.YYYY').startOf('week').add(-6,'day').format('DD.MM.YYYY');
+    // var weekAgoEnd = moment(report_date, 'DD.MM.YYYY').startOf('week').add(-2,'day').format('DD.MM.YYYY');
+
+
+	var weekAgoStart = moment(report_date, 'DD.MM.YYYY').startOf('week').format('DD.MM.YYYY');
+	var weekAgoEnd = report_date;
     var data, readyData, template, binaryData, filename;
     var manager_fee_percent = 0.01;
     var days_per_week = 5; // gov calendar

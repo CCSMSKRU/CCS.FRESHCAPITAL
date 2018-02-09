@@ -808,6 +808,90 @@
     }
   },
 
+  "insurance_company": {
+    "profile": {
+      "name": "insurance_company",
+      "name_ru": "Страховая компания",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name" : {"type": "varchar", "length": "255", "name": "Название"},
+      "inn" : {"type": "varchar", "length": "255", "name": "ИНН"}
+    }
+  },
+  "insurance_rate": {
+    "profile": {
+      "name": "insurance_rate",
+      "name_ru": "Ставка по страхованию",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "insurance_company_id": { "type": "bigint", "length": "20", "require": true},
+      "issue_amount": {"type": "DECIMAL(50, 2)", "name": "Сумма выдачи"},
+      "rate": {"type": "DECIMAL(50, 2)", "name": "Процентная ставка"}
+    }
+  },
+  "accounting_period": {
+    "profile": {
+      "name": "accounting_period",
+      "name_ru": "Отчетный период",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+
+      "year_id" : {"type": "bigint", "length": "20", "name": "Id Год"},
+      "year" : {"type": "varchar", "length": "255", "from_table": "accounting_period_year", "keyword": "year_id", "return_column": "name", "is_virtual": true, "name": "Год"},
+      "year_sysname" : {"type": "varchar", "length": "255", "from_table": "accounting_period_year", "keyword": "year_id", "return_column": "sysname", "is_virtual": true, "name": "Год sys", "visible": false, "default_value":"CREATED"},
+
+      "quarter_id" : {"type": "bigint", "length": "20", "name": "Id Квартал"},
+      "quarter" : {"type": "varchar", "length": "255", "from_table": "accounting_period_quarter", "keyword": "quarter_id", "return_column": "name", "is_virtual": true, "name": "Квартал"},
+      "quarter_sysname" : {"type": "varchar", "length": "255", "from_table": "accounting_period_quarter", "keyword": "quarter_id", "return_column": "sysname", "is_virtual": true, "name": "Квартал sys", "visible": false, "default_value":"CREATED"},
+
+      "month_id" : {"type": "bigint", "length": "20", "name": "Id Месяц"},
+      "month" : {"type": "varchar", "length": "255", "from_table": "accounting_period_month", "keyword": "month_id", "return_column": "name", "is_virtual": true, "name": "Месяц"},
+      "month_sysname" : {"type": "varchar", "length": "255", "from_table": "accounting_period_month", "keyword": "month_id", "return_column": "sysname", "is_virtual": true, "name": "Год sys", "visible": false, "default_value":"CREATED"}
+    }
+  },
+  "accounting_period_month": {
+    "profile": {
+      "name": "accounting_period_month",
+      "name_ru": "Отчетный месяц",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name": { "type": "varchar", "length": "255", "name": "Наименование"},
+      "sysname": { "type": "varchar", "length": "255", "name": "Системное имя"}
+    }
+  },
+  "accounting_period_quarter": {
+    "profile": {
+      "name": "accounting_period_quarter",
+      "name_ru": "Отчетный квартал",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name": { "type": "varchar", "length": "255", "name": "Наименование"},
+      "sysname": { "type": "varchar", "length": "255", "name": "Системное имя"}
+    }
+  },
+  "accounting_period_year": {
+    "profile": {
+      "name": "accounting_period_year",
+      "name_ru": "Отчетный год",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "name": { "type": "varchar", "length": "255", "name": "Наименование"},
+      "sysname": { "type": "varchar", "length": "255", "name": "Системное имя"}
+    }
+  },
+
   "merchant_financing": {
     "profile": {
       "name": "merchant_financing",
@@ -2070,7 +2154,21 @@
       "waiting_amount": {"type": "bigint", "length": "20", "name": "Ожидаемая сумма по списанию", "validation": "number"},
       "use_for_calc": {"type": "tinyint", "length" : "1", "name": "Использовать", "default":0},
       "works_on_holidays": {"type": "tinyint", "length" : "1", "name": "Без выходных", "default":0},
-      "deviation_by_month": {"type": "bigint", "length" : "20", "name": "Отклонение"}
+      "deviation_by_month": {"type": "bigint", "length" : "20", "name": "Отклонение"},
+      "custom_buttons_1": { "type": "varchar", "length": "255", "name": "-"}
+    }
+  },
+  "turnover_calendar":{
+    "profile": {
+      "name": "turnover_calendar",
+      "name_ru": "Календарь оборота",
+      "ending": ""
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "financing_request_id" : {"type": "bigint", "length": "20", "visible":false, "parent_key": true},
+      "month" : {"type": "varchar", "length": "255", "name": "Месяц"},
+      "days": { "type": "varchar", "length": "255", "name": "Дни"}
     }
   },
   "through_number":{
@@ -2095,6 +2193,18 @@
       "payments_for_date": { "type": "date", "name": "Дата", "unique":true},
       "total_paid_amount" : { "type": "DECIMAL(50, 2)", "name": "Оплачено (процессинг)"},
       "total_default_paid_amount" : { "type": "DECIMAL(50, 2)", "name": "Оплачено (счет)"}
+    }
+  },
+  "imported_files_dp":{
+    "profile": {
+      "name": "imported_files_dp",
+      "name_ru": "Импортированные файлы платежных дней",
+      "ending": ""
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "bank_agreement" : {"type": "varchar", "length": "255", "name": "Договор банка"},
+      "payment_date" : {"type": "varchar", "length": "255", "name": "Дата платежа"}
     }
   },
   "daily_payments_total":{

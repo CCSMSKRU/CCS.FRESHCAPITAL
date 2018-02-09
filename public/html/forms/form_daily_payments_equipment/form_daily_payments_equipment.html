@@ -1,0 +1,29 @@
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="col-md-6"><h1>Платежи за: {+{payments_for_date}+}</h1></div>
+        <div class="col-md-6">
+            <div class="execute-daily-payments"><i class="fa fa-fire"></i>&nbsp;&nbsp;Огонь!</div>
+            <div class="apply-import-vtb"><i class="fa fa-check"></i>&nbsp;&nbsp;Применить импорт</div>
+            <div class="import-vtb"><i class="fa fa-download"></i>&nbsp;&nbsp;Импорт ВТБ24</div>
+            <div class="append_new"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Обновить</div>
+        </div>
+
+    </div>
+
+    <div class="col-md-12">
+        <div class="col-md-4"><div class="fn-field" style="margin-left: -35px;"><label>Итого ожидается:</label> <span class="iih-field fn-summ-readonly-field" data-column="">-</span> руб.</div></div>
+        <div class="col-md-4"><div class="fn-field" ><label>С эквайринга:</label> <span class="iih-field fn-summ-readonly-field" data-column="total_paid_amount">{+{total_paid_amount}+}</span> руб.</div></div>
+        <div class="col-md-4"><div class="fn-field"><label>По счетам:</label> <span class="iih-field fn-summ-readonly-field" data-column="total_default_paid_amount">{+{total_default_paid_amount}+}</span>  руб.</div></div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div data-tbls="daily_payment.tbl_daily_payment" class="fn-child-tbl-holder marTop10"></div>
+        </div>
+    </div>
+
+
+
+</div>
