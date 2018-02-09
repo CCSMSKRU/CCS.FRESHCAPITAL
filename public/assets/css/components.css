@@ -8358,7 +8358,7 @@ td.i-p-table-merchant {
 .i-p-table-merchant {
     padding-left: 10px!important;
 }
-.open_plan{
+.open_plan, .close_period {
     list-style: none;
 }
 
@@ -9012,4 +9012,41 @@ label.invoice-free-sub {
 }
 .append_new:hover{
     background-color: #2894ff;
+}
+
+
+#month_wrapper {
+	position: absolute;
+	top: 168px;
+	left: 242px;
+	padding: 1px;
+	border: 1px solid;
+	background: white;
+	z-index: 1000;
+}
+
+#month_wrapper .week {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+#month_wrapper .week:last-child {
+	justify-content: flex-start;
+}
+
+#month_wrapper .weekday, #month_wrapper .weektitle {
+	background: #f1f1f1;
+	width: 40px;
+	line-height: 35px;
+	margin: 1px;
+	text-align: center;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+#month_wrapper .weekday.day_off,
+#month_wrapper .weektitle.day_off {
+	background: #ffa8a8;
 }

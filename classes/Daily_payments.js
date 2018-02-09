@@ -1323,20 +1323,19 @@ Model.prototype.import_vtb = function (obj, cb) {
                 cb(null);
             })
         },
-        moveFiles:function(cb){
-            async.eachSeries(uploaded_files, function(filename, cb){
-                fs.rename('./public/upload/'+filename, dir_prefix + date_dir + '/' + filename, function(err){
-                    if (err){
-                        errors.push(['ОШИБКА! При попытке скопировать файл', filename, err]);
-                        // Просто игнорируем
-                        return cb(null);
-                    }
-                    cb(null);
-                })
-            }, cb);
+        moveFiles:function(cb) {
+	        async.eachSeries(uploaded_files, function (filename, cb) {
+		        fs.rename('./public/upload/' + filename, dir_prefix + date_dir + '/' + filename, function (err) {
+			        if (err) {
+				        errors.push(['ОШИБКА! При попытке скопировать файл', filename, err]);
+				        // Просто игнорируем
+				        return cb(null);
+			        }
+			        cb(null);
+		        })
+	        }, cb);
         },
         unzip:function(cb){
-
             fs.readdir(dir_prefix + date_dir, function(err, files){
                 if (err) return cb(new UserError('Не удалось считать файлы из директории.',{err:err,date_dir:date_dir}));
                 async.eachSeries(files, function(file, cb){
@@ -1394,7 +1393,6 @@ Model.prototype.import_vtb = function (obj, cb) {
             });
         },
         readFiles:function(cb){
-
             fs.readdir(dir_prefix + date_dir, function(err, files){
                 if (err) return cb(new UserError('Не удалось считать файлы из директории.',{err:err,date_dir:date_dir}));
                 for (let i in files) {
@@ -1463,15 +1461,52 @@ Model.prototype.import_vtb = function (obj, cb) {
                     }
                 }
 
-                financings.push({
-                    import_date:report_period.from,
-                    import_merchant:data[4][0].replace('Наименование Клиента: ',''),
-                    import_inn:data[5][0].replace('ИНН: ',''),
-                    import_agreement:data[7][0].replace('Договор: ',''),
-                    import_amount:amount,
-                    import_amount_vtb:amount_vtb
+                let import_date = report_period.from;
+                let import_agreement = data[7][0].replace('Договор: ','');
+
+                let o = {
+                	command: 'get',
+	                object: 'imported_files_dp',
+	                params: {
+		                param_where: {
+			                bank_agreement: import_agreement,
+			                payment_date: import_date
+		                },
+		                collapseData: false
+	                }
+                };
+
+                _t.api(o, (err, res) => {
+	                if (err) return cb(new UserError('Не удалось проверить был ли уже импорт',{o : o, err : err}));
+
+	                if (!res.length) {
+	                	let o = {
+			                command: 'add',
+			                object: 'imported_files_dp',
+			                params: {
+				                bank_agreement: import_agreement,
+				                payment_date: import_date
+			                }
+		                };
+
+	                	_t.api(o,(err, res) => {
+			                if (err || (!res || res.code !== 0)) return cb(new UserError('Не удалось сохранить импорт файла',{o : o, err : err}));
+
+			                financings.push({
+				                import_date:import_date,
+				                import_merchant:data[4][0].replace('Наименование Клиента: ',''),
+				                import_inn:data[5][0].replace('ИНН: ',''),
+				                import_agreement:import_agreement,
+				                import_amount:amount,
+				                import_amount_vtb:amount_vtb
+			                });
+
+			                cb(null);
+		                });
+	                } else {
+	                	cb(null);
+	                }
                 });
-                cb(null);
                 // 0-> data -> [][]
                 // дата - 1,0 //12-10-2017 14:12:02
                 // мерч - 4,0 //Наименование Клиента: ГУДАШЕВА ТАМИЛЛА ВЛАДИМИРОВНА ИП
@@ -1552,7 +1587,13 @@ Model.prototype.import_vtb = function (obj, cb) {
                 }
                 // let calc_amount = Math.round((fin.import_amount * +fin.avl_proc_dly_withdraw_rate / 100) * 100)/100;
                 let calc_amount = (fin.import_amount * +fin.avl_proc_dly_withdraw_rate / 100).toFixed(3).slice( 0, -1 );
-                if (+calc_amount === +fin.daily_payment.import_amount && fin.daily_payment.import_amount !== 0) return cb(null);
+                // if (+calc_amount === +fin.daily_payment.import_amount && fin.daily_payment.import_amount !== 0) return cb(null);
+
+                if (fin.daily_payment.import_amount !== 0) {
+                	calc_amount = +calc_amount + +fin.daily_payment.import_amount;
+                	fin.import_amount_vtb = +fin.import_amount_vtb + +fin.daily_payment.import_amount_vtb;
+                }
+
                 let o = {
                     command:'modify',
                     object:'daily_payment',
@@ -1566,7 +1607,8 @@ Model.prototype.import_vtb = function (obj, cb) {
                 };
                 _t.api(o, function (err, res) {
                     if (err) return cb(new MyError('Не удалось установить import_amount платежу',{o : o, err : err}));
-                    cb(null);
+
+	                cb(null);
                 });
             }, cb);
         }

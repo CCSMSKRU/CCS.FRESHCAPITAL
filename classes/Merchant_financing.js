@@ -3929,6 +3929,135 @@ Model.prototype.ready_to_work_to_work = function (obj, cb) {
 };
 
 
+/**
+ * READY_TO_WORK --> SETTING_UP_EQUIPMENT
+ * @param obj
+ * @param cb
+ * @returns {*}
+ */
+Model.prototype.ready_to_work_to_setting_up = function (obj, cb) {
+	if (arguments.length == 1) {
+		cb = arguments[0];
+		obj = {};
+	}
+	var _t = this;
+	var id = obj.id;
+	var payments_start_date = obj.payments_start_date;
+
+	if (isNaN(+id)) return cb(new MyError('В метод не передан id'));
+	// if (!filename) return cb(new MyError('В метод не передан filename'));
+	var rollback_key = obj.rollback_key || rollback.create();
+
+
+	async.series({
+
+		notify: function (cb) {
+			var params = {
+				id:obj.id,
+				rollback_key:rollback_key,
+				doNotSaveRollback:true
+			};
+			_t.notifyBank(params,cb);
+
+		},
+		bankConfirm: function (cb) {
+			var params = {
+				id:obj.id,
+				payments_start_date: obj.payments_start_date,
+				rollback_key:rollback_key,
+				doNotSaveRollback:true
+			};
+			_t.bankConfirm(params,cb);
+
+		},
+		acquiring_in_proccess: function (cb) {
+			var params = {
+				id:obj.id,
+				rollback_key:rollback_key,
+				confirm:obj.confirm,
+				doNotSaveRollback:true
+			};
+			_t.moneySentAndSetInWork(params, cb);
+
+		}
+	}, function (err) {
+		if (err) {
+			// if (err.message == 'needConfirm') return cb(err);
+			rollback.rollback({rollback_key:rollback_key,user:_t.user}, function (err2) {
+				return cb(err, err2);
+			});
+		}else{
+			if (!obj.doNotSaveRollback){
+				rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'ready_to_work_to_work', params:obj});
+			}
+
+			cb(null, new UserOk('Деньги отправлены. Финансирование в работе!'));
+		}
+	});
+
+};
+
+
+/**
+ * SETTING_UP_EQUIPMENT --> READY_TO_WORK
+ * @param obj
+ * @param cb
+ * @returns {*}
+ */
+Model.prototype.setting_up_to_ready_to_work = function (obj, cb) {
+	if (arguments.length == 1) {
+		cb = arguments[0];
+		obj = {};
+	}
+	var _t = this;
+	var id = obj.id;
+
+	if (isNaN(+id)) return cb(new MyError('В метод не передан id'));
+	// if (!filename) return cb(new MyError('В метод не передан filename'));
+	var rollback_key = obj.rollback_key || rollback.create();
+
+	_t.setStatus({
+		id: id,
+		status: 'READY_TO_WORK',
+		rollback_key:rollback_key
+	}, function (err) {
+		if (err) return cb(new UserError('Не удалось изменить статус финансирования. Обратитесь к администратору.', {err: err}));
+
+		cb(null);
+	});
+};
+
+
+/**
+ * SETTING_UP_EQUIPMENT --> ACQUIRING_IN_PROCCESS
+ * @param obj
+ * @param cb
+ * @returns {*}
+ */
+Model.prototype.setting_up_to_work = function (obj, cb) {
+	if (arguments.length == 1) {
+		cb = arguments[0];
+		obj = {};
+	}
+	var _t = this;
+	var id = obj.id;
+
+	if (isNaN(+id)) return cb(new MyError('В метод не передан id'));
+	// if (!filename) return cb(new MyError('В метод не передан filename'));
+	var rollback_key = obj.rollback_key || rollback.create();
+
+	_t.setStatus({
+		id: id,
+		status: 'ACQUIRING_IN_PROCCESS',
+		rollback_key:rollback_key
+	}, function (err) {
+		if (err) return cb(new UserError('Не удалось изменить статус финансирования. Обратитесь к администратору.', {err: err}));
+
+		cb(null);
+	});
+};
+
+
 //Model.prototype.setInWork = function (obj, cb) {
 //    if (arguments.length == 1) {
 //        cb = arguments[0];
