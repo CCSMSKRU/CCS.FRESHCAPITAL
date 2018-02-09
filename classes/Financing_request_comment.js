@@ -61,6 +61,7 @@ Model.prototype.add = function (obj, cb) {
         cb = arguments[0];
         obj = {};
     }
+
     var _t = this;
     var client_object = _t.client_object || '';
 
