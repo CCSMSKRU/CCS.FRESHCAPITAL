@@ -1,0 +1,77 @@
+<div class="insertIntoHeader">
+    <div class="order-status iih-field" data-column="status" data-color="{+{status}+}">{+{status}+}</div>
+    <div class="order-created"><span class="iih-field" data-column="merchant_name">{+{merchant_name}+}</span></div>
+    <div class="order-created"><span class="iih-field" data-column="financing_type">{+{financing_type}+}</span></div>
+</div>
+
+<div class="col-md-12">
+    <!--<div class="col-md-12">-->
+        <div class="col-md-6"><h1>Расчет финансирования:</h1></div>
+        <div class="col-md-6"><h1>Дата в договоре: <span class="iih-field" data-column="agreement_date">{+{agreement_date}+}</span></h1></div>
+    <!--</div>-->
+</div>
+
+<div class="col-md-6">
+
+    <!--<div class="row"><div>{{{total_mouthly_turnover}}}</div></div>-->
+    <div class="row"><div>{{{total_mouthly_credit_card_turnover}}}</div></div>
+    <div class="row"><div>{{{visa_mc_percent}}}</div></div>
+    <div class="row"><div>{{{factoring_rate}}}</div></div>
+
+</div>
+
+<div class="col-md-6">
+
+    <div class="row"><div>{{{acquiring_days_count}}}</div></div>
+    <div class="row"><div>{{{avl_proc_dly_withdraw_rate}}}</div></div>
+    <div class="row"><div>{{{avl_mth_withdraw_rate}}}</div></div>
+
+</div>
+
+<div class="wid100pr founding-values-row">
+
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <h1>Ключевые параметры финансирования:</h1>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="row"><div>{{{founding_amount}}}</div></div>
+        <div class="row"><div>{{{amount_to_return}}}</div></div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="row"><div>{{{avl_proc_dly_withdraw_rate_calculated}}}</div></div>
+        <div class="row"><div>{{{payment_amount}}}</div></div>
+        <div class="row"><div>{{{payments_count}}}</div></div>
+
+    </div>
+
+</div>
+
+
+
+<div class="wid100pr recalc-row">
+
+    <!--<div class="fn-btn fn-small-btn splicedRoundedBtn blue send_offer"><i class="fa fa-envelope-o"></i><span class="buttonInner">Отправить </span></div>-->
+    <div class="recalculate"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Перерасчитать</div>
+
+    <!--<div class="fn-btn fn-small-btn splicedRoundedBtn black recalculate"><i class="fa fa-refresh"></i><span class="buttonInner">Перерасчитать</span></div>-->
+
+</div>
+
+<div class="col-md-12">
+    <div class="col-md-12">
+
+        <div data-tbls="merchant_financing_document.tbl_merchant_financing_document,investment_plan_merchant_investor.tbl_investment_plan_merchant_investor,merchant_financing_history_log.tbl_merchant_financing_history_log" class="fn-child-tbl-holder marTop10"></div>
+
+    </div>
+</div>
+
+
+<div class="lower-buttons-padder"></div>
+<div class="lower-buttons-wrapper"></div>

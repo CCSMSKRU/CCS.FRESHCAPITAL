@@ -241,95 +241,79 @@ Model.prototype.add_ = function (obj, cb) {
 
             });
         },
-        getComments: function(cb){
+        getComments: function(cb) {
 
-            if(!obj.merchant_id) return cb(null);
+	        if (!obj.merchant_id) return cb(null);
 
-            var p_r_ids = [];
+	        var o = {
+		        command: 'get',
+		        object: 'merchant_comment',
+		        params: {
+			        param_where: {
+				        merchant_id: obj.merchant_id
+			        },
+			        collapseData: false
+		        }
+	        };
 
-            for(var i in prev_requests){
-                var pr = prev_requests[i];
+	        _t.api(o, function (err, res) {
 
-                if(pr.id != id){
-                    p_r_ids.push(pr.id);
-                }
+		        if (err) return cb(new UserError('Не удалось получить заметки', {err: err, o: o}));
 
-            }
+		        comments = res;
 
-            var o = {
-                command: 'get',
-                object: 'financing_request_comment',
-                params: {
-                    where: [
-                        {
-                            key: 'financing_request_id',
-                            type: 'in',
-                            val1: p_r_ids
-                        }
-                    ],
-                    collapseData: false
-                }
-            };
+		        cb(null);
 
-            _t.api(o, function(err,res){
-
-                if(err) return cb(new UserError('Не удалось получить заметки', {err:err,o:o}));
-
-                comments = res;
-
-                cb(null);
-
-            });
+	        });
 
         },
-        insertComments: function(cb){
+        insertComments: function(cb) {
 
-            if(comments && comments.length > 0){
+	        if (comments && comments.length > 0) {
 
-                async.eachSeries(comments, function(item,cb){
+		        async.eachSeries(comments, function (comment, cb) {
+			        comment.financing_request_id = id;
 
-                    var created_id;
+			        var o = {
+				        command: 'add',
+				        object: 'financing_request_comment',
+				        params: comment
+			        };
 
-                    var o = {
-                        command: 'add',
-                        object: 'financing_request_comment',
-                        params: {
-                            financing_request_id: id,
-                            comment: item.comment
-                        }
-                    };
+			        _t.api(o, function (err, res) {
 
-                    _t.api(o, function(err,res){
+				        if (err) return cb(new UserError('Не удалось создать заметку', {err: err, o: o}));
 
-                        if(err) return cb(new UserError('Не удалось создать заметку', {err:err,o:o}));
+				        var created_id = res.id;
 
-                        created_id = res.id;
+				        var o2 = {
+					        command: 'modify',
+					        object: 'financing_request_comment',
+					        params: {
+						        id: created_id,
+						        created_by_user_id: comment.created_by_user_id,
+						        created: comment.created
+					        }
+				        };
 
-                        var o2 = {
-                            command: 'modify',
-                            object: 'financing_request_comment',
-                            params: {
-                                id: created_id,
-                                created_by_uesr_id: item.created_by_uesr_id,
-                                created: item.created
-                            }
-                        };
+				        _t.api(o2, function (err, res) {
 
-                        _t.api(o, function(err,res){
+					        if (err) return cb(new UserError('Не удалось обновить созданную заметку', {
+						        err: err,
+						        o: o2
+					        }));
 
-                            if(err) return cb(new UserError('Не удалось обновить созданную заметку', {err:err,o:o}));
+					        cb(null);
 
-                            cb(null);
+				        });
 
-                        });
+			        });
 
-                    });
+		        }, cb);
 
-                }, cb);
-
-            }else{
-                cb(null);
-            }
+	        } else {
+		        cb(null);
+	        }
 
         },
         getPreviousRequestTurnover: function(cb){
@@ -688,7 +672,6 @@ Model.prototype.add_ = function (obj, cb) {
             ];
 
             async.eachSeries(monthsArr, function(item, cb) {
-
 	            var o = {
 		            command: 'add',
 		            object: 'request_turnover',
@@ -724,7 +707,9 @@ Model.prototype.add_ = function (obj, cb) {
                         object: 'turnover_calendar',
                         params: {
 	                        financing_request_id: id,
-                            month: item.month,
+	                        year: item.year,
+	                        month_n: months.indexOf(item.month.toLowerCase()) + 1,
+	                        month: item.month,
                             days: nw[item.year][months.indexOf(item.month.toLowerCase())].join(',')
                         }
                     };
@@ -2065,6 +2050,74 @@ Model.prototype.request_to_merchant = function (obj, cb) {
 
             });
 
+        },
+	    removeMerchantComments: cb => {
+		    if (fin_request.merchant_id) {
+		    	let o = {
+		    		command: 'get',
+				    object: 'merchant_comment',
+				    params: {
+		    			param_where: {
+						    merchant_id: fin_request.merchant_id
+					    },
+					    collapseData: false
+				    }
+			    };
+
+		    	_t.api(o, (err, res) => {
+				    if (err) return cb(new UserError('Не удалось получить заметки торговца', {o: o, err: err}));
+
+				    if (res && res.length) {
+				    	async.eachSeries(res, (comment, cb2) => {
+				    		let o = {
+				    			command: 'remove',
+							    object: 'merchant_comment',
+							    params: {
+								    id: comment.id
+							    }
+						    };
+
+				    		_t.api(o, cb2);
+					    }, cb);
+				    } else {
+				    	cb(null);
+				    }
+			    });
+		    } else {
+		    	cb(null);
+		    }
+	    },
+        bindCommentsToMerchant: cb => {
+	        let o = {
+		        command: 'get',
+		        object: 'financing_request_comment',
+		        params: {
+			        param_where: {
+				        financing_request_id: id
+			        },
+			        collapseData: false
+		        }
+	        };
+
+	        _t.api(o, (err, res) => {
+		        if (err) return cb(new UserError('Не удалось получить заметки торговца', {o: o, err: err}));
+
+		        if (res && res.length) {
+			        async.eachSeries(res, (comment, cb2) => {
+				        comment.merchant_id = merchant_id || fin_request.merchant_id;
+
+				        let o = {
+					        command: 'add',
+					        object: 'merchant_comment',
+					        params: comment
+				        };
+
+				        _t.api(o, cb2);
+			        }, cb);
+		        } else {
+			        cb(null);
+		        }
+	        });
         },
         updateRequest: function (cb) {
 

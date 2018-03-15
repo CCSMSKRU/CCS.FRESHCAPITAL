@@ -2,7 +2,6 @@
 
     var tableInstance = MB.Tables.getTable(MB.Tables.justLoadedId);
 
-
     tableInstance.ct_instance.ctxMenuData = [
         {
             name: 'option1',
@@ -18,10 +17,11 @@
 
                 var financing_id = tableInstance.data.data[row].id;
 
-                var work_statuses = ['ACQUIRING_IN_PROCCESS', 'READY_TO_WORK','CLOSED', 'WAIT_BANK_CONFIRM','BANK_CONFIRM', 'WAIT_INVESTOR'];
-
-
-                var form_name = (work_statuses.indexOf(tableInstance.data.data[row].status_sysname) == -1 )? 'form_merchant_financing' : 'form_merchant_financing_work_2';
+	            var work_statuses = ['SETTING_UP_EQUIPMENT', 'ACQUIRING_IN_PROCCESS', 'READY_TO_WORK', 'CLOSED', 'WAIT_BANK_CONFIRM', 'BANK_CONFIRM'];
+	            console.error(tableInstance.data.data[row]);
+	            var form_name = (work_statuses.indexOf(tableInstance.data.data[row].status_sysname) == -1 ) ?
+		            (tableInstance.data.data[row].financing_request_type_sysname == 'POS' ? 'form_merchant_financing_equipment' : 'form_merchant_financing') :
+		            (tableInstance.data.data[row].financing_request_type_sysname == 'POS' ? 'form_merchant_financing_equipment_work_2' : 'form_merchant_financing_work_2');
 
 
                 var openInModalO = {

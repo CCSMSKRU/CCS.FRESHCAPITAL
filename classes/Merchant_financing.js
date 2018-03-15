@@ -334,6 +334,8 @@ Model.prototype.add_ = function (obj, cb) {
 
     var from_request = obj.from_request;
 
+    let financing_request_id;
+
     async.series({
         0: function (cb) {
             // Проверяю есть ли открытые финансирования (если есть, делаю запрос на confirm)
@@ -403,6 +405,8 @@ Model.prototype.add_ = function (obj, cb) {
                     return cb(new UserError('Для данного торговца не было создано заявки на финасирование'));
 
                 }
+
+                financing_request_id = res[0].id;
 
                 cb(null);
             });
@@ -704,7 +708,43 @@ Model.prototype.add_ = function (obj, cb) {
         addHistory: function (cb) { // Создадим запись в истории мерчанта
             obj.merchant_financing_id = merchant_financing_id;
             _t.addHistory(obj, cb);
-        }
+        },
+	    copyTurnoverCalendar: cb => {
+		    let o = {
+			    command: 'get',
+			    object: 'turnover_calendar',
+			    params: {
+				    param_where: {
+					    financing_request_id: financing_request_id
+				    },
+				    collapseData: false
+			    }
+		    };
+
+		    _t.api(o, (err, res) => {
+			    if (err) return cb(new MyError('Не удалось получить календарь заявки', {o: o, err: err}));
+
+			    if (res && res.length) {
+				    async.eachSeries(res, (cal, cb) => {
+					    let o = {
+						    command: 'add',
+						    object: 'financing_calendar',
+						    params: {
+							    merchant_financing_id: merchant_financing_id,
+							    days: cal.days,
+							    month: cal.month,
+							    month_n: cal.month_n,
+							    year: cal.year
+						    }
+					    };
+
+					    _t.api(o, cb);
+				    }, cb);
+			    } else {
+				    cb(null);
+			    }
+		    });
+	    }
     }, function (err, res) {
         if (err) {
             rollback.rollback({rollback_key:rollback_key,user:_t.user}, function (err, res) {
@@ -3344,7 +3384,7 @@ Model.prototype.moneySentAndSetInWork = function (obj, cb) {
 
     var readyData, template, binaryData, filenameXLS;
     var tplBank, tplMerch, attachments;
-    var bank, bank_emails, invalid_emails;
+    var bank, bank_emails, invalid_emails = [];
     var broker_comission;
     var agent_comission = 0;
     async.series({
@@ -3950,7 +3990,6 @@ Model.prototype.ready_to_work_to_setting_up = function (obj, cb) {
 
 
 	async.series({
-
 		notify: function (cb) {
 			var params = {
 				id:obj.id,
@@ -3979,7 +4018,18 @@ Model.prototype.ready_to_work_to_setting_up = function (obj, cb) {
 			};
 			_t.moneySentAndSetInWork(params, cb);
 
-		}
+		},
+        setStatus: cb => {
+	        _t.setStatus({
+		        id: id,
+		        status: 'SETTING_UP_EQUIPMENT',
+		        rollback_key:rollback_key
+	        }, function (err) {
+		        if (err) return cb(new UserError('Не удалось изменить статус финансирования. Обратитесь к администратору.', {err: err}));
+
+		        cb(null);
+	        });
+        }
 	}, function (err) {
 		if (err) {
 			// if (err.message == 'needConfirm') return cb(err);
@@ -3999,12 +4049,12 @@ Model.prototype.ready_to_work_to_setting_up = function (obj, cb) {
 
 
 /**
- * SETTING_UP_EQUIPMENT --> READY_TO_WORK
+ * ACQUIRING_IN_PROCCESS --> SETTING_UP_EQUIPMENT
  * @param obj
  * @param cb
  * @returns {*}
  */
-Model.prototype.setting_up_to_ready_to_work = function (obj, cb) {
+Model.prototype.work_to_setting_up = function (obj, cb) {
 	if (arguments.length == 1) {
 		cb = arguments[0];
 		obj = {};
@@ -4018,37 +4068,7 @@ Model.prototype.setting_up_to_ready_to_work = function (obj, cb) {
 
 	_t.setStatus({
 		id: id,
-		status: 'READY_TO_WORK',
-		rollback_key:rollback_key
-	}, function (err) {
-		if (err) return cb(new UserError('Не удалось изменить статус финансирования. Обратитесь к администратору.', {err: err}));
-
-		cb(null);
-	});
-};
-
-
-/**
- * SETTING_UP_EQUIPMENT --> ACQUIRING_IN_PROCCESS
- * @param obj
- * @param cb
- * @returns {*}
- */
-Model.prototype.setting_up_to_work = function (obj, cb) {
-	if (arguments.length == 1) {
-		cb = arguments[0];
-		obj = {};
-	}
-	var _t = this;
-	var id = obj.id;
-
-	if (isNaN(+id)) return cb(new MyError('В метод не передан id'));
-	// if (!filename) return cb(new MyError('В метод не передан filename'));
-	var rollback_key = obj.rollback_key || rollback.create();
-
-	_t.setStatus({
-		id: id,
-		status: 'ACQUIRING_IN_PROCCESS',
+		status: 'SETTING_UP_EQUIPMENT',
 		rollback_key:rollback_key
 	}, function (err) {
 		if (err) return cb(new UserError('Не удалось изменить статус финансирования. Обратитесь к администратору.', {err: err}));

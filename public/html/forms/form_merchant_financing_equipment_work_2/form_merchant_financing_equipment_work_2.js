@@ -1,7 +1,7 @@
 (function () {
 
     var formID = MB.Forms.justLoadedId;
-    var formInstance = MB.Forms.getForm('form_merchant_financing_work_2', formID);
+    var formInstance = MB.Forms.getForm('form_merchant_financing_equipment_work_2', formID);
     var formWrapper = $('#mw-' + formInstance.id);
 
     var modalInstance = MB.Core.modalWindows.windows.getWindow(formID);
@@ -29,11 +29,16 @@
                     matching: ['equal'],
                     colValues: ['ACQUIRING_IN_PROCCESS']
                 },
-                {
-                    colNames: ['status_sysname'],
-                    matching: ['equal'],
-                    colValues: ['WAIT_INVESTORS']
-                }
+	            {
+		            colNames: ['status_sysname'],
+		            matching: ['equal'],
+		            colValues: ['WAIT_INVESTORS']
+	            },
+	            {
+		            colNames: ['status_sysname'],
+		            matching: ['equal'],
+		            colValues: ['SETTING_UP_EQUIPMENT']
+	            }
             ],
             handler: function () {
 
@@ -133,71 +138,126 @@
 
             }
         },
-        {
-            title: 'В работу',
-            color: 'green',
-            icon: "fa-check",
-            type: "SINGLE",
-            hidden: false,
-            condition: [{
-                colNames: ['status_sysname'],
-                matching: ['not_equal'],
-                colValues: ['READY_TO_WORK']
-            }],
-            handler: function () {
+	    {
+		    title: 'Настройка оборудования',
+		    color: 'green',
+		    icon: "fa-check",
+		    type: "SINGLE",
+		    hidden: false,
+		    condition: [{
+			    colNames: ['status_sysname'],
+			    matching: ['not_equal'],
+			    colValues: ['READY_TO_WORK']
+		    }],
+		    handler: function () {
 
-                var msg = '<div class="form-group"><label>Укажите дату начала списаний:</label><input class="form-control p-s-date" type="text" value="{{date}}"/></div>';
-                var mo = {
-                    date: formInstance.data.data[0].payments_start_date
-                };
+			    var msg = '<div class="form-group"><label>Перевод финансирования в промежуточный статус "Настройка оборудования". ' +
+                    'Финансирование будет автоматически переведено в работу при первом поступлении средств от торговца.</label></div>';
 
-                bootbox.dialog({
-                    title: 'Подтверждение',
-                    message: Mustache.to_html(msg, mo),
-                    buttons: {
-                        success: {
-                            label: 'Подтвердить',
-                            callback: function () {
+			    msg = '<div class="form-group"><label>Укажите дату начала списаний:</label><input class="form-control p-s-date" type="text" value="{{date}}"/></div>';
+			    var mo = {
+				    date: formInstance.data.data[0].payments_start_date
+			    };
 
-                                var fin_o = {
-                                    command: 'ready_to_work_to_work',
-                                    object: 'merchant_financing',
-                                    params: {
-                                        payments_start_date: $('.p-s-date').val(),
-                                        id: formInstance.data.data[0].id
-                                    }
-                                };
+			    bootbox.dialog({
+				    title: 'Подтверждение',
+				    message: Mustache.to_html(msg, mo),
+				    buttons: {
+					    success: {
+						    label: 'Подтвердить',//
+						    callback: function () {
 
-                                formInstance.loader(true, 'Переводим финансирование в работу, пожалуйста пододжите.');
+							    var fin_o = {
+								    command: 'ready_to_work_to_setting_up',
+								    object: 'merchant_financing',
+								    params: {
+									    payments_start_date: $('.p-s-date').val(),
+									    id: formInstance.data.data[0].id
+								    }
+							    };
 
-                                socketQuery(fin_o, function (res) {
+							    formInstance.loader(true, 'Переводим финансирование в статус "Настройка оборудования", пожалуйста пододжите.');
 
-                                    formInstance.loader(false, 'Переводим финансирование в работу, пожалуйста пододжите.');
+							    socketQuery(fin_o, function (res) {
 
-                                    console.log(res);
+								    formInstance.loader(false, 'Переводим финансирование в статус "Настройка оборудования", пожалуйста пододжите.');
 
-                                    formInstance.reload();
+								    console.log(res);
 
-                                });
+								    formInstance.reload();
 
-                            }
-                        }
-                    }
-                });
+							    });
 
-                $('.p-s-date').datepicker({
-                    autoclose: true,
-                    todayHighlight: true,
-                    //minuteStep: 10,
-                    keyboardNavigation: false,
-                    todayBtn: true,
-                    firstDay: 1,
-                    format: 'dd.mm.yyyy',
-                    weekStart: 1,
-                    language: "ru"
-                });
-            }
-        },
+						    }
+					    }
+				    }
+			    });
+
+			    $('.p-s-date').datepicker({
+				    autoclose: true,
+				    todayHighlight: true,
+				    //minuteStep: 10,
+				    keyboardNavigation: false,
+				    todayBtn: true,
+				    firstDay: 1,
+				    format: 'dd.mm.yyyy',
+				    weekStart: 1,
+				    language: "ru"
+			    });
+		    }
+	    },
+	    {
+		    title: 'Вернуть в настройку',
+		    color: 'green',
+		    icon: "fa-check",
+		    type: "SINGLE",
+		    hidden: false,
+		    condition: [{
+			    colNames: ['status_sysname'],
+			    matching: ['not_equal'],
+			    colValues: ['ACQUIRING_IN_PROCCESS']
+		    }],
+		    handler: function () {
+
+			    var msg = '<div class="form-group">Уверены?</div>';
+
+			    bootbox.dialog({
+				    title: 'Подтверждение',
+				    message: msg,
+				    buttons: {
+					    success: {
+						    label: 'Подтвердить',
+						    callback: function () {
+
+							    var fin_o = {
+								    command: 'work_to_setting_up',
+								    object: 'merchant_financing',
+								    params: {
+									    id: formInstance.data.data[0].id
+								    }
+							    };
+
+							    formInstance.loader(true, 'Переводим финансирование в статус "Настройка оборудования", пожалуйста пододжите.');
+
+							    socketQuery(fin_o, function (res) {
+
+								    formInstance.loader(true, 'Переводим финансирование в статус "Настройка оборудования", пожалуйста пододжите.');
+
+								    console.log(res);
+
+								    formInstance.reload();
+
+							    });
+
+						    }
+					    },
+					    error: {
+						    label: 'Отменить'
+					    }
+				    }
+			    });
+		    }
+	    },
         {
             title: (formInstance.data.data[0].closed_by_financing_id == '')? 'Подготовить рефинансирование':'Открыть рефинансирование',
             color: 'black',
@@ -315,8 +375,9 @@
                         if(!res.code){
 
                             var formName = (res.data[0].status_sysname == 'READY_TO_WORK' ||
-                                res.data[0].status_sysname == 'ACQUIRING_IN_PROCCESS' ||
-                                res.data[0].status_sysname == 'CLOSED')? 'form_merchant_financing_work' : 'form_merchant_refinancing';
+	                            res.data[0].status_sysname == 'SETTING_UP_EQUIPMENT' ||
+	                            res.data[0].status_sysname == 'ACQUIRING_IN_PROCCESS' ||
+	                            res.data[0].status_sysname == 'CLOSED')? 'form_merchant_financing_work' : 'form_merchant_refinancing';
 
                             var openInModalO = {
                                 id: refinFormId,

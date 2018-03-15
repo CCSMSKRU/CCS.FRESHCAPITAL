@@ -1751,7 +1751,7 @@
       "sysname": { "type": "varchar", "length": "255", "name": "Системное имя"}
     }
   },
-    "investor_account_history_log": {
+  "investor_account_history_log": {
     "profile": {
       "name": "investor_account_history_log",
       "name_ru": "Лог счёта инвестора",
@@ -1778,7 +1778,7 @@
       "locked_amount": {"type": "bigint", "length": "255", "name": "Заблокировано средств", "validation": "number"},
       "is_default" : {"type": "tinyint", "length": "1", "name": "По умолчанию","hint":"Этот счет используется по умолчанию.", "editable":false}
     }
-  },
+},
   "investor_history_log": {
     "profile": {
       "name": "investor_history_log",
@@ -2158,6 +2158,21 @@
       "custom_buttons_1": { "type": "varchar", "length": "255", "name": "-"}
     }
   },
+  "financing_calendar":{
+    "profile": {
+      "name": "financing_calendar",
+      "name_ru": "Календарь финансирования",
+      "ending": ""
+    },
+    "structure": {
+      "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "merchant_financing_id" : {"type": "bigint", "length": "20", "visible":false, "parent_key": true},
+      "year" : {"type": "int", "length": "4", "name": "Год"},
+      "month_n" : {"type": "int", "length": "4", "name": "№ Месяца"},
+      "month" : {"type": "varchar", "length": "255", "name": "Месяц"},
+      "days": { "type": "varchar", "length": "255", "name": "Дни"}
+    }
+  },
   "turnover_calendar":{
     "profile": {
       "name": "turnover_calendar",
@@ -2167,6 +2182,8 @@
     "structure": {
       "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
       "financing_request_id" : {"type": "bigint", "length": "20", "visible":false, "parent_key": true},
+      "year" : {"type": "int", "length": "4", "name": "Год"},
+      "month_n" : {"type": "int", "length": "4", "name": "№ Месяца"},
       "month" : {"type": "varchar", "length": "255", "name": "Месяц"},
       "days": { "type": "varchar", "length": "255", "name": "Дни"}
     }
@@ -2235,9 +2252,9 @@
       "id": { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
       "daily_payments_id" : {"type": "bigint", "length": "20", "visible":false, "parent_key": true},
       "merchant_financing_payment_id" : {"type": "bigint", "length": "20"},
-      "merchant_financing_calendar_id" : {"type": "bigint", "from_table": "merchant_financing_payment", "keyword": "merchant_financing_payment_id", "return_column": "calendar_id", "is_virtual": true, "name": "Календарь id", "visible":false},
+      "merchant_financing_calendar_id" : {"type": "bigint", "length": "20", "name": "Календарь id", "visible":false},
       "daily_payments_date" : {"type": "date", "from_table": "daily_payments", "keyword": "daily_payments_id", "return_column": "payments_for_date", "is_virtual": true, "name": "daily_payments_date", "visible":false},
-      "merchant_financing_id" : {"type": "bigint", "join_table": "merchant_financing_payment", "from_table": "merchant_financing_calendar", "keyword": "calendar_id", "return_column": "merchant_financing_id", "is_virtual": true, "name": "Финансирование id", "visible":false},
+      "merchant_financing_id" : {"type": "bigint", "from_table": "merchant_financing_calendar", "keyword": "merchant_financing_calendar_id", "return_column": "merchant_financing_id", "is_virtual": true, "name": "Финансирование id", "visible":false},
       "merchant_id" : {"type": "bigint", "join_table": "merchant_financing_calendar", "from_table": "merchant_financing", "keyword": "merchant_financing_id", "return_column": "merchant_id", "is_virtual": true, "name": "Торговец id", "visible":false},
       "financing_agreement_date" : {"type": "date", "join_table": "merchant_financing_calendar", "from_table": "merchant_financing", "keyword": "merchant_financing_id", "return_column": "financing_date", "is_virtual": true, "name": "Дата договора"},
       "merchant_short_name" : {"type": "varchar", "join_table": "merchant_financing", "from_table": "merchant", "keyword": "merchant_id", "return_column": "short_name", "is_virtual": true, "name": "Торговец"},
@@ -2251,12 +2268,20 @@
       "import_amount_vtb" : { "type": "DECIMAL(50, 2)", "name": "Переведено vtb24 (импорт)"},
       "import_applied" : { "type": "tinyint", "length": "1", "name": "Импорт"},
 
+      "bank" : {"type": "varchar", "length": "255", "from_table": "bank", "keyword": "bank_id", "return_column": "name", "is_virtual": true, "name": "Банк", "visible": true, "editable": false},
+      "bank_id" : {"type": "bigint", "length": "20", "visible":false, "name": "Id Банка"},
+
+      "is_working_day" : { "type": "tinyint", "length": "1", "name": "Рабочий день", "default": 1},
 
       "closing_type_id" : {"type": "bigint", "length": "20", "editable": false, "visible": false},
       "closing_type" : {"type": "varchar", "length": "255", "from_table": "payment_close_type", "keyword": "closing_type_id", "return_column": "name", "is_virtual": true, "name": "Тип закрытия"},
       "closing_type_sysname" : {"type": "varchar", "length": "255", "from_table": "payment_close_type", "keyword": "closing_type_id", "return_column": "sysname", "is_virtual": true, "name": "Тип закрытия SYS", "visible": false},
       "default_date" : {"type": "date", "name": "Дата дефолта"},
       "closing_date": {"type": "date", "name": "Дата закрытия"},
+
+      "financing_request_type_id" : {"type": "bigint", "length": "20", "visible": false},
+      "financing_request_type" : {"type": "varchar", "length": "255", "from_table": "financing_request_type", "keyword": "financing_request_type_id", "return_column": "name", "is_virtual": true, "name": "Тип заявки"},
+      "financing_request_type_sysname" : {"type": "varchar", "length": "255", "from_table": "financing_request_type", "keyword": "financing_request_type_id", "return_column": "sysname", "is_virtual": true, "name": "Тип заявки SYS"},
 
       "custom_buttons_1": { "type": "varchar", "length": "255", "name": "-"},
       "default_count" : { "type": "bigint", "length": "20", "name": "Пропущено(не закрыто)"},
@@ -2435,14 +2460,30 @@
     "profile": {
       "name": "financing_request_comment",
       "name_ru": "Комментарий заявки",
+      "server_parent_table":"financing_request",
+      "server_parent_key":"financing_request_id",
       "ending": ""
     },
     "structure": {
       "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
       "datetime": {"type": "datetime","name": "Дата время"},
       "comment" : {"type": "varchar","length": "255", "name": "Коммент"},
-      "financing_request_id" : {"type": "bigint","length": "20"}
+      "financing_request_id" : {"type": "bigint","length": "20", "name": "Id Заявки", "parent_key": true}
+    }
+  },
+  "merchant_comment": {
+    "profile": {
+      "name": "merchant_comment",
+      "name_ru": "Комментарий торговца",
+      "server_parent_table":"merchant",
+      "server_parent_key":"merchant_id",
+      "ending": ""
+    },
+    "structure": {
+      "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
+      "datetime": {"type": "datetime","name": "Дата время"},
+      "comment" : {"type": "varchar","length": "255", "name": "Коммент"},
+      "merchant_id" : {"type": "bigint","length": "20", "name": "Id Торговца", "parent_key": true}
     }
   }
 }
-

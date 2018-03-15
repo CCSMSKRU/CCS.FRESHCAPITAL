@@ -13,6 +13,7 @@
 		this.parent_id = params.parent_id || '';
 		this.parentObject = params.parentObject || undefined;
 		this.externalWhere = params.externalWhere || "";
+		this.default_where = params.default_where || "";
         this.itemsPerPage = 0;
         this.pagesCount = 0;
 		this.primary_keys = [];
@@ -73,6 +74,8 @@
 		_t.getProfile(_t.client_object, function () {
 			_t.primary_keys = _t.profile['extra_data']['object_profile']['primary_key'].split(',');
 			_t.itemsPerPage = _t.profile['extra_data']['object_profile']['rows_max_num'];
+
+
 			_t.getData(function () {
 
 
@@ -559,7 +562,7 @@
 		}
 
 		if (_t.externalWhere != '') {
-			//whereArr.push(_t.externalWhere);
+			whereArr.push(_t.externalWhere);
 		}
 		if (_t.profile.extra_data.object_profile.default_where != '') {
 			//whereArr.push(_t.profile.extra_data.object_profile.default_where);

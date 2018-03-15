@@ -2,75 +2,8 @@
     <div data-tab="card" class="modal_tab_switcher active">Карточка</div>
     <div data-tab="scoring" class="modal_tab_switcher">Скоринг</div>
     <div data-tab="financing" class="modal_tab_switcher">Финансирование</div>
-    <div data-tab="docs" class="modal_tab_switcher">Документы (БКИ)</div>
+    <div data-tab="docs" class="modal_tab_switcher">Документы / Заметки</div>
 </div>
-
-<style>
-    #scoring_tabs_wrapper > ul {
-        display: flex;
-        flex-direction: row;
-        align-items: stretch;
-        justify-content: flex-start;
-        height: 60px;
-        margin: 40px 0 0;
-        padding: 0;
-        list-style: none;
-    }
-    #scoring_tabs_wrapper > ul li {
-        width: 160px;
-    }
-    #scoring_tabs_wrapper > ul li a {
-        display: block;
-        height: 100%;
-        font-size: 30px;
-        color: black;
-        text-decoration: none;
-        border-bottom: 4px solid rgba(255, 255, 255, 0);
-        text-align: center;
-    }
-    #scoring_tabs_wrapper > ul li.ui-tabs-active a,
-    #scoring_tabs_wrapper > ul li a:hover {
-        border-color: red;
-    }
-    #scoring_tabs_wrapper > ul li.ui-tabs-active a {
-        color: red;
-    }
-
-    .scoring_tabs {
-        border-top: 1px solid black;
-        padding: 30px 20px;
-        margin-top: -1px;
-    }
-
-    .scoring_tabs .request-btn {
-        margin-top: 20px;
-    }
-
-    .po_value {
-        min-width: calc(100% - 100px);
-        flex-basis: auto;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding-right: 4px;
-    }
-    .po_key {
-        min-width: 100px;
-        text-align: right;
-        margin-right: 10px;
-        flex-basis: auto;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding-right: 4px;
-    }
-    .po_key_wrapper {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: flex-start;
-    }
-</style>
 
 <div class="modal_tab active" data-tab="card">
 
@@ -249,7 +182,7 @@
             </div>
 
             <div class="col-md-8">
-                <div data-tbls="request_turnover.tbl_request_turnover_equipment" class="fn-child-tbl-holder marTop10"></div>
+                <div data-tbls="request_turnover.tbl_request_turnover" class="fn-child-tbl-holder marTop10"></div>
             </div>
         </div>
 
@@ -323,7 +256,7 @@
 
         <div class="col-md-12">
             <div class="col-md-12">
-                <div data-tbls="request_document.tbl_request_document" class="fn-child-tbl-holder marTop10"></div>
+                <div data-tbls="request_document.tbl_request_document,financing_request_comment.tbl_financing_request_comment" class="fn-child-tbl-holder marTop10"></div>
             </div>
         </div>
     </div>

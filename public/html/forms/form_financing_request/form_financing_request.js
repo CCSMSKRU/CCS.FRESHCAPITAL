@@ -11,7 +11,7 @@
 
     $("#scoring_tabs_wrapper").tabs();
 
-        try {
+    try {
     	$('#moedelo_input').val(formInstance.data.data[0].inn);
     	$('#2gis_org_name_input').val(formInstance.data.data[0].merchant_name);
         } catch (e) {

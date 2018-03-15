@@ -1,7 +1,7 @@
 (function () {
 
     var formID = MB.Forms.justLoadedId;
-    var formInstance = MB.Forms.getForm('form_merchant', formID);
+    var formInstance = MB.Forms.getForm('form_financing_request', formID);
     var formWrapper = $('#mw-' + formInstance.id);
 
     var docs_table = formInstance.tblInstances[0];
@@ -9,6 +9,19 @@
     var modalInstance = MB.Core.modalWindows.windows.getWindow(formID);
     modalInstance.stick = 'top';
     modalInstance.stickModal();
+
+
+    console.error('//////////////////////');
+    var chO = {
+		column_name: 'financing_request_type_id',
+		type: 'select2',
+		value: {
+			value: '1',
+			selValue: '1'
+		}
+    };
+
+    formInstance.addChange(chO);
 
 
     formInstance.lowerButtons = [

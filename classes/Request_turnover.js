@@ -193,9 +193,11 @@ Model.prototype.modify_ = function (obj, cb) {
             };
 
             var work_days_count = turnover.manual_days_count;
-            if (!work_days_count){
-                work_days_count = (turnover.works_on_holidays)? turnover.full_days_count : turnover.work_days_count;
+            if (!work_days_count) {
+	            work_days_count = (turnover.works_on_holidays) ? turnover.full_days_count : turnover.work_days_count;
             }
+
+            if (!work_days_count) return cb(null);
 
             params.amount_per_day = Math.round((turnover.turnover / work_days_count) * 100)/100;
 

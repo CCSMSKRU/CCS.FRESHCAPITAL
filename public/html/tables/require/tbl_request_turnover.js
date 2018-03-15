@@ -4,6 +4,9 @@
 
 	tableInstance.ct_instance.ctxMenuData = [];
 
+	$('body').find('#month_wrapper').remove();
+	$('body').append('<div id="month_wrapper"></div>');
+
 	let months_data = {};
 	let months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
 
@@ -17,11 +20,20 @@
 		let month = [];
 		let week = [];
 
+		let day_off = 0;
+		let day_on = 0;
+
 		for (let i = 1; i <= days_n; i++) {
 			week.push({
 				day_off: days.indexOf(i.toString()) >= 0,
 				day: i
 			});
+
+			if (days.indexOf(i.toString()) >= 0) {
+				day_off++;
+			} else {
+				day_on++;
+			}
 
 			if (weekday == 0) {
 				month.push(week);
@@ -33,15 +45,21 @@
 		}
 		month.push(week);
 
-		let html = '<div id="month_wrapper">' +
+		let month_title = curr_month[0].toUpperCase() + curr_month.substr(1);
+
+		let html =
+			'<div class="title_wrapper">' +
+			'<div class="month_title" data-month="' + month_title + '" data-days-n="' + days_n + '">' +
+				month_title + ' (раб.: ' + day_on + ', вых.: ' + day_off + ')' +
+			'</div>' +
 			'<div class="week">' +
-			'<div class="weektitle">ПН</div>' +
-			'<div class="weektitle">ВТ</div>' +
-			'<div class="weektitle">СР</div>' +
-			'<div class="weektitle">ЧТ</div>' +
-			'<div class="weektitle">ПТ</div>' +
-			'<div class="weektitle day_off">СБ</div>' +
-			'<div class="weektitle day_off">ВС</div></div>';
+			'<div class="weektitle">Пн</div>' +
+			'<div class="weektitle">Вт</div>' +
+			'<div class="weektitle">Ср</div>' +
+			'<div class="weektitle">Чт</div>' +
+			'<div class="weektitle">Пт</div>' +
+			'<div class="weektitle day_off">Сб</div>' +
+			'<div class="weektitle day_off">Вс</div></div></div><div class="content">';
 		month.forEach(week => {
 			html += '<div class="week">';
 			week.forEach(weekday => {
@@ -52,13 +70,18 @@
 		});
 		html += '</div>';
 
-		$('body').find('#month_wrapper').remove();
-		$('body').append(html);
+		let pos = $('.fa.fa-calendar').eq(0).offset();
+		$('#month_wrapper').css({
+			top: (pos.top - 5) + 'px',
+			left: (pos.left + 100) + 'px'
+		}).html(html).show();
 	};
 
 	$(document).off('click', '#month_wrapper .weekday').on('click', '#month_wrapper .weekday', (e) => {
 		if (curr_month) {
 			$(e.currentTarget).toggleClass('day_off');
+
+			let days_n = $('#month_wrapper .month_title').attr('data-days-n');
 
 			let week = [];
 			$(e.currentTarget).parents('#month_wrapper').find('.weekday').each((i, v) => {
@@ -72,11 +95,26 @@
 				object: 'turnover_calendar',
 				params: {
 					id: months_data[curr_month].id,
-					days: week.join(',')
+					days: week.join(','),
+					days_n: days_n - week.length
 				}
 			};
 
-			socketQuery(o);
+			socketQuery(o, () => {
+				let $month_title = $('#month_wrapper .month_title');
+				let month_title = $month_title.attr('data-month');
+				let days_n = $month_title.attr('data-days-n');
+
+				$month_title.html(month_title + ' (раб.: ' + (days_n - week.length) + ', вых.: ' + week.length + ')');
+			});
+		}
+	});
+
+	$(document).off('mouseup').on('mouseup', (e) => {
+		let month_wrapper = $('#month_wrapper');
+		if (!month_wrapper.is(e.target) && month_wrapper.has(e.target).length === 0 && month_wrapper.is(":visible")) {
+			month_wrapper.hide();
+			tableInstance.reload();
 		}
 	});
 
@@ -90,6 +128,7 @@
 					icon: 'fa-calendar',
 					placeholder: 'Календарь',
 					callback: function (rowdata) {
+						console.log(rowdata);
 						if (rowdata && rowdata.month && months.indexOf(rowdata.month.toLowerCase()) >= 0) {
 							curr_month = rowdata.month;
 

@@ -77,7 +77,7 @@ Model.prototype.createCalendar = function (obj, cb) {
     var confirm = obj.confirm;
     var rollback_key = obj.rollback_key || rollback.create();
 
-    var calendar_type = obj.calendar_type || 'gov';
+    var calendar_type = obj.calendar_type || 'custom';
     var financing_type_id = obj.financing_type_id;
 
     var gov_expiration_year = '01.03.2018';
@@ -164,15 +164,43 @@ Model.prototype.createCalendar = function (obj, cb) {
             });
         },
         ifFinancingFIXED: function (cb) {
-            if (merchant_financing.financing_type_sysname!=='FIXED') return cb(null);
+            // if (merchant_financing.financing_type_sysname!=='FIXED') return cb(null);
             // Создадим календарь (пейменты)
 
+	        let custom_calendar = {};
+
             async.series({
+	            getFinancingCalendar: cb => {
+		            let o = {
+			            command: 'get',
+			            object: 'financing_calendar',
+			            params: {
+				            param_where: {
+					            merchant_financing_id: merchant_financing.id
+				            },
+				            collapseData: false
+			            }
+		            };
+
+		            _t.api(o, (err, res) => {
+			            if (err) return cb(new MyError('Ошибка получения календаря финансирования', {o: o, err: err}));
+
+			            if (res) {
+				            res.forEach(row => {
+					            custom_calendar[row.month_n - 1] = row.days.split(',') || [];
+				            });
+			            }
+
+			            cb(null);
+		            });
+	            },
                 generateCalendar: function (cb) {
                     generateCalendar({
+	                    custom_calendar: custom_calendar,
                         date_start: payments_start_date,
                         payments_count: merchant_financing.payments_count,
-                        type: calendar_type
+                        type: calendar_type,
+	                    financing_id: merchant_financing.id
                     }, function (err, res) {
                         calendar = res;
                         cb(null);
@@ -184,7 +212,6 @@ Model.prototype.createCalendar = function (obj, cb) {
                     var counter = 0;
 
                     async.eachSeries(calendar, function (item, cb) {
-
                         var o = {
                             command: 'add',
                             object: 'merchant_financing_payment',

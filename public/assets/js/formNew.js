@@ -616,7 +616,10 @@
 			 });*/
 		};
 		MB.Forms.justLoadedId = _t.id;
-		if (_t.activeId == 'new' && _t.profile['extra_data']['object_profile']['child_client_object'] != '') {
+
+		// && _t.profile['extra_data']['object_profile']['child_client_object'] != ''
+
+		if (_t.activeId == 'new' ) {
 			load("html/forms/" + _t.name + "/" + _t.name + "_add" + ".js");
 
 		} else {

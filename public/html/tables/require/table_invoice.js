@@ -2,6 +2,8 @@
 
     var tableInstance = MB.Tables.getTable(MB.Tables.justLoadedId);
 
+    console.error('table_invoice');
+
     tableInstance.ct_instance.ctxMenuData = [
         {
             name: 'option1',

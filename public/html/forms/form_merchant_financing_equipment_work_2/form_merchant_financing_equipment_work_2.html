@@ -1,0 +1,58 @@
+<div class="insertIntoHeader">
+    <div class="order-status iih-field" data-column="status" data-color="{+{status}+}">{+{status}+}</div>
+    <div class="order-created"><span class="iih-field" data-column="merchant_short_name">{+{merchant_short_name}+}</span></div>
+    <div class="order-created"><span class="iih-field" data-column="financing_type">{+{financing_type}+}</span></div>
+</div>
+
+<div class="col-md-12">
+    <div class="col-md-6"><h1><span class="through_number">{+{through_number}+}</span> {+{merchant_short_name}+}</h1></div>
+</div>
+
+
+<div class="row" style="margin-top: 30px; margin-bottom: 30px;">
+
+
+    <div class="col-md-6">
+        <div class="row"><div>{{{merchant_short_name}}}</div></div>
+        <div class="row"><div>{{{payments_start_date}}}</div></div>
+        <div class="row"><div>{{{avr_monthly_turnover}}}</div></div>
+        <div class="row"><div>{{{financing_type}}}</div></div>
+        <div class="row"><div>{{{founding_amount}}}</div></div>
+        <div class="row"><div>{{{factoring_rate}}}</div></div>
+        <div class="row"><div>{{{avl_proc_dly_withdraw_rate}}}</div></div>
+        <div class="row"><div>{{{amount_to_return}}}</div></div>
+        <div class="row"><div>{{{payment_amount}}}</div></div>
+        <div class="row"><div>{{{payments_count}}}</div></div>
+        <div class="row"><div>{{{terminal_number}}}</div></div>
+        <div class="row"><div>{{{bank_agreement}}}</div></div>
+
+
+    </div>
+    
+    <div class="col-md-6">
+
+        <div class="row"><div>{{{complete_percent}}}</div></div>
+
+        <div class="row"><div class="fn-field"><label>Всего платежей:</label> <span class="iih-field fn-summ-readonly-field" data-column="payments_count">{+{payments_count}+}</span></div></div>
+        <div class="row"><div class="fn-field"><label>Оплаченных:</label> <span class="iih-field fn-summ-readonly-field" data-column="payments_paid">{+{payments_paid}+}</span></div></div>
+        <div class="row"><div class="fn-field"><label>Дефолтов:</label> <span class="iih-field fn-summ-readonly-field" data-column="payments_default">{+{payments_default}+}</span></div></div>
+        <div class="row"><div class="fn-field"><label>Осталось:</label> <span class="iih-field fn-summ-readonly-field" data-column="payments_pending">{+{payments_pending}+}</span></div></div>
+
+        <div class="row"><div class="fn-field"><label>Возвращено:</label> <span class="iih-field fn-summ-readonly-field" data-column="total_returned">{+{total_returned}+} руб.</span></div></div>
+        <div class="row"><div class="fn-field"><label>Осталось вернуть:</label> <span class="iih-field fn-summ-readonly-field" data-column="to_return">{+{to_return}+} руб.</span></div></div>
+        <div class="row"><div class="fn-field"><label>Переплата:</label> <span class="iih-field fn-summ-readonly-field" data-column="overpayment" style="color: #F00;">{+{overpayment}+} руб.</span></div></div>
+    </div>
+</div>
+
+
+<div class="col-md-12">
+    <div class="col-md-12">
+
+        <div data-tbls="merchant_financing_calendar.tbl_merchant_financing_calendar,investment_plan_merchant_investor.tbl_investment_plan_merchant_investor,merchant_financing_document.tbl_merchant_financing_document,merchant_financing_history_log.tbl_merchant_financing_history_log" class="fn-child-tbl-holder marTop10"></div>
+
+    </div>
+</div>
+
+
+<div class="lower-buttons-padder"></div>
+<div class="lower-buttons-wrapper"></div>

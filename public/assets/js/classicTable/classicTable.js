@@ -994,7 +994,6 @@ var classicTable = function () {
 
                 switch (params.type) {
                     case 'text':
-
                         if(params.name.indexOf('custom_buttons') > -1){
                             var btnId = params.name.replace('custom_buttons_','');
                             res = '<div class="ct-cell-insert-custom-buttons" data-id="'+btnId+'"></div>';
@@ -2661,7 +2660,7 @@ var classicTable = function () {
             e = e || window.event;
             e.preventDefault();
 
-            if (!_t.ctxMenuData) {
+            if (!_t.ctxMenuData || _t.ctxMenuData.length == 0) {
                 return;
             }
 

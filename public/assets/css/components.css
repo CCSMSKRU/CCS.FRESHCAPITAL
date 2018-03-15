@@ -8983,16 +8983,7 @@ label.invoice-free-sub {
 	color: red;
 }
 
-
-.scoring_tabs {
-	border-top: 1px solid black;
-	padding: 30px 20px;
-	margin-top: -1px;
-}
-
-.scoring_tabs .request-btn {
-	margin-top: 20px;
-}
+/*/////////////////////////////////////////////////*/
 .append_new{
 
     height: 50px;
@@ -9015,14 +9006,70 @@ label.invoice-free-sub {
 }
 
 
+#scoring_tabs_wrapper > ul {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: flex-start;
+	height: 60px;
+	margin: 40px 0 0;
+	padding: 0;
+	list-style: none;
+}
+#scoring_tabs_wrapper > ul li {
+	width: 160px;
+}
+#scoring_tabs_wrapper > ul li a {
+	display: block;
+	height: 100%;
+	font-size: 30px;
+	color: black;
+	text-decoration: none;
+	border-bottom: 4px solid rgba(255, 255, 255, 0);
+	text-align: center;
+}
+#scoring_tabs_wrapper > ul li.ui-tabs-active a,
+#scoring_tabs_wrapper > ul li a:hover {
+	border-color: red;
+}
+#scoring_tabs_wrapper > ul li.ui-tabs-active a {
+	color: red;
+}
+
+.scoring_tabs {
+	border-top: 1px solid black;
+	padding: 30px 20px;
+	margin-top: -1px;
+}
+
+.scoring_tabs .request-btn {
+	margin-top: 20px;
+}
+/*/////////////////////////////////////////////////*/
+
 #month_wrapper {
+	display: none;
 	position: absolute;
 	top: 168px;
 	left: 242px;
-	padding: 1px;
 	border: 1px solid;
 	background: white;
 	z-index: 1000;
+}
+
+#month_wrapper .title_wrapper .week {
+	margin: 0 1px;
+}
+
+#month_wrapper .content {
+	padding: 0 1px 1px;
+}
+
+#month_wrapper .month_title {
+	text-align: center;
+	line-height: 2.6em;
+	font-weight: 600;
+	font-size: 14px;
 }
 
 #month_wrapper .week {

@@ -20,9 +20,9 @@
 
                 var financing_id = tableInstance.data.data[row].id;
 
-                var work_statuses = ['ACQUIRING_IN_PROCCESS', 'READY_TO_WORK', 'CLOSED'];
+                var work_statuses = ['SETTING_UP_EQUIPMENT', 'ACQUIRING_IN_PROCCESS', 'READY_TO_WORK', 'CLOSED'];
 
-                var form_name = (work_statuses.indexOf(tableInstance.data.data[row].status_sysname) == -1 )? 'form_merchant_financing' : 'form_merchant_financing_work_2';
+                var form_name = (work_statuses.indexOf(tableInstance.data.data[row].status_sysname) == -1 )? 'form_merchant_financing' : 'form_merchant_financing_equipment_work_2';
 
 
                 console.log('tableInstance.data.data[row].status_sysname', tableInstance.data.data[row].status_sysname);

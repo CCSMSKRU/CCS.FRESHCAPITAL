@@ -41,13 +41,17 @@
                     };
 
                     socketQuery(o, function(res){
+                    	console.error(o, res);
 
                         if(!res.code){
                             var financing_data = res.data[0];
 
-                            var work_statuses = ['ACQUIRING_IN_PROCCESS', 'READY_TO_WORK', 'CLOSED', 'WAIT_BANK_CONFIRM', 'BANK_CONFIRM', 'WAIT_INVESTOR'];
+	                        var work_statuses = ['SETTING_UP_EQUIPMENT', 'ACQUIRING_IN_PROCCESS', 'READY_TO_WORK', 'CLOSED', 'WAIT_BANK_CONFIRM', 'BANK_CONFIRM', 'WAIT_INVESTOR'];
 
-                            var form_name = (work_statuses.indexOf(financing_data.status_sysname) == -1 )? (financing_data.closing_financing_id != '')? 'form_merchant_refinancing' : 'form_merchant_financing_work_2' : 'form_merchant_financing_work_2';
+	                        var form_name = financing_data.closing_financing_id != '' ? 'form_merchant_refinancing' :
+                                (work_statuses.indexOf(financing_data.status_sysname) == -1 ?
+	                                (financing_data.financing_request_type_sysname == 'POS' ? 'form_merchant_financing_equipment' : 'form_merchant_financing') :
+	                                (financing_data.financing_request_type_sysname == 'POS' ? 'form_merchant_financing_equipment_work_2' : 'form_merchant_financing_work_2'));
 
                             //
                             //if(financing_data.closing_financing_id != ''){

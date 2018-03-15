@@ -36,7 +36,6 @@
                 formInstance.loader(true, 'Подождите, создаем финансирование.');
 
                 socketQuery(add_o, function(r){
-
                     if(!r.code){
 
                         var id = r.id;
@@ -53,7 +52,6 @@
                     }else{
                         formInstance.loader(false, 'Подождите, создаем финансирование.');
                     }
-
                 });
 
             }

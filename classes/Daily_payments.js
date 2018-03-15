@@ -154,6 +154,8 @@ Model.prototype.create_new = function (obj, cb) {
     let calendar;
     let financings = {};
 
+	let active_financings = [];
+
     async.series({
         getLast:function(cb){
             let params = {
@@ -201,22 +203,99 @@ Model.prototype.create_new = function (obj, cb) {
                 // to_date: yesterday.format('DD.MM.YYYY'),
                 to_date: today.format('DD.MM.YYYY'),
                 payments_count: payments_count,
-                type: 'gov'
+                type: 'gov_seven'
             }, function (err, res) {
                 calendar = res;
                 if (!calendar.length) return cb(new UserOk('Пока создавить платежи не нужно'));
                 cb(null);
             });
         },
+	    getActiveFinancings: cb => {
+		    let o = {
+			    command: 'get',
+			    object: 'merchant_financing',
+			    params: {
+				    where: [
+					    {
+						    key: 'status_sysname',
+						    type: 'in',
+						    val1: ['SETTING_UP_EQUIPMENT', 'ACQUIRING_IN_PROCCESS']
+					    }
+
+				    ],
+				    collapseData: false
+			    }
+		    };
+		    _t.api(o, function (err, res) {
+			    if (err) return cb(new MyError('Не удалось получить необходимые финансирования.', {err: err, o: o}));
+
+			    active_financings = res;
+
+			    cb(null);
+		    })
+	    },
         createRows:function(cb){
             console.log('calendar',calendar);
             // Создать голову и создать его платежи
             // При создании платежа, собирается информация о реально существующих платежах
-            async.eachSeries(calendar, function(one_date, cb){
+            async.eachSeries(calendar, function(one_date_obj, cb){
+            	let one_date = one_date_obj.date;
+
                 let id;
                 let payments = [];
                 let financing_ids = [];
+
+                let is_working_day = {};
+	            let is_anybody_working = false;
                 async.series({
+	                getFinancingCalendar: cb => {
+		                let date = moment(one_date, 'DD.MM.YYYY');
+		                let month_n = date.month() + 1;
+		                let day = date.date();
+
+		                let o = {
+			                command: 'get',
+			                object: 'financing_calendar',
+			                params: {
+				                where: [
+					                {
+						                key: 'merchant_financing_id',
+						                type: 'in',
+						                val1: active_financings.map(fin => fin.id)
+					                }
+				                ],
+				                param_where: {
+					                month_n: month_n
+				                },
+				                collapseData: false
+			                }
+		                };
+
+		                _t.api(o, (err, res) => {
+			                if (err) {
+				                return cb(new MyError('Не удалось получить календарь финансирования', {
+					                o: o,
+					                err: err
+				                }));
+			                }
+
+			                if (res.length) {
+				                res.forEach(cal => {
+					                let days = cal.days.split(',');
+					                is_working_day[cal.merchant_financing_id] = days.indexOf(day.toString()) === -1;
+				                });
+
+				                for (let fin of active_financings) {
+					                if (fin.id in is_working_day && is_working_day[fin.id]) {
+						                is_anybody_working = true;
+						                break;
+					                }
+				                }
+			                }
+
+			                cb(null);
+		                });
+	                },
                     getChildsDate:function(cb){
                         // Запросить все фиксированные платежи на эту дату
                         // Запросим все процентные платежи на эту дату
@@ -238,8 +317,8 @@ Model.prototype.create_new = function (obj, cb) {
                                 };
                                 _t.api(o, function(err, res){
                                     if (err) return cb(new MyError('Не удалось получить платежи ФИКСИРОВАННЫХ финансирования на дату',{err:err, o:o}));
-                                    for (let i in res) {
-                                        payments.push(res[i]);
+                                    for (let payment of res) {
+                                        payments.push(payment);
                                     }
                                     cb(null);
                                 })
@@ -258,97 +337,106 @@ Model.prototype.create_new = function (obj, cb) {
                                 };
                                 _t.api(o, function(err, res){
                                     if (err) return cb(new MyError('Не удалось получить платежи ПРОЦЕНТНОГО финансирования на дату',{err:err, o:o}));
-                                    for (let i in res) {
-                                        payments.push(res[i]);
+	                                for (let payment of res) {
+		                                payments.push(payment);
                                     }
                                     cb(null);
                                 })
                             },
                             // Переделаем - НЕ ТОЛЬКО ПРОЦЕНТНЫЕ, но и ФИКСИРОВАННЫЕ у которых закончился календарь, но они еще не зкрыты
-                            getAnotherPercentFinancingAndCreatepayments:function(cb){
-                                for (let i in payments) {
-                                    if (financing_ids.indexOf(payments[i].merchant_financing_id) == -1) financing_ids.push(payments[i].merchant_financing_id);
+                            getAnotherPercentFinancingAndCreatePayments:function(cb){
+	                            for (let payment of payments) {
+                                    if (financing_ids.indexOf(payment.merchant_financing_id) === -1) financing_ids.push(payment.merchant_financing_id);
                                 }
 
-                                let o = {
-                                    command:'get',
-                                    object:'merchant_financing',
-                                    params:{
-                                        where:[
-                                            // {
-                                            //     key:'financing_type_sysname',
-                                            //     val1:'PERCENT'
-                                            // },
-                                            {
-                                                key:'status_sysname',
-                                                val1:'ACQUIRING_IN_PROCCESS'
-                                            }
+	                            let o = {
+		                            command:'get',
+		                            object:'merchant_financing',
+		                            params:{
+			                            where:[
+				                            // {
+				                            //     key:'financing_type_sysname',
+				                            //     val1:'PERCENT'
+				                            // },
+				                            {
+					                            key:'status_sysname',
+					                            type:'in',
+					                            val1:['SETTING_UP_EQUIPMENT','ACQUIRING_IN_PROCCESS']
+				                            }
 
-                                        ],
-                                        collapseData:false
-                                    }
-                                };
-                                if (financing_ids.length){
-                                    o.params.where.push({
-                                        key:'id',
-                                        type:'!in',
-                                        val1:financing_ids
-                                    });
-                                }
-                                _t.api(o, function(err, res){
-                                    if (err) return cb (new MyError('Не удалось получить необходимые финансирования.',{err:err, o:o}));
-                                    async.eachSeries(res, function(fin, cb){
-                                        // if (funcs.date_A_more_or_equal_B(fin.payments_start_date, one_date)) {
-                                        if (funcs.date_A_more_B(fin.payments_start_date, one_date)) {
-                                            return cb(null);
-                                        }
-                                        if (financing_ids.indexOf(fin.id) == -1) financing_ids.push(fin.id);
-                                        // Создадим платеж и запросим его
+			                            ],
+			                            collapseData:false
+		                            }
+	                            };
+	                            if (financing_ids.length){
+		                            o.params.where.push({
+			                            key:'id',
+			                            type:'!in',
+			                            val1:financing_ids
+		                            });
+	                            }
+	                            _t.api(o, function(err, res){
+		                            if (err) return cb (new MyError('Не удалось получить необходимые финансирования.',{err:err, o:o}));
 
-                                        let tmp_id;
-                                        async.series({
-                                            add:function(cb){
-                                                let pendingAmount = (+fin.to_return >= +fin.payment_amount)? +fin.payment_amount : +fin.to_return;
-                                                let o = {
-                                                    command:'add',
-                                                    object:'merchant_financing_payment',
-                                                    params:{
-                                                        payment_date:one_date,
-                                                        pending_amount: pendingAmount,
-                                                        merchant_id:fin.merchant_id,
-                                                        calendar_id:fin.current_calendar_id,
-                                                        status_sysname:'PENDING',
-                                                        rollback_key:rollback_key
-                                                    }
-                                                };
-                                                _t.api(o, function (err, res) {
-                                                    if (err) return cb(new MyError('Не удалось создать платеж для ПРОЦЕНТНОГО/ФИКСИРОВАННОГО финансирования',{o : o, err : err}));
-                                                    tmp_id = res.id;
-                                                    cb(null);
-                                                });
-                                            },
-                                            get:function(cb){
-                                                let o = {
-                                                    command:'getById',
-                                                    object:'merchant_financing_payment',
-                                                    params:{
-                                                        id:tmp_id
-                                                    }
-                                                };
-                                                _t.api(o, function (err, res) {
-                                                    if (err) return cb(new MyError('Не удалось получить платеж после его создания',{o : o, err : err}));
-                                                    payments.push(res[0]);
-                                                    cb(null);
-                                                });
-                                            }
-                                        }, cb);
-                                    }, cb);
-                                })
+		                            async.eachSeries(res, function (fin, cb) {
+			                            // if (funcs.date_A_more_or_equal_B(fin.payments_start_date, one_date)) {
+			                            if (funcs.date_A_more_B(fin.payments_start_date, one_date)) {
+				                            return cb(null);
+			                            }
+			                            if (fin.id in is_working_day && is_working_day[fin.id] || (!(fin.id in is_working_day) && one_date_obj.is_working_day)) {
+				                            if (financing_ids.indexOf(fin.id) == -1) financing_ids.push(fin.id);
+				                            // Создадим платеж и запросим его
+
+				                            let tmp_id;
+				                            async.series({
+					                            add: function (cb) {
+						                            let pendingAmount = (+fin.to_return >= +fin.payment_amount) ? +fin.payment_amount : +fin.to_return;
+						                            let o = {
+							                            command: 'add',
+							                            object: 'merchant_financing_payment',
+							                            params: {
+								                            payment_date: one_date,
+								                            pending_amount: pendingAmount,
+								                            merchant_id: fin.merchant_id,
+								                            calendar_id: fin.current_calendar_id,
+								                            status_sysname: 'PENDING',
+								                            rollback_key: rollback_key
+							                            }
+						                            };
+						                            _t.api(o, function (err, res) {
+							                            if (err) return cb(new MyError('Не удалось создать платеж для ПРОЦЕНТНОГО/ФИКСИРОВАННОГО финансирования', {
+								                            o: o,
+								                            err: err
+							                            }));
+							                            tmp_id = res.id;
+							                            cb(null);
+						                            });
+					                            },
+					                            get: function (cb) {
+						                            let o = {
+							                            command: 'getById',
+							                            object: 'merchant_financing_payment',
+							                            params: {
+								                            id: tmp_id
+							                            }
+						                            };
+						                            _t.api(o, function (err, res) {
+							                            if (err) return cb(new MyError('Не удалось получить платеж после его создания', {
+								                            o: o,
+								                            err: err
+							                            }));
+							                            payments.push(res[0]);
+							                            cb(null);
+						                            });
+					                            }
+				                            }, cb);
+			                            } else {
+				                            cb(null);
+			                            }
+		                            }, cb);
+	                            })
                             }
                         },cb);
-
-
-
 
                         // let o = {
                         //     command:'add',
@@ -359,136 +447,142 @@ Model.prototype.create_new = function (obj, cb) {
                         //     }
                         // }
                     },
-                    getFinancings:function(cb){
-                        let o = {
-                            command:'get',
-                            object:'merchant_financing',
-                            params:{
-                                where:[
-                                    {
-                                        key:'id',
-                                        type:'in',
-                                        val1:financing_ids
-                                    }
-                                ],
-                                collapseData:false
-                            }
-                        };
-                        _t.api(o, function (err, res) {
-                            if (err) return cb(new MyError('Не удалось получить финансирования',{o : o, err : err}));
-                            for (let i in res) {
-                                financings[res[i].id] = res[i];
-                            }
-                            cb(null);
-                        });
+                    getFinancings:function(cb) {
+	                    if (payments.length) {
+		                    let o = {
+			                    command: 'get',
+			                    object: 'merchant_financing',
+			                    params: {
+				                    where: [
+					                    {
+						                    key: 'id',
+						                    type: 'in',
+						                    val1: financing_ids
+					                    }
+				                    ],
+				                    collapseData: false
+			                    }
+		                    };
+		                    _t.api(o, function (err, res) {
+			                    if (err) return cb(new MyError('Не удалось получить финансирования', {o: o, err: err}));
+			                    for (let i in res) {
+				                    financings[res[i].id] = res[i];
+			                    }
+			                    cb(null);
+		                    });
+	                    } else {
+		                    cb(null);
+	                    }
                     },
                     addHeadRow:function(cb){
-                        let params = {
-                            payments_for_date:one_date,
-                            rollback_key:rollback_key
-                        };
-                        _t.add(params, function(err, res){
-                            if (err) return cb(new MyError('не удалось создать daily_payments', {err:err, params:params}));
-                            id = res.id;
-                            cb(null);
-                        })
+                    	if (payments.length) {
+		                    let params = {
+			                    payments_for_date: one_date,
+			                    rollback_key: rollback_key
+		                    };
+		                    _t.add(params, function (err, res) {
+			                    if (err) return cb(new MyError('не удалось создать daily_payments', {
+				                    err: err,
+				                    params: params
+			                    }));
+			                    id = res.id;
+			                    cb(null);
+		                    })
+	                    } else {
+                    		cb(null);
+	                    }
                     },
                     addChilds:function(cb){
-                        async.eachSeries(payments, function(payment, cb){
-                            let financing = financings[payment.merchant_financing_id];
-                            payment.pending_amount = payment.pending_amount || financing.payment_amount || 0;
-                            // Разобьем сумму на тело и процент
-                            let pending_body_amount = 0;
-                            let pending_percent_amount = 0;
-                            if (['DEFAULT','PARTIAL_PAID'].indexOf(payment.status_sysname)!== - 1){
-                                let default_amount = +payment.pending_amount - +payment.paid_amount || 0;
-                                pending_body_amount = Math.round((+default_amount * 100 / (100 + financing.factoring_rate)) * 100) /100;
-                                pending_percent_amount = default_amount - pending_body_amount;
-                            }
-                            // let o = {
-                            //     command:'add',
-                            //     object:'daily_payment',
-                            //     params:{
-                            //         daily_payments_id:id,
-                            //         merchant_financing_payment_id:payment.id,
-                            //         pending_amount:payment.pending_amount || 0,
-                            //         paid_amount:payment.paid_amount || 0,
-                            //         pending_body_amount:pending_body_amount,
-                            //         pending_percent_amount:pending_percent_amount,
-                            //         closing_type_sysname:payment.closing_type_sysname,
-                            //         default_date:payment.default_date,
-                            //         closing_date:payment.closing_date || payment.paid_date,
-                            //         status_sysname:payment.status_sysname,
-                            //         rollback_key:rollback_key
-                            //     }
-                            // };
-                            let paidAmountLater = +payment.paid_amount_later || (payment.closing_type_sysname !== 'BY_PROCESSING' && payment.closing_type_sysname)? +payment.paid_amount : 0;
+                    	async.eachSeries(active_financings, (financing, cb) => {
+                    		let payments_by_fin = payments.filter(payment => {
+                    			return payment.merchant_financing_id == financing.id;
+		                    });
 
-                            if (paidAmountLater){
-                                console.log('paidAmountLater', payment);
-                            }
+                    		if (!payments_by_fin.length && is_anybody_working) payments_by_fin.push({ id: 0 });
 
+		                    async.eachSeries(payments_by_fin, function(payment, cb) {
+			                    payment.pending_amount = payment.id !== 0 ? (payment.pending_amount || financing.payment_amount || 0) : 0;
+			                    // Разобьем сумму на тело и процент
+			                    let pending_body_amount = 0;
+			                    let pending_percent_amount = 0;
+			                    if (['DEFAULT', 'PARTIAL_PAID'].indexOf(payment.status_sysname) !== -1) {
+				                    let default_amount = +payment.pending_amount - +payment.paid_amount || 0;
+				                    pending_body_amount = Math.round((+default_amount * 100 / (100 + financing.factoring_rate)) * 100) / 100;
+				                    pending_percent_amount = default_amount - pending_body_amount;
+			                    }
+			                    let paidAmountLater = +payment.paid_amount_later || (payment.closing_type_sysname !== 'BY_PROCESSING' && payment.closing_type_sysname) ? +payment.paid_amount : 0;
 
-                            async.series({
-                                addDPayment:function(cb){
-                                    let o = {
-                                        command:'add',
-                                        object:'daily_payment',
-                                        params:{
-                                            daily_payments_id:id,
-                                            merchant_financing_payment_id:payment.id,
-                                            pending_amount:payment.pending_amount || 0,
-                                            paid_amount:payment.paid_amount_processing || (payment.closing_type_sysname === 'BY_PROCESSING')? payment.paid_amount : 0,
-                                            paid_amount_later: paidAmountLater,
-                                            pending_body_amount:pending_body_amount,
-                                            pending_percent_amount:pending_percent_amount,
-                                            closing_type_sysname:payment.closing_type_sysname,
-                                            default_date:payment.default_date,
-                                            closing_date:payment.closing_date || payment.paid_date,
-                                            status_sysname:payment.status_sysname,
-                                            rollback_key:rollback_key
-                                        }
-                                    };
-                                    if (payment.status_sysname !== 'PENDING') o.params.is_applied = true;
-                                    _t.api(o, function (err, res) {
-                                        if (err) {
-                                            return cb(new MyError('Не удалось создать единицу "платеж"',{o : o, err : err}));
-                                        }
-                                        payment.daily_payment_id = res.id;
-                                        cb(null);
-                                    });
-                                },
-                                addPaidLater:function(cb){
-                                    if (paidAmountLater){
-                                        console.log('paidAmountLater', payment);
-                                    }
-                                    if (!paidAmountLater || !payment.closing_date || payment.closing_type_sysname !== 'REMITTANCE') return cb(null);
+			                    if (paidAmountLater) {
+				                    console.log('paidAmountLater', payment);
+			                    }
 
-                                    let o = {
-                                        command:'add',
-                                        object:'daily_payment_paid_later',
-                                        params:{
-                                            daily_payment_id:null,
-                                            target_daily_payment_id:payment.daily_payment_id,
-                                            amount:+paidAmountLater,
-                                            operation_date_to_find:payment.closing_date,
-                                            financing_id_to_find:payment.merchant_financing_id,
-                                            rollback_key:rollback_key
-                                        }
-                                    };
-                                    _t.api(o, function (err, res) {
-                                        if (err) return cb(new MyError('Не удалось добавить daily_payment_paid_later',{o : o, err : err}));
-                                        cb(null);
-                                    });
+			                    async.series({
+				                    addDPayment: function (cb) {
+					                    let o = {
+						                    command: 'add',
+						                    object: 'daily_payment',
+						                    params: {
+							                    daily_payments_id: id,
+							                    merchant_financing_calendar_id: financing.current_calendar_id,
+							                    merchant_financing_id: financing.id,
+							                    merchant_financing_payment_id: payment.id,
+							                    pending_amount: payment.pending_amount || 0,
+							                    paid_amount: payment.paid_amount_processing || (payment.closing_type_sysname === 'BY_PROCESSING') ? payment.paid_amount : 0,
+							                    paid_amount_later: paidAmountLater,
+							                    pending_body_amount: pending_body_amount,
+							                    pending_percent_amount: pending_percent_amount,
+							                    closing_type_sysname: payment.closing_type_sysname,
+							                    default_date: payment.default_date,
+							                    closing_date: payment.closing_date || payment.paid_date,
+							                    bank_id: financing.processing_bank_id,
+							                    is_working_day: (financing.id in is_working_day ? is_working_day[financing.id] : one_date_obj.is_working_day),
+							                    financing_request_type_id: financing.financing_request_type_id,
+							                    status_sysname: payment.status_sysname,
+							                    rollback_key: rollback_key
+						                    }
+					                    };
+					                    if (payment.status_sysname !== 'PENDING') o.params.is_applied = true;
+					                    _t.api(o, function (err, res) {
+						                    if (err) {
+							                    return cb(new MyError('Не удалось создать единицу "платеж"', {
+								                    o: o,
+								                    err: err
+							                    }));
+						                    }
+						                    payment.daily_payment_id = res.id;
+						                    cb(null);
+					                    });
+				                    },
+				                    addPaidLater: function (cb) {
+					                    if (paidAmountLater) {
+						                    console.log('paidAmountLater', payment);
+					                    }
+					                    if (!paidAmountLater || !payment.closing_date || payment.closing_type_sysname !== 'REMITTANCE') return cb(null);
 
-                                }
-
-                            },cb);
-
-
-                        }, cb);
+					                    let o = {
+						                    command: 'add',
+						                    object: 'daily_payment_paid_later',
+						                    params: {
+							                    daily_payment_id: null,
+							                    target_daily_payment_id: payment.daily_payment_id,
+							                    amount: +paidAmountLater,
+							                    operation_date_to_find: payment.closing_date,
+							                    financing_id_to_find: payment.merchant_financing_id,
+							                    rollback_key: rollback_key
+						                    }
+					                    };
+					                    _t.api(o, function (err, res) {
+						                    if (err) return cb(new MyError('Не удалось добавить daily_payment_paid_later', {
+							                    o: o,
+							                    err: err
+						                    }));
+						                    cb(null);
+					                    });
+				                    }
+			                    }, cb);
+		                    }, cb);
+	                    }, cb);
                     }
-
                 },cb);
             },cb);
         },
@@ -733,10 +827,11 @@ Model.prototype.append_new = function (obj, cb) {
                                         //     key:'financing_type_sysname',
                                         //     val1:'PERCENT'
                                         // },
-                                        {
-                                            key:'status_sysname',
-                                            val1:'ACQUIRING_IN_PROCCESS'
-                                        }
+	                                    {
+		                                    key:'status_sysname',
+		                                    type:'in',
+		                                    val1:['SETTING_UP_EQUIPMENT','ACQUIRING_IN_PROCCESS']
+	                                    }
                                     ],
                                     collapseData:false
                                 }
@@ -873,11 +968,42 @@ Model.prototype.append_new = function (obj, cb) {
                         }
 
 
+                        let is_working_day = false;
                         async.series({
+	                        getFinancingCalendar: cb => {
+		                        let date = moment(daily_payments.payments_for_date, 'DD.MM.YYYY');
+		                        let month_n = date.month() + 1;
+		                        let day = date.date();
+
+		                        let o = {
+			                        command: 'get',
+			                        object: 'financing_calendar',
+			                        params: {
+				                        param_where: {
+					                        merchant_financing_id: payment.merchant_financing_id,
+					                        month_n: month_n
+				                        },
+				                        collapseData: false
+			                        }
+		                        };
+
+		                        _t.api(o, (err, res) => {
+			                        if (err) {
+				                        return cb(new MyError('Не удалось получить календарь финансирования', {o: o, err: err}));
+			                        }
+
+			                        if (res && res[0]) {
+				                        let days = res[0].days.split(',');
+				                        is_working_day = days.indexOf(day.toString()) === -1;
+			                        }
+
+			                        cb(null);
+		                        });
+	                        },
                             addDPayment:function(cb){
                                 let o = {
-                                    command:'add',
-                                    object:'daily_payment',
+                                    command: 'add',
+                                    object: 'daily_payment',
                                     params:{
                                         daily_payments_id:id,
                                         merchant_financing_payment_id:payment.id,
@@ -890,6 +1016,8 @@ Model.prototype.append_new = function (obj, cb) {
                                         default_date:payment.default_date,
                                         closing_date:payment.closing_date || payment.paid_date,
                                         status_sysname:payment.status_sysname,
+                                        bank_id: financing.processing_bank_id,
+	                                    is_working_day: is_working_day,
                                         rollback_key:rollback_key
                                     }
                                 };
@@ -926,7 +1054,6 @@ Model.prototype.append_new = function (obj, cb) {
                                 });
 
                             }
-
                         },cb);
                     }, cb);
                 }

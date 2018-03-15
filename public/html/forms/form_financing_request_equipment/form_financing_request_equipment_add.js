@@ -11,7 +11,20 @@
     modalInstance.stickModal();
 
 
-    formInstance.lowerButtons = [
+	console.error('//////////////////////ggggggg');
+	var chO = {
+		column_name: 'financing_request_type_id',
+		type: 'select2',
+		value: {
+			value: '2',
+			selValue: '2'
+		}
+	};
+
+	formInstance.addChange(chO);
+
+
+	formInstance.lowerButtons = [
         //{
         //    title: 'Отправить предложение',
         //    color: "blue",

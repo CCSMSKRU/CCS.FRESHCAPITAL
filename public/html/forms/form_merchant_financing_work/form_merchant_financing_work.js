@@ -460,7 +460,9 @@
 
                         if(!res.code){
 
-                            var formName = (res.data[0].status_sysname == 'READY_TO_WORK' || res.data[0].status_sysname == 'ACQUIRING_IN_PROCCESS' || res.data[0].status_sysname == 'CLOSED')? 'form_merchant_financing_work' : 'form_merchant_refinancing';
+                            var formName = (res.data[0].status_sysname == 'READY_TO_WORK' ||
+                                res.data[0].status_sysname == 'ACQUIRING_IN_PROCCESS' ||
+                                res.data[0].status_sysname == 'CLOSED')? 'form_merchant_financing_work' : 'form_merchant_refinancing';
 
                             var openInModalO = {
                                 id: refinFormId,

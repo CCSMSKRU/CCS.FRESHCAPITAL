@@ -1,3 +1,9 @@
+<style>
+	.custom_tabs .ct-environment-header {
+		display: none;
+	}
+</style>
+
 
 <div class="row">
 
@@ -12,15 +18,36 @@
 
     </div>
 
-    <div class="col-md-12">
-        <div class="col-md-4"><div class="fn-field" style="margin-left: -35px;"><label>Итого ожидается:</label> <span class="iih-field fn-summ-readonly-field" data-column="">-</span> руб.</div></div>
-        <div class="col-md-4"><div class="fn-field" ><label>С эквайринга:</label> <span class="iih-field fn-summ-readonly-field" data-column="total_paid_amount">{+{total_paid_amount}+}</span> руб.</div></div>
-        <div class="col-md-4"><div class="fn-field"><label>По счетам:</label> <span class="iih-field fn-summ-readonly-field" data-column="total_default_paid_amount">{+{total_default_paid_amount}+}</span>  руб.</div></div>
-    </div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="mb-devider"></div>
+		</div>
+
+		<div class="col-md-12 summary"></div>
+
+		<div class="col-md-12">
+			<div class="mb-devider"></div>
+		</div>
+	</div>
+
+	<div class="col-md-12">
+		<div class="col-md-4"><div class="fn-field" style="margin-left: -30px;"><label>Итого ожидается:</label> <span class="iih-field fn-summ-readonly-field" data-column="">-</span> руб.</div></div>
+		<div class="col-md-4"><div class="fn-field"><label>С эквайринга:</label> <span class="iih-field fn-summ-readonly-field" data-column="total_paid_amount">{+{total_paid_amount}+}</span> руб.</div></div>
+		<div class="col-md-4"><div class="fn-field"><label>По счетам:</label> <span class="iih-field fn-summ-readonly-field" data-column="total_default_paid_amount">{+{total_default_paid_amount}+}</span>  руб.</div></div>
+	</div>
 
     <div class="col-md-12">
         <div class="col-md-12">
-            <div data-tbls="daily_payment.tbl_daily_payment" class="fn-child-tbl-holder marTop10"></div>
+	        <div class="tabsParent sc_tabulatorParent floated custom_tabs" style="display: block;">
+		        <div class="tabsTogglersRow sc_tabulatorToggleRow custom_tabs_title">
+			        <div class="tabToggle sc_tabulatorToggler opened" dataitem="0">
+				        <span class="childObjectTabTitle">Все платежи</span>
+			        </div>
+		        </div>
+		        <div data-tbls="daily_payment.tbl_daily_payment" class="fn-child-tbl-holder marTop10"></div>
+		        <div id="custom_tables"></div>
+	        </div>
         </div>
     </div>
 

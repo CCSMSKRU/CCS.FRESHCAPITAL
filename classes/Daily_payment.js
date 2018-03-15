@@ -172,6 +172,29 @@ Model.prototype.setPaid = function (obj, cb) {
             });
 
         },
+	    check: cb => {
+		    let o = {
+			    command: 'get',
+			    object: 'merchant_financing_payment',
+			    params: {
+				    param_where: {
+					    merchant_financing_id: daily_payment.merchant_financing_id,
+					    payment_date: daily_payment.daily_payments_date
+				    },
+				    collapseData: false
+			    }
+		    };
+
+		    _t.api(o, (err, res) => {
+			    if(err) return cb(new UserError('Не удалось проверить платеж', {err:err, id:id}));
+
+			    if (res.length > 0) {
+			        cb(null);
+			    } else {
+				    return cb(new UserError('У торговца нет платежа на эту дату!', {err:err, id:id}));
+                }
+		    });
+	    },
         getFinancing:function(cb){
             var o = {
                 command:'getById',

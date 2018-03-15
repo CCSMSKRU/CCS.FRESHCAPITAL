@@ -1038,12 +1038,12 @@
                     icon: 'fa-check',
                     placeholder: 'Успешный платёж',
                     callback: function (rowdata) {
-                        if (!rowdata.is_working_day) {
-	                        toastr['info']('У торговца выходной день. Нельзя внести изменения.');
-	                        return;
-                        }
+	                    if (!rowdata.is_working_day) {
+		                    toastr['info']('У торговца выходной день. Нельзя внести изменения.');
+		                    return;
+	                    }
 
-                        function getPaidAmount(){
+	                    function getPaidAmount(){
 
                             var amount = 0;
                             if(tableInstance.ct_instance.changes.length > 0){
@@ -1222,6 +1222,7 @@
                                 return +amount;
                             }
                         }
+
 
                         if(rowdata.status_sysname != 'PENDING' && rowdata.status_sysname != 'DEFAULT'){
 
