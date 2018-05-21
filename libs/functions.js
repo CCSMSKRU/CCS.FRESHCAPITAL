@@ -1,6 +1,6 @@
 var moment = require('moment');
 var MyError = require('../error').MyError;
-let config = require('../config/config.json');
+let config = require('../config');
 
 var funcs = {
     guid: function () {
@@ -300,7 +300,8 @@ var funcs = {
         }
     },
     getSystemURL: function () {
-        return config ? 'http://' + config.host + ':' + config.port + '/' : 'http://127.0.0.1:81/';
+        // return config ? 'http://' + config.host + ':' + config.port + '/' : 'http://127.0.0.1:81/';
+        return 'http://' + config.get('host') + ':' + config.get('port');
     }
 
 };
