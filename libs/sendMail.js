@@ -8,7 +8,9 @@ var send = function(obj, cb){
     if (typeof cb !== 'function') throw new MyError('В метод не передан cb');
     if (typeof obj !== 'object') return cb(new MyError('В метод не переданы obj'));
     var _t = this;
-    console.log(config.get('mail:mailTransport'));
+    if (!obj.email) return cb(null, 'email не указан.');
+    // console.log(config.get('mail:mailTransport'));
+    console.log('send --->' + obj.email, obj.subject);
     var transporter = nodemailer.createTransport(config.get('mail:mailTransport'));
     var mailOptions = {
         from: config.get('mail:from'),
@@ -25,7 +27,7 @@ var send = function(obj, cb){
     }
     transporter.sendMail(mailOptions, function(error, info){
         if(error){
-            console.log(config.get('mail:mailTransport'));
+            // console.log(config.get('mail:mailTransport'));
             console.log(error, info);
             cb(error, info);
         }else{
