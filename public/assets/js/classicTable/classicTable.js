@@ -595,7 +595,7 @@ var classicTable = function () {
 
             chObj['COMMAND'] = (elem.parents('tr').hasClass('new_row')) ? 'NEW' : 'MODIFY';
 
-            if (!isNewRow) dataValue = _t.data.data[selectedRowIndex][selectedColIndex]
+            if (!isNewRow) dataValue = _t.data.data[selectedRowIndex][selectedColIndex];
 
             if (value != dataValue) {
                 row.addClass('edited');
@@ -860,6 +860,9 @@ var classicTable = function () {
                             res = '<input type="text" value="' + params.value + '">';
                         }
                         break;
+                    case 'textarea':
+                        res = '<textarea class="in-table-textarea">' + params.value + '</textarea>';
+                        break;
                     case 'wysiwyg':
                         res = '<input type="text" value="' + params.value + '">';
                         break;
@@ -1000,6 +1003,9 @@ var classicTable = function () {
                         }else{
                             res = '<input type="text" value="' + params.value + '">';
                         }
+                        break;
+                    case 'textarea':
+                        res = '<textarea class="in-table-textarea">' + params.value + '</textarea>';
                         break;
                     case 'wysiwyg':
                         res = '<input type="text" value="' + params.value + '">';
@@ -2801,6 +2807,10 @@ var classicTable = function () {
             inputTypeHandler.call(_t, $(this));
         });
 
+        _t.tds.find('textarea').off('input').on('input', function (event) { //keyup
+            inputTypeHandler.call(_t, $(this));
+        });
+
         _t.tds.find('input[type="checkbox"]').off('change').on('change', function () {
             var elem = $(this);
             var rowIndex = elem.parents('tr').index();
@@ -3766,10 +3776,19 @@ var classicTable = function () {
             }
         });
         $(document).on('mouseup', function () {
+
+            console.log('here 1');
+
             if (_t.wrapper.hasClass('colResize')) {
                 _t.wrapper.removeClass('colResize');
             }
+
+            console.log(_t, _t.colInResize , _t.swr , _t.th);
+
             if (_t.colInResize && _t.swr && _t.th) {
+
+                console.log('here 2');
+
                 var columnName = _t.th.data("column-name");
                 var lsColumn = lsTable.columns[columnName];
                 _t.swr.removeClass('inMove');
@@ -3777,6 +3796,7 @@ var classicTable = function () {
 
                 if (!lsColumn) lsTable.columns[columnName] = {};
                 lsTable.columns[columnName].width = _t.columnW;
+
 
                 _t.setLocalStorage(JSON.stringify(lsTable));
 

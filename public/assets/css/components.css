@@ -9097,3 +9097,16 @@ label.invoice-free-sub {
 #month_wrapper .weektitle.day_off {
 	background: #ffa8a8;
 }
+textarea.in-table-textarea {
+	margin: 5px!important;
+	border-radius: 10px 10px 0 10px;
+	padding: 5px 10px;
+	box-shadow: 0 0 4px rgba(0,0,0,0.15);
+	background-color: #ffffff;
+	min-height: 70px;
+	width: calc(100% - 10px);
+	min-width: 500px;
+	resize: vertical;
+	border: 1px solid #CDDC39;
+	outline: 0;
+}

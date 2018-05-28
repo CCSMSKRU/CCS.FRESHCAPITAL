@@ -2467,7 +2467,7 @@
     "structure": {
       "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
       "datetime": {"type": "datetime","name": "Дата время"},
-      "comment" : {"type": "varchar","length": "255", "name": "Коммент"},
+      "comment" : {"type": "text","length": "255", "name": "Коммент"},
       "financing_request_id" : {"type": "bigint","length": "20", "name": "Id Заявки", "parent_key": true}
     }
   },
@@ -2482,7 +2482,7 @@
     "structure": {
       "id" : { "type": "bigint", "length": "20", "notNull": true, "autoInc": true, "primary_key": true},
       "datetime": {"type": "datetime","name": "Дата время"},
-      "comment" : {"type": "varchar","length": "255", "name": "Коммент"},
+      "comment" : {"type": "text","length": "255", "name": "Коммент"},
       "merchant_id" : {"type": "bigint","length": "20", "name": "Id Торговца", "parent_key": true}
     }
   }
