@@ -1448,6 +1448,10 @@ Model.prototype.sendOffer = function (obj, cb) {
         },
         sendToEmail: function (cb) {
             // Отравить на емайл
+
+            cb(null);
+            return;
+
             if (obj.without_sending) return cb(null); // Все договорено по телефону
             sendMail({email: merchant.email, subject: 'Финансирование Вашего бизнеса', html: tpl}, function (err, info) {
                 if (err) return cb(new UserError('Не удалось отправить email', {err: err, info: info}));
@@ -1753,6 +1757,10 @@ Model.prototype.requestDocuments = function (obj, cb) {
         },
         sendToEmail: function (cb) {
             // Отравить на емайл
+
+            cb(null);
+            return;
+
             if (obj.without_sending) return cb(null); // Все договорено по телефону
             sendMail({email: merchant.email, subject: 'CCS.TEST1: Запрос документов', html: tpl}, function (err, info) {
                 if (err) return cb(new UserError('Не удалось отправить email', {err: err, info: info}));
@@ -2665,6 +2673,10 @@ Model.prototype.sendAgreement = function (obj, cb) {
         },
         sendToEmail: function (cb) {
             // Отравить на емайл
+
+            cb(null);
+            return;
+
             if (obj.without_sending) return cb(null); // Все договорено по телефону
             sendMail({email: merchant.email, subject: 'CCS.TEST1: Договор', html: tpl, attachments: attachments}, function (err, info) {
                 if (err) return cb(new UserError('Не удалось отправить email', {err: err, info: info}));
@@ -3171,6 +3183,10 @@ Model.prototype.notifyBank = function (obj, cb) {
         },
         sendNotify: function (cb) {
             // Разослать уведомления
+
+            cb(null);
+            return;
+
             if (obj.without_sending) return cb(null); // Все договорено по телефону
             emails_to_notify = main_company_emails.concat(bank_emails);
             async.eachSeries(emails_to_notify, function (item, cb) {
@@ -3827,6 +3843,10 @@ Model.prototype.moneySentAndSetInWork = function (obj, cb) {
         },
         sendEmailToBank: function (cb) {
             // Отравить на емайл
+
+            cb(null);
+            return;
+
             if (obj.without_sending) return cb(null); // Все договорено по телефону
             async.eachSeries(bank_emails, function (item, cb) {
                 sendMail({email: item, subject: 'CCS.TEST1: Договор №: '+ merchant_financing.agreement_number +'. Календарь платежей', html: tplBank, attachments: attachments}, function (err, info) {
@@ -3837,6 +3857,10 @@ Model.prototype.moneySentAndSetInWork = function (obj, cb) {
         },
         sendEmailToMerch: function (cb) {
             // Отравить на емайл
+
+            cb(null);
+            return;
+
             if (obj.without_sending) return cb(null); // Все договорено по телефону
             sendMail({email: merchant.email, subject: 'CCS.TEST1: Договор №: '+ merchant_financing.agreement_number +'. Календарь платежей', html: tplMerch, attachments: attachments}, function (err, info) {
                 if (err) return cb(new UserError('Не удалось отправить email торговцу ' + merchant.email, {err: err, info: info}));

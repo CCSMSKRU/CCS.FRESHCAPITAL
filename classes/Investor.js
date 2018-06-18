@@ -1521,6 +1521,10 @@ Model.prototype.reportDeployment = function (obj, cb) {
             });
         },
         sendmail: function (cb) {
+
+            cb(null);
+            return;
+
             if (!investor.email) return cb(null, '');
 
 
