@@ -110,11 +110,26 @@
 		}
 	});
 
-	$(document).off('mouseup').on('mouseup', (e) => {
-		let month_wrapper = $('#month_wrapper');
-		if (!month_wrapper.is(e.target) && month_wrapper.has(e.target).length === 0 && month_wrapper.is(":visible")) {
-			month_wrapper.hide();
-			tableInstance.reload();
+	//todo dikii kostil'
+	let executing = false;
+	$(document).on('mousedown', (e) => {
+		if (!executing) {
+			executing = true;
+
+			let month_wrapper = $('#month_wrapper');
+			if (!month_wrapper.is(e.target) && month_wrapper.has(e.target).length === 0 && month_wrapper.is(":visible")) {
+				month_wrapper.hide();
+
+				for(let i = MB.Tables.tables.length - 1; i >= 0; i--){
+					let t = MB.Tables.tables[i];
+					if(t.client_object == 'tbl_request_turnover'){
+						t.reload();
+						break;
+					}
+				}
+			}
+
+			executing = false;
 		}
 	});
 
