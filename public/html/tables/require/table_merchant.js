@@ -50,7 +50,7 @@
 
 	                        var form_name = financing_data.closing_financing_id != '' ? 'form_merchant_refinancing' :
                                 (work_statuses.indexOf(financing_data.status_sysname) == -1 ?
-	                                (financing_data.financing_request_type_sysname == 'POS' ? 'form_merchant_financing_equipment' : 'form_merchant_financing') :
+	                                (financing_data.financing_request_type_sysname == 'POS' ? 'form_merchant_financing_equipment_work_2' : 'form_merchant_financing_work_2') :
 	                                (financing_data.financing_request_type_sysname == 'POS' ? 'form_merchant_financing_equipment_work_2' : 'form_merchant_financing_work_2'));
 
                             //

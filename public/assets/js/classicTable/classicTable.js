@@ -2359,6 +2359,7 @@ var classicTable = function () {
     CTable.prototype.setHandlers = function () {
         var _t = this;
         var visArr = [];
+
         for (var i in _t.profile.data) {
             var pI = _t.profile.data[i];
             if (pI['visible']) {
@@ -4835,3 +4836,10 @@ var classicTable = function () {
 //socketQuery({command:'createClass', object:'Table', params:{name:'menu_type'}}, function(res){console.log(res);})
 //socketQuery({command:'createClass', object:'Table', params:{name:'test'}}, function(res){console.log(res);})
 //socketQuery({command:'createClass', object:'Table', params:{name:'test_child'}}, function(res){console.log(res);})
+
+
+
+
+
+
+
