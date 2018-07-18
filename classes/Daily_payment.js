@@ -1543,7 +1543,8 @@ Model.prototype.makeDayWorkingDay = function (obj, cb) {
 				params: {
 					id: daily_payment.id,
 					is_applied: false,
-					is_working_day: true
+					is_working_day: true,
+					rollback_key: rollback_key
 				}
 			};
 
