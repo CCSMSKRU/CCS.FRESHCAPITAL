@@ -489,8 +489,11 @@ api_functions.download_merchant_factoring = function (obj, cb) { // Отчет �
                 readyData.t1.push({
                     payment_date: p.payment_date,
                     pending: p.pending_amount,
-                    paid: +p.paid_amount || 0,
-                    type: p.closing_type
+	                type: p.closing_type,
+                    // paid: +p.paid_amount || 0,
+	                paid: (+p.paid_amount || 0) + (+p.paid_amount_later || 0),
+	                paid_amount: p.paid_amount,
+	                paid_amount_later: p.paid_amount_later
                 });
             }
 

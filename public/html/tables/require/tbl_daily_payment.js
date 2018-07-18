@@ -70,7 +70,62 @@
                 }
 
             }
-        }
+        },
+	    {
+		    name: 'option1',
+		    title: 'Сделать день рабочим',
+		    disabled: function () {
+			    var row = tableInstance.ct_instance.selectedRowIndex;
+			    return tableInstance.data.data[row].is_working_day;
+		    },
+		    callback: function () {
+
+			    var row = tableInstance.ct_instance.selectedRowIndex;
+
+			    var financingFormId = MB.Core.guid();
+			    var financing_id = tableInstance.data.data[row].merchant_financing_id;
+			    var daily_payment_id = tableInstance.data.data[row].id;
+
+			    console.log(tableInstance.data.data[row]);
+
+			    if (financing_id != '') {
+				    bootbox.dialog({
+					    message: 'Сделать день рабочим?',
+					    title: "",
+					    buttons: {
+						    save: {
+							    label: "Да",
+							    callback: function () {
+								    var o = {
+									    command: 'makeDayWorkingDay',
+									    object: 'daily_payment',
+									    params: {
+										    id: daily_payment_id
+									    }
+								    };
+
+								    socketQuery(o, function (res) {
+									    if (!res.code) {
+										    tableInstance.reload();
+									    } else {
+
+									    }
+								    });
+							    }
+						    },
+						    cancel: {
+							    label: "Нет",
+							    callback: function () {
+							    }
+						    }
+					    }
+				    });
+			    } else {
+				    toastr['info']('Внимание', 'Не удалось получить финансирование.');
+			    }
+
+		    }
+	    }
     ];
 
     var lastInput;
@@ -1071,9 +1126,12 @@
                             }
                         }
 
-                        if(rowdata.financing_type_sysname == 'FIXED'){
+                        console.error(rowdata);
+	                    let paid_amount_tmp = getPaidAmount();
+	                    paid_amount_tmp = paid_amount_tmp > 0 ? paid_amount_tmp : rowdata.import_amount_vtb;
 
-                            if(getPaidAmount() !== +rowdata.pending_amount && getPaidAmount() != 0){
+                        if(rowdata.financing_type_sysname == 'FIXED'){
+                            if(paid_amount_tmp !== +rowdata.pending_amount && paid_amount_tmp != 0){
 
                                 bootbox.dialog({
                                     title: 'Винмание!',
@@ -1088,7 +1146,7 @@
                                                     object: 'daily_payment',
                                                     params: {
                                                         id: rowdata.id,
-                                                        paid_amount: getPaidAmount()
+                                                        paid_amount: paid_amount_tmp
                                                     }
                                                 };
 
@@ -1127,7 +1185,7 @@
                                     object: 'daily_payment',
                                     params: {
                                         id: rowdata.id,
-                                        paid_amount: getPaidAmount()
+                                        paid_amount: paid_amount_tmp
                                     }
                                 };
 
@@ -1156,7 +1214,7 @@
                                 object: 'daily_payment',
                                 params: {
                                     id: rowdata.id,
-                                    paid_amount: getPaidAmount()
+                                    paid_amount: paid_amount_tmp
                                 }
                             };
 

@@ -1441,30 +1441,163 @@ Model.prototype.apply = function (obj, cb) {
 };
 
 Model.prototype.cancelProcessingAction = function (obj, cb) {
-    if (arguments.length == 1) {
-        cb = arguments[0];
-        obj = {};
-    }
-    var _t = this;
-    var id = obj.id;
-    if (isNaN(+id)) return cb(new MyError('Не передан id',{obj:obj}));
-    var rollback_key = obj.rollback_key || rollback.create();
+	if (arguments.length == 1) {
+		cb = arguments[0];
+		obj = {};
+	}
+	var _t = this;
+	var id = obj.id;
+	if (isNaN(+id)) return cb(new MyError('Не передан id',{obj:obj}));
+	var rollback_key = obj.rollback_key || rollback.create();
 
-    async.series({
+	async.series({
 
-    },function (err, res) {
-        if (err) {
-            if (err.message == 'needConfirm') return cb(err);
-            rollback.rollback({obj:obj, rollback_key: rollback_key, user: _t.user}, function (err2) {
-                return cb(err, err2);
-            });
-        } else {
-            //if (!obj.doNotSaveRollback){
-            //    rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'METHOD_NAME', params:obj});
-            //}
-            cb(null, new UserOk('Ок'));
-        }
-    });
+	},function (err, res) {
+		if (err) {
+			if (err.message == 'needConfirm') return cb(err);
+			rollback.rollback({obj:obj, rollback_key: rollback_key, user: _t.user}, function (err2) {
+				return cb(err, err2);
+			});
+		} else {
+			//if (!obj.doNotSaveRollback){
+			//    rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'METHOD_NAME', params:obj});
+			//}
+			cb(null, new UserOk('Ок'));
+		}
+	});
+};
+
+Model.prototype.makeDayWorkingDay = function (obj, cb) {
+	if (arguments.length == 1) {
+		cb = arguments[0];
+		obj = {};
+	}
+	var _t = this;
+	var id = obj.id;
+	if (isNaN(+id)) return cb(new MyError('Не передан id', {obj: obj}));
+	var rollback_key = obj.rollback_key || rollback.create();
+
+	let daily_payment;
+	let pendingAmount;
+
+	async.series({
+		getDailyPayment: cb => {
+			let o = {
+				command: 'get',
+				object: 'daily_payment',
+				params: {
+					param_where: {
+						id: id
+					},
+					collapseData: false
+				}
+			};
+
+			_t.api(o, (err, res) => {
+				if (err || !res.length) return cb(new MyError('Не удалось найти платежный день.', {
+					o: o,
+					err: err
+				}));
+
+				daily_payment = res[0];
+
+				cb(null);
+			});
+		},
+		getMerchantFinancig: cb => {
+			let o = {
+				command: 'get',
+				object: 'merchant_financing',
+				params: {
+					param_where: {
+						id: daily_payment.merchant_financing_id
+					},
+					where: [
+						{
+							key: 'status_sysname',
+							type: 'in',
+							val1: ['SETTING_UP_EQUIPMENT', 'ACQUIRING_IN_PROCCESS']
+						}
+
+					],
+					collapseData: false
+				}
+			};
+
+			_t.api(o, (err, res) => {
+				if (err || !res.length) return cb(new MyError('Не удалось найти финансирование.', {
+					o: o,
+					err: err
+				}));
+
+				let fin = res[0];
+				pendingAmount = (+fin.to_return >= +fin.payment_amount) ? +fin.payment_amount : +fin.to_return;
+
+				cb(null);
+			});
+		},
+		setIsWorkingDayTrue: cb => {
+			let o = {
+				command: 'modify',
+				object: 'daily_payment',
+				params: {
+					id: daily_payment.id,
+					is_applied: false,
+					is_working_day: true
+				}
+			};
+
+			_t.api(o, (err, res) => {
+				if (err) return cb(new MyError('Не удалось изменить платежный день.', {
+					o: o,
+					err: err
+				}));
+
+				cb(null);
+			});
+		},
+		addmMerchantFinancingPayment: cb => {
+			let o = {
+				command: 'add',
+				object: 'merchant_financing_payment',
+				params: {
+					payment_date: daily_payment.daily_payments_date,
+					pending_amount: pendingAmount,
+					merchant_id: daily_payment.merchant_id,
+					calendar_id: daily_payment.merchant_financing_calendar_id,
+					status_sysname: 'PENDING',
+					rollback_key: rollback_key
+				}
+			};
+			_t.api(o, function (err, res) {
+				if (err) return cb(new MyError('Не удалось создать платеж для финансирования', {
+					o: o,
+					err: err
+				}));
+
+				cb(null);
+			});
+		}
+	}, function (err, res) {
+		if (err) {
+			if (err.message == 'needConfirm') return cb(err);
+			rollback.rollback({obj: obj, rollback_key: rollback_key, user: _t.user}, function (err2) {
+				return cb(err, err2);
+			});
+		} else {
+			if (!obj.doNotSaveRollback) {
+				rollback.save({
+					rollback_key: rollback_key,
+					user: _t.user,
+					name: _t.name,
+					name_ru: _t.name_ru || _t.name,
+					method: 'METHOD_NAME',
+					params: obj
+				});
+			}
+			cb(null, new UserOk('Ок'));
+		}
+	});
 };
 
 Model.prototype.example = function (obj, cb) {
