@@ -1110,6 +1110,7 @@ Model.prototype.apply = function (obj, cb) {
 
     // Для всех не Pending простаить is_applied
 
+	var financing_request_type_sysname = obj.financing_request_type_sysname || 'FINANCING';
     let daily_payments;
     let to_apply_ids = [];
     let daily_payment_default;
@@ -1174,6 +1175,10 @@ Model.prototype.apply = function (obj, cb) {
                             key:'status_sysname',
                             type:'!in',
                             val1:['PENDING']
+                        },
+                        {
+                            key:'financing_request_type_sysname',
+                            val1:financing_request_type_sysname
                         }
                     ],
                     collapseData:false

@@ -88,6 +88,7 @@
             command: 'apply',
             object: 'daily_payments',
             params:{
+                financing_request_type_sysname:'FINANCING',
                 id: formInstance.activeId
             }
         };
