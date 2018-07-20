@@ -4320,7 +4320,9 @@ Model.prototype.closeFinancing = function (obj, cb) {
         },
         check: function (cb) {
             // проверим статусы
-            if (merchant_financing.status_sysname!=='ACQUIRING_IN_PROCCESS') return cb(new UserError('Финансирование должно быть в статусе "В работе"',{status:merchant_financing.status_sysname,merchant_financing:merchant_financing}));
+            //SETTING_UP_EQUIPMENT
+
+            if (['ACQUIRING_IN_PROCCESS','SETTING_UP_EQUIPMENT'].indexOf(merchant_financing.status_sysname) === -1) return cb(new UserError('Финансирование должно быть в статусе "В работе" или "Настройка оборудования"',{status:merchant_financing.status_sysname,merchant_financing:merchant_financing}));
             cb(null);
         },
         getCalendar: function (cb) {
@@ -4895,6 +4897,7 @@ Model.prototype.prepareRefinancing = function (obj, cb) {
         check: function (cb) {
             // проверим статусы
             if (merchant_financing.status_sysname!=='ACQUIRING_IN_PROCCESS') return cb(new UserError('Финансирование должно быть в статусе "В работе"',{status:merchant_financing.status_sysname,merchant_financing:merchant_financing}));
+            // if (['ACQUIRING_IN_PROCCESS','SETTING_UP_EQUIPMENT'].indexOf(merchant_financing.status_sysname) === -1) return cb(new UserError('Финансирование должно быть в статусе "В работе" или "Настройка оборудования"',{status:merchant_financing.status_sysname,merchant_financing:merchant_financing}));
             // Проверим не было ли уже создано рефинансирование
             if (merchant_financing.closed_by_financing_id) return cb(new UserError('Рефинансирование уже было создано. №: '+ merchant_financing.closed_by_financing_id));
             cb(null);

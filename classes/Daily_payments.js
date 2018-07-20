@@ -1153,7 +1153,7 @@ Model.prototype.apply = function (obj, cb) {
                 command:'get',
                 object:'daily_payment',
                 params:{
-                    columns:['id','status_sysname'],
+                    columns:['id','status_sysname','financing_request_type_sysname'],
                     where:[
                         {
                             key:'is_applied',
