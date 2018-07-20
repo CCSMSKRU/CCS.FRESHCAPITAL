@@ -1,0 +1,44 @@
+UPDATE daily_payment dp
+SET dp.merchant_financing_calendar_id = (
+	SELECT
+		mfp.calendar_id
+	FROM
+		merchant_financing_payment mfp
+	WHERE
+		mfp.id = dp.merchant_financing_payment_id
+)
+WHERE
+	dp.merchant_financing_calendar_id IS NULL
+
+################
+
+UPDATE daily_payment dp
+SET dp.merchant_financing_id = (
+	SELECT
+		mfc.merchant_financing_id
+	FROM
+		merchant_financing_calendar mfc
+	WHERE
+		mfc.id = dp.merchant_financing_calendar_id
+)
+WHERE
+	dp.merchant_financing_calendar_id IS not NULL and dp.merchant_financing_id is null
+
+################################
+
+UPDATE daily_payment dp
+SET dp.financing_request_type_id = (
+	SELECT
+		mf.financing_request_type_id
+	FROM
+		merchant_financing mf
+	WHERE
+		mf.id = dp.merchant_financing_id
+)
+WHERE
+	dp.financing_request_type_id IS NULL
+
+
+
+
+
