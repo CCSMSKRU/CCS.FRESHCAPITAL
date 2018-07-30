@@ -1007,6 +1007,7 @@ Model.prototype.append_new = function (obj, cb) {
                                     params:{
                                         daily_payments_id:id,
                                         merchant_financing_payment_id:payment.id,
+                                        merchant_financing_calendar_id: payment.calendar_id, // || financing.current_calendar_id,
                                         pending_amount:payment.pending_amount || 0,
                                         paid_amount:payment.paid_amount_processing || (payment.closing_type_sysname === 'BY_PROCESSING')? payment.paid_amount : 0,
                                         paid_amount_later: paidAmountLater,
