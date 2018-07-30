@@ -1019,6 +1019,8 @@ Model.prototype.append_new = function (obj, cb) {
                                         status_sysname:payment.status_sysname,
                                         bank_id: financing.processing_bank_id,
 	                                    is_working_day: is_working_day,
+                                        merchant_financing_id: financing.id,
+                                        financing_request_type_id: financing.financing_request_type_id,
                                         rollback_key:rollback_key
                                     }
                                 };
