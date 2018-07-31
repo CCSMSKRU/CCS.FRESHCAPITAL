@@ -1479,6 +1479,7 @@ Model.prototype.makeDayWorkingDay = function (obj, cb) {
 
 	let daily_payment;
 	let pendingAmount;
+	let payment_id;
 
 	async.series({
 		getDailyPayment: cb => {
@@ -1500,7 +1501,7 @@ Model.prototype.makeDayWorkingDay = function (obj, cb) {
 				}));
 
 				daily_payment = res[0];
-
+                if (daily_payment.is_working_day) return cb(new UserError('Уже выставлен как рабочий.',{daily_payment:daily_payment}));
 				cb(null);
 			});
 		},
@@ -1536,13 +1537,38 @@ Model.prototype.makeDayWorkingDay = function (obj, cb) {
 				cb(null);
 			});
 		},
+        addmMerchantFinancingPayment: cb => {
+            let o = {
+                command: 'add',
+                object: 'merchant_financing_payment',
+                params: {
+                    payment_date: daily_payment.daily_payments_date,
+                    pending_amount: pendingAmount,
+                    merchant_id: daily_payment.merchant_id,
+                    calendar_id: daily_payment.merchant_financing_calendar_id,
+                    status_sysname: 'PENDING',
+                    rollback_key: rollback_key
+                }
+            };
+            _t.api(o, function (err, res) {
+                if (err) return cb(new MyError('Не удалось создать платеж для финансирования', {
+                    o: o,
+                    err: err
+                }));
+                payment_id = res.id;
+                cb(null);
+            });
+        },
 		setIsWorkingDayTrue: cb => {
 			let o = {
 				command: 'modify',
 				object: 'daily_payment',
 				params: {
 					id: daily_payment.id,
+                    merchant_financing_payment_id:payment_id,
 					is_applied: false,
+                    default_date:null,
+                    status_sysname:'PENDING',
 					is_working_day: true,
 					rollback_key: rollback_key
 				}
@@ -1556,29 +1582,8 @@ Model.prototype.makeDayWorkingDay = function (obj, cb) {
 
 				cb(null);
 			});
-		},
-		addmMerchantFinancingPayment: cb => {
-			let o = {
-				command: 'add',
-				object: 'merchant_financing_payment',
-				params: {
-					payment_date: daily_payment.daily_payments_date,
-					pending_amount: pendingAmount,
-					merchant_id: daily_payment.merchant_id,
-					calendar_id: daily_payment.merchant_financing_calendar_id,
-					status_sysname: 'PENDING',
-					rollback_key: rollback_key
-				}
-			};
-			_t.api(o, function (err, res) {
-				if (err) return cb(new MyError('Не удалось создать платеж для финансирования', {
-					o: o,
-					err: err
-				}));
-
-				cb(null);
-			});
 		}
+
 	}, function (err, res) {
 		if (err) {
 			if (err.message == 'needConfirm') return cb(err);
