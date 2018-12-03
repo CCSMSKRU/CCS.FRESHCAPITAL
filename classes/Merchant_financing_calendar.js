@@ -900,7 +900,9 @@ Model.prototype.setStatisticInfo = function (obj, cb) {
     var payments_partial_paid = [];
     var payments_paid_count = 0;
     var payments_partial_paid_count = 0;
+    var overpayment = 0;
     var total_returned, complete_percent, to_return;
+    var total_paid = 0;
     async.series({
         get: function (cb) {
             _t.getById({id:id}, function (err, res) {
@@ -1035,9 +1037,11 @@ Model.prototype.setStatisticInfo = function (obj, cb) {
             total_returned = 0;
             for (var i in payments_paid) {
                 total_returned += payments_paid[i].paid_amount;
+                total_paid += payments_paid[i].paid_amount_processing + payments_paid[i].paid_amount_later;
             }
             for (var i in payments_partial_paid) {
                 total_returned += payments_partial_paid[i].paid_amount;
+                total_paid += payments_partial_paid[i].paid_amount_processing + payments_partial_paid[i].paid_amount_later;
             }
             cb(null);
         },
@@ -1051,6 +1055,13 @@ Model.prototype.setStatisticInfo = function (obj, cb) {
             if (!to_return) complete_percent = 100;
             cb(null);
         },
+        get_overpayment: function (cb) {
+            if (isNaN(+to_return)) return cb(new UserError('Некорректно указана сумма возврата.',{to_return:to_return}));
+            // overpayment = +merchant_financing.amount_to_return - +total_returned;
+            overpayment = +total_paid - +merchant_financing.amount_to_return;
+            if (overpayment <= 0) overpayment = 0;
+            cb(null);
+        },
         setToMerchant: function (cb) {
             var o = {
                 command:"modify",
@@ -1062,6 +1073,7 @@ Model.prototype.setStatisticInfo = function (obj, cb) {
                     payments_default:payments_default_count,
                     total_returned:total_returned,
                     to_return:to_return,
+                    overpayment:overpayment,
                     payments_pending:payments_pending_count,
                     complete_percent:complete_percent
                 }
@@ -1073,6 +1085,7 @@ Model.prototype.setStatisticInfo = function (obj, cb) {
                 merchant_financing.payments_default = payments_default_count;
                 merchant_financing.total_returned = total_returned;
                 merchant_financing.to_return = to_return;
+                merchant_financing.overpayment = overpayment;
                 merchant_financing.payments_pending = payments_pending_count;
                 merchant_financing.complete_percent = complete_percent;
                 cb(null);
@@ -1089,6 +1102,7 @@ Model.prototype.setStatisticInfo = function (obj, cb) {
                     payments_default:payments_default_count,
                     total_returned:total_returned,
                     to_return:to_return,
+                    overpayment:overpayment,
                     payments_pending:payments_pending_count,
                     complete_percent:complete_percent,
                     lock_key:obj.financing_lock_key
@@ -1126,6 +1140,7 @@ Model.prototype.setStatisticInfo = function (obj, cb) {
                 payments_default: payments_default_count,
                 total_returned: total_returned,
                 to_return: to_return,
+                overpayment: overpayment,
                 payments_pending: payments_pending_count,
                 complete_percent: complete_percent,
                 lock_key: obj.calendar_lock_key

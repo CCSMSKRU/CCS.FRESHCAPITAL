@@ -9,6 +9,9 @@ var util = require('util');
 var async = require('async');
 var rollback = require('../modules/rollback');
 var funcs = require('../libs/functions');
+var moment = require('moment');
+var fs = require('fs');
+var XlsxTemplate = require('xlsx-template');
 
 var Model = function(obj){
     this.name = obj.name;
@@ -548,6 +551,8 @@ Model.prototype.setRemittance = function (obj, cb) {
                         val1:daily_payment.merchant_financing_id
                     }
                 ],
+                // sort:'id',
+                limit:10000000,
                 collapseData:false
             };
             _t.get(params, function(err, res){
@@ -1099,6 +1104,22 @@ Model.prototype.apply = function (obj, cb) {
                 cb(null);
             });
         },
+        setStatisticForFin:function(cb){
+            var o = {
+                command:'setStatisticInfo',
+                object:'merchant_financing_calendar',
+                params:{
+                    id:d_pmnt.merchant_financing_calendar_id,
+                    rollback_key:rollback_key
+                }
+            };
+            _t.api(o, function (err, res) {
+                if (err) return cb(new MyError('Не удалось setStatisticInfo',{o : o, err : err}));
+
+                cb(null);
+            });
+
+        },
         getPayment:function(cb){
             var o = {
                 command:'getById',
@@ -1440,32 +1461,701 @@ Model.prototype.apply = function (obj, cb) {
     });
 };
 
-Model.prototype.cancelProcessingAction = function (obj, cb) {
-	if (arguments.length == 1) {
-		cb = arguments[0];
-		obj = {};
-	}
-	var _t = this;
-	var id = obj.id;
-	if (isNaN(+id)) return cb(new MyError('Не передан id',{obj:obj}));
-	var rollback_key = obj.rollback_key || rollback.create();
+// Model.prototype.cancelProcessingAction = function (obj, cb) {
+// 	if (arguments.length == 1) {
+// 		cb = arguments[0];
+// 		obj = {};
+// 	}
+// 	var _t = this;
+// 	var id = obj.id;
+// 	if (isNaN(+id)) return cb(new MyError('Не передан id',{obj:obj}));
+// 	var rollback_key = obj.rollback_key || rollback.create();
+//
+// 	async.series({
+//
+// 	},function (err, res) {
+// 		if (err) {
+// 			if (err.message == 'needConfirm') return cb(err);
+// 			rollback.rollback({obj:obj, rollback_key: rollback_key, user: _t.user}, function (err2) {
+// 				return cb(err, err2);
+// 			});
+// 		} else {
+// 			//if (!obj.doNotSaveRollback){
+// 			//    rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'METHOD_NAME', params:obj});
+// 			//}
+// 			cb(null, new UserOk('Ок'));
+// 		}
+// 	});
+// };
 
-	async.series({
 
-	},function (err, res) {
-		if (err) {
-			if (err.message == 'needConfirm') return cb(err);
-			rollback.rollback({obj:obj, rollback_key: rollback_key, user: _t.user}, function (err2) {
-				return cb(err, err2);
-			});
-		} else {
-			//if (!obj.doNotSaveRollback){
-			//    rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'METHOD_NAME', params:obj});
-			//}
-			cb(null, new UserOk('Ок'));
-		}
-	});
+
+// var o = {
+//     command:'getDatesToRollback',
+//     object:'daily_payment',
+//     params:{
+//         id:5169
+//     }
+// };
+// socketQuery(o, function(r){
+//     console.log(r);
+// });
+
+Model.prototype.getDatesToRollback = function (obj, cb) {
+    if (arguments.length == 1) {
+        cb = arguments[0];
+        obj = {};
+    }
+    var _t = this;
+    var id = obj.id;
+    if (isNaN(+id)) return cb(new MyError('Не передан id',{obj:obj}));
+
+    var d_payment;
+    var processed_payment_ids = obj.processed_payment_ids || [];
+    //daily_payments_date
+    var dates = [];
+    var financing, calendar;
+    var payment_ids = [];
+    async.series({
+        get:function(cb){
+            _t.getById({id:id}, function (err, res) {
+                if (err) return cb(new MyError('Не удалось получить daily_payment.',{id:id,err:err}));
+                d_payment = res[0];
+                console.log(d_payment.daily_payments_date);
+                dates.push(d_payment.daily_payments_date);
+                cb(null);
+            });
+        },
+        getFinAndCheckStatus:function(cb){
+            var o = {
+                command:'getById',
+                object:'merchant_financing',
+                params:{
+                    id:d_payment.merchant_financing_id
+                }
+            };
+            _t.api(o, function (err, res) {
+                if (err) return cb(new MyError('Не удалось получить финансирование',{o : o, err : err}));
+                financing = res[0];
+                if (financing.status_sysname !== 'ACQUIRING_IN_PROCCESS' && financing.status_sysname !== 'WAIT_FOR_FIRST_PAYMENT' && financing.status_sysname !== 'CLOSED') return cb(new UserError('Финансирование должно быть в работе или закрыто'));
+                cb(null);
+            });
+        },
+        getCalendar:function(cb){
+            var o = {
+                command:'getById',
+                object:'merchant_financing_calendar',
+                params:{
+                    id:d_payment.merchant_financing_calendar_id
+                }
+            };
+            _t.api(o, function (err, res) {
+                if (err) return cb(new MyError('Не удалось получить календарь',{o : o, err : err}));
+                calendar = res[0];
+                cb(null);
+            });
+        },
+        getLinkedDates:function(cb){
+
+            async.series({
+                getAnotherPayments:function(cb){
+                    var o = {
+                        command:'get',
+                        object:'daily_payment_paid_later',
+                        params:{
+                            where:[
+                                {
+                                    key:'daily_payment_id',
+                                    val1:d_payment.id,
+                                    comparisonType:'OR'
+                                },
+                                {
+                                    key:'target_daily_payment_id',
+                                    val1:d_payment.id,
+                                    comparisonType:'OR'
+                                }
+                            ],
+                            collapseData:false
+                        }
+                    };
+                    _t.api(o, function (err, res) {
+                        if (err) return cb(new MyError('Не удалось получить daily_payment_paid_later',{o : o, err : err}));
+
+                        for (var i in res) {
+                            if (res[i].daily_payment_id !== d_payment.id){ // этот платеж закрывается кем-то еще
+                                if (payment_ids.indexOf(res[i].daily_payment_id) === -1) payment_ids.push(res[i].daily_payment_id);
+                            }
+                            if (res[i].target_daily_payment_id !== d_payment.id){ // этот платеж закрывает кого-то еще
+                                if (payment_ids.indexOf(res[i].target_daily_payment_id) === -1) payment_ids.push(res[i].target_daily_payment_id);
+                            }
+                        }
+                        cb(null);
+                    });
+                },
+                getAnotherDates:function(cb){
+                    if (!payment_ids.length) return cb(null);
+
+                    var params = {
+                        where:[
+                            {
+                                key:'id',
+                                type:'in',
+                                val1:payment_ids
+                            }
+                        ],
+                        collapseData:false
+                    };
+                    _t.get(params, function (err, res) {
+                        if (err) return cb(new MyError('Не удалось получить daily_payment',{params : params, err : err}));
+                        for (var i in res) {
+                            if (dates.indexOf(res[i].daily_payments_date) === -1) dates.push(res[i].daily_payments_date);
+                        }
+                        cb(null);
+                    });
+                }
+            }, cb);
+
+        },
+        runForLinked:function(cb){
+            processed_payment_ids.push(d_payment.id);
+
+            if (!payment_ids.length) return cb(null);
+
+            async.eachSeries(payment_ids, function(item, cb){
+                if (processed_payment_ids.indexOf(item) !== -1) return cb(null);
+                var params = {
+                    id:item,
+                    processed_payment_ids:processed_payment_ids,
+                    isChild:true
+                };
+                _t.getDatesToRollback(params, function(err, res){
+                    if (err) return cb(new MyError('При попытке получить даты связанных платежей произошла ош.',{err:err, params:params}));
+                    for (var i in res.dates) {
+                        if(dates.indexOf(res.dates[i]) === -1) dates.push(res.dates[i]);
+                    }
+                    if (processed_payment_ids.indexOf(item) === -1) processed_payment_ids.push(item);
+                    cb(null);
+                });
+
+            }, cb);
+        },
+        sort:function(cb){
+            if (obj.isChild) return cb(null);
+
+            var dates_moment_arr = [];
+            for (var i in dates) {
+                dates_moment_arr.push(moment(dates[i], 'DD.MM.YYYY'));
+            }
+            dates_moment_arr.sort(function (a, b) {
+                return a - b;
+            });
+            dates = [];
+            for (var j in dates_moment_arr) {
+                dates.push(dates_moment_arr[j].format('DD.MM.YYYY'));
+            }
+            cb(null);
+        }
+    },function (err, res) {
+        if (err) return cb(err);
+        cb(null, new UserOk('noToastr',{dates:dates}));
+    });
 };
+
+
+
+// var o = {
+//     command:'cancelAllOperations',
+//     object:'daily_payment',
+//     params:{
+//         id:24615
+//     }
+// };
+// socketQuery(o, function(res){
+//     console.log(res);
+//     if(!res.code){
+//         if (!res.filename) return;
+//         var linkName = 'my_download_link' + MB.Core.guid();
+//
+//         var nameRu = res.name_ru || res.filename;
+//
+//         $("body").prepend('<a id="'+linkName+'" href="' + res.path + res.filename +'" download="'+ nameRu+'" style="display:none;"></a>');
+//         var jqElem = $('#'+linkName);
+//         jqElem[0].click();
+//         jqElem.remove();
+//     }
+// });
+/**
+ * Отменит все операции по данному платежу и всем связаннам с ним
+ * @param obj
+ * @param cb
+ * @returns {*}
+ */
+Model.prototype.cancelAllOperations = function (obj, cb) {
+    if (arguments.length == 1) {
+        cb = arguments[0];
+        obj = {};
+    }
+    var _t = this;
+    var id = obj.id;
+    if (isNaN(+id)) return cb(new MyError('Не передан id',{obj:obj}));
+    var rollback_key = obj.rollback_key || rollback.create();
+
+    var accepted_users = ['ivantgco@gmail.com','alextgco@gmail.com'];
+    if (accepted_users.indexOf(_t.user.user_data.email) === -1) return cb(new UserError('У Вас нет доступа к этой функции.'));
+
+    var name_ru;
+    var filename;
+
+    var d_payment;
+    var dates;
+    var financing;
+    var overpayment = 0;
+
+    async.series({
+        get:function(cb){
+            _t.getById({id:id}, function (err, res) {
+                if (err) return cb(new MyError('Не удалось получить daily_payment.',{id:id,err:err}));
+                d_payment = res[0];
+                cb(null);
+            });
+        },
+        getFin:function(cb){
+            var o = {
+                command:'getById',
+                object:'merchant_financing',
+                params:{
+                    id:d_payment.merchant_financing_id
+                }
+            };
+            _t.api(o, function (err, res) {
+                if (err) return cb(new MyError('Не удалось получить финансирование',{o : o, err : err})); // Could not
+                financing = res[0];
+                cb(null);
+            });
+        },
+        getDates:function(cb){
+            _t.getDatesToRollback({id:d_payment.id}, function(err, res){
+                if (err) return cb(err);
+                dates = res.dates;
+                cb(null);
+            })
+        },
+        askConfirm:function(cb){
+            if (!obj.confirm) {
+                return cb(new UserError('needConfirm', {confirmType:'dialog', message: 'Внимание!' +
+                        '<br><br>' +
+                        'Будут отменены операции для данного торговца за следующие даты: <br>' + dates.join(', ')}));
+            }
+            cb(null);
+        },
+        saveToFile:function(cb){
+            var readyData;
+            var report_date = funcs.getDate();
+            var template;
+            var binaryData;
+
+            var name = 'canceled_dates.xlsx';
+            name_ru = 'Даты отменненых операций ('+ d_payment.merchant_short_name +')_' + moment().format('DD_MM_YYYY hh_mm_ss') + '.xlsx';
+            async.series({
+                prepareData0: function (cb) {
+                    readyData = {
+                        merchant_name:d_payment.merchant_short_name,
+                        report_date: report_date,
+                        t1: []
+                    };
+                    for (var i in dates) {
+                        readyData.t1.push({
+                            one_date: dates[i]
+                        });
+                    }
+                    cb(null);
+                },
+                getTemplate: function (cb) {
+                    fs.readFile('./templates/' + name, function (err, data) {
+                        if (err) return cb(new MyError('Не удалось считать файл шаблона canceled_dates.xlsx.', err));
+                        template = new XlsxTemplate(data);
+                        cb(null);
+                    });
+                },
+                perform: function (cb) {
+                    var sheetNumber = 1;
+                    template.substitute(sheetNumber, readyData);
+                    var dataBuf = template.generate();
+                    binaryData = new Buffer(dataBuf, 'binary');
+                    cb(null)
+                },
+                writeFile: function (cb) {
+                    filename = '_' + name;
+                    fs.writeFile('./public/savedFiles/' + filename,binaryData, function (err) {
+                        if (err) return cb(new MyError('Не удалось записать файл ' + filename,{err:err}));
+                        return cb(null, new UserOk(filename + ' успешно сформирован'));
+                    });
+                }
+            }, cb);
+        },
+        cancelCloseFin:function(cb){
+            if (!dates.length) return cb(null);
+            if (financing.status_sysname !== "CLOSED") return cb(null);
+            async.series({
+                cancelCloseCalender:function(cb){
+                    var o = {
+                        command:'modify',
+                        object:'merchant_financing_calendar',
+                        params:{
+                            id:financing.current_calendar_id,
+                            status_sysname:'IN_WORK',
+                            closing_date:null,
+                            closing_type_id:null,
+                            rollback_key:rollback_key
+                        }
+                    };
+                    _t.api(o, function (err, res) {
+                        if (err) return cb(new MyError('Не удалось установить статус календарю: IN_WORK',{o : o, err : err})); // Could not
+                        cb(null);
+                    });
+
+                },
+                cancelCloseFin:function(cb){
+                    var o = {
+                        command:'modify',
+                        object:'merchant_financing',
+                        params:{
+                            id:financing.id,
+                            status_sysname:'ACQUIRING_IN_PROCCESS',
+                            closing_date:null,
+                            closing_type_id:null,
+                            rollback_key:rollback_key
+                        }
+                    };
+                    _t.api(o, function (err, res) {
+                        if (err) return cb(new MyError('Не удалось установить статус финансированию: ACQUIRING_IN_PROCCESS',{o : o, err : err})); // Could not
+                        cb(null);
+                    });
+                },
+                cancelOperationMGMFee:function(cb){
+                    async.series({
+                        cancelToMainCompany:function(cb){
+                            // Отменим транзакции ПЕРЕВОДА от инвесторов главной компании (у инвесторов)
+                            var o = {
+                                command:'get',
+                                object:'investor_account_operation',
+                                params:{
+                                    param_where:{
+                                        merchant_financing_id:financing.id,
+                                        subtype_sysname:'REMITTANCE_MAIN_INV_COMISSION',
+                                    },
+                                    collapseData:false
+                                }
+                            };
+                            _t.api(o, function (err, res) {
+                                if (err) return cb(new MyError('Не удалось получить операции перевода MGM FEE в пользу главной компании',{o : o, err : err})); // Could not
+                                async.eachSeries(res, function(transaction, cb){
+                                    var o = {
+                                        command:'removeCascade',
+                                        object:'investor_account_operation',
+                                        params:{
+                                            id:transaction.id,
+                                            confirm:true,
+                                            rollback_key:rollback_key
+                                        }
+                                    };
+                                    _t.api(o, function (err, res) {
+                                        if (err) return cb(new MyError('Не удалось удалить операцию аккаунта инвестора',{o : o, err : err}));
+                                        cb(null);
+                                    });
+                                }, cb);
+                            });
+
+                        },
+                        cancelInMainCompany:function(cb){
+                            // Отменим транзакции ПОСТУПЛЕНИЕ от инвесторов главной компании (у главной компании)
+                            var o = {
+                                command:'get',
+                                object:'investor_account_operation',
+                                params:{
+                                    param_where:{
+                                        merchant_financing_id:financing.id,
+                                        subtype_sysname:'GET_MAIN_COMPANY_REMITTANCE',
+                                    },
+                                    collapseData:false
+                                }
+                            };
+                            _t.api(o, function (err, res) {
+                                if (err) return cb(new MyError('Не удалось получить операции перевода MGM FEE в пользу главной компании',{o : o, err : err})); // Could not
+                                async.eachSeries(res, function(transaction, cb){
+                                    var o = {
+                                        command:'removeCascade',
+                                        object:'investor_account_operation',
+                                        params:{
+                                            id:transaction.id,
+                                            confirm:true,
+                                            rollback_key:rollback_key
+                                        }
+                                    };
+                                    _t.api(o, function (err, res) {
+                                        if (err) return cb(new MyError('Не удалось удалить операцию аккаунта инвестора',{o : o, err : err}));
+                                        cb(null);
+                                    });
+                                }, cb);
+                            });
+                        }
+                    }, cb);
+                }
+            }, cb);
+        },
+        cancelEach:function(cb){
+            if (!dates.length) return cb(null);
+
+
+            var account_ids = [];
+            async.eachSeries(dates, function(one_date, cb){
+                var this_date_payment;
+                async.series({
+                    getThisDatePayment:function(cb){
+                        var params = {
+                            param_where:{
+                                merchant_financing_id:d_payment.merchant_financing_id,
+                                daily_payments_date:one_date
+                            },
+                            collapseData:false
+                        };
+                        _t.get(params, function (err, res) {
+                            if (err) return cb(new MyError('Не удалось получить ThisDatePayment',{params : params, err : err}));
+                            this_date_payment = res[0];
+                            cb(null);
+                        });
+                    },
+                    dropAllInvestorOperation:function(cb){
+
+                        var oper_ids = [];
+                        async.series({
+                            getAllOper:function(cb){
+                                var o = {
+                                    command:'get',
+                                    object:'investor_account_operation',
+                                    params:{
+                                        param_where:{
+                                            merchant_financing_id:d_payment.merchant_financing_id,
+                                            operation_date:one_date
+                                        },
+                                        collapseData:false
+                                    }
+                                };
+                                _t.api(o, function (err, res) {
+                                    if (err) return cb(new MyError('Не удалось получить investor_account_operation',{o : o, err : err}));
+                                    for (var i in res) {
+                                        oper_ids.push(res[i].id);
+                                        if (account_ids.indexOf(res[i].investor_account_id) === -1) account_ids.push(res[i].investor_account_id);
+                                    }
+                                    cb(null);
+                                });
+                            },
+                            remove:function(cb){
+                                if (!oper_ids.length) return cb(null);
+                                async.eachSeries(oper_ids, function(item, cb){
+                                    var o = {
+                                        command:'removeCascade',
+                                        object:'investor_account_operation',
+                                        params:{
+                                            id:item,
+                                            confirm:true,
+                                            rollback_key:rollback_key
+                                        }
+                                    };
+                                    _t.api(o, function (err, res) {
+                                        if (err) return cb(new MyError('Не удалось удалить операцию аккаунта инвестора',{o : o, err : err}));
+                                        cb(null);
+                                    });
+                                }, cb);
+                            }
+                        }, cb);
+                    },
+                    modifyAllMerchFinPayment:function(cb){
+                        var o = {
+                            command:'modify',
+                            object:'merchant_financing_payment',
+                            params:{
+                                id:this_date_payment.merchant_financing_payment_id,
+                                amount:0,
+                                paid_amount:0,
+                                paid_date:null,
+                                complete_percent:null,
+                                default_date:null,
+                                closed_by_payment_id:null,
+                                paid_amount_processing:null,
+                                paid_amount_later:null,
+                                paid_by_user_id:null,
+                                default_by_user_id:null,
+                                closing_type_id:null,
+                                closing_date:null,
+                                status_sysname:'PENDING',
+                                rollback_key:rollback_key
+                            }
+                        };
+                        _t.api(o, function (err, res) {
+                            if (err) return cb(new MyError('Не удалось обнулить платеж в календаре',{o : o, err : err}));
+
+                            cb(null);
+                        });
+
+                    },
+                    modifyAllDailyPayment:function(cb){
+                        var params = {
+                            id:this_date_payment.id,
+                            paid_amount:0,
+                            import_amount:0,
+                            import_amount_vtb:0,
+                            import_applied:false,
+                            closing_type_id:null,
+                            default_date:null,
+                            closing_date:null,
+                            default_paid_amount:0,
+                            status_sysname:'PENDING',
+                            is_applied:false,
+                            paid_amount_later:0,
+                            pending_body_amount:0,
+                            pending_percent_amount:0,
+                            pending_body_amount_tmp:0,
+                            pending_percent_amount_tmp:0,
+                            rollback_key:rollback_key
+                        };
+                        _t.modify(params, function (err, res) {
+                            if (err) return cb(new MyError('Не удалось изменить платеж',{params : params, err : err}));
+
+                            cb(null);
+                        });
+                    },
+                    dropAllbillout:function(cb){
+                        cb(null); // Пока можно не делать, вроде
+                    },
+                    dropAllPaidLater:function(cb){
+                        var ids = [];
+                        async.series({
+
+                            getAllOper:function(cb){
+                                var o = {
+                                    command:'get',
+                                    object:'daily_payment_paid_later',
+                                    params:{
+                                        where:[
+                                            {
+                                                key:'daily_payment_id',
+                                                val1:this_date_payment.id,
+                                                comparisonType:'OR'
+                                            },
+                                            {
+                                                key:'target_daily_payment_id',
+                                                val1:this_date_payment.id,
+                                                comparisonType:'OR'
+                                            }
+                                        ],
+                                        collapseData:false
+                                    }
+                                };
+                                _t.api(o, function (err, res) {
+                                    if (err) return cb(new MyError('Не удалось получить daily_payment_paid_later',{o : o, err : err}));
+                                    for (var i in res) {
+                                        ids.push(res[i].id);
+                                    }
+                                    cb(null);
+                                });
+                            },
+                            remove:function(cb){
+                                if (!ids.length) return cb(null);
+                                async.eachSeries(ids, function(item, cb){
+                                    var o = {
+                                        command:'removeCascade',
+                                        object:'daily_payment_paid_later',
+                                        params:{
+                                            id:item,
+                                            confirm:true,
+                                            rollback_key:rollback_key
+                                        }
+                                    };
+                                    _t.api(o, function (err, res) {
+                                        if (err) return cb(new MyError('Не удалось удалить daily_payment_paid_later',{o : o, err : err}));
+                                        cb(null);
+                                    });
+                                }, cb);
+                            }
+                        }, cb);
+                    }
+                }, cb);
+            }, function(err, res){
+                if (err) return cb(err);
+                async.series({
+                    Investor_calc_amounts:function(cb){
+                        if (!account_ids.length) return cb(null);
+                        async.eachSeries(account_ids, function(item, cb){
+                            var o = {
+                                command:'calc_amounts',
+                                object:'investor_account',
+                                params:{
+                                    id:item,
+                                    rollback_key:rollback_key
+                                }
+                            };
+                            _t.api(o, function (err, res) {
+                                if (err) return cb(new MyError('Не удалось пересчитать значения счетов',{o : o, err : err}));
+                                cb(null);
+                            });
+
+                        }, cb);
+                    },
+                    merchant_setStatistic:function(cb){
+                        var o = {
+                            command:'setStatisticInfo',
+                            object:'merchant_financing_calendar',
+                            params:{
+                                id:d_payment.merchant_financing_calendar_id,
+                                rollback_key:rollback_key
+                            }
+                        };
+                        _t.api(o, function (err, res) {
+                            if (err) return cb(new MyError('Не удалось setStatisticInfo',{o : o, err : err}));
+                            cb(null);
+                        });
+                    }
+                }, cb);
+            });
+        },
+
+        addLog: function (cb) {
+            // Записать лог
+
+            var o = {
+                command:'addHistory',
+                object:'merchant_financing',
+                params:{
+                    history_log_status_sysname: 'ACQUIRING_IN_PROCCESS',
+                    comment:'Отмена проведения платежа и связанных с ним. Платеж: ' + d_payment.daily_payments_date + '(' + d_payment.id + '). Даты: ' + dates.join(','),
+                    rollback_key:rollback_key
+                }
+            };
+            for (var i in financing) {
+                if (typeof o.params[i] !== 'undefined') continue;
+                o.params[i] = financing[i];
+            }
+            _t.api(o, function (err, res) {
+                if (err) return cb(new MyError('Не удалось добавить историю по финансированию',{o : o, err : err})); // Could not
+                cb(null);
+            });
+        }
+    },function (err, res) {
+        if (err) {
+            if (err.message == 'needConfirm') return cb(err);
+            rollback.rollback({obj:obj, rollback_key: rollback_key, user: _t.user}, function (err2) {
+                return cb(err, err2);
+            });
+        } else {
+            if (!obj.doNotSaveRollback){
+                rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'cancelAllOperations', params:obj});
+            }
+            cb(null, new UserOk('Ок', {filename:filename,path:'/savedFiles/',name_ru:name_ru}));
+        }
+    });
+};
+
 
 Model.prototype.makeDayWorkingDay = function (obj, cb) {
 	if (arguments.length == 1) {

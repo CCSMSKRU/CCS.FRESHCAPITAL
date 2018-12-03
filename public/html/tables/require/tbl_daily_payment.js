@@ -72,7 +72,7 @@
             }
         },
 	    {
-		    name: 'option1',
+		    name: 'optionToWork',
 		    title: 'Сделать день рабочим',
 		    disabled: function () {
 			    var row = tableInstance.ct_instance.selectedRowIndex;
@@ -125,7 +125,40 @@
 			    }
 
 		    }
-	    }
+	    }//,
+        /*{
+            name: 'optionCancel',
+            title: 'Отменить проведение(АДМИН)',
+            disabled: function(){
+                var row = tableInstance.ct_instance.selectedRowIndex;
+                return !tableInstance.data.data[row].is_applied;
+            },
+            callback: function(){
+
+                var row = tableInstance.ct_instance.selectedRowIndex;
+                var o = {
+                    command:'cancelAllOperations',
+                    object:'daily_payment',
+                    params:{
+                        id:tableInstance.data.data[row].id
+                    }
+                };
+                socketQuery(o, function(res){
+                    if(!res.code){
+                        if (!res.filename) return;
+                        var linkName = 'my_download_link' + MB.Core.guid();
+
+                        var nameRu = res.name_ru || res.filename;
+
+                        $("body").prepend('<a id="'+linkName+'" href="' + res.path + res.filename +'" download="'+ nameRu+'" style="display:none;"></a>');
+                        var jqElem = $('#'+linkName);
+                        jqElem[0].click();
+                        jqElem.remove();
+                    }
+                });
+
+            }
+        }*/
     ];
 
     var lastInput;

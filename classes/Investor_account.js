@@ -1651,6 +1651,66 @@ Model.prototype.calc_amounts = function (obj, cb) {
     });
 };
 
+// var o = {
+//     command: 'recalcAll',
+//     object: 'investor_account',
+//     params: {
+//     }
+// };
+// socketQuery(o, function (res) {
+//     console.log(res);
+// });
+
+/**
+ * Операция пройдется по всем счетам инвесторов и пересчитает суммарные показатели.
+ * Может потребоваться после ручной отмены транзакций.
+ * @param obj
+ * @param cb
+ * @returns {*}
+ */
+Model.prototype.recalcAll = function (obj, cb) {
+    if (arguments.length == 1) {
+        cb = arguments[0];
+        obj = {};
+    }
+    var _t = this;
+    var rollback_key = obj.rollback_key || rollback.create();
+
+    var accounts;
+    async.series({
+        getAccounts:function(cb){
+            var params = {
+                param_where:{},
+                collapseData:false
+            };
+            _t.get(params, function (err, res) {
+                if (err) return cb(new MyError('Не удалось получить счета',{params : params, err : err})); // Could not get
+                async.eachSeries(res, function(item, cb){
+                    var params = {
+                        id:item.id,
+                    };
+                    _t.calc_amounts(params, function (err, res) {
+                        if (err) return cb(new MyError('Не удалось пересчитать счет ',{params : params, err : err})); // Could not get
+                        cb(null);
+                    });
+                }, cb);
+            });
+        }
+    },function (err, res) {
+        if (err) {
+            if (err.message == 'needConfirm') return cb(err);
+            rollback.rollback({obj:obj, rollback_key: rollback_key, user: _t.user}, function (err2) {
+                return cb(err, err2);
+            });
+        } else {
+            //if (!obj.doNotSaveRollback){
+            //    rollback.save({rollback_key:rollback_key, user:_t.user, name:_t.name, name_ru:_t.name_ru || _t.name, method:'METHOD_NAME', params:obj});
+            //}
+            cb(null, new UserOk('Ок'));
+        }
+    });
+};
+
 
 Model.prototype.example = function (obj, cb) {
     if (arguments.length == 1) {
